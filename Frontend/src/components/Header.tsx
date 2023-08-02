@@ -4,6 +4,7 @@ import { ReactComponent as DictionaryOffIcon } from '../asset/icons/dictionary_o
 import { ReactComponent as CarIcon } from '../asset/icons/header_car_icon.svg';
 import { ReactComponent as MoreIcon } from '../asset/icons/more_icon.svg';
 import { hyundaiLogo } from '../asset';
+import { headMedium3, headRegular5 } from '../style/typefaces';
 
 const Header = () => {
   return (
@@ -64,7 +65,7 @@ const HeaderLogo = styled.img`
 `;
 
 const HeaderMode = styled.div`
-  font-family: 'headMedium3';
+  ${headMedium3}
 `;
 
 const HeaderRightContainer = styled.div`
@@ -81,7 +82,7 @@ const DictionaryContainer = styled.div`
 `;
 
 const DictionaryText = styled.div`
-  font-family: 'bodyRegular5';
+  ${headRegular5}
 `;
 
 const CarModelContainer = styled.div`
@@ -92,5 +93,5 @@ const CarModelContainer = styled.div`
 
 const CarModelText = styled.div`
   margin-left: 4px;
-  font-family: 'bodyRegular5';
+  ${headRegular5}
 `;

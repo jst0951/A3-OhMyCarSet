@@ -138,170 +138,30 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
-
-    // Hyundai Sans Head
-   @font-face {
-        font-family: 'headMedium1';
+    @font-face {
+        font-family: 'Hyundai Sans Head Medium';
         font-style: normal;
         font-display: swap;
-        font-size: 22px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
         src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headMedium2';
+      }
+      @font-face {
+        font-family: 'Hyundai Sans Head Regular';
         font-style: normal;
         font-display: swap;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-  }   
-  @font-face {
-        font-family: 'headMedium3';
-        font-style: normal;
-        font-display: swap;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headRegular3';
-        font-style: normal;
-        font-display: swap;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
         src: url('src/asset/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headMedium4';
+      }
+      @font-face {
+        font-family: 'Hyundai Sans Text Medium';
         font-style: normal;
         font-display: swap;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headRegular4';
-        font-style: normal;
-        font-display: swap;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headMedium5';
-        font-style: normal;
-        font-display: swap;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headRegular5';
-        font-style: normal;
-        font-display: swap;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'headRegular6';
-        font-style: normal;
-        font-display: swap;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
-  }
-
-  // Hyundai Sans Body
-  @font-face {
-        font-family: 'bodyMedium1';
-        font-style: normal;
-        font-display: swap;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
         src: url('src/asset/fonts/HyundaiSansTextKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'bodyRegular1';
+      }  
+      @font-face {
+        font-family: 'Hyundai Sans Text Regular';
         font-style: normal;
         font-display: swap;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
         src: url('src/asset/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'bodyMedium2';
-        font-style: normal;
-        font-display: swap;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansTextKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'bodyRegular2';
-        font-style: normal;
-        font-display: swap;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'bodyMedium3';
-        font-style: normal;
-        font-display: swap;
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansTextKROTFMedium.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'bodyRegular3';
-        font-style: normal;
-        font-display: swap;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 130%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
-  }
-  @font-face {
-        font-family: 'popupRegular';
-        font-style: normal;
-        font-display: swap;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 150%;
-        letter-spacing: -3%;
-        src: url('src/asset/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
-  }
+      }
 `;
 
 export default GlobalStyle;
