@@ -1,5 +1,11 @@
+import Layout from '../components/Layout';
+
 function MainPage() {
-  return <div>메인 페이지</div>;
+  return (
+    <>
+      <Layout></Layout>
+    </>
+  );
 }
 
 export default MainPage;
