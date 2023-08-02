@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import Router from './routes/Router.tsx';
 import './index.css';
 import GlobalStyle from '../style/global.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
     <GlobalStyle />
-    <App />
+    <Router />
   </>
 );
