@@ -28,6 +28,16 @@ public class ExteriorColorService implements ExteriorColorRepository {
         return exteriorColorList.stream().findAny();
     }
 
+    @Override
+    public List<ExteriorColor> findAllByTrimId(Long trimId) {
+        String sql =
+                "SELECT A.* FROM exterior_color AS A\n" +
+                "INNER JOIN trim_exterior_color_map as M\n" +
+                "ON A.id = M.e_color_id\n" +
+                "WHERE M.trim_id = ?";
+        return jdbcTemplate.query(sql, exteriorColorRowMapper(), trimId);
+    }
+
     private RowMapper<ExteriorColor> exteriorColorRowMapper() {
         return ((rs, rowNum) -> {
             ExteriorColor exteriorColor = new ExteriorColor();
