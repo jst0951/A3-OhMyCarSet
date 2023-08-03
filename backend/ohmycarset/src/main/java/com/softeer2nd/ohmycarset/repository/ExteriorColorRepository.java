@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface ExteriorColorRepository {
 
-    public List<ExteriorColor> findAll();
+    List<ExteriorColor> findAll();
 
-    public Optional<ExteriorColor> findById(Long id);
+    Optional<ExteriorColor> findById(Long id);
 
-    public List<ExteriorColor> findAllByTrimId(Long trimId);
+    List<ExteriorColor> findAllByTrimId(Long trimId);
 }
