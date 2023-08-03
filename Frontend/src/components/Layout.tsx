@@ -5,13 +5,11 @@ interface LayoutProps {
   children?: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
       {children}
     </>
   );
-};
-
-export default Layout;
+}

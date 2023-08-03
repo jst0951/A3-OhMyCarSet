@@ -1,11 +1,9 @@
 import Layout from '../components/Layout';
 
-function MainPage() {
+export default function MainPage() {
   return (
     <>
       <Layout></Layout>
     </>
   );
 }
-
-export default MainPage;

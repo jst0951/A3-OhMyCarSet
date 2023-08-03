@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 import { ReactComponent as HeaderDivider } from '../../asset/icons/header_divider.svg';
 import { hyundaiLogo } from '../../asset';
-import ModeButton from './ModeButton';
-import DictionaryButton from './DictionaryButton';
-import CarModelButton from './CarModelButton';
+import ModeButton from './ModeButton/ModeButton';
+import DictionaryButton from './DictionaryButton/DictionaryButton';
+import CarModelButton from './CarModelButton/CarModelButton';
 
-const Header = () => {
+export default function Header() {
   return (
     <>
       <HeaderContainer>
@@ -24,9 +24,7 @@ const Header = () => {
       </HeaderContainer>
     </>
   );
-};
-
-export default Header;
+}
 
 const HeaderContainer = styled.div`
   position: fixed;
