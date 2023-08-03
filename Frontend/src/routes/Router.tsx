@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MainPage from '../pages/MainPage.tsx';
-import SelfModePage from '../pages/SelfModePage.tsx';
+import MainPage from '../pages/MainPage/MainPage.tsx';
+import SelfModePage from '../pages/SelfModePage/SelfModePage.tsx';
 
 export default function Router() {
   return (

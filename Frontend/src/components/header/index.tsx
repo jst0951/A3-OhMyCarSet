@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { hyundaiLogo } from '@/asset';
 import ModeButton from './ModeButton/ModeButton';
 import DictionaryButton from './DictionaryButton/DictionaryButton';
 import CarModelButton from './CarModelButton/CarModelButton';
 import Icon from '@/components/common/Icon';
+import HeaderLogo from './HeaderLogo/HeaderLogo';
 
 export default function Header() {
   return (
@@ -11,9 +11,9 @@ export default function Header() {
       <HeaderContainer>
         <HeaderSection>
           <HeaderLeftContainer>
-            <HeaderLogo src={hyundaiLogo} alt="현대자동차"></HeaderLogo>
+            <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton />
+            <ModeButton type="default" />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
@@ -47,11 +47,6 @@ const HeaderLeftContainer = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-`;
-
-const HeaderLogo = styled.img`
-  width: 149px;
-  height: 21px;
 `;
 
 const HeaderRightContainer = styled.div`
