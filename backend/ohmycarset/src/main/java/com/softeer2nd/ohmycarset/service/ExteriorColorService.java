@@ -1,0 +1,41 @@
+package com.softeer2nd.ohmycarset.service;
+
+import com.softeer2nd.ohmycarset.domain.ExteriorColor;
+import com.softeer2nd.ohmycarset.repository.ExteriorColorRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ExteriorColorService implements ExteriorColorRepository {
+
+    private final JdbcTemplate jdbcTemplate;
+    public ExteriorColorService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<ExteriorColor> findAll() {
+        return jdbcTemplate.query("SELECT * FROM exterior_color", exteriorColorRowMapper());
+    }
+
+    @Override
+    public Optional<ExteriorColor> findById(Long id) {
+        List<ExteriorColor> exteriorColorList = jdbcTemplate.query("SELECT * FROM exterior_color WHERE id=?", exteriorColorRowMapper(), id);
+        return exteriorColorList.stream().findAny();
+    }
+
+    private RowMapper<ExteriorColor> exteriorColorRowMapper() {
+        return ((rs, rowNum) -> {
+            ExteriorColor exteriorColor = new ExteriorColor();
+            exteriorColor.setId(rs.getLong("id"));
+            exteriorColor.setName(rs.getString("name"));
+            exteriorColor.setColorCode(rs.getString("color_code"));
+            exteriorColor.setImgSrc(rs.getString("img_src"));
+            return exteriorColor;
+        });
+    }
+}
