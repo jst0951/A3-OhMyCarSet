@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { headRegular5 } from '../../../style/typefaces';
+import { headRegular5 } from '@/style/typefaces';
 
 export const CarModelContainer = styled.div`
   display: flex;

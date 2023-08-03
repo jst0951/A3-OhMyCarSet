@@ -1,6 +1,6 @@
 import { css, styled } from 'styled-components';
-import { headRegular5 } from '../../../style/typefaces';
-import { colors } from '../../../style/theme';
+import { headRegular5 } from '@/style/typefaces';
+import { colors } from '@/style/theme';
 
 export const DictionaryButtonContainer = styled.div`
   display: flex;
