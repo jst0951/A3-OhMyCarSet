@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { ReactComponent as DictionaryOffIcon } from '../../../asset/icons/dictionary_off.svg';
-import { ReactComponent as DictionaryOnIcon } from '../../../asset/icons/dictionary_on.svg';
+import Icon from '@/components/common/Icon';
 
 import * as Style from './DictionaryButton.style';
 
@@ -14,7 +13,7 @@ export default function DictionaryButton() {
   return (
     <Style.DictionaryButtonContainer onClick={toggleDictionary}>
       <Style.DictionaryIconWrapper>
-        {dictionaryOn ? <DictionaryOnIcon /> : <DictionaryOffIcon />}
+        {dictionaryOn ? <Icon icon="DictionaryOnIcon" /> : <Icon icon="DictionaryOffIcon" />}
       </Style.DictionaryIconWrapper>
       <Style.DictionaryText $active={dictionaryOn}>백카사전 {dictionaryOn ? 'On' : 'Off'}</Style.DictionaryText>
     </Style.DictionaryButtonContainer>

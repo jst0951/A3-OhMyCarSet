@@ -15,11 +15,6 @@ export const DictionaryIconWrapper = styled.div`
   position: relative;
   width: 24px;
   height: 24px;
-
-  > svg {
-    position: absolute;
-    bottom: 0;
-  }
 `;
 
 export const DictionaryText = styled.div<{ $active: boolean }>`

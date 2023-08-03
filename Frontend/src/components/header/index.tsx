@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import { ReactComponent as HeaderDivider } from '../../asset/icons/header_divider.svg';
-import { hyundaiLogo } from '../../asset';
+import { hyundaiLogo } from '@/asset';
 import ModeButton from './ModeButton/ModeButton';
 import DictionaryButton from './DictionaryButton/DictionaryButton';
 import CarModelButton from './CarModelButton/CarModelButton';
+import Icon from '@/components/common/Icon';
 
 export default function Header() {
   return (
@@ -12,12 +12,12 @@ export default function Header() {
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo src={hyundaiLogo} alt="현대자동차"></HeaderLogo>
-            <HeaderDivider />
+            <Icon icon="HeaderDividerIcon" />
             <ModeButton />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
-            <HeaderDivider />
+            <Icon icon="HeaderDividerIcon" />
             <CarModelButton />
           </HeaderRightContainer>
         </HeaderSection>
@@ -45,7 +45,7 @@ const HeaderSection = styled.div`
 
 const HeaderLeftContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
 `;
 
@@ -56,6 +56,6 @@ const HeaderLogo = styled.img`
 
 const HeaderRightContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 4px;
   align-items: center;
 `;

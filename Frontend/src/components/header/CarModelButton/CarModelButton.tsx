@@ -1,15 +1,14 @@
 // import React from 'react';
-import { ReactComponent as CarIcon } from '../../../asset/icons/header_car_icon.svg';
-import { ReactComponent as MoreIcon } from '../../../asset/icons/more_icon.svg';
+import Icon from '@/components/common/Icon';
 
 import * as Style from './CarModelButton.style';
 
 export default function CarModelButton() {
   return (
     <Style.CarModelContainer>
-      <CarIcon />
+      <Icon icon="HeaderCarIcon" />
       <Style.CarModelText>펠리세이드</Style.CarModelText>
-      <MoreIcon />
+      <Icon icon="HeaderMoreIcon" />
     </Style.CarModelContainer>
   );
 }
