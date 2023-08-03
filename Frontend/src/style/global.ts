@@ -102,6 +102,7 @@ const GlobalStyle = createGlobalStyle`
         display: block;
     }
     body {
+        /* position: relative; */
         line-height: 1;
     }
     ol,

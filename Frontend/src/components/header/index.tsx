@@ -13,7 +13,7 @@ export default function Header() {
           <HeaderLeftContainer>
             <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton type="self" />
+            <ModeButton type="default" />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
