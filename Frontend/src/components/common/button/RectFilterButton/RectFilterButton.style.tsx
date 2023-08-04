@@ -40,10 +40,10 @@ const typeStyle = css<Props>`
   }}
 `;
 
-const ButtonBase = styled.button<Props>`
+const RectFilterButton = styled.button<Props>`
   border-radius: 6px;
   ${pageStyle};
   ${typeStyle};
 `;
 
-export default ButtonBase;
+export default RectFilterButton;
