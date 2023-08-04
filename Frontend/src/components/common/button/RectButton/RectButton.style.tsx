@@ -59,20 +59,20 @@ const typeStyle = css<Props>`
   ${({ type = 'recommended' }) => {
     if (type === 'notrecommended') {
       return css`
-        background-color: ${colors.coolGrey007};
+        background-color: ${colors.hyundaiGrey001};
         color: ${colors.mainHyundaiBlue};
       `;
     }
     if (type === 'etc') {
       return css`
-        background-color: ${colors.white};
-        color: ${colors.black};
+        background-color: ${colors.hyundaiWhite};
+        color: ${colors.hyundaiBlack};
         border: 1px solid #000;
       `;
     }
     return css`
       background-color: ${colors.mainHyundaiBlue};
-      color: ${colors.white};
+      color: ${colors.hyundaiWhite};
     `;
   }}
 `;
