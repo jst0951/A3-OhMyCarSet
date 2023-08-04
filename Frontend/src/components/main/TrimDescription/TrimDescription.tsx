@@ -14,6 +14,11 @@ interface TrimInformationProps {
   trimInfo: TrimInfoProps;
 }
 
+// function TrimInfoWithText({ trimInfo }: TrimInformationProps) {
+//   \
+//   return <></>;
+// }
+
 function TrimInformation({ trimInfo }: TrimInformationProps) {
   const { descriptionData } = trimInfo;
   console.log(descriptionData);

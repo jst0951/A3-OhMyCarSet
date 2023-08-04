@@ -1,4 +1,3 @@
-// import React from 'react';
 import Icon from '@/components/common/Icon';
 
 import * as Style from './CarModelButton.style';
