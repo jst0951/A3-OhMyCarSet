@@ -8,6 +8,7 @@ export const TrimDescriptionCard = styled.div`
   border-radius: 6px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   color: white;
   z-index: 1;
@@ -36,6 +37,9 @@ export const TrimDescriptionBorder = styled.div`
       rgba(225, 225, 225, 0.7) 100%
     );
     -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
