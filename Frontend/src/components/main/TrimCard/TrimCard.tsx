@@ -24,7 +24,7 @@ export interface TrimCardProps {
 }
 
 function TrimCard({ trimData }: TrimCardProps) {
-  const { name, tag, price, descriptionCard } = trimData;
+  const { id, name, tag, price, descriptionCard } = trimData;
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
@@ -45,7 +45,7 @@ function TrimCard({ trimData }: TrimCardProps) {
           <Icon icon="ArrowRightIcon" size={20} />
         </Style.TrimPriceContainer>
         {isHovered && (
-          <Style.TrimDescriptionWrapper>
+          <Style.TrimDescriptionWrapper $id={id}>
             {descriptionCard && <TrimDescription trimData={trimData} />}
           </Style.TrimDescriptionWrapper>
         )}

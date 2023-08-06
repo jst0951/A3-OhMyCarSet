@@ -6,18 +6,14 @@ function LandingMain() {
   return (
     <>
       <Style.LandingMainContainer>
-        <Style.LandingMainBackground>
-          <Style.LandingMainContent>
-            <Style.LandingMainTextContainer>
-              <Style.LandingSubText>내 차 만들기</Style.LandingSubText>
-              <Style.LandingMainText>PALISADE</Style.LandingMainText>
-            </Style.LandingMainTextContainer>
-          </Style.LandingMainContent>
-          <Style.LandingDimmed>
-            <TrimCardList />
-          </Style.LandingDimmed>
-        </Style.LandingMainBackground>
+        <Style.LandingMainContent>
+          <Style.LandingMainTextContainer>
+            <Style.LandingSubText>내 차 만들기</Style.LandingSubText>
+            <Style.LandingMainText>PALISADE</Style.LandingMainText>
+          </Style.LandingMainTextContainer>
+        </Style.LandingMainContent>
         <Style.ShowMoreContainer>
+          <TrimCardList />
           <Style.ShowMoreText>자세한 설명과 비교를 원한다면</Style.ShowMoreText>
           <Style.IconWrapper>
             <Icon icon="ShowMoreIcon" size={26} />

@@ -1,40 +1,19 @@
+import { mainBackgroundImage1 } from '@/asset';
 import { headRegular5 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const LandingMainContainer = styled.div`
-  position: absolute;
-  top: 0;
   display: flex;
   justify-content: center;
   width: 100vw;
-  height: 720px;
-  background-color: black;
-`;
-
-export const LandingMainBackground = styled.div`
-  position: relative;
-  width: 100vw;
-  height: 631px;
-  background-image: url('src/asset/images/main_palisade2.png');
+  height: 100vh;
+  background-image: url(${mainBackgroundImage1});
   background-size: cover;
-`;
-
-export const LandingDimmed = styled.div`
-  position: absolute;
-  bottom: 0;
-
-  display: flex;
-  justify-content: center;
-
-  width: 100vw;
-  height: 231px;
-
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+  background-position: center;
 `;
 
 export const LandingMainContent = styled.div`
   width: 1024px;
-  /* min-width: 1024px; */
   margin: 0 auto;
 `;
 
