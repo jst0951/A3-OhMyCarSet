@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 
 export const TrimCardListContainer = styled.div`
   position: absolute;
-  bottom: 30px;
+  top: -153px;
   display: flex;
   gap: 16px;
 `;
@@ -30,7 +30,7 @@ export const TrimCardContainer = styled.div`
     background-color: ${colors.mainHyundaiBlue};
 
     svg {
-      fill: white; // hover 시 fill 속성 변경
+      fill: white;
     }
   }
 `;
@@ -55,8 +55,9 @@ export const TrimPrice = styled.div`
   ${bodyRegular2}
 `;
 
-export const TrimDescriptionWrapper = styled.div`
+export const TrimDescriptionWrapper = styled.div<{ $id: number }>`
   position: absolute;
   top: -253px;
-  left: 0;
+
+  left: ${({ $id }) => ($id === 1 ? '0' : '-210px')};
 `;
