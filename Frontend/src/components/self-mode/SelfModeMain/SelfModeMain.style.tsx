@@ -4,12 +4,12 @@ export const SelfModeMainContainer = styled.div`
   display: flex;
   width: 100%;
   height: calc(100vh - 110px);
+  overflow: hidden;
 `;
 
 export const SelfModeImage = styled.div`
   width: 60%;
   height: 100%;
-  background-color: silver;
 
   & > img {
     width: 100%;
@@ -27,7 +27,7 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  margin: 26px;
+  margin: 26px 26px 10px;
 `;
 
 export const Title = styled.div`
@@ -54,5 +54,12 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 4px 26px;
+  padding: 20px 0;
+  margin: 0 26px;
+  height: calc(100vh - 340px);
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

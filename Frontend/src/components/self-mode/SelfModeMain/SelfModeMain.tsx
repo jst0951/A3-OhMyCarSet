@@ -2,6 +2,7 @@ import * as Style from './SelfModeMain.style';
 import selectiveOptionData from '../../../asset/data/selectiveOptionData.json';
 import OptionItem from '../OptionItem/OptionItem';
 import { useState } from 'react';
+import OptionFooter from './OptionFooter/OptionFooter';
 
 export default function SelfModeMain() {
   const [selectedOption, setSelectedOption] = useState<number>(1);
@@ -32,7 +33,16 @@ export default function SelfModeMain() {
                 onClick={() => handleClickOption(data.id)}
               />
             ))}
+            {selectiveOptionData.map((data) => (
+              <OptionItem
+                key={data.id}
+                optionData={data}
+                isActive={selectedOption === data.id}
+                onClick={() => handleClickOption(data.id)}
+              />
+            ))}
           </Style.OptionContainer>
+          <OptionFooter />
         </Style.SelfModeOption>
       </Style.SelfModeMainContainer>
     </>
