@@ -34,7 +34,6 @@ export const SalePercent = styled.div`
 `;
 
 export const OptionName = styled.div<{ $isActive: boolean }>`
-  margin-bottom: 13px;
   ${headMedium2}
   color: ${colors.coolGreyBlack};
 
@@ -44,13 +43,14 @@ export const OptionName = styled.div<{ $isActive: boolean }>`
 export const OptionBottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 13px;
 `;
 
 export const OptionPrice = styled.div`
   ${bodyRegular2}
 `;
 
-export const ShowMoreButton = styled.div`
+export const ShowMoreButton = styled.div<{ $showMore: boolean }>`
   display: flex;
   align-items: center;
   gap: 2px;
@@ -59,4 +59,15 @@ export const ShowMoreButton = styled.div`
   color: ${colors.coolGrey003};
 
   cursor: pointer;
+
+  & > svg {
+    transition: 0.2s ease-in-out;
+
+    ${({ $showMore }) =>
+      $showMore &&
+      `
+      transform: scaleY(-1);
+      
+  `}
+  }
 `;
