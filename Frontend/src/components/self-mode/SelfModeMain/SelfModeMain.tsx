@@ -5,6 +5,10 @@ import { useState } from 'react';
 
 export default function SelfModeMain() {
   const [selectedOption, setSelectedOption] = useState<number>(1);
+
+  const handleClickOption = (selectedOptionId: number) => {
+    setSelectedOption(selectedOptionId);
+  };
   return (
     <>
       <Style.SelfModeMainContainer>
@@ -21,7 +25,12 @@ export default function SelfModeMain() {
           </Style.TitleContainer>
           <Style.OptionContainer>
             {selectiveOptionData.map((data) => (
-              <OptionItem key={data.id} optionData={data} isActive={selectedOption === data.id} />
+              <OptionItem
+                key={data.id}
+                optionData={data}
+                isActive={selectedOption === data.id}
+                onClick={() => handleClickOption(data.id)}
+              />
             ))}
           </Style.OptionContainer>
         </Style.SelfModeOption>

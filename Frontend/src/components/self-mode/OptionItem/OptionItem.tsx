@@ -16,15 +16,16 @@ type OptionData = {
 export interface OptionDataProps {
   optionData: OptionData;
   isActive: boolean;
+  onClick: () => void;
 }
 
-export default function OptionItem({ optionData, isActive }: OptionDataProps) {
+export default function OptionItem({ optionData, isActive, onClick }: OptionDataProps) {
   return (
     <>
-      <Style.OptionItemContainer $isActive={isActive}>
-        <Icon icon="CheckIcon" />
+      <Style.OptionItemContainer $isActive={isActive} onClick={onClick}>
+        <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         <Style.SalePercent>구매자의 63%가 선택했어요!</Style.SalePercent>
-        <Style.OptionName>{optionData.name}</Style.OptionName>
+        <Style.OptionName $isActive={isActive}>{optionData.name}</Style.OptionName>
         <Style.OptionBottomContainer>
           <Style.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</Style.OptionPrice>
           <Style.ShowMoreButton>

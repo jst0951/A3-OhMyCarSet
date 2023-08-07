@@ -20,7 +20,7 @@ export const SelfModeImage = styled.div`
 
 export const SelfModeOption = styled.div`
   width: 40%;
-  margin: 44px 0;
+  margin: 44px 0 0;
 `;
 
 export const TitleContainer = styled.div`
