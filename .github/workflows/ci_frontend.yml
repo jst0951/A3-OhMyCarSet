@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-frontend
-          path: dist
+          path: dist/*
 
   deploy:
     needs: build
@@ -53,6 +53,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           aws s3 sync \
-          dist/* s3://ohmycarset.com \
+          ./* s3://ohmycarset.com \
           --region ap-northeast-2 \
           --delete
