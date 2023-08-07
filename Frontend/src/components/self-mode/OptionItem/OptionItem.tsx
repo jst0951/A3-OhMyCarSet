@@ -36,14 +36,14 @@ export default function OptionItem({ optionData, isActive, onClick }: OptionData
 
   return (
     <>
-      <Style.OptionItemContainer $isActive={isActive} onClick={onClick}>
+      <Style.OptionItemContainer $isActive={isActive} $showMore={showMore} onClick={onClick}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-        <Style.SalePercent>구매자의 63%가 선택했어요!</Style.SalePercent>
+        <Style.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</Style.SalePercent>
         <Style.OptionName $isActive={isActive}>{optionData.name}</Style.OptionName>
-        {showMore && <OptionShowMore main={optionData.mainDescription} sub={optionData.subDescription} />}
-        <Style.OptionBottomContainer>
+        <OptionShowMore main={optionData.mainDescription} sub={optionData.subDescription} />
+        <Style.OptionBottomContainer $isActive={isActive}>
           <Style.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</Style.OptionPrice>
-          <Style.ShowMoreButton $showMore={showMore} onClick={toggleShowMore}>
+          <Style.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
             {showMore ? '접기' : '자세히 보기'}
             <Icon icon="OptionShowMoreIcon" size={14} />
           </Style.ShowMoreButton>
