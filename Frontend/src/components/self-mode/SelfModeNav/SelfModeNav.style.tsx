@@ -15,7 +15,7 @@ export const SelfModeNavContainer = styled.div`
   text-align: center;
 `;
 
-export const NavOptionContainer = styled.div<{ $active: boolean }>`
+export const NavCategoryContainer = styled.div<{ $active: boolean }>`
   width: 120px;
   padding-top: 2px;
 
@@ -29,9 +29,9 @@ export const NavOptionContainer = styled.div<{ $active: boolean }>`
   `}
 `;
 
-export const OptionActiveBorder = styled.div<{ $activeOption: number }>`
+export const CategoryActiveBorder = styled.div<{ $activeCategory: number }>`
   position: absolute;
-  left: ${({ $activeOption }) => `${($activeOption - 1) * 120}px`};
+  left: ${({ $activeCategory }) => `${($activeCategory - 1) * 120}px`};
   bottom: 0;
 
   display: flex;

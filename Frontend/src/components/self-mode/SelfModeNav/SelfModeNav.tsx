@@ -3,25 +3,25 @@ import * as Style from './SelfModeNav.style';
 import optionList from '@/asset/data/optionList.json';
 
 export default function SelfModeNav() {
-  const [activeOption, setActiveOption] = useState<number>(1);
+  const [activeCategory, setActiveCategory] = useState<number>(1);
 
   const handleClickOption = (selectedOption: number) => {
-    setActiveOption(selectedOption);
+    setActiveCategory(selectedOption);
   };
 
   return (
     <>
       <Style.SelfModeNavContainer>
         {optionList.map((option) => (
-          <Style.NavOptionContainer
+          <Style.NavCategoryContainer
             key={option.id}
-            $active={activeOption === option.id}
+            $active={activeCategory === option.id}
             onClick={() => handleClickOption(option.id)}
           >
             {`0${option.id} ${option.name}`}
-          </Style.NavOptionContainer>
+          </Style.NavCategoryContainer>
         ))}
-        <Style.OptionActiveBorder $activeOption={activeOption} />
+        <Style.CategoryActiveBorder $activeCategory={activeCategory} />
         <Style.NavBottomBorder />
       </Style.SelfModeNavContainer>
     </>
