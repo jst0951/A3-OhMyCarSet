@@ -1,51 +1,35 @@
 package com.softeer2nd.ohmycarset.service;
 
 import com.softeer2nd.ohmycarset.domain.ExteriorColor;
+import com.softeer2nd.ohmycarset.domain.Trim;
+import com.softeer2nd.ohmycarset.dto.ExteriorColorDto;
 import com.softeer2nd.ohmycarset.repository.ExteriorColorRepository;
+import com.softeer2nd.ohmycarset.repository.TrimRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ExteriorColorService implements ExteriorColorRepository {
-
-    private final JdbcTemplate jdbcTemplate;
-    public ExteriorColorService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+public class ExteriorColorService {
+    private final TrimRepository trimRepository;
+    private final ExteriorColorRepository exteriorColorRepository;
+    public ExteriorColorService(TrimRepository trimRepository, ExteriorColorRepository exteriorColorRepository) {
+        this.trimRepository = trimRepository;
+        this.exteriorColorRepository = exteriorColorRepository;
     }
 
-    @Override
-    public List<ExteriorColor> findAll() {
-        return jdbcTemplate.query("SELECT * FROM exterior_color", exteriorColorRowMapper());
-    }
+    public List<ExteriorColorDto> getAllExteriorColor() {
+        List<ExteriorColorDto> exteriorColorDtoList = new ArrayList<>();
+        List<Trim> trimList = trimRepository.findAll();
+        for(Trim trim: trimList) {
+            List<ExteriorColor> exteriorColorList = exteriorColorRepository.findAllByTrimId(trim.getId());
+            exteriorColorDtoList.add(new ExteriorColorDto(trim, exteriorColorList));
+        }
 
-    @Override
-    public Optional<ExteriorColor> findById(Long id) {
-        List<ExteriorColor> exteriorColorList = jdbcTemplate.query("SELECT * FROM exterior_color WHERE id=?", exteriorColorRowMapper(), id);
-        return exteriorColorList.stream().findAny();
-    }
-
-    @Override
-    public List<ExteriorColor> findAllByTrimId(Long trimId) {
-        String sql =
-                "SELECT A.* FROM exterior_color AS A\n" +
-                "INNER JOIN trim_exterior_color_map as M\n" +
-                "ON A.id = M.e_color_id\n" +
-                "WHERE M.trim_id = ?";
-        return jdbcTemplate.query(sql, exteriorColorRowMapper(), trimId);
-    }
-
-    private RowMapper<ExteriorColor> exteriorColorRowMapper() {
-        return ((rs, rowNum) -> {
-            ExteriorColor exteriorColor = new ExteriorColor();
-            exteriorColor.setId(rs.getLong("id"));
-            exteriorColor.setName(rs.getString("name"));
-            exteriorColor.setColorCode(rs.getString("color_code"));
-            exteriorColor.setImgSrc(rs.getString("img_src"));
-            return exteriorColor;
-        });
+        return exteriorColorDtoList;
     }
 }

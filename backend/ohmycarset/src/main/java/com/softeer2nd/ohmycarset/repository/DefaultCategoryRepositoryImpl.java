@@ -1,19 +1,17 @@
-package com.softeer2nd.ohmycarset.service;
+package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.DefaultCategory;
-import com.softeer2nd.ohmycarset.domain.DefaultOption;
-import com.softeer2nd.ohmycarset.repository.DefaultCategoryRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class DefaultCategoryService implements DefaultCategoryRepository {
+@Repository
+public class DefaultCategoryRepositoryImpl implements DefaultCategoryRepository {
     private final JdbcTemplate jdbcTemplate;
-    public DefaultCategoryService(JdbcTemplate jdbcTemplate) {
+    public DefaultCategoryRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
