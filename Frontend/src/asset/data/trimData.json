@@ -4,6 +4,7 @@
     "name": "Guide Mode",
     "tag": "나만을 위한 팰리세이드",
     "price": 38960000,
+    "route": "/",
     "descriptionCard": {
       "subTitle": "나에게 딱맞는 구성으로,",
       "subImage": false,
@@ -28,6 +29,7 @@
     "name": "Exclusive",
     "tag": "기본에 충실",
     "price": 40440000,
+    "route": "/",
     "descriptionCard": null
   },
   {
@@ -35,6 +37,7 @@
     "name": "Le Blanc",
     "tag": "베스트셀러",
     "price": 43460000,
+    "route": "/self-mode",
     "descriptionCard": {
       "subTitle": "모두가 선택한 베스트셀러",
       "subImage": true,
@@ -59,6 +62,7 @@
     "name": "Prestige",
     "tag": "부담없는 고급감",
     "price": 47720000,
+    "route": "/",
     "descriptionCard": null
   },
   {
@@ -66,6 +70,7 @@
     "name": "Calligraphy",
     "tag": "최고를 원한다면",
     "price": 52540000,
+    "route": "/",
     "descriptionCard": null
   }
 ]

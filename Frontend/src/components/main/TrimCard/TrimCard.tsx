@@ -3,12 +3,14 @@ import trimData from '@/asset/data/trimData.json';
 import * as Style from './TrimCard.style';
 import TrimDescription from '../TrimDescription/TrimDescription';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type TrimData = {
   id: number;
   name: string;
   tag: string;
   price: number;
+  route: string;
   descriptionCard?: {
     subTitle: string;
     subImage: boolean;
@@ -24,7 +26,8 @@ export interface TrimCardProps {
 }
 
 function TrimCard({ trimData }: TrimCardProps) {
-  const { id, name, tag, price, descriptionCard } = trimData;
+  const navigate = useNavigate();
+  const { id, name, tag, price, route, descriptionCard } = trimData;
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
@@ -35,9 +38,17 @@ function TrimCard({ trimData }: TrimCardProps) {
     setIsHovered(false);
   };
 
+  const handleClickTrimCard = (route: string) => {
+    navigate(route);
+  };
+
   return (
     <>
-      <Style.TrimCardContainer onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Style.TrimCardContainer
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => handleClickTrimCard(route)}
+      >
         <Style.TrimDescription>{`#${tag}`}</Style.TrimDescription>
         <Style.TrimName>{name}</Style.TrimName>
         <Style.TrimPriceContainer>

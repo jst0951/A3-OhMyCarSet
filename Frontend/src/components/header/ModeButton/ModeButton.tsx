@@ -24,7 +24,7 @@ export default function ModeButton({ type }: ModeButtonType) {
         {modeText && (
           <Style.ModeText>
             {modeText}
-            <Icon icon="HeaderMoreIcon" color={type === 'self' ? colors.subActiveBlue : undefined} />
+            <Icon icon="HeaderMoreIcon" color={type === 'guide' ? colors.subActiveBlue : undefined} />
           </Style.ModeText>
         )}
       </Style.HeaderModeContainer>
