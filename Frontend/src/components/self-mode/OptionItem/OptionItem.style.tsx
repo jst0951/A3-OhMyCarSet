@@ -103,7 +103,7 @@ export const ShowMoreButton = styled.div<{ $isActive: boolean; $showMore: boolea
   display: flex;
   align-items: center;
   gap: 2px;
-  z-index: 3;
+  /* z-index: 1; */
 
   ${bodyMedium3}
   color: ${colors.coolGrey003};
