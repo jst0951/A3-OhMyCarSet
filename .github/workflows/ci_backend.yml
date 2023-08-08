@@ -1,0 +1,87 @@
+name: CI(Backend)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main", "dev"]
+    paths:
+      - "backend/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend/ohmycarset
+
+    steps:
+      - name: VM으로 파일을 전송합니다.
+        uses: actions/checkout@v3
+
+      - name: JDK 11을 설정합니다.
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: corretto
+
+      - name: Gradle을 설정합니다.
+        uses: gradle/gradle-build-action@v2
+
+      - name: 빌드를 실행합니다.
+        run: ./gradlew build
+
+      - name: 빌드 결과물 이름을 app.jar로 바꿉니다.
+        run: |
+          mv ./build/libs/*.jar ./build/libs/app.jar
+
+      - name: 빌드 결과물을 artifact로 업로드합니다.
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-backend
+          path: backend/ohmycarset/build/libs
+
+  deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 빌드 결과물 artifact를 다운로드합니다.
+        uses: actions/download-artifact@v3
+        with:
+          name: build-backend
+
+      - name: 현재 서버에서 동작중인 docker를 종료시킵니다.
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          timeout: 1m
+          script: |
+            cd /home/ubuntu/spring
+            docker compose down
+
+      - name: SCP로 빌드 파일을 전송합니다.
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: "app.jar"
+          target: "/home/ubuntu/spring"
+
+      - name: 새로운 빌드 결과물로 docker 컨테이너를 동작시킵니다.
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          timeout: 1m
+          script: |
+            cd /home/ubuntu/spring
+            docker compose up -d
