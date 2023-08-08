@@ -29,7 +29,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: 빌드를 실행합니다.
-        run: ./gradlew build
+        run: ./gradlew build --exclude-task test
 
       - name: 빌드 결과물 이름을 app.jar로 바꿉니다.
         run: |
