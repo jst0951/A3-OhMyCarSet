@@ -8,7 +8,7 @@ export default function OptionFooter() {
   return (
     <>
       <Style.OptionFooterContainer>
-        <Style.FooterDimmed></Style.FooterDimmed>
+        <Style.FooterDimmed />
         <Style.TotalPriceContainer>
           <Style.TotalPriceButton>
             총 견적금액 <Icon icon="TotalPriceIcon" size={16} />

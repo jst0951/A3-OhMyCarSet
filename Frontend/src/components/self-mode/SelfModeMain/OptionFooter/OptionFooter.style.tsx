@@ -22,6 +22,8 @@ export const FooterDimmed = styled.div`
   width: 100%;
   height: 70px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, #ffffff 80%);
+
+  pointer-events: none;
 `;
 
 export const TotalPriceContainer = styled.div`
