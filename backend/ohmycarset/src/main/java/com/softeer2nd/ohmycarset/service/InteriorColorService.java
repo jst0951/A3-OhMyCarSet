@@ -1,50 +1,35 @@
 package com.softeer2nd.ohmycarset.service;
 
 import com.softeer2nd.ohmycarset.domain.InteriorColor;
+import com.softeer2nd.ohmycarset.domain.Trim;
+import com.softeer2nd.ohmycarset.dto.InteriorColorDto;
 import com.softeer2nd.ohmycarset.repository.InteriorColorRepository;
+import com.softeer2nd.ohmycarset.repository.TrimRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InteriorColorService implements InteriorColorRepository {
-
-    private final JdbcTemplate jdbcTemplate;
-    public InteriorColorService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+public class InteriorColorService {
+    private final InteriorColorRepository interiorColorRepository;
+    private final TrimRepository trimRepository;
+    public InteriorColorService(InteriorColorRepository interiorColorRepository, TrimRepository trimRepository) {
+        this.interiorColorRepository = interiorColorRepository;
+        this.trimRepository = trimRepository;
     }
 
-    @Override
-    public List<InteriorColor> findAll() {
-        return jdbcTemplate.query("SELECT * FROM interior_color", interiorColorRowMapper());
-    }
+    public List<InteriorColorDto> getAllInteriorColor() {
+        List<InteriorColorDto> interiorColorDtoList = new ArrayList<>();
+        List<Trim> trimList = trimRepository.findAll();
+        for(Trim trim: trimList) {
+            List<InteriorColor> interiorColorList = interiorColorRepository.findAllByTrimId(trim.getId());
+            interiorColorDtoList.add(new InteriorColorDto(trim, interiorColorList));
+        }
 
-    @Override
-    public Optional<InteriorColor> findById() {
-        List<InteriorColor> interiorColorList = jdbcTemplate.query("SELECT * FROM interior_color WHERE id=?", interiorColorRowMapper());
-        return interiorColorList.stream().findAny();
-    }
-
-    @Override
-    public List<InteriorColor> findAllByTrimId(Long trimId) {
-        String sql =
-                "SELECT A.* FROM interior_color AS A\n" +
-                "INNER JOIN trim_interior_color_map as M\n" +
-                "ON A.id = M.i_color_id\n" +
-                "WHERE M.trim_id = ?";
-        return jdbcTemplate.query(sql, interiorColorRowMapper(), trimId);
-    }
-
-    private RowMapper<InteriorColor> interiorColorRowMapper() {
-        return ((rs, rowNum) -> {
-            InteriorColor interiorColor = new InteriorColor();
-            interiorColor.setId(rs.getLong("id"));
-            interiorColor.setName(rs.getString("name"));
-            interiorColor.setImgSrc(rs.getString("img_src"));
-            return interiorColor;
-        });
+        return interiorColorDtoList;
     }
 }

@@ -14,23 +14,13 @@ import java.util.List;
 @RestController
 public class CoreOptionController {
     private final CoreOptionService coreOptionService;
-    private final TrimService trimService;
 
     public CoreOptionController(CoreOptionService coreOptionService, TrimService trimService) {
         this.coreOptionService = coreOptionService;
-        this.trimService = trimService;
     }
 
     @GetMapping(value = "/core_option")
     public List<CoreOptionDto> getAllCoreOption() {
-        List<CoreOptionDto> coreOptionDtoList = new ArrayList<>();
-        List<Trim> trimList = trimService.findAll();
-
-        for (Trim trim : trimList) {
-            List<CoreOption> coreOptionList = coreOptionService.findByTrimId(trim.getId());
-            coreOptionDtoList.add(new CoreOptionDto(trim, coreOptionList));
-        }
-
-        return coreOptionDtoList;
+        return coreOptionService.getAllCoreOption();
     }
 }

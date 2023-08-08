@@ -14,22 +14,13 @@ import java.util.List;
 @RestController
 public class TrimController {
 
-    private final ExteriorColorService exteriorColorService;
     private final TrimService trimService;
     public TrimController(ExteriorColorService exteriorColorService, TrimService trimService) {
-        this.exteriorColorService = exteriorColorService;
         this.trimService = trimService;
     }
 
     @GetMapping(value = "/trim")
     public List<TrimDto> getAllTrim() {
-        List<TrimDto> trimDtoList = new ArrayList<>();
-        List<Trim> trimList = trimService.findAll();
-        for(Trim trim: trimList) {
-            ExteriorColor exteriorColor = exteriorColorService.findById(trim.getRepColorId()).orElse(null);
-            trimDtoList.add(new TrimDto(trim, exteriorColor));
-        }
-
-        return trimDtoList;
+        return trimService.getAllTrim();
     }
 }
