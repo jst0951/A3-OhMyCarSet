@@ -1,6 +1,6 @@
-package com.softeer2nd.ohmycarset.dto;
+package com.softeer2nd.ohmycarset.dto.selectiveOptionDto;
 
-import com.softeer2nd.ohmycarset.domain.PowerTrainOption;
+import com.softeer2nd.ohmycarset.domain.selectiveOption.PowerTrainOption;
 
 public class PowerTrainDto {
     private final Long id;

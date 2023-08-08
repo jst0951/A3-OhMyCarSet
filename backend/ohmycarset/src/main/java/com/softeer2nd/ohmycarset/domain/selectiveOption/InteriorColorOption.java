@@ -1,14 +1,13 @@
-package com.softeer2nd.ohmycarset.domain;
+package com.softeer2nd.ohmycarset.domain.selectiveOption;
 
-public class PowerTrainOption {
+public class InteriorColorOption {
     private Long id;
     private String name;
-    private String mainDescription;
-    private String subDescription;
     private String mainFeedback;
     private String subFeedback;
     private Integer price;
     private String imgSrc;
+    private String iconSrc;
 
     public Long getId() {
         return id;
@@ -24,22 +23,6 @@ public class PowerTrainOption {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getMainDescription() {
-        return mainDescription;
-    }
-
-    public void setMainDescription(String mainDescription) {
-        this.mainDescription = mainDescription;
-    }
-
-    public String getSubDescription() {
-        return subDescription;
-    }
-
-    public void setSubDescription(String subDescription) {
-        this.subDescription = subDescription;
     }
 
     public String getMainFeedback() {
@@ -72,5 +55,13 @@ public class PowerTrainOption {
 
     public void setImgSrc(String imgSrc) {
         this.imgSrc = imgSrc;
+    }
+
+    public String getIconSrc() {
+        return iconSrc;
+    }
+
+    public void setIconSrc(String iconSrc) {
+        this.iconSrc = iconSrc;
     }
 }
