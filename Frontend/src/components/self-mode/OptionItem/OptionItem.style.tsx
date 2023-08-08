@@ -33,7 +33,7 @@ export const OptionItemContainer = styled.div<{ $isActive: boolean; $showMore: b
   ${({ $showMore }) =>
     $showMore
       ? `
-     height: calc(100% - 30px);
+     height: 315px;
      transition: height 0.5s linear;
      animation: show-item 0.5s linear forwards;
 
