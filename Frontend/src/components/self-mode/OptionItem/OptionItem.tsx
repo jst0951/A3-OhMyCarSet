@@ -46,6 +46,7 @@ export default function OptionItem({ optionData, isActive, onClick }: OptionData
   useEffect(() => {
     if (!isActive) {
       setShowMore(false);
+
       if (contentBoxRef.current !== null && contentRef.current !== null) {
         if (contentBoxRef.current.clientHeight > 0) {
           contentBoxRef.current.style.height = '0';
@@ -56,12 +57,12 @@ export default function OptionItem({ optionData, isActive, onClick }: OptionData
 
   return (
     <>
-      <Style.ItemContainer $isActive={isActive} $showMore={showMore} onClick={onClick}>
+      <Style.ItemContainer $isActive={isActive} onClick={onClick}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         <Style.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</Style.SalePercent>
         <Style.OptionName $isActive={isActive}>{optionData.name}</Style.OptionName>
-        <Style.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore} $isActive={isActive}>
-          <Style.ShowMoreContainer ref={contentRef} $showMore={showMore}>
+        <Style.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore}>
+          <Style.ShowMoreContainer ref={contentRef}>
             <Style.ShowMoreMainText>{optionData.mainDescription}</Style.ShowMoreMainText>
             <Style.ShowMoreSubText>{optionData.subDescription}</Style.ShowMoreSubText>
           </Style.ShowMoreContainer>

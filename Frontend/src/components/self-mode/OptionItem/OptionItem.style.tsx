@@ -6,7 +6,7 @@ const inactiveOptionCss = css`
   color: ${colors.coolGrey003};
 `;
 
-export const ItemContainer = styled.div<{ $isActive: boolean; $showMore: boolean }>`
+export const ItemContainer = styled.div<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -19,7 +19,6 @@ export const ItemContainer = styled.div<{ $isActive: boolean; $showMore: boolean
 
   cursor: pointer;
   min-height: 155px;
-  /* transition: height 2s ease; */
 
   ${({ $isActive }) =>
     !$isActive &&
@@ -48,7 +47,7 @@ export const OptionName = styled.div<{ $isActive: boolean }>`
   ${({ $isActive }) => !$isActive && inactiveOptionCss}
 `;
 
-export const ShowMoreWrapper = styled.div<{ $showMore: boolean; $isActive: boolean }>`
+export const ShowMoreWrapper = styled.div<{ $showMore: boolean }>`
   position: relative;
   height: 0;
   overflow: hidden;
@@ -58,7 +57,7 @@ export const ShowMoreWrapper = styled.div<{ $showMore: boolean; $isActive: boole
     opacity 0.5s;
 `;
 
-export const ShowMoreContainer = styled.div<{ $showMore: boolean }>`
+export const ShowMoreContainer = styled.div`
   position: absolute;
   margin-top: 10px;
   padding-bottom: 13px;
