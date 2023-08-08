@@ -1,6 +1,11 @@
 import { styled } from 'styled-components';
 
-export const SelfModeMainContainer = styled.div``;
+export const SelfModeSingleContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 110px);
+  overflow: hidden;
+`;
 
 export const SelfModeImage = styled.div`
   width: 60%;
