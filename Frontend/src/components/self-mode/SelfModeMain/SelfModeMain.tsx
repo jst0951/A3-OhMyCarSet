@@ -33,14 +33,6 @@ export default function SelfModeMain() {
                 onClick={() => handleClickOption(data.id)}
               />
             ))}
-            {/* {selectiveOptionData.map((data) => (
-              <OptionItem
-                key={data.id}
-                optionData={data}
-                isActive={selectedOption === data.id}
-                onClick={() => handleClickOption(data.id)}
-              />
-            ))} */}
           </Style.OptionContainer>
           <OptionFooter />
         </Style.SelfModeOption>
