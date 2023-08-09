@@ -1,4 +1,4 @@
-import OptionFooter from '../OptionFooter/OptionFooter';
+// import OptionFooter from '../OptionFooter/OptionFooter';
 import * as Style from './SelfModeMulti.style';
 
 export default function SelfModeMulti() {
@@ -17,7 +17,7 @@ export default function SelfModeMulti() {
             <Style.TitleText>을 선택해주세요.</Style.TitleText>
           </Style.TitleContainer>
           <Style.OptionContainer>{/* TO DO */}</Style.OptionContainer>
-          <OptionFooter />
+          {/* <OptionFooter /> */}
         </Style.SelfModeOption>
       </Style.SelfModeMultiContainer>
     </>

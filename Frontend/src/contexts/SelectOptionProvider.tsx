@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-type SelectOptionData = {
+export type SelectOptionData = {
   id: number;
   stepName: string;
   selectedName: string | null;
@@ -28,24 +28,6 @@ interface SelectOptionProviderProps {
 }
 
 export default function SelectOptionProvider({ children }: SelectOptionProviderProps) {
-  //   const updateSelectOption = ({ id, selectedName, price, imgSrc }: UpdateProps) => {
-  //     setSelectOption((prev: SelectOptionContextProps) => {
-  //       const updatedList = prev.selectOptionList.map((option) => {
-  //         if (option.id === id) {
-  //           return {
-  //             ...option,
-  //             selectedName: selectedName,
-  //             price: price,
-  //             imgSrc: imgSrc,
-  //           };
-  //         }
-  //         return option;
-  //       });
-
-  //       return { ...prev, selectOptionList: updatedList };
-  //     });
-  //   };
-
   const initialState = [
     {
       id: 1,

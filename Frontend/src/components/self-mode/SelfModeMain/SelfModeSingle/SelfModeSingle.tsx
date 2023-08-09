@@ -5,7 +5,6 @@ import fetchData from '@/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionData } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
-import { useSelectOptionContext } from '@/contexts/SelectOptionProvider';
 
 const categoryNameList = [
   {
@@ -36,7 +35,6 @@ const categoryNameList = [
 
 export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
-  const { selectOptionList, setSelectOptionList } = useSelectOptionContext();
   const [stepData, setStepData] = useState<OptionData[]>([]);
   const [selectedOption, setSelectedOption] = useState<number>(1);
 
@@ -50,26 +48,7 @@ export default function SelfModeSingle() {
   };
 
   const handleClickOption = (selectedOptionId: number) => {
-    const data = stepData[selectedOptionId - 1];
     setSelectedOption(selectedOptionId);
-
-    // OptionFooter에 onClick으로
-    setSelectOptionList((prev) => {
-      const updatedList = prev.map((option, idx) => {
-        if (idx + 1 === selfModeStep) {
-          console.log(option.id);
-          return {
-            ...option,
-            selectedName: data.name,
-            price: data.price,
-            imgSrc: data.imgSrc,
-          };
-        }
-        return option;
-      });
-      return updatedList;
-    });
-    console.log(selectOptionList);
   };
 
   useEffect(() => {
@@ -83,10 +62,12 @@ export default function SelfModeSingle() {
     <>
       <Style.SelfModeSingleContainer>
         <Style.SelfModeImage>
-          <img
-            src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData[selectedOption - 1]?.imgSrc}`}
-            alt={stepData[selectedOption - 1]?.name}
-          />
+          {stepData[selectedOption - 1] && (
+            <img
+              src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData[selectedOption - 1]?.imgSrc}`}
+              alt={stepData[selectedOption - 1]?.name}
+            />
+          )}
         </Style.SelfModeImage>
         <Style.SelfModeOption>
           <Style.TitleContainer>
@@ -103,7 +84,7 @@ export default function SelfModeSingle() {
               />
             ))}
           </Style.OptionContainer>
-          <OptionFooter />
+          <OptionFooter selectedData={stepData[selectedOption - 1]} />
         </Style.SelfModeOption>
       </Style.SelfModeSingleContainer>
     </>
