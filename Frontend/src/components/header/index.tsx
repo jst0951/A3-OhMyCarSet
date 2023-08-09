@@ -1,39 +1,49 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { ReactComponent as HeaderDivider } from '../../asset/icons/header_divider.svg';
-import { hyundaiLogo } from '../../asset';
-import ModeButton from './ModeButton';
-import DictionaryButton from './DictionaryButton';
-import CarModelButton from './CarModelButton';
+import ModeButton from './ModeButton/ModeButton';
+import DictionaryButton from './DictionaryButton/DictionaryButton';
+import CarModelButton from './CarModelButton/CarModelButton';
+import Icon from '@/components/common/Icon';
+import HeaderLogo from './HeaderLogo/HeaderLogo';
+import { colors } from '@/style/theme';
 
-const Header = () => {
+export default function Header() {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  }, []);
+
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
-            <HeaderLogo src={hyundaiLogo} alt="현대자동차"></HeaderLogo>
-            <HeaderDivider />
-            <ModeButton />
+            <HeaderLogo />
+            <Icon icon="HeaderDividerIcon" />
+            <ModeButton type="self" />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
-            <HeaderDivider />
+            <Icon icon="HeaderDividerIcon" />
             <CarModelButton />
           </HeaderRightContainer>
         </HeaderSection>
       </HeaderContainer>
     </>
   );
-};
+}
 
-export default Header;
-
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ $scrollPosition: number }>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-
+  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.hyundaiGrey001)};
+  transition: all 0.3s ease;
   width: 100vw;
 `;
 
@@ -47,17 +57,12 @@ const HeaderSection = styled.div`
 
 const HeaderLeftContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
-`;
-
-const HeaderLogo = styled.img`
-  width: 149px;
-  height: 21px;
 `;
 
 const HeaderRightContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 4px;
   align-items: center;
 `;
