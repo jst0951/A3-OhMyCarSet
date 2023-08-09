@@ -3,10 +3,9 @@ import * as Style from './OptionFooter.style';
 import RectButton from '@/components/common/button/RectButton/RectButton.style';
 import { useState } from 'react';
 import Estimate from '../Estimate/Estimate';
-import { useSelectOptionContext } from '@/contexts/SelectOptionProvider';
+import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { updateSelectList } from '@/utils/updateSelectList';
 import { DEFAULT_PRICE } from '@/constants';
 
 interface OptionFooterProps {
@@ -16,7 +15,6 @@ interface OptionFooterProps {
 export default function OptionFooter({ selectedData }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
-  const { setSelectOptionList } = useSelectOptionContext();
 
   const handleClickEstimate = () => {
     setShowEstimate((prev) => !prev);
@@ -28,15 +26,23 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
     }
   };
 
-  const handleClickNext = () => {
-    setSelectOptionList((prev) =>
-      updateSelectList({
-        prevData: prev,
-        currentStep: selfModeStep,
-        selectedData: selectedData,
-      })
-    );
+  const selectOptionDispatch = useSelectOptionDispatch();
+  const selectOptionState = useSelectOptionState();
+
+  const handleClickNext = (optionId: number, selectedData: OptionData) => {
+    selectOptionDispatch({
+      type: 'UPDATE_LIST',
+      payload: {
+        optionId,
+        newOptionData: {
+          selectedName: selectedData.name,
+          price: selectedData.price,
+          imgSrc: selectedData.imgSrc,
+        },
+      },
+    });
     setSelfModeStep((prev) => prev + 1);
+    console.log(selectOptionState);
   };
 
   return (
@@ -54,7 +60,7 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
             <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </Style.PrevButton>
-            <RectButton type="recommended" page="self" onClick={handleClickNext}>
+            <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep, selectedData)}>
               선택완료
             </RectButton>
           </Style.CompleteButtonContainer>
