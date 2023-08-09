@@ -1,7 +1,7 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.DefaultCategory;
-import com.softeer2nd.ohmycarset.repository.mapper.SingletonBeanPropertyRowMapper;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,10 +12,10 @@ import java.util.Optional;
 @Repository
 public class DefaultCategoryRepositoryImpl implements DefaultCategoryRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final SingletonBeanPropertyRowMapper<DefaultCategory> defaultCategoryRowMapper;
+    private final RowMapper<DefaultCategory> defaultCategoryRowMapper = BeanPropertyRowMapper.newInstance(DefaultCategory.class);
+
     public DefaultCategoryRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.defaultCategoryRowMapper = SingletonBeanPropertyRowMapper.getInstance(DefaultCategory.class);
     }
 
     @Override

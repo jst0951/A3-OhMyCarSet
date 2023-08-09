@@ -2,7 +2,7 @@ package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.ExteriorColor;
 import com.softeer2nd.ohmycarset.domain.InteriorColor;
-import com.softeer2nd.ohmycarset.repository.mapper.SingletonBeanPropertyRowMapper;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -14,11 +14,10 @@ import java.util.Optional;
 public class ExteriorColorRepositoryImpl implements ExteriorColorRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final SingletonBeanPropertyRowMapper<ExteriorColor> exteriorColorRowMapper;
+    private final RowMapper<ExteriorColor> exteriorColorRowMapper = BeanPropertyRowMapper.newInstance(ExteriorColor.class);
 
     public ExteriorColorRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.exteriorColorRowMapper = SingletonBeanPropertyRowMapper.getInstance(ExteriorColor.class);
     }
 
     @Override

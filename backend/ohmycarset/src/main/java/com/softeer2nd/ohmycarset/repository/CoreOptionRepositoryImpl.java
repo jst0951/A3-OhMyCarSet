@@ -1,8 +1,8 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.CoreOption;
-import com.softeer2nd.ohmycarset.repository.mapper.SingletonBeanPropertyRowMapper;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,11 +13,10 @@ import java.util.Optional;
 @Repository
 public class CoreOptionRepositoryImpl implements CoreOptionRepository{
     private final JdbcTemplate jdbcTemplate;
-    private final SingletonBeanPropertyRowMapper<CoreOption> coreOptionRowMapper;
+    private final RowMapper<CoreOption> coreOptionRowMapper = BeanPropertyRowMapper.newInstance(CoreOption.class);
 
     public CoreOptionRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.coreOptionRowMapper = SingletonBeanPropertyRowMapper.getInstance(CoreOption.class);
     }
 
     @Override
