@@ -9,7 +9,7 @@ export const EstimateContainer = styled.div<{ $show: boolean }>`
   /* max-width: 375px;
   min-height: 468px; */
   width: 375px;
-  height: 468px;
+  height: calc(100vh - 252px);
   /* margin: 0 7px; */
   border-radius: 6px;
   border: 2px solid ${colors.coolGrey001};
@@ -24,7 +24,7 @@ export const EstimateContainer = styled.div<{ $show: boolean }>`
 
   ${({ $show }) =>
     $show &&
-    `top: -548px;
+    `top: calc((100vh - 252px) * -1 - 70px);
     opacity: 1;
     pointer-events: all;
   `}
