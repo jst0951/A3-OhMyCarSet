@@ -40,11 +40,11 @@ export const ItemLine = styled.div`
   gap: 41px;
 `;
 
-export const ItemContainer = styled.div`
-  display: flex;
+export const ItemContainer = styled.div<{ $more: boolean; $showMore: string }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  ${({ $more, $showMore }) => !$more && `display: ${$showMore}`}
 `;
 
 export const MoreItemContainer = styled.div<{ $showMore: string }>`

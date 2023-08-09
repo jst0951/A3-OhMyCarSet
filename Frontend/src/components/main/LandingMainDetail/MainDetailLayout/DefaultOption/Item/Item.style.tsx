@@ -10,7 +10,11 @@ export const ItemContainer = styled.div`
 `;
 
 export const Item = styled.div`
-  border-radius: 6px;
+  & > img {
+    width: 80px;
+    height: 60px;
+    border-radius: 6px;
+  }
 `;
 
 export const ItemDescription = styled.div`

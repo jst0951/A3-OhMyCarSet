@@ -5,3 +5,4 @@ export { ReactComponent as HeaderDividerIcon } from './header_divider.svg';
 export { ReactComponent as HeaderMoreIcon } from './more_icon.svg';
 export { ReactComponent as ArrowRightIcon } from './arrow_right.svg';
 export { ReactComponent as ShowMoreIcon } from './show_more.svg';
+export { ReactComponent as ArrowBottomIcon } from './arrow_bottom.svg';

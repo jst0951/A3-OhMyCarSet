@@ -2,6 +2,7 @@ import { useState } from 'react';
 import * as Style from './DefaultOption.style';
 import RectFilterButton from '@/components/common/button/RectFilterButton/RectFilterButton';
 import Item from './Item/Item';
+import Icon from '@/components/common/Icon';
 
 type DefaultOption = {
   trimId: number;
@@ -24,6 +25,22 @@ interface DefaultOptionProps {
 
 const MAX_ITEM_NUM = 5;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
+
+function ItemContianer(item: ItemProps, showMore: string, index?: number) {
+  if (index === undefined) {
+    return (
+      <Style.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
+        <Item item={item}></Item>
+      </Style.ItemContainer>
+    );
+  } else {
+    return (
+      <Style.ItemContainer $more={index < MAX_ITEM_NUM} $showMore={showMore}>
+        <Item item={item}></Item>
+      </Style.ItemContainer>
+    );
+  }
+}
 
 export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
   const [selectedCategory, setSelectedCategory] = useState(-1);
@@ -62,46 +79,30 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
               {selectedCategory === -1
                 ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <>{itemContianer(item, showMore)}</>
+                      <>{ItemContianer(item, showMore)}</>
                     ))
                   )
                 : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
-                    (item: ItemProps, optionIndex: number) => <>{itemContianer(item, showMore, optionIndex)}</>
+                    (item: ItemProps, optionIndex: number) => <>{ItemContianer(item, showMore, optionIndex)}</>
                   )}
             </Style.ItemLine>
           ))}
         </Style.OptionContainer>
         {selectedCategory === -1 ? (
-          <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
+          <Style.MoreButtonContainer onClick={moreEventHandler}>
+            더보기
+            <Icon icon="ArrowBottomIcon" size={20} />
+          </Style.MoreButtonContainer>
         ) : (
           defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
-            MAX_ITEM_NUM && <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
+            MAX_ITEM_NUM && (
+            <Style.MoreButtonContainer onClick={moreEventHandler}>
+              더보기
+              <Icon icon="ArrowBottomIcon" size={20} />
+            </Style.MoreButtonContainer>
+          )
         )}
       </Style.Container>
     </>
   );
 }
-
-const itemContianer = (item: ItemProps, showMore: string, index?: number) => {
-  if (index === undefined) {
-    return item.optionId <= MAX_ITEM_NUM ? (
-      <Style.ItemContainer>
-        <Item item={item}></Item>
-      </Style.ItemContainer>
-    ) : (
-      <Style.MoreItemContainer $showMore={showMore}>
-        <Item item={item}></Item>
-      </Style.MoreItemContainer>
-    );
-  } else {
-    return index < MAX_ITEM_NUM ? (
-      <Style.ItemContainer>
-        <Item item={item}></Item>
-      </Style.ItemContainer>
-    ) : (
-      <Style.MoreItemContainer $showMore={showMore}>
-        <Item item={item}></Item>
-      </Style.MoreItemContainer>
-    );
-  }
-};

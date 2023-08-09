@@ -30,19 +30,13 @@ export const ExteriorColorItemContainer = styled.div`
   gap: 15px;
 `;
 
-export const ExteriorColorItem = styled.div<{ $bgColor: string }>`
+export const ExteriorColorItem = styled.div<{ $bgColor: string; $border: boolean }>`
   border-radius: 50%;
   background-color: ${(props) => props.$bgColor};
   width: 20px;
   height: 20px;
-`;
 
-export const ExteriorColorFirstItem = styled.div<{ $bgColor: string }>`
-  border-radius: 50%;
-  background-color: ${(props) => props.$bgColor};
-  border: 1px solid ${colors.coolGrey002};
-  width: 20px;
-  height: 20px;
+  ${({ $border }) => $border && `border: 1px solid ${colors.coolGrey002};`}
 `;
 
 export const ExteriorColorItemDescription = styled.div`

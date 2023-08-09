@@ -50,9 +50,10 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
     },
   ];
 
-  const eventhandler = () => {
+  const eventHandler = () => {
     window.location.href = '/self-mode';
   };
+
   useEffect(() => {
     async function fetchCoreOption() {
       try {
@@ -104,15 +105,13 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
         {mainDetailList.map((detail, idx) => (
           <Style.OptionContainer key={idx}>{detail.data.length > 0 && detail.component}</Style.OptionContainer>
         ))}
-
         <Style.SelfButtonContainer>
           {trimData.map((trim) => (
-            <RectButton key={trim.id} onClick={eventhandler} type="recommended" page="main">
+            <RectButton key={trim.id} onClick={eventHandler} type="recommended" page="main">
               내 차 만들기
             </RectButton>
           ))}
         </Style.SelfButtonContainer>
-
         <Style.GuideButtonContainer>
           <Style.GuideButtonInside>
             <Style.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</Style.GuideButtonExplain>
