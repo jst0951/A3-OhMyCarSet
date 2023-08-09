@@ -1,16 +1,16 @@
 import Icon from '@/components/common/Icon';
 import * as Style from './Estimate.style';
 import { useState } from 'react';
+import { DEFAULT_PRICE } from '@/constants';
 
 interface EstimateProps {
   show: boolean;
   onClick: () => void;
 }
 
-const DEFAULT_PRICE = 46030000;
-
 export default function Estimate({ show, onClick }: EstimateProps) {
   const [totalPrice, setTotalPrice] = useState<number>(DEFAULT_PRICE);
+
   return (
     <>
       <Style.EstimateContainer $show={show}>

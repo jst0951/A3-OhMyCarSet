@@ -7,8 +7,7 @@ import { useSelectOptionContext } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { updateSelectList } from '@/utils/updateSelectList';
-
-const dummyPrice = 47270000;
+import { DEFAULT_PRICE } from '@/constants';
 
 interface OptionFooterProps {
   selectedData: OptionData;
@@ -49,7 +48,7 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
             <Style.TotalPriceButton onClick={handleClickEstimate} $show={showEstimate}>
               총 견적금액 <Icon icon="TotalPriceIcon" size={16} />
             </Style.TotalPriceButton>
-            <Style.TotalPrice>{dummyPrice.toLocaleString()} 원</Style.TotalPrice>
+            <Style.TotalPrice>{DEFAULT_PRICE.toLocaleString()} 원</Style.TotalPrice>
           </Style.TotalPriceContainer>
           <Style.CompleteButtonContainer>
             <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
