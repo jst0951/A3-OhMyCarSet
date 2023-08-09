@@ -1,10 +1,6 @@
 package com.softeer2nd.ohmycarset.controller;
 
 import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.*;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.externalDeviceOption.ExternalDeviceOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.internalDeviceOption.InternalDeviceOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.systemOption.SystemOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.temperatureOption.TemperatureOptionDto;
 import com.softeer2nd.ohmycarset.service.SelectiveOptionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,22 +46,22 @@ public class SelectiveOptionController {
     }
 
     @GetMapping(value = "/selective_option/system")
-    public List<SystemOptionDto> getAllSystem() {
+    public List<SelectiveOptionAdditionalDto> getAllSystem() {
         return selectiveOptionService.getAllSystemOption();
     }
 
     @GetMapping(value = "/selective_option/temperature")
-    public List<TemperatureOptionDto> getAllTemperature() {
+    public List<SelectiveOptionAdditionalDto> getAllTemperature() {
         return selectiveOptionService.getAllTemperatureOption();
     }
 
     @GetMapping(value = "/selective_option/external_device")
-    public List<ExternalDeviceOptionDto> getAllExternalDevice() {
+    public List<SelectiveOptionAdditionalDto> getAllExternalDevice() {
         return selectiveOptionService.getAllExternalDeviceOption();
     }
 
     @GetMapping(value = "/selective_option/internal_device")
-    public List<InternalDeviceOptionDto> getAllInternalDevice() {
+    public List<SelectiveOptionAdditionalDto> getAllInternalDevice() {
         return selectiveOptionService.getAllInternalDeviceOption();
     }
 }
