@@ -31,6 +31,25 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
   const [interiorColor, setInteriorColor] = useState([]);
   const [defaultOption, setDefaultOption] = useState([]);
 
+  const mainDetailList = [
+    {
+      data: coreOption,
+      component: <Core coreOption={coreOption} />,
+    },
+    {
+      data: exteriorColor,
+      component: <ExteriorColor exteriorColor={exteriorColor} />,
+    },
+    {
+      data: interiorColor,
+      component: <InteriorColor interiorColor={interiorColor} />,
+    },
+    {
+      data: defaultOption,
+      component: <DefaultOption defaultOption={defaultOption} />,
+    },
+  ];
+
   const eventhandler = () => {
     window.location.href = '/self-mode';
   };
@@ -81,32 +100,19 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
             <Trim key={trim.id} trimData={trim} />
           ))}
         </Style.Trim>
-        <Style.coreOptionContainer>
-          {coreOption.length > 0 && <Core coreOption={coreOption} />}
-        </Style.coreOptionContainer>
-        <Style.exteriorColorContainer>
-          {exteriorColor.length > 0 && <ExteriorColor exteriorColor={exteriorColor} />}
-        </Style.exteriorColorContainer>
-        <Style.interiorColorContainer>
-          {interiorColor.length > 0 && <InteriorColor interiorColor={interiorColor} />}
-        </Style.interiorColorContainer>
-        <Style.defaultOptionContainer>
-          {defaultOption.length > 0 && <DefaultOption defaultOption={defaultOption} />}
-        </Style.defaultOptionContainer>
+
+        {mainDetailList.map((detail, idx) => (
+          <Style.OptionContainer key={idx}>{detail.data.length > 0 && detail.component}</Style.OptionContainer>
+        ))}
+
         <Style.SelfButtonContainer>
-          <RectButton onClick={eventhandler} type="recommended" page="main">
-            내 차 만들기
-          </RectButton>
-          <RectButton onClick={eventhandler} type="recommended" page="main">
-            내 차 만들기
-          </RectButton>
-          <RectButton onClick={eventhandler} type="recommended" page="main">
-            내 차 만들기
-          </RectButton>
-          <RectButton onClick={eventhandler} type="recommended" page="main">
-            내 차 만들기
-          </RectButton>
+          {trimData.map((trim) => (
+            <RectButton key={trim.id} onClick={eventhandler} type="recommended" page="main">
+              내 차 만들기
+            </RectButton>
+          ))}
         </Style.SelfButtonContainer>
+
         <Style.GuideButtonContainer>
           <Style.GuideButtonInside>
             <Style.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</Style.GuideButtonExplain>

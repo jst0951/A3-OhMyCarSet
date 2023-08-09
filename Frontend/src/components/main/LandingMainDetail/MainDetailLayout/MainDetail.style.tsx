@@ -19,8 +19,8 @@ export const Trim = styled.div`
   gap: 46px;
 `;
 
-export const coreOptionContainer = styled.div`
-  height: 311px;
+export const OptionContainer = styled.div`
+  margin-bottom: 60px;
 `;
 
 export const interiorColorContainer = styled.div`

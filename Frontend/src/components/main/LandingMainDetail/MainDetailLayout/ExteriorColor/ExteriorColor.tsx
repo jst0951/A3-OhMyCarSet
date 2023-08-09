@@ -27,14 +27,14 @@ export default function ExteriorColor({ exteriorColor }: ExteriorColorProps) {
                 index !== 0 ? (
                   <>
                     <Style.ExteriorColorItemContainer>
-                      <Style.ExteriorColorItem bgColor={item.colorCode}></Style.ExteriorColorItem>
+                      <Style.ExteriorColorItem $bgColor={item.colorCode}></Style.ExteriorColorItem>
                       <Style.ExteriorColorItemDescription>{item.name}</Style.ExteriorColorItemDescription>
                     </Style.ExteriorColorItemContainer>
                   </>
                 ) : (
                   <>
                     <Style.ExteriorColorItemContainer>
-                      <Style.ExteriorColorFirstItem bgColor={item.colorCode}></Style.ExteriorColorFirstItem>
+                      <Style.ExteriorColorFirstItem $bgColor={item.colorCode}></Style.ExteriorColorFirstItem>
                       <Style.ExteriorColorItemDescription>{item.name}</Style.ExteriorColorItemDescription>
                     </Style.ExteriorColorItemContainer>
                   </>

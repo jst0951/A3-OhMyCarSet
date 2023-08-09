@@ -2,10 +2,6 @@ import { colors } from '@/style/theme';
 import { headMedium4, bodyRegular2 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
-interface ContainerProps {
-  bgColor: string;
-}
-
 export const LineTitle = styled.div`
   border-bottom: 1px solid ${colors.coolGreyBlack};
   padding-bottom: 25px;
@@ -34,16 +30,16 @@ export const ExteriorColorItemContainer = styled.div`
   gap: 15px;
 `;
 
-export const ExteriorColorItem = styled.div<ContainerProps>`
+export const ExteriorColorItem = styled.div<{ $bgColor: string }>`
   border-radius: 50%;
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.$bgColor};
   width: 20px;
   height: 20px;
 `;
 
-export const ExteriorColorFirstItem = styled.div<ContainerProps>`
+export const ExteriorColorFirstItem = styled.div<{ $bgColor: string }>`
   border-radius: 50%;
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.$bgColor};
   border: 1px solid ${colors.coolGrey002};
   width: 20px;
   height: 20px;

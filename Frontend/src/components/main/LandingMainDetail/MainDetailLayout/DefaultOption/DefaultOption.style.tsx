@@ -2,10 +2,6 @@ import { colors } from '@/style/theme';
 import { headMedium4, bodyMedium2 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
-interface MoreProps {
-  showMore: string;
-}
-
 export const LineTitle = styled.div`
   border-bottom: 1px solid ${colors.coolGreyBlack};
   padding-bottom: 25px;
@@ -51,8 +47,8 @@ export const ItemContainer = styled.div`
   gap: 12px;
 `;
 
-export const MoreItemContainer = styled.div<MoreProps>`
-  display: ${(props) => props.showMore};
+export const MoreItemContainer = styled.div<{ $showMore: string }>`
+  display: ${(props) => props.$showMore};
   flex-direction: row;
   align-items: center;
   gap: 12px;
