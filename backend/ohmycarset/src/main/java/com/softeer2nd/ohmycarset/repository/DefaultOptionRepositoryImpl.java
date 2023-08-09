@@ -2,7 +2,6 @@ package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.DefaultOption;
 import com.softeer2nd.ohmycarset.domain.ExteriorColor;
-import com.softeer2nd.ohmycarset.repository.mapper.SingletonBeanPropertyRowMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,11 +14,10 @@ import java.util.Optional;
 public class DefaultOptionRepositoryImpl implements DefaultOptionRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final SingletonBeanPropertyRowMapper<DefaultOption> defaultOptionRowMapper;
+    private final RowMapper<DefaultOption> defaultOptionRowMapper = BeanPropertyRowMapper.newInstance(DefaultOption.class);
 
     public DefaultOptionRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.defaultOptionRowMapper = SingletonBeanPropertyRowMapper.getInstance(DefaultOption.class);
     }
 
     @Override

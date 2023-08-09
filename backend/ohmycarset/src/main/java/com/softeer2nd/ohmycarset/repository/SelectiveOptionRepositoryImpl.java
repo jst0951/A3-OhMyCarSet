@@ -9,8 +9,9 @@ import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptio
 import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptionComponent;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOption;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOptionComponent;
-import com.softeer2nd.ohmycarset.repository.mapper.SingletonBeanPropertyRowMapper;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -19,38 +20,37 @@ import java.util.List;
 @Repository
 public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final SingletonBeanPropertyRowMapper<PowerTrainOption> powerTrainRowMapper;
-    private final SingletonBeanPropertyRowMapper<WDOption> wdRowMapper;
-    private final SingletonBeanPropertyRowMapper<BodyOption> bodyRowMapper;
-    private final SingletonBeanPropertyRowMapper<ExteriorColorOption> eColorRowMapper;
-    private final SingletonBeanPropertyRowMapper<InteriorColorOption> iColorRowMapper;
-    private final SingletonBeanPropertyRowMapper<WheelOption> wheelRowMapper;
-    private final SingletonBeanPropertyRowMapper<SystemOption> systemRowMapper;
-    private final SingletonBeanPropertyRowMapper<SystemOptionComponent> systemComponentRowMapper;
-    private final SingletonBeanPropertyRowMapper<TemperatureOption> temperatureRowMapper;
-    private final SingletonBeanPropertyRowMapper<TemperatureOptionComponent> temperatureComponentRowMapper;
-    private final SingletonBeanPropertyRowMapper<ExternalDeviceOption> eDeviceRowMapper;
-    private final SingletonBeanPropertyRowMapper<ExternalDeviceOptionComponent> eDeviceComponentRowMapper;
-    private final SingletonBeanPropertyRowMapper<InternalDeviceOption> iDeviceRowMapper;
-    private final SingletonBeanPropertyRowMapper<InternalDeviceOptionComponent> iDeviceComponentRowMapper;
-
+    private final RowMapper<PowerTrainOption> powerTrainRowMapper;
+    private final RowMapper<WDOption> wdRowMapper;
+    private final RowMapper<BodyOption> bodyRowMapper;
+    private final RowMapper<ExteriorColorOption> eColorRowMapper;
+    private final RowMapper<InteriorColorOption> iColorRowMapper;
+    private final RowMapper<WheelOption> wheelRowMapper;
+    private final RowMapper<SystemOption> systemRowMapper;
+    private final RowMapper<SystemOptionComponent> systemComponentRowMapper;
+    private final RowMapper<TemperatureOption> temperatureRowMapper;
+    private final RowMapper<TemperatureOptionComponent> temperatureComponentRowMapper;
+    private final RowMapper<ExternalDeviceOption> eDeviceRowMapper;
+    private final RowMapper<ExternalDeviceOptionComponent> eDeviceComponentRowMapper;
+    private final RowMapper<InternalDeviceOption> iDeviceRowMapper;
+    private final RowMapper<InternalDeviceOptionComponent> iDeviceComponentRowMapper;
 
     public SelectiveOptionRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.powerTrainRowMapper = SingletonBeanPropertyRowMapper.getInstance(PowerTrainOption.class);
-        this.wdRowMapper = SingletonBeanPropertyRowMapper.getInstance(WDOption.class);
-        this.bodyRowMapper = SingletonBeanPropertyRowMapper.getInstance(BodyOption.class);
-        this.eColorRowMapper = SingletonBeanPropertyRowMapper.getInstance(ExteriorColorOption.class);
-        this.iColorRowMapper = SingletonBeanPropertyRowMapper.getInstance(InteriorColorOption.class);
-        this.wheelRowMapper = SingletonBeanPropertyRowMapper.getInstance(WheelOption.class);
-        this.systemRowMapper = SingletonBeanPropertyRowMapper.getInstance(SystemOption.class);
-        this.systemComponentRowMapper = SingletonBeanPropertyRowMapper.getInstance(SystemOptionComponent.class);
-        this.temperatureRowMapper = SingletonBeanPropertyRowMapper.getInstance(TemperatureOption.class);
-        this.temperatureComponentRowMapper = SingletonBeanPropertyRowMapper.getInstance(TemperatureOptionComponent.class);
-        this.eDeviceRowMapper = SingletonBeanPropertyRowMapper.getInstance(ExternalDeviceOption.class);
-        this.eDeviceComponentRowMapper = SingletonBeanPropertyRowMapper.getInstance(ExternalDeviceOptionComponent.class);
-        this.iDeviceRowMapper = SingletonBeanPropertyRowMapper.getInstance(InternalDeviceOption.class);
-        this.iDeviceComponentRowMapper = SingletonBeanPropertyRowMapper.getInstance(InternalDeviceOptionComponent.class);
+        this.powerTrainRowMapper = BeanPropertyRowMapper.newInstance(PowerTrainOption.class);
+        this.wdRowMapper = BeanPropertyRowMapper.newInstance(WDOption.class);
+        this.bodyRowMapper = BeanPropertyRowMapper.newInstance(BodyOption.class);
+        this.eColorRowMapper = BeanPropertyRowMapper.newInstance(ExteriorColorOption.class);
+        this.iColorRowMapper = BeanPropertyRowMapper.newInstance(InteriorColorOption.class);
+        this.wheelRowMapper = BeanPropertyRowMapper.newInstance(WheelOption.class);
+        this.systemRowMapper = BeanPropertyRowMapper.newInstance(SystemOption.class);
+        this.systemComponentRowMapper = BeanPropertyRowMapper.newInstance(SystemOptionComponent.class);
+        this.temperatureRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOption.class);
+        this.temperatureComponentRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOptionComponent.class);
+        this.eDeviceRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOption.class);
+        this.eDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOptionComponent.class);
+        this.iDeviceRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOption.class);
+        this.iDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOptionComponent.class);
     }
 
     @Override
