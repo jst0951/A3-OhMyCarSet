@@ -28,7 +28,6 @@ const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', 
 export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
   const [selectedCategory, setSelectedCategory] = useState(-1);
   const [showMore, setShowMore] = useState('none');
-  const itemLength = defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length;
 
   const moreEventHandler = () => {
     showMore === 'none' ? setShowMore('flex') : setShowMore('none');
@@ -75,9 +74,8 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
         {selectedCategory === -1 ? (
           <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
         ) : (
-          itemLength > MAX_ITEM_NUM && (
-            <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
-          )
+          defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
+            MAX_ITEM_NUM && <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
         )}
       </Style.Container>
     </>
@@ -86,7 +84,7 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
 
 const itemContianer = (item: ItemProps, showMore: string, index?: number) => {
   if (index === undefined) {
-    return item.optionId < 5 ? (
+    return item.optionId <= MAX_ITEM_NUM ? (
       <Style.ItemContainer>
         <Item item={item}></Item>
       </Style.ItemContainer>
@@ -96,7 +94,7 @@ const itemContianer = (item: ItemProps, showMore: string, index?: number) => {
       </Style.MoreItemContainer>
     );
   } else {
-    return index < 5 ? (
+    return index < MAX_ITEM_NUM ? (
       <Style.ItemContainer>
         <Item item={item}></Item>
       </Style.ItemContainer>
