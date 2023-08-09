@@ -9,7 +9,6 @@ import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptio
 import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptionComponent;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOption;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOptionComponent;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.systemOption.SystemOptionComponentDto;
 
 import java.util.List;
 
