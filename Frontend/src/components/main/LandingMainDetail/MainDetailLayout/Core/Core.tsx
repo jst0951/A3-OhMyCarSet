@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import * as Style from './Core.style';
+import fetchData from '@/apis/fetchData';
 
 type CoreOption = Array<{
   trimId: number;
@@ -11,11 +13,22 @@ type CoreOption = Array<{
   }>;
 }>;
 
-interface CoreOptionProps {
-  coreOption: CoreOption;
-}
+export default function Core() {
+  const [coreOption, setCoreOption] = useState<CoreOption>([]);
 
-export default function Core({ coreOption }: CoreOptionProps) {
+  const fetchCoreOption = async () => {
+    try {
+      const coreOptionData = await fetchData('core_option');
+      setCoreOption(coreOptionData);
+    } catch (error) {
+      console.error('Error fetching core option data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoreOption();
+  }, []);
+
   return (
     <>
       <Style.LineTitle>핵심 옵션</Style.LineTitle>

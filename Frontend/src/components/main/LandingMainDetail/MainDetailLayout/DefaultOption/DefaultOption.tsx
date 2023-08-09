@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Style from './DefaultOption.style';
 import RectFilterButton from '@/components/common/button/RectFilterButton/RectFilterButton';
 import Item from './Item/Item';
 import Icon from '@/components/common/Icon';
+import fetchData from '@/apis/fetchData';
 
 type DefaultOption = {
   trimId: number;
@@ -17,10 +18,6 @@ interface ItemProps {
   optionId: number;
   optionName: string;
   imgSrc: string;
-}
-
-interface DefaultOptionProps {
-  defaultOption: DefaultOption[];
 }
 
 interface ItemContainerProps {
@@ -48,8 +45,9 @@ function ItemContianer({ item, showMore, index }: ItemContainerProps) {
   }
 }
 
-export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
-  const [selectedCategory, setSelectedCategory] = useState(-1);
+export default function DefaultOption() {
+  const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [showMore, setShowMore] = useState('none');
 
   const moreEventHandler = () => {
@@ -60,6 +58,19 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
     setSelectedCategory(index - 1);
     setShowMore('none');
   };
+
+  const fetchSetDefaultOption = async () => {
+    try {
+      const defaultOpion = await fetchData('default_option');
+      setDefaultOption(defaultOpion);
+    } catch (error) {
+      console.error('Error fetching core option data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSetDefaultOption();
+  }, []);
 
   return (
     <>

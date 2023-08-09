@@ -1,5 +1,3 @@
-import fetchData from '@/apis/fetchData';
-import { useEffect, useState } from 'react';
 import * as Style from './MainDetail.style';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Trim from './Trim/Trim';
@@ -26,72 +24,28 @@ interface DetailHeaderProps {
 }
 
 export default function MainDetail({ trimData }: DetailHeaderProps) {
-  const [coreOption, setCoreOption] = useState([]);
-  const [exteriorColor, setExteriorColor] = useState([]);
-  const [interiorColor, setInteriorColor] = useState([]);
-  const [defaultOption, setDefaultOption] = useState([]);
-
   const mainDetailList = [
     {
-      data: coreOption,
-      component: <Core coreOption={coreOption} />,
+      key: 'core',
+      component: <Core />,
     },
     {
-      data: exteriorColor,
-      component: <ExteriorColor exteriorColor={exteriorColor} />,
+      key: 'exterior',
+      component: <ExteriorColor />,
     },
     {
-      data: interiorColor,
-      component: <InteriorColor interiorColor={interiorColor} />,
+      key: 'interior',
+      component: <InteriorColor />,
     },
     {
-      data: defaultOption,
-      component: <DefaultOption defaultOption={defaultOption} />,
+      key: 'default',
+      component: <DefaultOption />,
     },
   ];
 
   const eventHandler = () => {
     window.location.href = '/self-mode';
   };
-
-  useEffect(() => {
-    async function fetchCoreOption() {
-      try {
-        const coreOptionData = await fetchData('core_option');
-        setCoreOption(coreOptionData);
-      } catch (error) {
-        console.error('Error fetching core option data:', error);
-      }
-    }
-    async function fetchExteriorColor() {
-      try {
-        const exteriorColorData = await fetchData('exterior_color');
-        setExteriorColor(exteriorColorData);
-      } catch (error) {
-        console.error('Error fetching core option data:', error);
-      }
-    }
-    async function fetchInteriorColor() {
-      try {
-        const interiorColorData = await fetchData('interior_color');
-        setInteriorColor(interiorColorData);
-      } catch (error) {
-        console.error('Error fetching core option data:', error);
-      }
-    }
-    async function fetchSetDefaultOption() {
-      try {
-        const defaultOpion = await fetchData('default_option');
-        setDefaultOption(defaultOpion);
-      } catch (error) {
-        console.error('Error fetching core option data:', error);
-      }
-    }
-    fetchCoreOption();
-    fetchExteriorColor();
-    fetchInteriorColor();
-    fetchSetDefaultOption();
-  }, []);
 
   return (
     <>
@@ -102,8 +56,8 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
           ))}
         </Style.Trim>
 
-        {mainDetailList.map((detail, idx) => (
-          <Style.OptionContainer key={idx}>{detail.data.length > 0 && detail.component}</Style.OptionContainer>
+        {mainDetailList.map((detail) => (
+          <Style.OptionContainer key={detail.key}>{detail.component}</Style.OptionContainer>
         ))}
         <Style.SelfButtonContainer>
           {trimData.map((trim) => (

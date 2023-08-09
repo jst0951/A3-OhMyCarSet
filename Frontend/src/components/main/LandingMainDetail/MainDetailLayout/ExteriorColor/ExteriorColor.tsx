@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import * as Style from './ExteriorColor.style';
+import fetchData from '@/apis/fetchData';
 
 type ExteriorColor = Array<{
   trimId: number;
@@ -11,11 +13,22 @@ type ExteriorColor = Array<{
   }>;
 }>;
 
-interface ExteriorColorProps {
-  exteriorColor: ExteriorColor;
-}
+export default function ExteriorColor() {
+  const [exteriorColor, setExteriorColor] = useState<ExteriorColor>([]);
 
-export default function ExteriorColor({ exteriorColor }: ExteriorColorProps) {
+  const fetchExteriorColor = async () => {
+    try {
+      const coreOptionData = await fetchData('exterior_color');
+      setExteriorColor(coreOptionData);
+    } catch (error) {
+      console.error('Error fetching core option data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchExteriorColor();
+  }, []);
+
   return (
     <>
       <Style.LineTitle>외장 색상</Style.LineTitle>

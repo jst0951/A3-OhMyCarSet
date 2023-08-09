@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import * as Style from './InteriorColor.style';
+import fetchData from '@/apis/fetchData';
 
 type InteriorColor = Array<{
   trimId: number;
@@ -10,11 +12,22 @@ type InteriorColor = Array<{
   }>;
 }>;
 
-interface InteriorColorProps {
-  interiorColor: InteriorColor;
-}
+export default function InteriorColor() {
+  const [interiorColor, setInteriorColor] = useState<InteriorColor>([]);
 
-export default function InteriorColor({ interiorColor }: InteriorColorProps) {
+  const fetchInteriorColor = async () => {
+    try {
+      const interiorColorData = await fetchData('interior_color');
+      setInteriorColor(interiorColorData);
+    } catch (error) {
+      console.error('Error fetching core option data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchInteriorColor();
+  }, []);
+
   return (
     <>
       <Style.LineTitle>내장 색상</Style.LineTitle>
