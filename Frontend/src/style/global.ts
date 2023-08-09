@@ -102,6 +102,7 @@ const GlobalStyle = createGlobalStyle`
         display: block;
     }
     body {
+        /* position: relative; */
         line-height: 1;
     }
     ol,
@@ -141,25 +142,21 @@ const GlobalStyle = createGlobalStyle`
     @font-face {
         font-family: 'Hyundai Sans Head Medium';
         font-style: normal;
-        font-display: swap;
         src: url('src/asset/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
       }
       @font-face {
         font-family: 'Hyundai Sans Head Regular';
         font-style: normal;
-        font-display: swap;
         src: url('src/asset/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
       }
       @font-face {
         font-family: 'Hyundai Sans Text Medium';
         font-style: normal;
-        font-display: swap;
         src: url('src/asset/fonts/HyundaiSansTextKROTFMedium.woff2') format('woff2'); 
       }  
       @font-face {
         font-family: 'Hyundai Sans Text Regular';
         font-style: normal;
-        font-display: swap;
         src: url('src/asset/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
       }
 `;
