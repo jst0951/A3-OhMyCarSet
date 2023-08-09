@@ -2,7 +2,7 @@ package com.softeer2nd.ohmycarset.dto.selectiveOptionDto;
 
 import com.softeer2nd.ohmycarset.domain.selectiveOption.*;
 
-public class SelectiveOptionDto {
+public class SelectiveOptionDefaultDto {
     private final Long id;
     private final String name;
     private final String mainDescription;
@@ -13,7 +13,7 @@ public class SelectiveOptionDto {
     private final String imgSrc;
     private final String iconSrc;
 
-    public SelectiveOptionDto(PowerTrainOption powerTrainOption) {
+    public SelectiveOptionDefaultDto(PowerTrainOption powerTrainOption) {
         this.id = powerTrainOption.getId();
         this.name = powerTrainOption.getName();
         this.mainDescription = powerTrainOption.getMainDescription();
@@ -25,7 +25,7 @@ public class SelectiveOptionDto {
         this.iconSrc = null;
     }
 
-    public SelectiveOptionDto(WDOption wdOption) {
+    public SelectiveOptionDefaultDto(WDOption wdOption) {
         this.id = wdOption.getId();
         this.name = wdOption.getName();
         this.mainDescription = wdOption.getMainDescription();
@@ -37,7 +37,7 @@ public class SelectiveOptionDto {
         this.iconSrc = null;
     }
 
-    public SelectiveOptionDto(BodyOption bodyOption) {
+    public SelectiveOptionDefaultDto(BodyOption bodyOption) {
         this.id = bodyOption.getId();
         this.name = bodyOption.getName();
         this.mainDescription = bodyOption.getMainDescription();
@@ -49,7 +49,7 @@ public class SelectiveOptionDto {
         this.iconSrc = null;
     }
 
-    public SelectiveOptionDto(ExteriorColorOption exteriorColorOption) {
+    public SelectiveOptionDefaultDto(ExteriorColorOption exteriorColorOption) {
         this.id = exteriorColorOption.getId();
         this.name = exteriorColorOption.getName();
         this.mainDescription = null;
@@ -61,7 +61,7 @@ public class SelectiveOptionDto {
         this.iconSrc = exteriorColorOption.getIconSrc();
     }
 
-    public SelectiveOptionDto(InteriorColorOption interiorColorOption) {
+    public SelectiveOptionDefaultDto(InteriorColorOption interiorColorOption) {
         this.id = interiorColorOption.getId();
         this.name = interiorColorOption.getName();
         this.mainDescription = null;
@@ -73,7 +73,7 @@ public class SelectiveOptionDto {
         this.iconSrc = interiorColorOption.getIconSrc();
     }
 
-    public SelectiveOptionDto(WheelOption wheelOption) {
+    public SelectiveOptionDefaultDto(WheelOption wheelOption) {
         this.id = wheelOption.getId();
         this.name = wheelOption.getName();
         this.mainDescription = null;

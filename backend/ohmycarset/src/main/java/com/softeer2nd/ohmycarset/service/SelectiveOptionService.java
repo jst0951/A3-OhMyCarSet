@@ -33,74 +33,74 @@ public class SelectiveOptionService {
         this.selectiveOptionRepository = selectiveOptionRepository;
     }
 
-    public List<SelectiveOptionDto> getAllPowerTrainOption() {
-        List<SelectiveOptionDto> powerTrainDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllPowerTrainOption() {
+        List<SelectiveOptionDefaultDto> powerTrainDtoList = new ArrayList<>();
 
         List<PowerTrainOption> powerTrainList = selectiveOptionRepository.findAllPowerTrain();
 
         for (PowerTrainOption powerTrain : powerTrainList) {
-            powerTrainDtoList.add(new SelectiveOptionDto(powerTrain));
+            powerTrainDtoList.add(new SelectiveOptionDefaultDto(powerTrain));
         }
 
         return powerTrainDtoList;
     }
 
-    public List<SelectiveOptionDto> getAllWDOption() {
-        List<SelectiveOptionDto> wdDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllWDOption() {
+        List<SelectiveOptionDefaultDto> wdDtoList = new ArrayList<>();
 
         List<WDOption> wdList = selectiveOptionRepository.findAllWD();
 
         for (WDOption wd : wdList) {
-            wdDtoList.add(new SelectiveOptionDto(wd));
+            wdDtoList.add(new SelectiveOptionDefaultDto(wd));
         }
 
         return wdDtoList;
 
     }
 
-    public List<SelectiveOptionDto> getAllBodyOption() {
-        List<SelectiveOptionDto> bodyDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllBodyOption() {
+        List<SelectiveOptionDefaultDto> bodyDtoList = new ArrayList<>();
 
         List<BodyOption> bodyList = selectiveOptionRepository.findAllBody();
 
         for (BodyOption body : bodyList) {
-            bodyDtoList.add(new SelectiveOptionDto(body));
+            bodyDtoList.add(new SelectiveOptionDefaultDto(body));
         }
 
         return bodyDtoList;
     }
 
-    public List<SelectiveOptionDto> getAllExteriorColorOption() {
-        List<SelectiveOptionDto> exteriorColorOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllExteriorColorOption() {
+        List<SelectiveOptionDefaultDto> exteriorColorOptionDtoList = new ArrayList<>();
 
         List<ExteriorColorOption> exteriorColorList = selectiveOptionRepository.findAllExteriorColor();
 
         for (ExteriorColorOption exteriorColor : exteriorColorList) {
-            exteriorColorOptionDtoList.add(new SelectiveOptionDto(exteriorColor));
+            exteriorColorOptionDtoList.add(new SelectiveOptionDefaultDto(exteriorColor));
         }
 
         return exteriorColorOptionDtoList;
     }
 
-    public List<SelectiveOptionDto> getAllInteriorColorOption() {
-        List<SelectiveOptionDto> interiorColorOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllInteriorColorOption() {
+        List<SelectiveOptionDefaultDto> interiorColorOptionDtoList = new ArrayList<>();
 
         List<InteriorColorOption> interiorColorList = selectiveOptionRepository.findAllInteriorColor();
 
         for (InteriorColorOption interiorColor : interiorColorList) {
-            interiorColorOptionDtoList.add(new SelectiveOptionDto(interiorColor));
+            interiorColorOptionDtoList.add(new SelectiveOptionDefaultDto(interiorColor));
         }
 
         return interiorColorOptionDtoList;
     }
 
-    public List<SelectiveOptionDto> getAllWheelOption() {
-        List<SelectiveOptionDto> wheelOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllWheelOption() {
+        List<SelectiveOptionDefaultDto> wheelOptionDtoList = new ArrayList<>();
 
         List<WheelOption> wheelList = selectiveOptionRepository.findAllWheel();
 
         for (WheelOption wheel : wheelList) {
-            wheelOptionDtoList.add(new SelectiveOptionDto(wheel));
+            wheelOptionDtoList.add(new SelectiveOptionDefaultDto(wheel));
         }
 
         return wheelOptionDtoList;
