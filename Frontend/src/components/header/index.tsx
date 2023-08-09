@@ -7,10 +7,6 @@ import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
 
-interface ContainerProps {
-  scrollPosition: number;
-}
-
 export default function Header() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
@@ -23,7 +19,7 @@ export default function Header() {
 
   return (
     <>
-      <HeaderContainer scrollPosition={scrollPosition}>
+      <HeaderContainer $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo />
@@ -41,12 +37,13 @@ export default function Header() {
   );
 }
 
-const HeaderContainer = styled.div<ContainerProps>`
+const HeaderContainer = styled.div<{ $scrollPosition: number }>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: ${(props) => (props.scrollPosition < 100 ? null : colors.hyundaiGrey001)};
+  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.hyundaiGrey001)};
+  transition: all 0.3s ease;
   width: 100vw;
 `;
 

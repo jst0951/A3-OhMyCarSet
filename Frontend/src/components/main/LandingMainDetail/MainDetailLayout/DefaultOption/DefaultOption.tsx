@@ -23,10 +23,16 @@ interface DefaultOptionProps {
   defaultOption: DefaultOption[];
 }
 
+interface ItemContainerProps {
+  item: ItemProps;
+  showMore: string;
+  index?: number;
+}
+
 const MAX_ITEM_NUM = 5;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
-function ItemContianer(item: ItemProps, showMore: string, index?: number) {
+function ItemContianer({ item, showMore, index }: ItemContainerProps) {
   if (index === undefined) {
     return (
       <Style.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
@@ -79,11 +85,13 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
               {selectedCategory === -1
                 ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <>{ItemContianer(item, showMore)}</>
+                      <ItemContianer key={item.optionId} item={item} showMore={showMore} />
                     ))
                   )
                 : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
-                    (item: ItemProps, optionIndex: number) => <>{ItemContianer(item, showMore, optionIndex)}</>
+                    (item: ItemProps, optionIndex: number) => (
+                      <ItemContianer key={item.optionId} item={item} showMore={showMore} index={optionIndex} />
+                    )
                   )}
             </Style.ItemLine>
           ))}
