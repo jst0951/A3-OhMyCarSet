@@ -10,14 +10,6 @@ import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptio
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOption;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOptionComponent;
 import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.*;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.externalDeviceOption.ExternalDeviceOptionComponentDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.externalDeviceOption.ExternalDeviceOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.internalDeviceOption.InternalDeviceOptionComponentDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.internalDeviceOption.InternalDeviceOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.systemOption.SystemOptionComponentDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.systemOption.SystemOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.temperatureOption.TemperatureOptionDto;
-import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.temperatureOption.TemperatureOptionComponentDto;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
 import org.springframework.stereotype.Service;
 
@@ -33,152 +25,132 @@ public class SelectiveOptionService {
         this.selectiveOptionRepository = selectiveOptionRepository;
     }
 
-    public List<PowerTrainDto> getAllPowerTrainOption() {
-        List<PowerTrainDto> powerTrainDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllPowerTrainOption() {
+        List<SelectiveOptionDefaultDto> powerTrainDtoList = new ArrayList<>();
 
         List<PowerTrainOption> powerTrainList = selectiveOptionRepository.findAllPowerTrain();
 
         for (PowerTrainOption powerTrain : powerTrainList) {
-            powerTrainDtoList.add(new PowerTrainDto(powerTrain));
+            powerTrainDtoList.add(new SelectiveOptionDefaultDto(powerTrain));
         }
 
         return powerTrainDtoList;
     }
 
-    public List<WDOptionDto> getAllWDOption() {
-        List<WDOptionDto> wdDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllWDOption() {
+        List<SelectiveOptionDefaultDto> wdDtoList = new ArrayList<>();
 
         List<WDOption> wdList = selectiveOptionRepository.findAllWD();
 
         for (WDOption wd : wdList) {
-            wdDtoList.add(new WDOptionDto(wd));
+            wdDtoList.add(new SelectiveOptionDefaultDto(wd));
         }
 
         return wdDtoList;
 
     }
 
-    public List<BodyOptionDto> getAllBodyOption() {
-        List<BodyOptionDto> bodyDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllBodyOption() {
+        List<SelectiveOptionDefaultDto> bodyDtoList = new ArrayList<>();
 
         List<BodyOption> bodyList = selectiveOptionRepository.findAllBody();
 
         for (BodyOption body : bodyList) {
-            bodyDtoList.add(new BodyOptionDto(body));
+            bodyDtoList.add(new SelectiveOptionDefaultDto(body));
         }
 
         return bodyDtoList;
     }
 
-    public List<ExteriorColorOptionDto> getAllExteriorColorOption() {
-        List<ExteriorColorOptionDto> exteriorColorOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllExteriorColorOption() {
+        List<SelectiveOptionDefaultDto> exteriorColorOptionDtoList = new ArrayList<>();
 
         List<ExteriorColorOption> exteriorColorList = selectiveOptionRepository.findAllExteriorColor();
 
         for (ExteriorColorOption exteriorColor : exteriorColorList) {
-            exteriorColorOptionDtoList.add(new ExteriorColorOptionDto(exteriorColor));
+            exteriorColorOptionDtoList.add(new SelectiveOptionDefaultDto(exteriorColor));
         }
 
         return exteriorColorOptionDtoList;
     }
 
-    public List<InteriorColorOptionDto> getAllInteriorColorOption() {
-        List<InteriorColorOptionDto> interiorColorOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllInteriorColorOption() {
+        List<SelectiveOptionDefaultDto> interiorColorOptionDtoList = new ArrayList<>();
 
         List<InteriorColorOption> interiorColorList = selectiveOptionRepository.findAllInteriorColor();
 
         for (InteriorColorOption interiorColor : interiorColorList) {
-            interiorColorOptionDtoList.add(new InteriorColorOptionDto(interiorColor));
+            interiorColorOptionDtoList.add(new SelectiveOptionDefaultDto(interiorColor));
         }
 
         return interiorColorOptionDtoList;
     }
 
-    public List<WheelOptionDto> getAllWheelOption() {
-        List<WheelOptionDto> wheelOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionDefaultDto> getAllWheelOption() {
+        List<SelectiveOptionDefaultDto> wheelOptionDtoList = new ArrayList<>();
 
         List<WheelOption> wheelList = selectiveOptionRepository.findAllWheel();
 
         for (WheelOption wheel : wheelList) {
-            wheelOptionDtoList.add(new WheelOptionDto(wheel));
+            wheelOptionDtoList.add(new SelectiveOptionDefaultDto(wheel));
         }
 
         return wheelOptionDtoList;
     }
 
-    public List<SystemOptionDto> getAllSystemOption() {
-        List<SystemOptionDto> systemOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionAdditionalDto> getAllSystemOption() {
+        List<SelectiveOptionAdditionalDto> selectiveOptionAdditionalDtoList = new ArrayList<>();
 
         List<SystemOption> systemList = selectiveOptionRepository.findAllSystem();
 
         for (SystemOption system : systemList) {
-            List<SystemOptionComponentDto> systemComponentDtoList = new ArrayList<>();
             List<SystemOptionComponent> systemComponentList = selectiveOptionRepository.findAllSystemComponentBySystemOptionId(system.getId());
 
-            for (SystemOptionComponent systemComponent : systemComponentList) {
-                systemComponentDtoList.add(new SystemOptionComponentDto(systemComponent));
-            }
-
-            systemOptionDtoList.add(new SystemOptionDto(system, systemComponentDtoList));
+            selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(system, systemComponentList));
         }
 
-        return systemOptionDtoList;
+        return selectiveOptionAdditionalDtoList;
     }
 
-    public List<TemperatureOptionDto> getAllTemperatureOption() {
-        List<TemperatureOptionDto> temperaturOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionAdditionalDto> getAllTemperatureOption() {
+        List<SelectiveOptionAdditionalDto> selectiveOptionAdditionalDtoList = new ArrayList<>();
 
         List<TemperatureOption> temperatureList = selectiveOptionRepository.findAllTemperature();
 
         for (TemperatureOption temperature : temperatureList) {
-            List<TemperatureOptionComponentDto> temperatureComponentDtoList = new ArrayList<>();
-            List<TemperatureOptionComponent> temperatureComponentList = selectiveOptionRepository.findAllTemperatureComponentBySystemOptionId(temperature.getId());
+            List<TemperatureOptionComponent> temperatureOptionComponentList = selectiveOptionRepository.findAllTemperatureComponentBySystemOptionId(temperature.getId());
 
-            for (TemperatureOptionComponent temperatureComponent : temperatureComponentList) {
-                temperatureComponentDtoList.add(new TemperatureOptionComponentDto(temperatureComponent));
-            }
-
-            temperaturOptionDtoList.add(new TemperatureOptionDto(temperature, temperatureComponentDtoList));
+            selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(temperature, temperatureOptionComponentList));
         }
 
-        return temperaturOptionDtoList;
+        return selectiveOptionAdditionalDtoList;
     }
 
-    public List<ExternalDeviceOptionDto> getAllExternalDeviceOption() {
-        List<ExternalDeviceOptionDto> externalDeviceOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionAdditionalDto> getAllExternalDeviceOption() {
+        List<SelectiveOptionAdditionalDto> selectiveOptionAdditionalDtoList = new ArrayList<>();
 
         List<ExternalDeviceOption> externalDeviceList = selectiveOptionRepository.findAllExternalDevice();
 
         for (ExternalDeviceOption externalDevice : externalDeviceList) {
-            List<ExternalDeviceOptionComponentDto> externalDeviceComponentDtoList = new ArrayList<>();
-            List<ExternalDeviceOptionComponent> externalDeviceComponentList = selectiveOptionRepository.findAllExternalDeviceComponentBySystemOptionId(externalDevice.getId());
+            List<ExternalDeviceOptionComponent> externalDeviceOptionComponentList = selectiveOptionRepository.findAllExternalDeviceComponentBySystemOptionId(externalDevice.getId());
 
-            for (ExternalDeviceOptionComponent externalDeviceComponent : externalDeviceComponentList) {
-                externalDeviceComponentDtoList.add(new ExternalDeviceOptionComponentDto(externalDeviceComponent));
-            }
-
-            externalDeviceOptionDtoList.add(new ExternalDeviceOptionDto(externalDevice, externalDeviceComponentDtoList));
+            selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(externalDevice, externalDeviceOptionComponentList));
         }
 
-        return externalDeviceOptionDtoList;
+        return selectiveOptionAdditionalDtoList;
     }
 
-    public List<InternalDeviceOptionDto> getAllInternalDeviceOption() {
-        List<InternalDeviceOptionDto> internalDeviceOptionDtoList = new ArrayList<>();
+    public List<SelectiveOptionAdditionalDto> getAllInternalDeviceOption() {
+        List<SelectiveOptionAdditionalDto> selectiveOptionAdditionalDtoList = new ArrayList<>();
 
         List<InternalDeviceOption> internalDeviceList = selectiveOptionRepository.findAllInternalDevice();
 
         for (InternalDeviceOption internalDevice : internalDeviceList) {
-            List<InternalDeviceOptionComponentDto> internalDeviceComponentDtoList = new ArrayList<>();
-            List<InternalDeviceOptionComponent> internalDeviceComponentList = selectiveOptionRepository.findAllInternalDeviceComponentBySystemOptionId(internalDevice.getId());
+            List<InternalDeviceOptionComponent> internalDeviceOptionComponentList = selectiveOptionRepository.findAllInternalDeviceComponentBySystemOptionId(internalDevice.getId());
 
-            for (InternalDeviceOptionComponent internalDeviceComponent : internalDeviceComponentList) {
-                internalDeviceComponentDtoList.add(new InternalDeviceOptionComponentDto(internalDeviceComponent));
-            }
-
-            internalDeviceOptionDtoList.add(new InternalDeviceOptionDto(internalDevice, internalDeviceComponentDtoList));
+            selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(internalDevice, internalDeviceOptionComponentList));
         }
 
-        return internalDeviceOptionDtoList;
+        return selectiveOptionAdditionalDtoList;
     }
 }
