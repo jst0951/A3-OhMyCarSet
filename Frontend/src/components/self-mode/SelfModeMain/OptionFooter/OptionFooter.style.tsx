@@ -73,7 +73,7 @@ export const CompleteButtonContainer = styled.div`
   height: 46px;
 `;
 
-export const PrevButton = styled.div`
+export const PrevButton = styled.div<{ $disable: boolean }>`
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -82,4 +82,10 @@ export const PrevButton = styled.div`
   color: ${colors.coolGrey003};
 
   cursor: pointer;
+
+  ${({ $disable }) =>
+    $disable &&
+    `
+      pointer-events: none;
+  `}
 `;

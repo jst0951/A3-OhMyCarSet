@@ -42,6 +42,7 @@ export default function SelfModeSingle() {
     try {
       const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
+      setSelectedOption(1);
     } catch (error) {
       console.error('Error fetching core option data:', error);
     }
@@ -55,7 +56,6 @@ export default function SelfModeSingle() {
     fetchStepData();
 
     // 초기화
-    setSelectedOption(1);
   }, [selfModeStep]);
 
   return (

@@ -23,6 +23,12 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
     setShowEstimate((prev) => !prev);
   };
 
+  const handleClickPrev = () => {
+    if (selfModeStep !== 1) {
+      setSelfModeStep((prev) => prev - 1);
+    }
+  };
+
   const handleClickNext = () => {
     setSelectOptionList((prev) =>
       updateSelectList({
@@ -46,7 +52,9 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
             <Style.TotalPrice>{dummyPrice.toLocaleString()} 원</Style.TotalPrice>
           </Style.TotalPriceContainer>
           <Style.CompleteButtonContainer>
-            <Style.PrevButton>이전</Style.PrevButton>
+            <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
+              이전
+            </Style.PrevButton>
             <RectButton type="recommended" page="self" onClick={handleClickNext}>
               선택완료
             </RectButton>
