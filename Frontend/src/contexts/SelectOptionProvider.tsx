@@ -4,7 +4,7 @@ export type SelectOptionData = {
   id: number;
   stepName: string;
   selectedName: string | null;
-  price: number | null;
+  price: number;
   imgSrc: string | null;
 };
 
