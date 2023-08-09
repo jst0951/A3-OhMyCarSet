@@ -15,7 +15,8 @@ export default function SelfModeNav() {
         {optionList.map((option) => (
           <Style.NavCategoryContainer
             key={option.id}
-            $active={selfModeStep === option.id}
+            $active={option.id === selfModeStep}
+            $disabled={option.id > selfModeStep} // TO DO : 값이 있으면 클릭되게
             onClick={() => handleClickOption(option.id)}
           >
             {`0${option.id} ${option.name}`}

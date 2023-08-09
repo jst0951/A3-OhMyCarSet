@@ -15,7 +15,7 @@ export const SelfModeNavContainer = styled.div`
   text-align: center;
 `;
 
-export const NavCategoryContainer = styled.div<{ $active: boolean }>`
+export const NavCategoryContainer = styled.div<{ $active: boolean; $disabled: boolean }>`
   width: 120px;
   padding-top: 2px;
 
@@ -26,6 +26,11 @@ export const NavCategoryContainer = styled.div<{ $active: boolean }>`
     $active &&
     `${headMedium5}
     color: ${colors.mainHyundaiBlue};
+  `}
+
+  ${({ $disabled }) =>
+    $disabled &&
+    `pointer-events: none;
   `}
 `;
 
