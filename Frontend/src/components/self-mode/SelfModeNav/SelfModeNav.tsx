@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import * as Style from './SelfModeNav.style';
 import optionList from '@/asset/data/optionList.json';
+import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 
 export default function SelfModeNav() {
-  const [activeCategory, setActiveCategory] = useState<number>(1);
+  const { selfModeStep, setSelfModeStep } = useSelfModeContext();
 
   const handleClickOption = (selectedOption: number) => {
-    setActiveCategory(selectedOption);
+    setSelfModeStep(selectedOption);
   };
 
   return (
@@ -15,13 +15,14 @@ export default function SelfModeNav() {
         {optionList.map((option) => (
           <Style.NavCategoryContainer
             key={option.id}
-            $active={activeCategory === option.id}
+            $active={option.id === selfModeStep}
+            $disabled={option.id > selfModeStep} // TO DO : 값이 있으면 클릭되게
             onClick={() => handleClickOption(option.id)}
           >
             {`0${option.id} ${option.name}`}
           </Style.NavCategoryContainer>
         ))}
-        <Style.CategoryActiveBorder $activeCategory={activeCategory} />
+        <Style.CategoryActiveBorder $activeCategory={selfModeStep} />
         <Style.NavBottomBorder />
       </Style.SelfModeNavContainer>
     </>

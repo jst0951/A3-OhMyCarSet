@@ -1,13 +1,12 @@
 import { colors } from '@/style/theme';
-import { bodyMedium3, bodyRegular2, headMedium2 } from '@/style/typefaces';
+import { bodyMedium3, bodyRegular2, bodyRegular3, headMedium2 } from '@/style/typefaces';
 import { css, styled } from 'styled-components';
 
 const inactiveOptionCss = css`
   color: ${colors.coolGrey003};
 `;
 
-export const OptionItemContainer = styled.div<{ $isActive: boolean; $showMore: boolean }>`
-  position: relative;
+export const ItemContainer = styled.div<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -19,8 +18,7 @@ export const OptionItemContainer = styled.div<{ $isActive: boolean; $showMore: b
   color: ${colors.mainHyundaiBlue};
 
   cursor: pointer;
-  height: 155px;
-  transition: height 2s ease;
+  min-height: 155px;
 
   ${({ $isActive }) =>
     !$isActive &&
@@ -30,38 +28,8 @@ export const OptionItemContainer = styled.div<{ $isActive: boolean; $showMore: b
       color: ${colors.coolGrey003}
   `}
 
-  ${({ $showMore }) =>
-    $showMore
-      ? `
-     height: 315px;
-     transition: height 0.5s linear;
-     animation: show-item 0.5s linear forwards;
-
-  `
-      : `
-    transition: height 0.3s linear;
-    overflow: hidden;
-  `}
-
   & > svg {
     overflow: visible;
-  }
-
-  @keyframes show-item {
-    from {
-      overflow: hidden;
-    }
-    to {
-      overflow: visible;
-    }
-  }
-  @keyframes hide-item {
-    from {
-      overflow: visible;
-    }
-    to {
-      overflow: hidden;
-    }
   }
 `;
 
@@ -79,15 +47,50 @@ export const OptionName = styled.div<{ $isActive: boolean }>`
   ${({ $isActive }) => !$isActive && inactiveOptionCss}
 `;
 
-export const OptionBottomContainer = styled.div<{ $isActive: boolean }>`
+export const ShowMoreWrapper = styled.div<{ $showMore: boolean }>`
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  opacity: ${({ $showMore }) => ($showMore ? 1 : 0)};
+  transition:
+    height 0.5s,
+    opacity 0.5s;
+`;
+
+export const ShowMoreContainer = styled.div`
   position: absolute;
-  left: 0;
-  bottom: 0;
+  margin-top: 10px;
+  padding-bottom: 13px;
+`;
+
+export const ShowMoreMainText = styled.div`
+  padding: 12px 0 17px;
+  border-top: 1px solid ${colors.coolGrey001};
+
+  ${bodyRegular3}
+  line-height: 16.8px;
+  color: ${colors.coolGreyBlack};
+
+  word-break: keep-all;
+`;
+
+export const ShowMoreSubText = styled.div`
+  padding: 12px;
+  /* margin-bottom: 13px; */
+  border-radius: 6px;
+  background-color: #f3f3f3;
+
+  ${bodyRegular3}
+  color: #4b4b4b;
+  line-height: 20px;
+  white-space: pre-line;
+`;
+
+export const OptionBottomContainer = styled.div<{ $isActive: boolean }>`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 13px 20px 20px;
-  border-radius: 6px;
+  padding-top: 13px;
   background-color: ${({ $isActive }) => ($isActive ? colors.hyundaiWhite : colors.coolGrey001)};
   color: ${({ $isActive }) => ($isActive ? colors.mainHyundaiBlue : colors.coolGrey003)};
 `;
@@ -100,6 +103,7 @@ export const ShowMoreButton = styled.div<{ $isActive: boolean; $showMore: boolea
   display: flex;
   align-items: center;
   gap: 2px;
+  /* z-index: 1; */
 
   ${bodyMedium3}
   color: ${colors.coolGrey003};

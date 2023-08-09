@@ -77,10 +77,10 @@ const typeStyle = css<Props>`
   }}
 `;
 
-const RectButton = styled.button<Props>`
+const RectButtonBase = styled.button<Props>`
   border-radius: 6px;
   ${pageStyle};
   ${typeStyle};
 `;
 
-export default RectButton;
+export default RectButtonBase;
