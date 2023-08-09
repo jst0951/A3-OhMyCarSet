@@ -34,9 +34,9 @@ public class DefaultOptionService {
 
         List<DefaultOptionDto> defaultOptionDtoList = new ArrayList<>();
         List<Trim> trimList = trimRepository.findAll();
+        List<DefaultCategory> defaultCategoryList = defaultCategoryRepository.findAll();
 
         for (Trim trim : trimList) {
-            List<DefaultCategory> defaultCategoryList = defaultCategoryRepository.findAll();
             List<DefaultOptionCategoryDto> defaultOptionCategoryDtoList = new ArrayList<>();
 
             for(DefaultCategory defaultCategory : defaultCategoryList) {
