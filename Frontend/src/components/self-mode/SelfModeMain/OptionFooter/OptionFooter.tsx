@@ -52,7 +52,7 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
             </RectButton>
           </Style.CompleteButtonContainer>
         </Style.OptionFooterWrapper>
-        <Estimate show={showEstimate} />
+        <Estimate show={showEstimate} onClick={handleClickEstimate} />
       </Style.OptionFooterContainer>
     </>
   );

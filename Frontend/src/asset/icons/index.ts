@@ -10,3 +10,4 @@ export { ReactComponent as CheckIcon } from './check_icon.svg';
 export { ReactComponent as UncheckIcon } from './uncheck_icon.svg';
 export { ReactComponent as OptionShowMoreIcon } from './option_show_more.svg';
 export { ReactComponent as TotalPriceIcon } from './total_price_icon.svg';
+export { ReactComponent as CloseIcon } from './close_icon.svg';
