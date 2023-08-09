@@ -22,11 +22,13 @@ interface DefaultOptionProps {
   defaultOption: DefaultOption[];
 }
 
+const MAX_ITEM_NUM = 5;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
 export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
   const [selectedCategory, setSelectedCategory] = useState(-1);
   const [showMore, setShowMore] = useState('none');
+  const itemLength = defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length;
 
   const moreEventHandler = () => {
     showMore === 'none' ? setShowMore('flex') : setShowMore('none');
@@ -70,7 +72,13 @@ export default function DefaultOption({ defaultOption }: DefaultOptionProps) {
             </Style.ItemLine>
           ))}
         </Style.OptionContainer>
-        <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
+        {selectedCategory === -1 ? (
+          <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
+        ) : (
+          itemLength > MAX_ITEM_NUM && (
+            <Style.MoreButtonContainer onClick={moreEventHandler}>더보기</Style.MoreButtonContainer>
+          )
+        )}
       </Style.Container>
     </>
   );
