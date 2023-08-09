@@ -20,32 +20,32 @@ public class SelectiveOptionController {
     }
 
     @GetMapping(value = "/selective_option/powertrain")
-    public List<PowerTrainDto> getAllPowerTrain() {
+    public List<SelectiveOptionDto> getAllPowerTrain() {
         return selectiveOptionService.getAllPowerTrainOption();
     }
 
     @GetMapping(value = "/selective_option/wd")
-    public List<WDOptionDto> getAllWD() {
+    public List<SelectiveOptionDto> getAllWD() {
         return selectiveOptionService.getAllWDOption();
     }
 
     @GetMapping(value = "/selective_option/body")
-    public List<BodyOptionDto> getAllBody() {
+    public List<SelectiveOptionDto> getAllBody() {
         return selectiveOptionService.getAllBodyOption();
     }
 
     @GetMapping(value = "/selective_option/exterior_color")
-    public List<ExteriorColorOptionDto> getAllExteriorColor() {
+    public List<SelectiveOptionDto> getAllExteriorColor() {
         return selectiveOptionService.getAllExteriorColorOption();
     }
 
     @GetMapping(value = "/selective_option/interior_color")
-    public List<InteriorColorOptionDto> getAllInteriorColor() {
+    public List<SelectiveOptionDto> getAllInteriorColor() {
         return selectiveOptionService.getAllInteriorColorOption();
     }
 
     @GetMapping(value = "/selective_option/wheel")
-    public List<WheelOptionDto> getAllWheel() {
+    public List<SelectiveOptionDto> getAllWheel() {
         return selectiveOptionService.getAllWheelOption();
     }
 
