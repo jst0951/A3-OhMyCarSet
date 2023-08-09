@@ -1,6 +1,7 @@
 import SelfModeProvider from '@/contexts/SelfModeProvider';
 import { createElement } from 'react';
 import Router from './routes/Router';
+import SelectOptionProvider from './contexts/SelectOptionProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -18,7 +19,7 @@ export default function App() {
     );
   return (
     <>
-      <AppProvider contexts={[SelfModeProvider]}>
+      <AppProvider contexts={[SelfModeProvider, SelectOptionProvider]}>
         <Router />
       </AppProvider>
     </>
