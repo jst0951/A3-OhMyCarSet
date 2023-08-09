@@ -1,4 +1,4 @@
-export function fetchData(endpoint: string) {
+export default function fetchData(endpoint: string) {
   const PromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
     method: 'GET',
   })

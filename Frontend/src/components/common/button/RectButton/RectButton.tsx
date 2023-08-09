@@ -1,4 +1,3 @@
-import React from 'react';
 import RectButtonBase from './RectButton.style';
 
 type buttonType = 'recommended' | 'notrecommended' | 'etc';

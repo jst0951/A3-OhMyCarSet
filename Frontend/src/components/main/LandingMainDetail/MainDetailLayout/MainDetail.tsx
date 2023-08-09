@@ -1,4 +1,4 @@
-import { fetchData } from '@/apis/fetchData';
+import fetchData from '@/apis/fetchData';
 import { useEffect, useState } from 'react';
 import * as Style from './MainDetail.style';
 import RectButton from '@/components/common/button/RectButton/RectButton';

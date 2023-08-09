@@ -1,8 +1,8 @@
 import Header from './Header/Header';
 import Main from './MainDetailLayout/MainDetail';
 import { useState, useEffect } from 'react';
-import { fetchData } from '@/apis/fetchData';
 import * as Style from './LandingMainDetail.style';
+import fetchData from '@/apis/fetchData';
 
 type HeaderData = {
   id: number;

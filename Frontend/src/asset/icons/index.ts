@@ -6,3 +6,7 @@ export { ReactComponent as HeaderMoreIcon } from './more_icon.svg';
 export { ReactComponent as ArrowRightIcon } from './arrow_right.svg';
 export { ReactComponent as ShowMoreIcon } from './show_more.svg';
 export { ReactComponent as ArrowBottomIcon } from './arrow_bottom.svg';
+export { ReactComponent as CheckIcon } from './check_icon.svg';
+export { ReactComponent as UncheckIcon } from './uncheck_icon.svg';
+export { ReactComponent as OptionShowMoreIcon } from './option_show_more.svg';
+export { ReactComponent as TotalPriceIcon } from './total_price_icon.svg';

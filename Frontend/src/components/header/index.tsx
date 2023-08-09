@@ -28,7 +28,7 @@ export default function Header() {
           <HeaderLeftContainer>
             <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton type="default" />
+            <ModeButton type="self" />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />

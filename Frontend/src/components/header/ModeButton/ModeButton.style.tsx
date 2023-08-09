@@ -10,7 +10,7 @@ export const HeaderModeContainer = styled.div<ModeButtonType>`
 
   ${headMedium3}
   white-space: pre;
-  color: ${(props) => (props.type === 'self' ? colors.subActiveBlue : colors.coolGreyBlack)};
+  color: ${(props) => (props.type === 'guide' ? colors.subActiveBlue : colors.coolGreyBlack)};
 
   cursor: pointer;
 `;
