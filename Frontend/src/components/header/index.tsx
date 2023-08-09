@@ -1,14 +1,29 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import ModeButton from './ModeButton/ModeButton';
 import DictionaryButton from './DictionaryButton/DictionaryButton';
 import CarModelButton from './CarModelButton/CarModelButton';
 import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
+import { colors } from '@/style/theme';
+
+interface ContainerProps {
+  scrollPosition: number;
+}
 
 export default function Header() {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  }, []);
+
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo />
@@ -26,12 +41,12 @@ export default function Header() {
   );
 }
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<ContainerProps>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-
+  background-color: ${(props) => (props.scrollPosition < 100 ? null : colors.hyundaiGrey001)};
   width: 100vw;
 `;
 

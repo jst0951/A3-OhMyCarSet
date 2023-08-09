@@ -34,16 +34,16 @@ const typeStyle = css<Props>`
     }
     return css`
       ${bodyMedium2};
-      background-color: ${colors.coolGrey001};
-      color: ${colors.coolGrey003};
+      background-color: ${colors.mainHyundaiBlue};
+      color: ${colors.hyundaiWhite};
     `;
   }}
 `;
 
-const RectFilterButton = styled.button<Props>`
+const RectFilterButtonBase = styled.button<Props>`
   border-radius: 6px;
   ${pageStyle};
   ${typeStyle};
 `;
 
-export default RectFilterButton;
+export default RectFilterButtonBase;

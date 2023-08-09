@@ -2,20 +2,20 @@ import { styled } from 'styled-components';
 import { bodyRegular2 } from '@/style/typefaces';
 import { colors } from '@/style/theme';
 
-export const MainHeaderTrimContainer = styled.div`
+export const HeaderTrimContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-export const MainHeaderItemContainer = styled.div`
+export const HeaderItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 `;
 
-export const MainHeaderItemName = styled.div`
+export const HeaderItemName = styled.div`
   color: ${colors.coolGreyBlack};
   font-family: 'Hyundai Sans Head Medium';
   font-size: 28px;
@@ -25,11 +25,11 @@ export const MainHeaderItemName = styled.div`
   letter-spacing: -0.84px;
 `;
 
-export const MainHeaderItemDescription = styled.div`
+export const HeaderItemDescription = styled.div`
   ${bodyRegular2};
 `;
 
-export const MainHeaderItemBest = styled.div`
+export const HeaderItemBest = styled.div`
   color: #ff4d4d;
   font-family: 'Hyundai Sans Head Medium';
   font-size: 14px;

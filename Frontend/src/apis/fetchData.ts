@@ -1,5 +1,5 @@
-export function getDetailData(endpoint: string) {
-  const landingPromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
+export function fetchData(endpoint: string) {
+  const PromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
     method: 'GET',
   })
     .then((response) => {
@@ -10,5 +10,5 @@ export function getDetailData(endpoint: string) {
     })
     .catch((error) => console.log(error));
 
-  return landingPromiseData;
+  return PromiseData;
 }
