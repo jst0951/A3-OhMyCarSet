@@ -2,6 +2,9 @@ package com.softeer2nd.ohmycarset.controller;
 
 import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.SelectiveOptionTagDto;
 import com.softeer2nd.ohmycarset.service.TagService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,21 +49,25 @@ public class TagController {
     }
 
     @GetMapping(value = "/tag/system")
+    @Cacheable(value = "purchaseTagSystemOption")
     public List<SelectiveOptionTagDto> getPurchaseTagSystemOption() {
         return tagService.getPurchaseTagSystemOption();
     }
 
     @GetMapping(value = "/tag/temperature")
+    @Cacheable(value = "purchaseTagTemperatureOption")
     public List<SelectiveOptionTagDto> getPurchaseTagTemperatureOption() {
         return tagService.getPurchaseTagTemperatureOption();
     }
 
     @GetMapping(value = "/tag/external_device")
+    @Cacheable(value = "purchaseTagExternalDeviceOption")
     public List<SelectiveOptionTagDto> getPurchaseTagExternalDeviceOption() {
         return tagService.getPurchaseTagExternalDeviceOption();
     }
 
     @GetMapping(value = "/tag/internal_device")
+    @Cacheable(value = "purchaseTagInternalDeviceOption")
     public List<SelectiveOptionTagDto> getPurchaseTagInternalDeviceOption() {
         return tagService.getPurchaseTagInternalDeviceOption();
     }
