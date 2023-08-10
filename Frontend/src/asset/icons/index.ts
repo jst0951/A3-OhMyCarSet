@@ -11,3 +11,6 @@ export { ReactComponent as UncheckIcon } from './uncheck_icon.svg';
 export { ReactComponent as OptionShowMoreIcon } from './option_show_more.svg';
 export { ReactComponent as TotalPriceIcon } from './total_price_icon.svg';
 export { ReactComponent as CloseIcon } from './close_icon.svg';
+export { ReactComponent as SmileBeforeIcon } from './smile_before.svg';
+export { ReactComponent as SmileAfterIcon } from './smile_after.svg';
+export { ReactComponent as FeedbackIcon } from './feedback_icon.svg';
