@@ -7,7 +7,7 @@ export const TitleContainer = styled.div`
 `;
 
 export const Title = styled.div`
-  color: ${colors.hyundaiBlack};
+  color: ${colors.coolGreyBlack};
   text-align: center;
   font-family: 'Hyundai Sans Head Medium';
   font-size: 40px;
@@ -34,5 +34,5 @@ export const TrimContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 31px 0 39px;
-  gap: 130px;
+  /* gap: 130px; */
 `;

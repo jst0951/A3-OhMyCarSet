@@ -6,6 +6,7 @@ export const HeaderTrimContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 256px;
 `;
 
 export const HeaderItemContainer = styled.div`
@@ -27,6 +28,7 @@ export const HeaderItemName = styled.div`
 
 export const HeaderItemDescription = styled.div`
   ${bodyRegular2};
+  color: ${colors.coolGreyBlack};
 `;
 
 export const HeaderItemBest = styled.div`
