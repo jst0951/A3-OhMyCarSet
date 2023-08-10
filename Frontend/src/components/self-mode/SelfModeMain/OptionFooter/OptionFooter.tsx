@@ -6,14 +6,15 @@ import Estimate from '../Estimate/Estimate';
 import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { getTotalPrice } from '@/utils/getTotalPrice';
 
 interface OptionFooterProps {
   selectedData: OptionData;
+  tempTotal: number;
 }
 
-export default function OptionFooter({ selectedData }: OptionFooterProps) {
+export default function OptionFooter({ selectedData, tempTotal }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
+  const selectOptionState = useSelectOptionState();
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
 
   const handleClickEstimate = () => {
@@ -27,7 +28,6 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
   };
 
   const selectOptionDispatch = useSelectOptionDispatch();
-  const selectOptionState = useSelectOptionState();
 
   const handleClickNext = (optionId: number, selectedData: OptionData) => {
     selectOptionDispatch({
@@ -54,7 +54,7 @@ export default function OptionFooter({ selectedData }: OptionFooterProps) {
             <Style.TotalPriceButton onClick={handleClickEstimate} $show={showEstimate}>
               총 견적금액 <Icon icon="TotalPriceIcon" size={16} />
             </Style.TotalPriceButton>
-            <Style.TotalPrice>{getTotalPrice(selectedData).toLocaleString()} 원</Style.TotalPrice>
+            <Style.TotalPrice>{tempTotal.toLocaleString()} 원</Style.TotalPrice>
           </Style.TotalPriceContainer>
           <Style.CompleteButtonContainer>
             <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>

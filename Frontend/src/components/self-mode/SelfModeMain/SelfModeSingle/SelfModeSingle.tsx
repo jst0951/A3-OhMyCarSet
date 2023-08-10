@@ -5,6 +5,7 @@ import fetchData from '@/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionData } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
+import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
 const categoryNameList = [
   {
@@ -35,6 +36,7 @@ const categoryNameList = [
 
 export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
+  const selectOptionState = useSelectOptionState();
   const [stepData, setStepData] = useState<OptionData[]>([]);
   const [selectedOption, setSelectedOption] = useState<number>(1);
 
@@ -42,6 +44,7 @@ export default function SelfModeSingle() {
     try {
       const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
+      // 옵션 초기화
       setSelectedOption(1);
     } catch (error) {
       console.error('Error fetching core option data:', error);
@@ -54,8 +57,6 @@ export default function SelfModeSingle() {
 
   useEffect(() => {
     fetchStepData();
-
-    // 초기화
   }, [selfModeStep]);
 
   return (
@@ -84,7 +85,10 @@ export default function SelfModeSingle() {
               />
             ))}
           </Style.OptionContainer>
-          <OptionFooter selectedData={stepData[selectedOption - 1]} />
+          <OptionFooter
+            selectedData={stepData[selectedOption - 1]}
+            tempTotal={selectOptionState.totalPrice + stepData[selectedOption - 1]?.price}
+          />
         </Style.SelfModeOption>
       </Style.SelfModeSingleContainer>
     </>
