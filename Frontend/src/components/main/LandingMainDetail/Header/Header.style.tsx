@@ -3,7 +3,7 @@ import { colors } from '@/style/theme';
 
 export const TitleContainer = styled.div`
   width: 100vw;
-  background-color: ${colors.hyundaiGrey001};
+  background-color: ${colors.coolGrey001};
 `;
 
 export const Title = styled.div`
@@ -15,8 +15,7 @@ export const Title = styled.div`
   font-weight: 500;
   line-height: 52px;
   letter-spacing: -1.6px;
-  padding-top: 65px;
-  padding-bottom: 60px;
+  padding: 65px 0 86px;
 `;
 
 export const Container = styled.div`
@@ -28,13 +27,12 @@ export const Container = styled.div`
   left: 0;
   z-index: 100;
   width: 100vw;
-  height: 158px;
-  background-color: ${colors.hyundaiGrey001};
+  background-color: ${colors.coolGrey001};
 `;
 
 export const TrimContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 58px;
+  margin: 31px 0 39px;
   gap: 130px;
 `;

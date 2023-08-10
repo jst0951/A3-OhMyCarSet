@@ -21,7 +21,7 @@ export const HeaderItemName = styled.div`
   font-size: 28px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  line-height: 30px;
   letter-spacing: -0.84px;
 `;
 
@@ -35,7 +35,7 @@ export const HeaderItemBest = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  line-height: 15px;
   letter-spacing: -0.42px;
   margin-top: -26px;
   margin-bottom: 8px;

@@ -42,7 +42,7 @@ const HeaderContainer = styled.div<{ $scrollPosition: number }>`
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.hyundaiGrey001)};
+  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.coolGrey001)};
   transition: all 0.3s ease;
   width: 100vw;
 `;
