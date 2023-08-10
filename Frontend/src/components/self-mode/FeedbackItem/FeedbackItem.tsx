@@ -1,16 +1,51 @@
 import Icon from '@/components/common/Icon';
 import * as S from './FeedbackItem.style';
+import { OptionData } from '../SelfModeMain/SelfModeMain';
+import { useEffect, useState } from 'react';
+import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 
-export default function FeedbackItem() {
+type FeedbackProps = {
+  show: boolean;
+  optionData: OptionData;
+};
+
+export default function FeedbackItem({ show, optionData }: FeedbackProps) {
+  const { selfModeStep } = useSelfModeContext();
+  const [showFirstIcon, setShowFirstIcon] = useState<boolean>(false);
+  const [showSecondIcon, setShowSecondIcon] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (show) {
+      const timer1 = setTimeout(() => {
+        setShowFirstIcon(true);
+      }, 500);
+
+      const timer2 = setTimeout(() => {
+        setShowSecondIcon(true);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+  }, [show]);
+
+  useEffect(() => {
+    setShowFirstIcon(false);
+    setShowSecondIcon(false);
+  }, [selfModeStep]);
+
   return (
     <>
-      <S.FeedbackContainer>
-        <Icon icon="SmileBeforeIcon" />
-        <S.Title>디젤 엔진은 효율이 좋아요!</S.Title>
-        <S.Description>
-          알콘(alcon) 단조 브레이크 & 20인치 휠 패키지는 뛰어난 제동력이 강점이에요! 안전과 디자인을 모두 원하신다면,
-          탁월한 선택입니다.
-        </S.Description>
+      <S.FeedbackContainer $show={showFirstIcon}>
+        <Icon icon="SmileBeforeIcon" size={30} />
+        <S.NextIcon $show={showSecondIcon}>
+          <Icon icon="SmileAfterIcon" size={30} />
+          <Icon icon="FeedbackIcon" size={30} />
+        </S.NextIcon>
+        <S.Title>{optionData.mainFeedback}</S.Title>
+        <S.Description>{optionData.subFeedback}</S.Description>
       </S.FeedbackContainer>
     </>
   );

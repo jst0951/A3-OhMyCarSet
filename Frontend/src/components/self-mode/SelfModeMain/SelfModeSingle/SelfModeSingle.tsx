@@ -6,7 +6,6 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionData } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
-import FeedbackItem from '../../FeedbackItem/FeedbackItem';
 
 const categoryNameList = [
   {
@@ -42,7 +41,7 @@ export default function SelfModeSingle() {
   const [tempTotal, setTempTotal] = useState<number>(0);
   const [prevTotal, setPrevTotal] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(1);
-  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [showFeedback, setShowFeedback] = useState<number>(0);
 
   const fetchStepData = async () => {
     try {
@@ -66,6 +65,7 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
+    console.log(prevTotal, tempTotal);
     setPrevTotal(tempTotal);
     setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
   }, [selectedOption]);
@@ -93,12 +93,16 @@ export default function SelfModeSingle() {
                 optionData={data}
                 isActive={selectedOption === data.id}
                 onClick={() => handleClickOption(data.id)}
+                showFeedback={showFeedback}
               />
             ))}
-            {/* 테스트용 */}
-            <FeedbackItem />
           </Style.OptionContainer>
-          <OptionFooter selectedData={stepData[selectedOption - 1]} prevTotal={prevTotal} tempTotal={tempTotal} />
+          <OptionFooter
+            selectedData={stepData[selectedOption - 1]}
+            prevTotal={prevTotal}
+            tempTotal={tempTotal}
+            setShowFeedback={setShowFeedback}
+          />
         </Style.SelfModeOption>
       </Style.SelfModeSingleContainer>
     </>

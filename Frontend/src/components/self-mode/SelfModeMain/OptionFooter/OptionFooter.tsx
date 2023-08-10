@@ -1,9 +1,9 @@
 import Icon from '@/components/common/Icon';
 import * as Style from './OptionFooter.style';
 import RectButton from '@/components/common/button/RectButton/RectButton.style';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, useEffect, useRef, useState } from 'react';
 import Estimate from '../Estimate/Estimate';
-import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
@@ -12,11 +12,11 @@ interface OptionFooterProps {
   selectedData: OptionData;
   prevTotal: number;
   tempTotal: number;
+  setShowFeedback: Dispatch<React.SetStateAction<number>>;
 }
 
-export default function OptionFooter({ selectedData, prevTotal, tempTotal }: OptionFooterProps) {
+export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
-  const selectOptionState = useSelectOptionState();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
@@ -34,6 +34,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
   const selectOptionDispatch = useSelectOptionDispatch();
 
   const handleClickNext = (optionId: number, selectedData: OptionData) => {
+    setShowFeedback(selectedData.id);
     selectOptionDispatch({
       type: 'UPDATE_LIST',
       payload: {
@@ -45,8 +46,10 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
         },
       },
     });
-    setSelfModeStep((prev) => prev + 1);
-    console.log(selectOptionState);
+    setTimeout(() => {
+      setShowFeedback(0);
+      setSelfModeStep((prev) => prev + 1);
+    }, 2000);
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
