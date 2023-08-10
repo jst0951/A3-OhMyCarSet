@@ -1,11 +1,16 @@
 import { styled } from 'styled-components';
 import { colors } from '@/style/theme';
-export const MainContainer = styled.div``;
-
-export const MainLeftContainer = styled.div`
-  margin-top: 240px;
-  margin-left: 128px;
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10vw;
+  margin-right: 10vw;
 `;
+
+export const MainLeftContainer = styled.div``;
 
 export const MainRightContainer = styled.div``;
 

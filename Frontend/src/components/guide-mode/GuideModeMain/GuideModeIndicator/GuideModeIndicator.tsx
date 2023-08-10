@@ -9,16 +9,12 @@ export default function GuideModeIndicator() {
   };
 
   return (
-    <Style.GuideModeIndicatorContainer>
+    <Style.IndicatorContainer>
       {guideDescriptionData.map((data) => (
-        <Style.GuideModeIndicator
-          key={data.page}
-          $selected={data.page === GuideModeStep}
-          onClick={() => handleClick(data.page)}
-        >
+        <Style.Indicator key={data.page} $selected={data.page === GuideModeStep} onClick={() => handleClick(data.page)}>
           {data.page}
-        </Style.GuideModeIndicator>
+        </Style.Indicator>
       ))}
-    </Style.GuideModeIndicatorContainer>
+    </Style.IndicatorContainer>
   );
 }

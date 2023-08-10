@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 export type SelectTagData = {
   id: number;
   stepName: string;
-  age?: number;
+  age?: string;
   sex?: string;
   keyword1?: string;
   keyword2?: string;
@@ -34,7 +34,7 @@ export default function SelectTagProvider({ children }: SelectTagProviderProps) 
     {
       id: 1,
       stepName: '연령대',
-      age: 0,
+      age: '선택 전',
     },
     {
       id: 2,

@@ -1,13 +1,13 @@
 import { colors } from '@/style/theme';
 import { styled } from 'styled-components';
 
-export const GuideModeIndicatorContainer = styled.div`
+export const IndicatorContainer = styled.div`
   display: inline-flex;
   align-items: flex-start;
   gap: 16px;
 `;
 
-export const GuideModeIndicator = styled.div<{ $selected: boolean }>`
+export const Indicator = styled.div<{ $selected: boolean }>`
   display: flex;
   width: 33px;
   height: 33px;
