@@ -141,9 +141,8 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countBySystemOptionId(Long systemOptionId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_system_map AS M ON A.id=M.purchase_id\n" +
-                "WHERE M.s_option_id=?";
+        String sql = "SELECT COUNT(*) FROM purchase_system_map\n" +
+                "WHERE purchase_system_map.s_option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, systemOptionId);
     }
 
@@ -157,9 +156,8 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countByTemperatureOptionId(Long temperatureOptionId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_temperature_map AS M ON A.id=M.purchase_id\n" +
-                "WHERE M.t_option_id=?";
+        String sql = "SELECT COUNT(*) FROM purchase_temperature_map\n" +
+                "WHERE purchase_temperature_map.t_option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, temperatureOptionId);
     }
 
@@ -173,9 +171,8 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countByExternalDeviceOptionId(Long externalDeviceOptionId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_external_device_map AS M ON A.id=M.purchase_id\n" +
-                "WHERE M.e_d_option_id=?";
+        String sql = "SELECT COUNT(*) FROM purchase_external_device_map\n" +
+                "WHERE purchase_external_device_map.e_d_option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, externalDeviceOptionId);
     }
 
@@ -189,9 +186,8 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countByInternalDeviceOptionId(Long internalDeviceOptionId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_internal_device_map AS M ON A.id=M.purchase_id\n" +
-                "WHERE M.i_d_option_id=?";
+        String sql = "SELECT COUNT(*) FROM purchase_internal_device_map\n" +
+                "WHERE purchase_internal_device_map.i_d_option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, internalDeviceOptionId);
     }
 
