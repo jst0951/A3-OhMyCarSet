@@ -6,13 +6,15 @@ import Estimate from '../Estimate/Estimate';
 import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
+import CountingAnimation from '@/utils/CountingAnimation';
 
 interface OptionFooterProps {
   selectedData: OptionData;
+  prevTotal: number;
   tempTotal: number;
 }
 
-export default function OptionFooter({ selectedData, tempTotal }: OptionFooterProps) {
+export default function OptionFooter({ selectedData, prevTotal, tempTotal }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
@@ -54,7 +56,12 @@ export default function OptionFooter({ selectedData, tempTotal }: OptionFooterPr
             <Style.TotalPriceButton onClick={handleClickEstimate} $show={showEstimate}>
               총 견적금액 <Icon icon="TotalPriceIcon" size={16} />
             </Style.TotalPriceButton>
-            <Style.TotalPrice>{tempTotal.toLocaleString()} 원</Style.TotalPrice>
+            <Style.TotalPrice>
+              <Style.Price>
+                <CountingAnimation startValue={prevTotal} endValue={tempTotal} duration={1000} />
+              </Style.Price>{' '}
+              원
+            </Style.TotalPrice>
           </Style.TotalPriceContainer>
           <Style.CompleteButtonContainer>
             <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>

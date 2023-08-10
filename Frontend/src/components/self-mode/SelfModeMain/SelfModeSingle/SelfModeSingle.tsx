@@ -39,6 +39,7 @@ export default function SelfModeSingle() {
   const selectOptionState = useSelectOptionState();
   const [stepData, setStepData] = useState<OptionData[]>([]);
   const [tempTotal, setTempTotal] = useState<number>(0);
+  const [prevTotal, setPrevTotal] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(1);
 
   const fetchStepData = async () => {
@@ -48,6 +49,7 @@ export default function SelfModeSingle() {
       // 옵션 초기화
       setSelectedOption(1);
       setTempTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
+      setPrevTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
     } catch (error) {
       console.error('Error fetching core option data:', error);
     }
@@ -62,6 +64,8 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
+    console.log(tempTotal, selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+    setPrevTotal(tempTotal);
     setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
   }, [selectedOption]);
 
@@ -91,7 +95,7 @@ export default function SelfModeSingle() {
               />
             ))}
           </Style.OptionContainer>
-          <OptionFooter selectedData={stepData[selectedOption - 1]} tempTotal={tempTotal} />
+          <OptionFooter selectedData={stepData[selectedOption - 1]} prevTotal={prevTotal} tempTotal={tempTotal} />
         </Style.SelfModeOption>
       </Style.SelfModeSingleContainer>
     </>

@@ -62,8 +62,14 @@ export const TotalPriceButton = styled.div<{ $show: boolean }>`
 `;
 
 export const TotalPrice = styled.div`
+  display: flex;
+  gap: 4px;
   ${headMedium1}
   color: ${colors.coolGreyBlack};
+`;
+
+export const Price = styled.div`
+  width: 118px;
 `;
 
 export const CompleteButtonContainer = styled.div`
