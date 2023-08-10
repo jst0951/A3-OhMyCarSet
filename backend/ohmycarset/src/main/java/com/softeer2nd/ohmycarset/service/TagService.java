@@ -27,20 +27,20 @@ public class TagService {
 
     public List<SelectiveOptionTagDto> getPurchaseTagPowerTrain() {
         // 각 카운트 조회
-        Map<PowerTrainOption, Integer> purchaseCountMap = new HashMap<>();
+        Map<PowerTrainOption, Long> purchaseCountMap = new HashMap<>();
 
         List<PowerTrainOption> powerTrainOptionList = selectiveOptionRepository.findAllPowerTrain();
         for(PowerTrainOption powerTrainOption: powerTrainOptionList) {
-            List<PurchaseHistory> purchaseHistoryList = purchaseHistoryRepository.findAllByPowerTrainOptionId(powerTrainOption.getId());
-            purchaseCountMap.put(powerTrainOption, purchaseHistoryList.size());
+            Long purchaseCount = purchaseHistoryRepository.countByPowerTrainOptionId(powerTrainOption.getId());
+            purchaseCountMap.put(powerTrainOption, purchaseCount);
         }
 
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
-        Double purchaseCountSum = (double) purchaseCountMap.values().stream().mapToInt(Integer::intValue).sum();
+        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
         for(PowerTrainOption powerTrainOption: powerTrainOptionList) {
-            Double purchasePercentage = Float.valueOf(purchaseCountMap.get(powerTrainOption)) / purchaseCountSum * 100;
+            Double purchasePercentage = (double) purchaseCountMap.get(powerTrainOption) / purchaseCountSum * 100;
             selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(powerTrainOption, purchasePercentage));
         }
 
