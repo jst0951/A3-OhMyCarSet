@@ -1,11 +1,14 @@
 import Layout from '@/components/layout/Layout';
 import * as Style from './GuideModePage.style';
+import GuideModeMain from '../../components/guide-mode/GuideModeMain/GuideModeMain';
 
-export default function SelfModePage() {
+export default function GuideModePage() {
   return (
     <>
       <Layout>
-        <Style.GuideModeContainer></Style.GuideModeContainer>
+        <Style.GuideModeContainer>
+          <GuideModeMain />
+        </Style.GuideModeContainer>
       </Layout>
     </>
   );
