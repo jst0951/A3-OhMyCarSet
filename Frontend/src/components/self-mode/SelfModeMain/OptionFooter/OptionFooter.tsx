@@ -1,7 +1,7 @@
 import Icon from '@/components/common/Icon';
 import * as Style from './OptionFooter.style';
 import RectButton from '@/components/common/button/RectButton/RectButton.style';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Estimate from '../Estimate/Estimate';
 import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { OptionData } from '../SelfModeMain';
@@ -17,6 +17,7 @@ interface OptionFooterProps {
 export default function OptionFooter({ selectedData, prevTotal, tempTotal }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
+  const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
 
   const handleClickEstimate = () => {
@@ -47,6 +48,20 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
     console.log(selectOptionState);
   };
 
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (estimateRef.current && !estimateRef.current.contains(event.target as Node)) {
+      setShowEstimate(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
   return (
     <>
       <Style.OptionFooterContainer>
@@ -72,7 +87,9 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
             </RectButton>
           </Style.CompleteButtonContainer>
         </Style.OptionFooterWrapper>
-        <Estimate show={showEstimate} onClick={handleClickEstimate} />
+        <Style.EstimateContainer ref={estimateRef} $show={showEstimate}>
+          <Estimate onClick={handleClickEstimate} tempTotal={tempTotal} />
+        </Style.EstimateContainer>
       </Style.OptionFooterContainer>
     </>
   );
