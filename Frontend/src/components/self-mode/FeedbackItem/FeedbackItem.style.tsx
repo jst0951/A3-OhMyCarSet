@@ -23,14 +23,23 @@ export const FeedbackContainer = styled.div<{ $show: boolean }>`
   }
 `;
 
-export const NextIcon = styled.div<{ $show: boolean }>`
+export const NextIcon = styled.div`
   position: absolute;
   top: 20px;
   left: 20px;
   display: flex;
   align-items: center;
+`;
 
-  & > svg:nth-child(2) {
+export const SecondIcon = styled.div<{ $show: boolean }>`
+  position: relative;
+  width: 30px;
+  height: 30px;
+
+  & > svg {
+    position: absolute;
+    bottom: 4px;
+
     transform: scale(0);
     ${({ $show }) =>
       $show &&

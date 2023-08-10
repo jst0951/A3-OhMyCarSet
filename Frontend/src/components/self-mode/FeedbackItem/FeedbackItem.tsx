@@ -40,9 +40,11 @@ export default function FeedbackItem({ show, optionData }: FeedbackProps) {
     <>
       <S.FeedbackContainer $show={showFirstIcon}>
         <Icon icon="SmileBeforeIcon" size={30} />
-        <S.NextIcon $show={showSecondIcon}>
+        <S.NextIcon>
           <Icon icon="SmileAfterIcon" size={30} />
-          <Icon icon="FeedbackIcon" size={30} />
+          <S.SecondIcon $show={showSecondIcon}>
+            <Icon icon="FeedbackIcon" size={30} />
+          </S.SecondIcon>
         </S.NextIcon>
         <S.Title>{optionData.mainFeedback}</S.Title>
         <S.Description>{optionData.subFeedback}</S.Description>
