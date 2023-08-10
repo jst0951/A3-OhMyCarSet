@@ -16,11 +16,17 @@ export const Trim = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 46px;
 `;
 
 export const OptionContainer = styled.div`
   margin-bottom: 60px;
+`;
+
+export const LineTitle = styled.div`
+  border-bottom: 1px solid ${colors.coolGrey003};
+  padding-bottom: 25px;
+  ${headMedium4};
+  color: ${colors.coolGreyBlack};
 `;
 
 export const interiorColorContainer = styled.div`
@@ -32,12 +38,6 @@ export const exteriorColorContainer = styled.div`
 `;
 
 export const defaultOptionContainer = styled.div``;
-
-export const LineTitle = styled.div`
-  border-bottom: 1px solid ${colors.coolGreyBlack};
-  padding-bottom: 25px;
-  ${headMedium4};
-`;
 
 export const SelfButtonContainer = styled.div`
   display: flex;
@@ -76,6 +76,9 @@ export const GuideButtonLogoContainer = styled.div`
 `;
 
 export const GuideButtonText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: ${colors.coolGreyBlack};
   font-family: 'Hyundai Sans Head Medium';
   font-size: 32px;
@@ -84,5 +87,3 @@ export const GuideButtonText = styled.div`
   line-height: normal;
   letter-spacing: -0.96px;
 `;
-
-export const GuideButtonSVG = styled.div``;

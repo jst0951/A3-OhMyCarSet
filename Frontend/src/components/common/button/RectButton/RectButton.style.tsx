@@ -71,6 +71,7 @@ const typeStyle = css<Props>`
       `;
     }
     return css`
+      ${bodyMedium2}
       background-color: ${colors.mainHyundaiBlue};
       color: ${colors.hyundaiWhite};
     `;

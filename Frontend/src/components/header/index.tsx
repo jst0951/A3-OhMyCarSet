@@ -8,14 +8,18 @@ import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
 
 export default function Header() {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const updateScroll = () => {
+    console.log(window.scrollY);
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+    };
+  }, [scrollPosition]);
 
   return (
     <>
@@ -42,7 +46,7 @@ const HeaderContainer = styled.div<{ $scrollPosition: number }>`
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.hyundaiGrey001)};
+  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.coolGrey001)};
   transition: all 0.3s ease;
   width: 100vw;
 `;

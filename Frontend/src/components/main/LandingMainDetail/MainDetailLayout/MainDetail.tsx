@@ -5,6 +5,7 @@ import Core from './Core/Core';
 import ExteriorColor from './ExteriorColor/ExteriorColor';
 import InteriorColor from './InteriorColor/InteriorColor';
 import DefaultOption from './DefaultOption/DefaultOption';
+import Icon from '@/components/common/Icon';
 
 type TrimData = {
   id: number;
@@ -27,18 +28,22 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
   const mainDetailList = [
     {
       key: 'core',
+      name: '핵심 옵션',
       component: <Core />,
     },
     {
       key: 'exterior',
+      name: '외장 색상',
       component: <ExteriorColor />,
     },
     {
       key: 'interior',
+      name: '내장 색상',
       component: <InteriorColor />,
     },
     {
       key: 'default',
+      name: '기본 포함 품목',
       component: <DefaultOption />,
     },
   ];
@@ -57,7 +62,10 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
         </Style.Trim>
 
         {mainDetailList.map((detail) => (
-          <Style.OptionContainer key={detail.key}>{detail.component}</Style.OptionContainer>
+          <Style.OptionContainer key={detail.key}>
+            <Style.LineTitle>{detail.name}</Style.LineTitle>
+            {detail.component}
+          </Style.OptionContainer>
         ))}
         <Style.SelfButtonContainer>
           {trimData.map((trim) => (
@@ -70,8 +78,10 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
           <Style.GuideButtonInside>
             <Style.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</Style.GuideButtonExplain>
             <Style.GuideButtonLogoContainer>
-              <Style.GuideButtonText>Guide Mode</Style.GuideButtonText>
-              <Style.GuideButtonSVG></Style.GuideButtonSVG>
+              <Style.GuideButtonText>
+                Guide Mode
+                <Icon icon="ArrowRightIcon" size={36} />
+              </Style.GuideButtonText>
             </Style.GuideButtonLogoContainer>
           </Style.GuideButtonInside>
         </Style.GuideButtonContainer>

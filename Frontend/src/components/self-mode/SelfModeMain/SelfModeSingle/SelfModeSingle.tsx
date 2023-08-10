@@ -5,6 +5,7 @@ import fetchData from '@/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionData } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
+import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
 const categoryNameList = [
   {
@@ -35,13 +36,21 @@ const categoryNameList = [
 
 export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
+  const selectOptionState = useSelectOptionState();
   const [stepData, setStepData] = useState<OptionData[]>([]);
+  const [tempTotal, setTempTotal] = useState<number>(0);
+  const [prevTotal, setPrevTotal] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(1);
+  const [showFeedback, setShowFeedback] = useState<number>(0);
 
   const fetchStepData = async () => {
     try {
       const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
+      // 옵션 초기화
+      setSelectedOption(1);
+      setTempTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
+      setPrevTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
     } catch (error) {
       console.error('Error fetching core option data:', error);
     }
@@ -53,10 +62,13 @@ export default function SelfModeSingle() {
 
   useEffect(() => {
     fetchStepData();
-
-    // 초기화
-    setSelectedOption(1);
   }, [selfModeStep]);
+
+  useEffect(() => {
+    console.log(prevTotal, tempTotal);
+    setPrevTotal(tempTotal);
+    setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+  }, [selectedOption]);
 
   return (
     <>
@@ -81,10 +93,16 @@ export default function SelfModeSingle() {
                 optionData={data}
                 isActive={selectedOption === data.id}
                 onClick={() => handleClickOption(data.id)}
+                showFeedback={showFeedback}
               />
             ))}
           </Style.OptionContainer>
-          <OptionFooter selectedData={stepData[selectedOption - 1]} />
+          <OptionFooter
+            selectedData={stepData[selectedOption - 1]}
+            prevTotal={prevTotal}
+            tempTotal={tempTotal}
+            setShowFeedback={setShowFeedback}
+          />
         </Style.SelfModeOption>
       </Style.SelfModeSingleContainer>
     </>

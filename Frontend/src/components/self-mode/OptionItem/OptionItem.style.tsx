@@ -6,33 +6,6 @@ const inactiveOptionCss = css`
   color: ${colors.coolGrey003};
 `;
 
-export const ItemContainer = styled.div<{ $isActive: boolean }>`
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  max-width: 375px;
-  padding: 20px;
-  border-radius: 6px;
-  border: 2px solid ${colors.mainHyundaiBlue};
-  background-color: ${colors.hyundaiWhite};
-  color: ${colors.mainHyundaiBlue};
-
-  cursor: pointer;
-  min-height: 155px;
-
-  ${({ $isActive }) =>
-    !$isActive &&
-    `
-      border: 2px solid ${colors.coolGrey001};
-      background-color: ${colors.coolGrey001};
-      color: ${colors.coolGrey003}
-  `}
-
-  & > svg {
-    overflow: visible;
-  }
-`;
-
 export const SalePercent = styled.div<{ $isActive: boolean }>`
   margin: 10px 0 4px;
   ${bodyRegular2}
@@ -121,4 +94,59 @@ export const ShowMoreButton = styled.div<{ $isActive: boolean; $showMore: boolea
   }
 
   ${({ $isActive }) => !$isActive && `pointer-events: none`}
+`;
+
+export const ItemContainer = styled.div<{ $isActive: boolean }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  max-width: 375px;
+  padding: 20px;
+  border-radius: 6px;
+  border: 2px solid ${colors.mainHyundaiBlue};
+  background-color: ${colors.hyundaiWhite};
+  color: ${colors.mainHyundaiBlue};
+
+  cursor: pointer;
+  min-height: 155px;
+
+  ${({ $isActive }) =>
+    !$isActive &&
+    `
+      border: 2px solid ${colors.coolGrey001};
+      background-color: ${colors.coolGrey001};
+      color: ${colors.coolGrey003}
+
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        border: 2px solid ${colors.coolGrey003};
+        transition: all 0.3s ease-in-out;
+      }
+      &:hover ${SalePercent}, ${OptionPrice} {
+        color: ${colors.mainHyundaiBlue};
+      }
+      &:hover ${OptionName} {
+        color: ${colors.coolGreyBlack};
+      }
+  `}
+
+  & > svg {
+    overflow: visible;
+  }
+`;
+
+export const FeedbackContainer = styled.div<{ $show: boolean }>`
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  opacity: 0;
+
+  pointer-events: none;
+
+  ${({ $show }) =>
+    $show &&
+    `opacity: 1;
+  transition: opacity 0.5s linear;`}
 `;

@@ -31,7 +31,6 @@ export default function ExteriorColor() {
 
   return (
     <>
-      <Style.LineTitle>외장 색상</Style.LineTitle>
       <Style.ExteriorColorContainer>
         {exteriorColor.map((line) => (
           <Style.ExteriorColorItemLine key={line.trimId}>
