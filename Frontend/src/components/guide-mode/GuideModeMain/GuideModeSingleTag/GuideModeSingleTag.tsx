@@ -1,6 +1,6 @@
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 import * as Style from './GuideModeSingleTag.style';
-import guideTagData from '@/asset/data/guideTagData.json';
+import guideSingleTagData from '@/asset/data/guideSingleTagData.json';
 import { CheckIcon } from '@/asset/icons';
 import { UncheckIcon } from '@/asset/icons';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
@@ -10,18 +10,8 @@ export default function GuideModeSingleTag() {
   const [hover, setHover] = useState<boolean>(false);
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();
-
   const currentPage = GuideModeStep - 1;
-  const tagData = guideTagData[currentPage].tagList;
-  let TagList: Array<string> = [];
-
-  if (Array.isArray(tagData)) {
-    TagList = tagData;
-  } else {
-    Object.values(tagData).forEach((tags) => {
-      TagList = TagList.concat(tags);
-    });
-  } //이렇게 type error 잡는게 맞는지...
+  const TagList = guideSingleTagData[currentPage].tagList;
 
   const handleClick = (tag: string) => {
     switch (currentPage) {
