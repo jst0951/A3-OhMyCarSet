@@ -4,7 +4,7 @@ public class DefaultOption {
     private Long id;
     private String name;
     private String imgSrc;
-    private String defCategoryName;
+    private Long defCategoryId;
 
     public Long getId() {
         return id;
@@ -30,11 +30,11 @@ public class DefaultOption {
         this.imgSrc = imgSrc;
     }
 
-    public String getDefCategoryName() {
-        return defCategoryName;
+    public Long getDefCategoryId() {
+        return defCategoryId;
     }
 
-    public void setDefCategoryName(String defCategoryName) {
-        this.defCategoryName = defCategoryName;
+    public void setDefCategoryId(Long defCategoryId) {
+        this.defCategoryId = defCategoryId;
     }
 }
