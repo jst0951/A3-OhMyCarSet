@@ -28,13 +28,13 @@ public interface PurchaseHistoryRepository {
 
     Long countByBodyOptionId(Long bodyOptionId);
 
-    List<PurchaseHistory> findAllByExternalColorOptionId(Long externalColorOptionId);
+    List<PurchaseHistory> findAllByExteriorColorOptionId(Long externalColorOptionId);
 
-    Long countByExternalColorOptionId(Long externalColorOptionId);
+    Long countByExteriorColorOptionId(Long externalColorOptionId);
 
-    List<PurchaseHistory> findAllByInternalColorOptionId(Long internalColorOptionId);
+    List<PurchaseHistory> findAllByInteriorColorOptionId(Long internalColorOptionId);
 
-    Long countByInternalColorOptionId(Long internalColorOptionId);
+    Long countByInteriorColorOptionId(Long internalColorOptionId);
 
     List<PurchaseHistory> findAllByWheelOptionId(Long wheelOptionId);
 

@@ -90,28 +90,28 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public List<PurchaseHistory> findAllByExternalColorOptionId(Long externalColorOptionId) {
+    public List<PurchaseHistory> findAllByExteriorColorOptionId(Long externalColorOptionId) {
         String sql = "SELECT * FROM purchase_history\n" +
                 "WHERE e_color_id=?";
         return jdbcTemplate.query(sql, purchaseHistoryRowMapper, externalColorOptionId);
     }
 
     @Override
-    public Long countByExternalColorOptionId(Long externalColorOptionId) {
+    public Long countByExteriorColorOptionId(Long externalColorOptionId) {
         String sql = "SELECT COUNT(*) FROM purchase_history\n" +
                 "WHERE e_color_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, externalColorOptionId);
     }
 
     @Override
-    public List<PurchaseHistory> findAllByInternalColorOptionId(Long internalColorOptionId) {
+    public List<PurchaseHistory> findAllByInteriorColorOptionId(Long internalColorOptionId) {
         String sql = "SELECT * FROM purchase_history\n" +
                 "WHERE i_color_id=?";
         return jdbcTemplate.query(sql, purchaseHistoryRowMapper, internalColorOptionId);
     }
 
     @Override
-    public Long countByInternalColorOptionId(Long internalColorOptionId) {
+    public Long countByInteriorColorOptionId(Long internalColorOptionId) {
         String sql = "SELECT COUNT(*) FROM purchase_history\n" +
                 "WHERE i_color_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, internalColorOptionId);
