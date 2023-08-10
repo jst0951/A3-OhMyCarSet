@@ -113,7 +113,7 @@ export const EstimateContainer = styled.div<{ $show: boolean }>`
 
   /* opacity: 0; */
 
-  pointer-events: none;
+  /* pointer-events: none; */
 
   transition: all 0.7s ease;
 

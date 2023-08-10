@@ -17,6 +17,7 @@ interface OptionFooterProps {
 export default function OptionFooter({ selectedData, prevTotal, tempTotal }: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
+  const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
 
@@ -49,7 +50,12 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
-    if (estimateRef.current && !estimateRef.current.contains(event.target as Node)) {
+    if (
+      estimateRef.current &&
+      !estimateRef.current.contains(event.target as Node) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target as Node)
+    ) {
       setShowEstimate(false);
     }
   };
@@ -68,7 +74,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal }: Opt
         <Style.OptionFooterWrapper>
           <Style.FooterDimmed />
           <Style.TotalPriceContainer>
-            <Style.TotalPriceButton onClick={handleClickEstimate} $show={showEstimate}>
+            <Style.TotalPriceButton ref={buttonRef} onClick={handleClickEstimate} $show={showEstimate}>
               총 견적금액 <Icon icon="TotalPriceIcon" size={16} />
             </Style.TotalPriceButton>
             <Style.TotalPrice>
