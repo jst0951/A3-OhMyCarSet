@@ -174,9 +174,9 @@ public class TagService {
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
+        Long purchaseCount = purchaseHistoryRepository.count();
         for(SystemOption systemOption: systemOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(systemOption) / purchaseCountSum * 100;
+            Double purchasePercentage = (double) purchaseCountMap.get(systemOption) / purchaseCount * 100;
             selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(systemOption, purchasePercentage));
         }
 
@@ -196,9 +196,9 @@ public class TagService {
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
+        Long purchaseCount = purchaseHistoryRepository.count();
         for(TemperatureOption temperatureOption: temperatureOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(temperatureOption) / purchaseCountSum * 100;
+            Double purchasePercentage = (double) purchaseCountMap.get(temperatureOption) / purchaseCount * 100;
             selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(temperatureOption, purchasePercentage));
         }
 
@@ -218,9 +218,9 @@ public class TagService {
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
+        Long purchaseCount = purchaseHistoryRepository.count();
         for(ExternalDeviceOption externalDeviceOption: externalDeviceOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(externalDeviceOption) / purchaseCountSum * 100;
+            Double purchasePercentage = (double) purchaseCountMap.get(externalDeviceOption) / purchaseCount * 100;
             selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(externalDeviceOption, purchasePercentage));
         }
 
@@ -240,9 +240,9 @@ public class TagService {
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
+        Long purchaseCount = purchaseHistoryRepository.count();
         for(InternalDeviceOption internalDeviceOption: internalDeviceOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(internalDeviceOption) / purchaseCountSum * 100;
+            Double purchasePercentage = (double) purchaseCountMap.get(internalDeviceOption) / purchaseCount * 100;
             selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(internalDeviceOption, purchasePercentage));
         }
 
