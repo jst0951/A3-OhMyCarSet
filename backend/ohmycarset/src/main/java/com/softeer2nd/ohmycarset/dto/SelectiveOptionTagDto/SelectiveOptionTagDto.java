@@ -7,6 +7,8 @@ import com.softeer2nd.ohmycarset.domain.selectiveOption.externalDeviceOption.Ext
 import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOption;
 import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOption;
 
+import java.beans.ConstructorProperties;
+
 public class SelectiveOptionTagDto {
     private static final String PURCHASE_PERCENTAGE = "구매비율";
 
@@ -14,6 +16,14 @@ public class SelectiveOptionTagDto {
     private final String optionName;
     private final String tagName;
     private final Double percentage;
+
+    @ConstructorProperties({"optionId", "optionName", "tagName", "percentage"})
+    public SelectiveOptionTagDto(Long optionId, String optionName, String tagName, Double percentage) {
+        this.optionId = optionId;
+        this.optionName = optionName;
+        this.tagName = tagName;
+        this.percentage = percentage;
+    }
 
     public SelectiveOptionTagDto(PowerTrainOption powerTrainOption, Double percentage) {
         this.optionId = powerTrainOption.getId();
