@@ -2,7 +2,7 @@ package com.softeer2nd.ohmycarset.domain.selectiveOption.externalDeviceOption;
 
 public class ExternalDeviceOptionComponent {
     private Long id;
-    private Long edOptionId;
+    private Long eDOptionId;
     private String name;
     private String description;
     private String imgSrc;
@@ -15,12 +15,12 @@ public class ExternalDeviceOptionComponent {
         this.id = id;
     }
 
-    public Long getEdOptionId() {
-        return edOptionId;
+    public Long geteDOptionId() {
+        return eDOptionId;
     }
 
-    public void setEdOptionId(Long edOptionId) {
-        this.edOptionId = edOptionId;
+    public void seteDOptionId(Long eDOptionId) {
+        this.eDOptionId = eDOptionId;
     }
 
     public String getName() {

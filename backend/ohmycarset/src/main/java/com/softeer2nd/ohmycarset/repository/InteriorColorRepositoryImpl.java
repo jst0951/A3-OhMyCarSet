@@ -26,8 +26,8 @@ public class InteriorColorRepositoryImpl implements InteriorColorRepository {
     }
 
     @Override
-    public Optional<InteriorColor> findById() {
-        List<InteriorColor> interiorColorList = jdbcTemplate.query("SELECT * FROM interior_color WHERE id=?", interiorColorRowMapper);
+    public Optional<InteriorColor> findById(Long id) {
+        List<InteriorColor> interiorColorList = jdbcTemplate.query("SELECT * FROM interior_color WHERE id=?", interiorColorRowMapper, id);
         return interiorColorList.stream().findAny();
     }
 

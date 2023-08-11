@@ -10,7 +10,7 @@ public interface InteriorColorRepository {
 
     List<InteriorColor> findAll();
 
-    Optional<InteriorColor> findById();
+    Optional<InteriorColor> findById(Long id);
 
     List<InteriorColor> findAllByTrimId(Long trimId);
 }
