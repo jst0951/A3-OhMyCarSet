@@ -6,8 +6,8 @@ export const MainContainer = styled.div`
   height: 100vh;
   align-items: center;
   justify-content: space-between;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  width: 1024px;
+  margin: 0 auto;
 `;
 
 export const MainLeftContainer = styled.div``;
@@ -46,4 +46,8 @@ export const SubDescription = styled.div`
   margin-top: 16px;
 `;
 
-export const ButtonContainer = styled.div``;
+export const ButtonContainer = styled.div<{ $hidden: boolean }>`
+  margin-top: 24px;
+
+  visibility: ${({ $hidden }) => ($hidden ? `hidden` : `visible`)};
+`;

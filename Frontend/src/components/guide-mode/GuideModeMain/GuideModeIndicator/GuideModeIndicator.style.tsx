@@ -21,6 +21,7 @@ export const Indicator = styled.div<{ $selected: boolean }>`
   font-weight: 400;
   line-height: 28px;
   letter-spacing: -0.8px;
+  cursor: pointer;
   ${({ $selected }) =>
     $selected ? `background-color: ${colors.mainHyundaiBlue}` : ` background-color: ${colors.coolGrey001}`};
 `;

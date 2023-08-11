@@ -22,10 +22,16 @@ export const TagContainer = styled.div`
   background-color: ${colors.coolGrey001};
   color: ${colors.coolGrey003};
 
+  cursor: pointer;
+
   &:hover {
     color: #212121;
     background-color: ${colors.hyundaiWhite};
     border: 2px solid ${colors.mainHyundaiBlue};
+  }
+
+  &:hover svg {
+    color: ${colors.mainHyundaiBlue};
   }
 `;
 

@@ -3,11 +3,7 @@ import { createContext, useContext, useState } from 'react';
 export type SelectTagData = {
   id: number;
   stepName: string;
-  age?: string;
-  sex?: string;
-  keyword1?: string;
-  keyword2?: string;
-  keyword3?: string;
+  value?: string | Set<string> | null;
 };
 
 interface SelectTagContextProps {
@@ -34,19 +30,17 @@ export default function SelectTagProvider({ children }: SelectTagProviderProps) 
     {
       id: 1,
       stepName: '연령대',
-      age: '선택 전',
+      value: null,
     },
     {
       id: 2,
       stepName: '성별',
-      sex: '선택 전',
+      value: null,
     },
     {
       id: 3,
       stepName: '키워드',
-      keyword1: '선택 전',
-      keyword2: '선택 전',
-      keyword3: '선택 전',
+      value: new Set(''),
     },
   ];
 

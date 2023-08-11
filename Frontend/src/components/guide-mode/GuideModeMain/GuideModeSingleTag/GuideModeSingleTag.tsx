@@ -7,33 +7,29 @@ import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useState } from 'react';
 
 export default function GuideModeSingleTag() {
-  const [hover, setHover] = useState<boolean>(false);
+  const [hovered, setHovered] = useState<number | null>(null);
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const currentPage = GuideModeStep - 1;
   const TagList = guideSingleTagData[currentPage].tagList;
 
   const handleClick = (tag: string) => {
-    switch (currentPage) {
-      case 0:
-        selectTagList[0].age = tag;
-        setGuideModeStep(GuideModeStep + 1);
-        setSelectTagList(selectTagList);
-        break;
-      case 1:
-        selectTagList[1].sex = tag;
-        setGuideModeStep(GuideModeStep + 1);
-        setSelectTagList(selectTagList);
-        break;
-    }
+    selectTagList[currentPage].value = tag;
+    setGuideModeStep(GuideModeStep + 1);
+    setSelectTagList(selectTagList);
   };
 
   return (
     <Style.TagListContainer>
       {TagList.map((tag, index) => (
-        <Style.TagContainer key={index} onClick={() => handleClick(tag)} onMouseEnter={() => setHover(true)}>
+        <Style.TagContainer
+          key={index}
+          onClick={() => handleClick(tag)}
+          onMouseEnter={() => setHovered(index)}
+          onMouseLeave={() => setHovered(null)}
+        >
           <Style.TagName>{tag}</Style.TagName>
-          {hover ? <CheckIcon /> : <UncheckIcon />}
+          {hovered === index ? <CheckIcon /> : <UncheckIcon />}
         </Style.TagContainer>
       ))}
     </Style.TagListContainer>
