@@ -69,7 +69,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, []);
+  }, [estimateRef]);
 
   return (
     <>
