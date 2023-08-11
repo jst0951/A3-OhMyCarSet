@@ -30,7 +30,6 @@ export default function InteriorColor() {
 
   return (
     <>
-      <Style.LineTitle>내장 색상</Style.LineTitle>
       <Style.InteriorColorContainer>
         {interiorColor.map((line) => (
           <Style.InteriorColorItemLine key={line.trimId}>

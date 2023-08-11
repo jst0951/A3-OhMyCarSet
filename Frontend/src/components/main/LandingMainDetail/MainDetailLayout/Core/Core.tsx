@@ -31,7 +31,6 @@ export default function Core() {
 
   return (
     <>
-      <Style.LineTitle>핵심 옵션</Style.LineTitle>
       <Style.CoreOptionContainer>
         {coreOption.map((trim) => (
           <Style.CoreOptionItemLine key={trim.trimId}>

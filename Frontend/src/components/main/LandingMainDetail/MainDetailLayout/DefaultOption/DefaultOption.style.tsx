@@ -1,12 +1,6 @@
 import { colors } from '@/style/theme';
-import { headMedium4, bodyMedium2 } from '@/style/typefaces';
+import { bodyMedium1 } from '@/style/typefaces';
 import { styled } from 'styled-components';
-
-export const LineTitle = styled.div`
-  border-bottom: 1px solid ${colors.coolGreyBlack};
-  padding-bottom: 25px;
-  ${headMedium4};
-`;
 
 export const Container = styled.div`
   display: flex;
@@ -27,16 +21,14 @@ export const OptionContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-top: 32px;
-  padding-left: 24px;
-  padding-right: 45px;
-  gap: 70px;
 `;
 
 export const ItemLine = styled.div`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 184px;
+  width: 256px;
+  padding-left: 24px;
   gap: 41px;
 `;
 
@@ -54,22 +46,12 @@ export const MoreItemContainer = styled.div<{ $showMore: string }>`
   gap: 12px;
 `;
 
-export const Item = styled.div`
-  border-radius: 6px;
-`;
-
-export const ItemDescription = styled.div`
-  ${bodyMedium2};
-  color: ${colors.coolGreyBlack};
-  word-break: keep-all;
-`;
-
 export const MoreButtonContainer = styled.div`
   margin-top: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Hyundai Sans Text Medium';
+  ${bodyMedium1}
   background-color: ${colors.coolGrey001};
   color: ${colors.coolGrey004};
   width: 140px;

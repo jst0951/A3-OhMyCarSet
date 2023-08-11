@@ -74,7 +74,6 @@ export default function DefaultOption() {
 
   return (
     <>
-      <Style.LineTitle>기본 옵션</Style.LineTitle>
       <Style.Container>
         <Style.ButtonLine>
           {filterCategory.map((category, index) => (
