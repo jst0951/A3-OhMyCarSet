@@ -10,7 +10,6 @@ import { colors } from '@/style/theme';
 export default function Header() {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const updateScroll = () => {
-    console.log(window.scrollY);
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
 

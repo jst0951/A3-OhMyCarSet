@@ -1,4 +1,4 @@
-import * as Style from './MainDetail.style';
+import * as S from './MainDetail.style';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Trim from './Trim/Trim';
 import Core from './Core/Core';
@@ -54,38 +54,38 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
 
   return (
     <>
-      <Style.Container>
-        <Style.Trim>
+      <S.Container>
+        <S.Trim>
           {trimData.map((trim) => (
             <Trim key={trim.id} trimData={trim} />
           ))}
-        </Style.Trim>
+        </S.Trim>
 
         {mainDetailList.map((detail) => (
-          <Style.OptionContainer key={detail.key}>
-            <Style.LineTitle>{detail.name}</Style.LineTitle>
+          <S.OptionContainer key={detail.key}>
+            <S.LineTitle>{detail.name}</S.LineTitle>
             {detail.component}
-          </Style.OptionContainer>
+          </S.OptionContainer>
         ))}
-        <Style.SelfButtonContainer>
+        <S.SelfButtonContainer>
           {trimData.map((trim) => (
             <RectButton key={trim.id} onClick={eventHandler} type="recommended" page="main">
               내 차 만들기
             </RectButton>
           ))}
-        </Style.SelfButtonContainer>
-        <Style.GuideButtonContainer>
-          <Style.GuideButtonInside>
-            <Style.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</Style.GuideButtonExplain>
-            <Style.GuideButtonLogoContainer>
-              <Style.GuideButtonText>
+        </S.SelfButtonContainer>
+        <S.GuideButtonContainer>
+          <S.GuideButtonInside>
+            <S.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</S.GuideButtonExplain>
+            <S.GuideButtonLogoContainer>
+              <S.GuideButtonText>
                 Guide Mode
                 <Icon icon="ArrowRightIcon" size={36} />
-              </Style.GuideButtonText>
-            </Style.GuideButtonLogoContainer>
-          </Style.GuideButtonInside>
-        </Style.GuideButtonContainer>
-      </Style.Container>
+              </S.GuideButtonText>
+            </S.GuideButtonLogoContainer>
+          </S.GuideButtonInside>
+        </S.GuideButtonContainer>
+      </S.Container>
     </>
   );
 }

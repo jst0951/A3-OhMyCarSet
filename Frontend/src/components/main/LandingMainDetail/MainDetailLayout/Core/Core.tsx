@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as Style from './Core.style';
+import * as S from './Core.style';
 import fetchData from '@/apis/fetchData';
 
 type CoreOption = Array<{
@@ -31,20 +31,20 @@ export default function Core() {
 
   return (
     <>
-      <Style.CoreOptionContainer>
+      <S.CoreOptionContainer>
         {coreOption.map((trim) => (
-          <Style.CoreOptionItemLine key={trim.trimId}>
+          <S.CoreOptionItemLine key={trim.trimId}>
             {trim.coreOptionList.map((option) => (
-              <Style.CoreOptionItemContainer key={option.id}>
-                <Style.CoreOptionItemImg>
+              <S.CoreOptionItemContainer key={option.id}>
+                <S.CoreOptionItemImg>
                   <img src={`${import.meta.env.VITE_STATIC_API_URL}/${option.imgSrc}`} alt={option.name} width={60} />
-                </Style.CoreOptionItemImg>
-                <Style.CoreOptionItemDescription>{option.name}</Style.CoreOptionItemDescription>
-              </Style.CoreOptionItemContainer>
+                </S.CoreOptionItemImg>
+                <S.CoreOptionItemDescription>{option.name}</S.CoreOptionItemDescription>
+              </S.CoreOptionItemContainer>
             ))}
-          </Style.CoreOptionItemLine>
+          </S.CoreOptionItemLine>
         ))}
-      </Style.CoreOptionContainer>
+      </S.CoreOptionContainer>
     </>
   );
 }

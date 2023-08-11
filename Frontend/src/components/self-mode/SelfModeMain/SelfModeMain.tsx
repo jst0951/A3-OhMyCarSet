@@ -1,4 +1,4 @@
-import * as Style from './SelfModeMain.style';
+import * as S from './SelfModeMain.style';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import SelfModeSingle from './SelfModeSingle/SelfModeSingle';
 import SelfModeMulti from './SelfModeMulti/SelfModeMulti';
@@ -34,9 +34,7 @@ export default function SelfModeMain() {
 
   return (
     <>
-      <Style.SelfModeMainContainer>
-        {selfModeStep < 7 ? <SelfModeSingle /> : <SelfModeMulti />}
-      </Style.SelfModeMainContainer>
+      <S.SelfModeMainContainer>{selfModeStep < 7 ? <SelfModeSingle /> : <SelfModeMulti />}</S.SelfModeMainContainer>
     </>
   );
 }

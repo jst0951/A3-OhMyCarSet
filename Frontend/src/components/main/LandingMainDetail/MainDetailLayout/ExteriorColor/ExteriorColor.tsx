@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as Style from './ExteriorColor.style';
+import * as S from './ExteriorColor.style';
 import fetchData from '@/apis/fetchData';
 
 type ExteriorColor = Array<{
@@ -31,18 +31,18 @@ export default function ExteriorColor() {
 
   return (
     <>
-      <Style.ExteriorColorContainer>
+      <S.ExteriorColorContainer>
         {exteriorColor.map((line) => (
-          <Style.ExteriorColorItemLine key={line.trimId}>
+          <S.ExteriorColorItemLine key={line.trimId}>
             {line.eColorList.map((item, index) => (
-              <Style.ExteriorColorItemContainer key={item.id}>
-                <Style.ExteriorColorItem $border={index === 0} $bgColor={item.colorCode}></Style.ExteriorColorItem>
-                <Style.ExteriorColorItemDescription>{item.name}</Style.ExteriorColorItemDescription>
-              </Style.ExteriorColorItemContainer>
+              <S.ExteriorColorItemContainer key={item.id}>
+                <S.ExteriorColorItem $border={index === 0} $bgColor={item.colorCode}></S.ExteriorColorItem>
+                <S.ExteriorColorItemDescription>{item.name}</S.ExteriorColorItemDescription>
+              </S.ExteriorColorItemContainer>
             ))}
-          </Style.ExteriorColorItemLine>
+          </S.ExteriorColorItemLine>
         ))}
-      </Style.ExteriorColorContainer>
+      </S.ExteriorColorContainer>
     </>
   );
 }

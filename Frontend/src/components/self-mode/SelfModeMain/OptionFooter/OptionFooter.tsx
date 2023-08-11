@@ -1,5 +1,5 @@
 import Icon from '@/components/common/Icon';
-import * as Style from './OptionFooter.style';
+import * as S from './OptionFooter.style';
 import RectButton from '@/components/common/button/RectButton/RectButton.style';
 import { Dispatch, useEffect, useRef, useState } from 'react';
 import Estimate from '../Estimate/Estimate';
@@ -73,33 +73,33 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
 
   return (
     <>
-      <Style.OptionFooterContainer>
-        <Style.OptionFooterWrapper>
-          <Style.FooterDimmed />
-          <Style.TotalPriceContainer>
-            <Style.TotalPriceButton ref={buttonRef} onClick={handleClickEstimate} $show={showEstimate}>
+      <S.OptionFooterContainer>
+        <S.OptionFooterWrapper>
+          <S.FooterDimmed />
+          <S.TotalPriceContainer>
+            <S.TotalPriceButton ref={buttonRef} onClick={handleClickEstimate} $show={showEstimate}>
               총 견적금액 <Icon icon="TotalPriceIcon" size={16} />
-            </Style.TotalPriceButton>
-            <Style.TotalPrice>
-              <Style.Price>
+            </S.TotalPriceButton>
+            <S.TotalPrice>
+              <S.Price>
                 <CountingAnimation startValue={prevTotal} endValue={tempTotal} duration={1000} />
-              </Style.Price>{' '}
+              </S.Price>{' '}
               원
-            </Style.TotalPrice>
-          </Style.TotalPriceContainer>
-          <Style.CompleteButtonContainer>
-            <Style.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
+            </S.TotalPrice>
+          </S.TotalPriceContainer>
+          <S.CompleteButtonContainer>
+            <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
-            </Style.PrevButton>
+            </S.PrevButton>
             <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep, selectedData)}>
               선택완료
             </RectButton>
-          </Style.CompleteButtonContainer>
-        </Style.OptionFooterWrapper>
-        <Style.EstimateContainer ref={estimateRef} $show={showEstimate}>
+          </S.CompleteButtonContainer>
+        </S.OptionFooterWrapper>
+        <S.EstimateContainer ref={estimateRef} $show={showEstimate}>
           <Estimate onClick={handleClickEstimate} tempTotal={tempTotal} />
-        </Style.EstimateContainer>
-      </Style.OptionFooterContainer>
+        </S.EstimateContainer>
+      </S.OptionFooterContainer>
     </>
   );
 }

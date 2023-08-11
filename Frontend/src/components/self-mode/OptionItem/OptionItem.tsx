@@ -1,5 +1,5 @@
 import Icon from '@/components/common/Icon';
-import * as Style from './OptionItem.style';
+import * as S from './OptionItem.style';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { OptionData } from '../SelfModeMain/SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
@@ -59,34 +59,32 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
   return (
     <>
-      <Style.ItemContainer $isActive={isActive} onClick={onClick}>
+      <S.ItemContainer $isActive={isActive} onClick={onClick}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-        <Style.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</Style.SalePercent>
-        <Style.OptionName $isActive={isActive}>{optionData.name}</Style.OptionName>
+        <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
+        <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
         <OptionImage />
         {(optionData.mainDescription || optionData.subDescription) && (
-          <Style.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore}>
-            <Style.ShowMoreContainer ref={contentRef}>
-              {optionData.mainDescription && (
-                <Style.ShowMoreMainText>{optionData.mainDescription}</Style.ShowMoreMainText>
-              )}
-              {optionData.subDescription && <Style.ShowMoreSubText>{optionData.subDescription}</Style.ShowMoreSubText>}
-            </Style.ShowMoreContainer>
-          </Style.ShowMoreWrapper>
+          <S.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore}>
+            <S.ShowMoreContainer ref={contentRef}>
+              {optionData.mainDescription && <S.ShowMoreMainText>{optionData.mainDescription}</S.ShowMoreMainText>}
+              {optionData.subDescription && <S.ShowMoreSubText>{optionData.subDescription}</S.ShowMoreSubText>}
+            </S.ShowMoreContainer>
+          </S.ShowMoreWrapper>
         )}
-        <Style.OptionBottomContainer $isActive={isActive}>
-          <Style.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</Style.OptionPrice>
+        <S.OptionBottomContainer $isActive={isActive}>
+          <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
           {optionData.mainDescription && (
-            <Style.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
+            <S.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
               {showMore ? '접기' : '자세히 보기'}
               <Icon icon="OptionShowMoreIcon" size={14} />
-            </Style.ShowMoreButton>
+            </S.ShowMoreButton>
           )}
-        </Style.OptionBottomContainer>
-        <Style.FeedbackContainer $show={showFeedback === optionData.id}>
+        </S.OptionBottomContainer>
+        <S.FeedbackContainer $show={showFeedback === optionData.id}>
           <FeedbackItem show={showFeedback === optionData.id} optionData={optionData} />
-        </Style.FeedbackContainer>
-      </Style.ItemContainer>
+        </S.FeedbackContainer>
+      </S.ItemContainer>
     </>
   );
 }

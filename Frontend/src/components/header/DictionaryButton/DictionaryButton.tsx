@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Icon from '@/components/common/Icon';
 
-import * as Style from './DictionaryButton.style';
+import * as S from './DictionaryButton.style';
 
 export default function DictionaryButton() {
   const [dictionaryOn, setDictionaryOn] = useState<boolean>(false);
@@ -11,11 +11,11 @@ export default function DictionaryButton() {
   };
 
   return (
-    <Style.DictionaryButtonContainer onClick={toggleDictionary}>
-      <Style.DictionaryIconWrapper>
+    <S.DictionaryButtonContainer onClick={toggleDictionary}>
+      <S.DictionaryIconWrapper>
         {dictionaryOn ? <Icon icon="DictionaryOnIcon" /> : <Icon icon="DictionaryOffIcon" />}
-      </Style.DictionaryIconWrapper>
-      <Style.DictionaryText $active={dictionaryOn}>백카사전 {dictionaryOn ? 'On' : 'Off'}</Style.DictionaryText>
-    </Style.DictionaryButtonContainer>
+      </S.DictionaryIconWrapper>
+      <S.DictionaryText $active={dictionaryOn}>백카사전 {dictionaryOn ? 'On' : 'Off'}</S.DictionaryText>
+    </S.DictionaryButtonContainer>
   );
 }

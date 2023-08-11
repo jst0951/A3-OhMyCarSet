@@ -1,5 +1,5 @@
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
-import * as Style from './GuideModeSingleTag.style';
+import * as S from './GuideModeSingleTag.style';
 import guideSingleTagData from '@/asset/data/guideSingleTagData.json';
 import { CheckIcon } from '@/asset/icons';
 import { UncheckIcon } from '@/asset/icons';
@@ -20,18 +20,18 @@ export default function GuideModeSingleTag() {
   };
 
   return (
-    <Style.TagListContainer>
+    <S.TagListContainer>
       {TagList.map((tag, index) => (
-        <Style.TagContainer
+        <S.TagContainer
           key={index}
           onClick={() => handleClick(tag)}
           onMouseEnter={() => setHovered(index)}
           onMouseLeave={() => setHovered(null)}
         >
-          <Style.TagName>{tag}</Style.TagName>
+          <S.TagName>{tag}</S.TagName>
           {hovered === index ? <CheckIcon /> : <UncheckIcon />}
-        </Style.TagContainer>
+        </S.TagContainer>
       ))}
-    </Style.TagListContainer>
+    </S.TagListContainer>
   );
 }

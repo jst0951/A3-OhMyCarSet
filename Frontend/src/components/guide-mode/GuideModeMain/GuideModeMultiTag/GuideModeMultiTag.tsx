@@ -1,4 +1,4 @@
-import * as Style from './GuideModeMultiTag.style';
+import * as S from './GuideModeMultiTag.style';
 import guideMultiTagData from '@/asset/data/guideMultiTagData.json';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { Dispatch, useState } from 'react';
@@ -36,13 +36,13 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
   };
 
   return (
-    <Style.TagListContainer>
+    <S.TagListContainer>
       {tagCategory.map((category) => (
-        <Style.TagSubContainer key={category.id}>
-          <Style.TagSubListTitle>{category.title}</Style.TagSubListTitle>
-          <Style.TagSubListContainer>
+        <S.TagSubContainer key={category.id}>
+          <S.TagSubListTitle>{category.title}</S.TagSubListTitle>
+          <S.TagSubListContainer>
             {category.tagList.map((tag, index) => (
-              <Style.TagContainer
+              <S.TagContainer
                 key={index}
                 onMouseEnter={() => handleMouseEnter(tag)}
                 onMouseLeave={() => setHoveredTag(null)}
@@ -50,18 +50,18 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
                 $disable={selectedTagList.size === 3}
                 $selected={selectedTagList.has(tag)}
               >
-                <Style.TagName>{tag}</Style.TagName>
+                <S.TagName>{tag}</S.TagName>
 
                 {selectedTagList.has(tag) ? (
-                  <Style.TagOrder>{Array.from(selectedTagList).findIndex((value) => value === tag) + 1}</Style.TagOrder>
+                  <S.TagOrder>{Array.from(selectedTagList).findIndex((value) => value === tag) + 1}</S.TagOrder>
                 ) : (
-                  hoveredTag === tag && <Style.TagOrder>{selectedTagList.size + 1}</Style.TagOrder>
+                  hoveredTag === tag && <S.TagOrder>{selectedTagList.size + 1}</S.TagOrder>
                 )}
-              </Style.TagContainer>
+              </S.TagContainer>
             ))}
-          </Style.TagSubListContainer>
-        </Style.TagSubContainer>
+          </S.TagSubListContainer>
+        </S.TagSubContainer>
       ))}
-    </Style.TagListContainer>
+    </S.TagListContainer>
   );
 }

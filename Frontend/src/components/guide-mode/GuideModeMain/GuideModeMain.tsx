@@ -1,4 +1,4 @@
-import * as Style from './GuideModeMain.style';
+import * as S from './GuideModeMain.style';
 import GuideModeIndicator from './GuideModeIndicator/GuideModeIndicator';
 import GuideModeSingleTag from './GuideModeSingleTag/GuideModeSingleTag';
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
@@ -14,26 +14,24 @@ export default function GuideModeMain() {
 
   return (
     <>
-      <Style.MainContainer>
-        <Style.MainLeftContainer>
+      <S.MainContainer>
+        <S.MainLeftContainer>
           <GuideModeIndicator />
-          <Style.MainDescription>{guideDescriptionData[currentIndex].mainDescription}</Style.MainDescription>
-          <Style.MainDescriptionBold>
-            {guideDescriptionData[currentIndex].mainDescriptionBold}
-          </Style.MainDescriptionBold>
-          <Style.SubDescription>{guideDescriptionData[currentIndex].subDescription}</Style.SubDescription>
+          <S.MainDescription>{guideDescriptionData[currentIndex].mainDescription}</S.MainDescription>
+          <S.MainDescriptionBold>{guideDescriptionData[currentIndex].mainDescriptionBold}</S.MainDescriptionBold>
+          <S.SubDescription>{guideDescriptionData[currentIndex].subDescription}</S.SubDescription>
 
-          <Style.ButtonContainer $hidden={!complete}>
+          <S.ButtonContainer $hidden={!complete}>
             <RectButton type="recommended" page="guide">
               선택 완료
             </RectButton>
-          </Style.ButtonContainer>
-        </Style.MainLeftContainer>
+          </S.ButtonContainer>
+        </S.MainLeftContainer>
 
-        <Style.MainRightContainer>
+        <S.MainRightContainer>
           {currentIndex === 2 ? <GuideModeMultiTag setComplete={setComplete} /> : <GuideModeSingleTag />}
-        </Style.MainRightContainer>
-      </Style.MainContainer>
+        </S.MainRightContainer>
+      </S.MainContainer>
     </>
   );
 }

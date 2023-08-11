@@ -1,4 +1,4 @@
-import * as Style from './Trim.style';
+import * as S from './Trim.style';
 
 type TrimData = {
   id: number;
@@ -22,12 +22,12 @@ export default function Trim({ trimData }: TrimProps) {
 
   return (
     <>
-      <Style.TrimContainer>
-        <Style.TrimImgContainer>
+      <S.TrimContainer>
+        <S.TrimImgContainer>
           <img src={`${import.meta.env.VITE_STATIC_API_URL}/${repColor.imgSrc}`} alt={name} width={214} />
-        </Style.TrimImgContainer>
-        <Style.TrimPrice>{defaultPrice.toLocaleString()}원 부터</Style.TrimPrice>
-      </Style.TrimContainer>
+        </S.TrimImgContainer>
+        <S.TrimPrice>{defaultPrice.toLocaleString()}원 부터</S.TrimPrice>
+      </S.TrimContainer>
     </>
   );
 }

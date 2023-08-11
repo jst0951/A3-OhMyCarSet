@@ -1,4 +1,4 @@
-import * as Style from './GuideModeIndicator.style';
+import * as S from './GuideModeIndicator.style';
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 
@@ -11,12 +11,12 @@ export default function GuideModeIndicator() {
   };
 
   return (
-    <Style.IndicatorContainer>
+    <S.IndicatorContainer>
       {guideDescriptionData.map((data) => (
-        <Style.Indicator key={data.page} $selected={data.page === GuideModeStep} onClick={() => handleClick(data.page)}>
+        <S.Indicator key={data.page} $selected={data.page === GuideModeStep} onClick={() => handleClick(data.page)}>
           {data.page}
-        </Style.Indicator>
+        </S.Indicator>
       ))}
-    </Style.IndicatorContainer>
+    </S.IndicatorContainer>
   );
 }

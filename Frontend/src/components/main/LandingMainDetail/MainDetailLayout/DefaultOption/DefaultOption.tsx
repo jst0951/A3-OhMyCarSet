@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as Style from './DefaultOption.style';
+import * as S from './DefaultOption.style';
 import RectFilterButton from '@/components/common/button/RectFilterButton/RectFilterButton';
 import Item from './Item/Item';
 import Icon from '@/components/common/Icon';
@@ -32,15 +32,15 @@ const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', 
 function ItemContianer({ item, showMore, index }: ItemContainerProps) {
   if (index === undefined) {
     return (
-      <Style.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
+      <S.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
         <Item item={item}></Item>
-      </Style.ItemContainer>
+      </S.ItemContainer>
     );
   } else {
     return (
-      <Style.ItemContainer $more={index < MAX_ITEM_NUM} $showMore={showMore}>
+      <S.ItemContainer $more={index < MAX_ITEM_NUM} $showMore={showMore}>
         <Item item={item}></Item>
-      </Style.ItemContainer>
+      </S.ItemContainer>
     );
   }
 }
@@ -74,8 +74,8 @@ export default function DefaultOption() {
 
   return (
     <>
-      <Style.Container>
-        <Style.ButtonLine>
+      <S.Container>
+        <S.ButtonLine>
           {filterCategory.map((category, index) => (
             <RectFilterButton
               key={index - 1}
@@ -88,10 +88,10 @@ export default function DefaultOption() {
               {category}
             </RectFilterButton>
           ))}
-        </Style.ButtonLine>
-        <Style.OptionContainer>
+        </S.ButtonLine>
+        <S.OptionContainer>
           {defaultOption.map((trim) => (
-            <Style.ItemLine key={trim.trimId}>
+            <S.ItemLine key={trim.trimId}>
               {selectedCategory === -1
                 ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
@@ -103,24 +103,24 @@ export default function DefaultOption() {
                       <ItemContianer key={item.optionId} item={item} showMore={showMore} index={optionIndex} />
                     )
                   )}
-            </Style.ItemLine>
+            </S.ItemLine>
           ))}
-        </Style.OptionContainer>
+        </S.OptionContainer>
         {selectedCategory === -1 ? (
-          <Style.MoreButtonContainer onClick={moreEventHandler}>
+          <S.MoreButtonContainer onClick={moreEventHandler}>
             더보기
             <Icon icon="ArrowBottomIcon" size={20} />
-          </Style.MoreButtonContainer>
+          </S.MoreButtonContainer>
         ) : (
           defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
             MAX_ITEM_NUM && (
-            <Style.MoreButtonContainer onClick={moreEventHandler}>
+            <S.MoreButtonContainer onClick={moreEventHandler}>
               더보기
               <Icon icon="ArrowBottomIcon" size={20} />
-            </Style.MoreButtonContainer>
+            </S.MoreButtonContainer>
           )
         )}
-      </Style.Container>
+      </S.Container>
     </>
   );
 }
