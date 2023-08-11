@@ -66,7 +66,6 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
-    console.log(prevTotal, tempTotal);
     setPrevTotal(tempTotal);
     setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
   }, [selectedOption]);
