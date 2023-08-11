@@ -34,11 +34,7 @@ const CountingAnimation = ({ startValue, endValue, duration }: CountingAnimation
     return () => cancelAnimationFrame(requestId);
   }, [endValue, duration, increment, shouldIncrement, startValue]);
 
-  const formatNumberWithCommas = (number: number): string => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
-
-  return <>{formatNumberWithCommas(Math.floor(count))}</>;
+  return <>{Math.floor(count).toLocaleString()}</>;
 };
 
 export default CountingAnimation;

@@ -2,7 +2,7 @@ import { SectionProps } from '../Estimate';
 import * as S from './EstimateSection.style';
 
 interface EstimateSectionProps {
-  data: SectionProps; // data 프로퍼티 추가
+  data: SectionProps;
 }
 
 export default function EstimateSection({ data }: EstimateSectionProps) {

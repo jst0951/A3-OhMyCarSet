@@ -16,6 +16,7 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
+
     return () => {
       window.removeEventListener('scroll', updateScroll);
     };
@@ -28,7 +29,7 @@ export default function Header() {
           <HeaderLeftContainer>
             <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton type="self" />
+            <ModeButton type="default" />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
