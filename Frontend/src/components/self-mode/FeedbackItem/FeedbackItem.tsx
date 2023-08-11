@@ -11,38 +11,31 @@ type FeedbackProps = {
 
 export default function FeedbackItem({ show, optionData }: FeedbackProps) {
   const { selfModeStep } = useSelfModeContext();
-  const [showFirstIcon, setShowFirstIcon] = useState<boolean>(false);
-  const [showSecondIcon, setShowSecondIcon] = useState<boolean>(false);
+  const [showIcon, setShowIcon] = useState<boolean>(false);
 
   useEffect(() => {
     if (show) {
-      const timer1 = setTimeout(() => {
-        setShowFirstIcon(true);
+      const timer = setTimeout(() => {
+        setShowIcon(true);
       }, 500);
 
-      const timer2 = setTimeout(() => {
-        setShowSecondIcon(true);
-      }, 1000);
-
       return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
+        clearTimeout(timer);
       };
     }
   }, [show]);
 
   useEffect(() => {
-    setShowFirstIcon(false);
-    setShowSecondIcon(false);
+    setShowIcon(false);
   }, [selfModeStep]);
 
   return (
     <>
-      <S.FeedbackContainer $show={showFirstIcon}>
+      <S.FeedbackContainer $show={showIcon}>
         <Icon icon="SmileBeforeIcon" size={30} />
         <S.NextIcon>
           <Icon icon="SmileAfterIcon" size={30} />
-          <S.SecondIcon $show={showSecondIcon}>
+          <S.SecondIcon $show={showIcon}>
             <Icon icon="FeedbackIcon" size={30} />
           </S.SecondIcon>
         </S.NextIcon>

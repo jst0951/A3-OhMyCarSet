@@ -148,5 +148,5 @@ export const FeedbackContainer = styled.div<{ $show: boolean }>`
   ${({ $show }) =>
     $show &&
     `opacity: 1;
-  transition: opacity 0.5s linear;`}
+  transition: opacity 0.3s linear;`}
 `;
