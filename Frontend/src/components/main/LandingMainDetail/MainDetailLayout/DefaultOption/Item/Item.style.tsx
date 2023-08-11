@@ -21,4 +21,5 @@ export const ItemDescription = styled.div`
   ${bodyMedium2};
   color: ${colors.coolGreyBlack};
   word-break: keep-all;
+  max-width: 120px;
 `;
