@@ -50,11 +50,13 @@ export default function SelfModeSingle() {
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
         setSelectedOption(selectOptionState.dataList[selfModeStep - 1].selectedId);
+        setTempTotal(selectOptionState.totalPrice);
+        setPrevTotal(selectOptionState.totalPrice);
       } else {
         setSelectedOption(1);
+        setTempTotal(selectOptionState.totalPrice + response[0].price);
+        setPrevTotal(selectOptionState.totalPrice + response[0].price);
       }
-      setTempTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
-      setPrevTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
     } catch (error) {
       console.error('Error fetching core option data:', error);
     }
@@ -69,6 +71,7 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
+    console.log(tempTotal, selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
     setPrevTotal(tempTotal);
     setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
   }, [selectedOption]);
