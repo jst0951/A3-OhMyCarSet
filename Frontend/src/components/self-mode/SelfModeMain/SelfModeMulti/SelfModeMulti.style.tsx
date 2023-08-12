@@ -1,3 +1,5 @@
+import { colors } from '@/style/theme';
+import { bodyMedium2, popupRegular } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const SelfModeMultiContainer = styled.div`
@@ -10,6 +12,7 @@ export const SelfModeMultiContainer = styled.div`
 export const SelfModeImage = styled.div`
   width: 60%;
   height: 100%;
+  background-color: ${colors.coolGrey001};
 
   & > img {
     width: 100%;
@@ -20,14 +23,37 @@ export const SelfModeImage = styled.div`
 
 export const SelfModeOption = styled.div`
   width: 40%;
-  margin: 44px 0 0;
+  padding: 12px 27px;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const FilterButton = styled.div<{ $active: boolean }>`
+  padding: 6px 20px;
+  border-radius: 6px;
+  background-color: ${colors.coolGrey001};
+  ${popupRegular}
+  color: ${colors.coolGrey003};
+
+  ${({ $active }) =>
+    $active &&
+    `  
+      background-color: ${colors.mainHyundaiBlue};
+      ${bodyMedium2}
+      color: ${colors.hyundaiWhite};`}
+  line-height: 21px;
+
+  cursor: pointer;
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  margin: 26px 26px 10px;
+  margin: 26px 0;
 `;
 
 export const Title = styled.div`
