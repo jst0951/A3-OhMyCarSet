@@ -42,6 +42,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       payload: {
         optionId,
         newOptionData: {
+          selectedId: selectedData.id,
           selectedName: selectedData.name,
           price: selectedData.price,
           imgSrc: selectedData.imgSrc,

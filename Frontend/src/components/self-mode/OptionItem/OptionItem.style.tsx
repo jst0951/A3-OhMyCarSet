@@ -115,7 +115,7 @@ export const ItemContainer = styled.div<{ $isActive: boolean }>`
       background-color: ${colors.coolGrey001};
       color: ${colors.coolGrey003};
 
-      transition: all 0.3s ease-in;
+      
 
       &:hover {
         border: 2px solid ${colors.coolGrey003};
@@ -123,9 +123,11 @@ export const ItemContainer = styled.div<{ $isActive: boolean }>`
       }
       &:hover ${SalePercent}, &:hover ${OptionPrice} {
         color: ${colors.mainHyundaiBlue};
+        transition: all 0.3s ease-in;
       }
       &:hover ${OptionName} {
         color: ${colors.coolGreyBlack};
+        transition: all 0.3s ease-in;
       }
   `
       : `

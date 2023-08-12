@@ -47,9 +47,12 @@ export default function SelfModeSingle() {
     try {
       const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
-      // console.log(response);
       // 옵션 초기화
-      setSelectedOption(1);
+      if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
+        setSelectedOption(selectOptionState.dataList[selfModeStep - 1].selectedId);
+      } else {
+        setSelectedOption(1);
+      }
       setTempTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
       setPrevTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
     } catch (error) {
