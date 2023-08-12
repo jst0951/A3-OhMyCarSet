@@ -104,19 +104,16 @@ export const ItemContainer = styled.div<{ $isActive: boolean }>`
   max-width: 375px;
   padding: 20px;
   border-radius: 6px;
-  border: 2px solid ${colors.mainHyundaiBlue};
-  background-color: ${colors.hyundaiWhite};
-  color: ${colors.mainHyundaiBlue};
 
   cursor: pointer;
   min-height: 155px;
 
   ${({ $isActive }) =>
-    !$isActive &&
-    `
+    !$isActive
+      ? `
       border: 2px solid ${colors.coolGrey001};
       background-color: ${colors.coolGrey001};
-      color: ${colors.coolGrey003}
+      color: ${colors.coolGrey003};
 
       transition: all 0.3s ease-in;
 
@@ -124,12 +121,17 @@ export const ItemContainer = styled.div<{ $isActive: boolean }>`
         border: 2px solid ${colors.coolGrey003};
         transition: all 0.3s ease-in-out;
       }
-      &:hover ${SalePercent}, ${OptionPrice} {
+      &:hover ${SalePercent}, &:hover ${OptionPrice} {
         color: ${colors.mainHyundaiBlue};
       }
       &:hover ${OptionName} {
         color: ${colors.coolGreyBlack};
       }
+  `
+      : `
+  border: 2px solid ${colors.mainHyundaiBlue};
+  background-color: ${colors.hyundaiWhite};
+  color: ${colors.mainHyundaiBlue};
   `}
 
   & > svg {
