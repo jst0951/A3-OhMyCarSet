@@ -13,11 +13,11 @@ const optionList = [
     text: '온도관리',
   },
   {
-    key: 'exterior_device',
+    key: 'external_device',
     text: '외부장치',
   },
   {
-    key: 'interior_device',
+    key: 'internal_device',
     text: '내부장치',
   },
 ];
@@ -35,9 +35,11 @@ interface OptionPackageT {
   }>;
 }
 
+type OptionPackageListT = OptionPackageT[];
+
 export default function SelfModeMulti() {
   const [currentFilter, setCurrentFilter] = useState<number>(1);
-  const [optionPackage, setOptionPackage] = useState<OptionPackageT[]>([]);
+  const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
 
   const handleFilterOption = (idx: number) => {
     setCurrentFilter(idx + 1);
@@ -55,11 +57,12 @@ export default function SelfModeMulti() {
 
   const fetchAllData = async () => {
     try {
-      const allData: OptionPackageT[] = [];
+      const allData: OptionPackageListT[] = [];
       for (const option of optionList) {
         const response = await fetchOptionData(option.key);
         allData.push(response);
       }
+      console.log(allData[0][0]);
       setOptionPackage(allData);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
@@ -73,7 +76,15 @@ export default function SelfModeMulti() {
   return (
     <>
       <S.SelfModeMultiContainer>
-        <S.SelfModeImage></S.SelfModeImage>
+        <S.SelfModeImage>
+          {optionPackage[currentFilter - 1] && (
+            <img
+              src={`${import.meta.env.VITE_STATIC_API_URL}/${optionPackage[currentFilter - 1][0]?.components[0]
+                ?.imgSrc}`}
+              alt={optionPackage[currentFilter - 1][0]?.components[0]?.name}
+            />
+          )}
+        </S.SelfModeImage>
         <S.SelfModeOption>
           <S.FilterContainer>
             {optionList.map((option, idx) => (

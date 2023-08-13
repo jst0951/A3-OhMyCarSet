@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom';
 
 export default function Header() {
   const { pathname } = useLocation();
-  console.log(pathname);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   const getCurrentMode = () => {
