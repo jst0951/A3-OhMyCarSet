@@ -23,10 +23,10 @@ export default function Detail() {
       <S.MainContainer>
         <S.TitleContainer>
           <S.Title>견적 자세히 보기</S.Title>
-          <S.leftTitle>
-            <S.subTitle>차량 총 견적 금액</S.subTitle>
+          <S.LeftTitle>
+            <S.SubTitle>차량 총 견적 금액</S.SubTitle>
             <S.TotalPrice>{selectOptionState.totalPrice.toLocaleString()}원</S.TotalPrice>
-          </S.leftTitle>
+          </S.LeftTitle>
         </S.TitleContainer>
         <S.SectionContainer>
           {completeCarData.map((data) => (

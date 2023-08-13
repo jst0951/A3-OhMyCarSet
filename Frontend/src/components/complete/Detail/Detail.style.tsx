@@ -20,13 +20,13 @@ export const Title = styled.div`
   ${headMedium2}
 `;
 
-export const leftTitle = styled.div`
+export const LeftTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
 `;
 
-export const subTitle = styled.div`
+export const SubTitle = styled.div`
   ${headRegular4}
   color: ${colors.coolGreyBlack};
   margin-right: 14px;
