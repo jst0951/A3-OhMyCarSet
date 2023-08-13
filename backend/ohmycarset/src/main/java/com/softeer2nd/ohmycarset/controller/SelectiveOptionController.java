@@ -17,12 +17,12 @@ public class SelectiveOptionController {
     }
 
     @GetMapping(value = "/selective_option/required_option/{optionName}")
-    public List<RequiredOptionDto> getOptionByName(@PathVariable String optionName) {
-        return selectiveOptionService.getOptionByName(optionName);
+    public List<RequiredOptionDto> getAllOptionByName(@PathVariable String optionName) {
+        return selectiveOptionService.getAllOptionByName(optionName);
     }
 
     @GetMapping(value = "/selective_option/option_package/{packageName}")
-    public List<OptionPackageDto> getPackageByName(@PathVariable String packageName) {
-        return selectiveOptionService.getPackageByName(packageName);
+    public List<OptionPackageDto> getAllPackageByName(@PathVariable String packageName) {
+        return selectiveOptionService.getAllPackageByName(packageName);
     }
 }

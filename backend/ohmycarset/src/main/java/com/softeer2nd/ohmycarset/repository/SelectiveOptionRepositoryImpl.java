@@ -22,19 +22,19 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<RequiredOption> findOptionByName(String optionName) {
+    public List<RequiredOption> findAllOptionByName(String optionName) {
         String table = optionName + "_option";
         return jdbcTemplate.query("SELECT * FROM " + table, requiredOptionRowMapper);
     }
 
     @Override
-    public List<OptionPackage> findPackageByName(String packageName) {
+    public List<OptionPackage> findAllPackageByName(String packageName) {
         String table = packageName + "_option";
         return jdbcTemplate.query("SELECT * FROM " + table, optionPackageRowMapper);
     }
 
     @Override
-    public List<PackageComponent> findComponentByPackageNameAndPackageId(String packageName, Long packageId) {
+    public List<PackageComponent> findAllComponentByPackageNameAndPackageId(String packageName, Long packageId) {
         String table = packageName + "_option_component";
         return jdbcTemplate.query("SELECT * FROM " + table + " AS C WHERE C.package_id=?", packageComponentRowMapper, packageId);
     }

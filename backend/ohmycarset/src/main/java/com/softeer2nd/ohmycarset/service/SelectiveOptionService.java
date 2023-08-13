@@ -19,7 +19,7 @@ public class SelectiveOptionService {
         this.selectiveOptionRepository = selectiveOptionRepository;
     }
 
-    public List<RequiredOptionDto> getOptionByName(String optionName) {
+    public List<RequiredOptionDto> getAllOptionByName(String optionName) {
         List<RequiredOptionDto> requiredOptionDtoList = new ArrayList<>();
 
         List<RequiredOption> requiredOptionList = selectiveOptionRepository.findOptionByName(optionName);
@@ -31,7 +31,7 @@ public class SelectiveOptionService {
         return requiredOptionDtoList;
     }
 
-    public List<OptionPackageDto> getPackageByName(String packageName) {
+    public List<OptionPackageDto> getAllPackageByName(String packageName) {
         List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
 
         List<OptionPackage> packageList = selectiveOptionRepository.findPackageByName(packageName);
