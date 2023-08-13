@@ -1,4 +1,5 @@
-import { headMedium3, headRegular4 } from '@/style/typefaces';
+import { colors } from '@/style/theme';
+import { headMedium2, headRegular4 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const MainContainer = styled.div`
@@ -15,9 +16,8 @@ export const TitleContainer = styled.div`
 `;
 
 export const Title = styled.div`
-  ${headMedium3}
-  color: #212121;
-  margin-left: 24px;
+  color: ${colors.coolGreyBlack};
+  ${headMedium2}
 `;
 
 export const leftTitle = styled.div`
@@ -28,12 +28,12 @@ export const leftTitle = styled.div`
 
 export const subTitle = styled.div`
   ${headRegular4}
-  color: #212121;
+  color: ${colors.coolGreyBlack};
   margin-right: 14px;
 `;
 
 export const TotalPrice = styled.div`
-  color: #36383c;
+  color: ${colors.coolGreyBlack};
   text-align: right;
   font-family: 'Hyundai Sans Head Medium';
   font-size: 34px;

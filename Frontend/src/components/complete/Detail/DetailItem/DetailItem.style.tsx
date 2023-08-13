@@ -1,5 +1,4 @@
 import { colors } from '@/style/theme';
-import { headMedium2 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const Section = styled.div`

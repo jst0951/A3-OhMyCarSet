@@ -22,7 +22,7 @@ export default function Detail() {
     <>
       <S.MainContainer>
         <S.TitleContainer>
-          <S.Title>견적 요약</S.Title>
+          <S.Title>견적 자세히 보기</S.Title>
           <S.leftTitle>
             <S.subTitle>차량 총 견적 금액</S.subTitle>
             <S.TotalPrice>{selectOptionState.totalPrice.toLocaleString()}원</S.TotalPrice>
