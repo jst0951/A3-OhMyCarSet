@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 모든 경로에 대해
                 .allowedOrigins(
-                        "http://loclahost:5173",
+                        "http://localhost:5173",
                         "http://ohmycarset.com",
                         "http://ohmycarset.com:80",
                         "http://www.ohmycarset.com",
