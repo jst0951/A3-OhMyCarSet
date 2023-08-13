@@ -21,7 +21,7 @@ export const Title = styled.div`
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 31.2px */
+  line-height: 31.2px;
   letter-spacing: -0.72px;
 `;
 
@@ -32,7 +32,7 @@ export const Price = styled.div`
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 31.2px */
+  line-height: 31.2px;
   letter-spacing: -0.72px;
 `;
 
@@ -90,6 +90,6 @@ export const Correction = styled.div`
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 23.4px */
+  line-height: 23.4px;
   letter-spacing: -0.54px;
 `;

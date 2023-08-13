@@ -39,7 +39,7 @@ export const TotalPrice = styled.div`
   font-size: 34px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 44.2px */
+  line-height: 44.2px;
   letter-spacing: -1.02px;
 `;
 
