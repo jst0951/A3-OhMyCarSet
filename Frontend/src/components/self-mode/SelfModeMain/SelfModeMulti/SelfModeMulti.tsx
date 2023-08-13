@@ -22,24 +22,52 @@ const optionList = [
   },
 ];
 
+interface OptionPackageT {
+  id: number;
+  name: string;
+  price: number;
+  iconSrc: string | null;
+  components: Array<{
+    id: number;
+    name: string;
+    description: string;
+    imgSrc: string;
+  }>;
+}
+
 export default function SelfModeMulti() {
   const [currentFilter, setCurrentFilter] = useState<number>(1);
+  const [optionPackage, setOptionPackage] = useState<OptionPackageT[]>([]);
 
   const handleFilterOption = (idx: number) => {
     setCurrentFilter(idx + 1);
   };
 
-  const fetchStepData = async () => {
+  const fetchOptionData = async (key: string) => {
     try {
-      const response = await fetchData(`selective_option/${optionList[0].key}`);
+      const response = await fetchData(`selective_option/${key}`);
       console.log(response);
+      return response;
     } catch (error) {
-      console.error('Error fetching core option data:', error);
+      console.error('Error fetching option data:', error);
+    }
+  };
+
+  const fetchAllData = async () => {
+    try {
+      const allData: OptionPackageT[] = [];
+      for (const option of optionList) {
+        const response = await fetchOptionData(option.key);
+        allData.push(response);
+      }
+      setOptionPackage(allData);
+    } catch (error) {
+      console.error('Error fetching data for all options:', error);
     }
   };
 
   useEffect(() => {
-    fetchStepData();
+    fetchAllData();
   }, []);
 
   return (
