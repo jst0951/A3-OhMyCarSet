@@ -7,7 +7,7 @@ export const Section = styled.div`
   margin: 0 auto;
 `;
 
-export const SectionTitleContainer = styled.div`
+export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 14px 24px;
@@ -15,7 +15,7 @@ export const SectionTitleContainer = styled.div`
   background-color: ${colors.hyundaiGrey001};
 `;
 
-export const SectionTitle = styled.div`
+export const Title = styled.div`
   color: #212121;
   ${headMedium1}
 `;
@@ -31,14 +31,14 @@ export const Price = styled.div`
   letter-spacing: -0.72px;
 `;
 
-export const SectionMainContainer = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 20px;
 `;
 
-export const SectionMain = styled.div<{ $hidden: boolean }>`
+export const Main = styled.div<{ $hidden: boolean }>`
   display: flex;
 
   /* ${({ $hidden }) => $hidden && `opacity: 0;`} */

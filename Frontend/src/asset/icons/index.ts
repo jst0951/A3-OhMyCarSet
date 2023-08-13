@@ -14,3 +14,4 @@ export { ReactComponent as CloseIcon } from './close_icon.svg';
 export { ReactComponent as SmileBeforeIcon } from './smile_before.svg';
 export { ReactComponent as SmileAfterIcon } from './smile_after.svg';
 export { ReactComponent as FeedbackIcon } from './feedback_icon.svg';
+export { ReactComponent as CorrectionIcon } from './correction_icon.svg';

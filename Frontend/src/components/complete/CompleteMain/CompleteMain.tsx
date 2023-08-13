@@ -2,6 +2,7 @@ import * as S from './CompleteMain.style';
 import { useState } from 'react';
 import Summary from '../Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
+import Detail from '../Detail/Detail';
 
 export default function CompleteMain() {
   const [endPoint, setEndPoint] = useState<string>('selective_option/4_1.png');
@@ -43,7 +44,9 @@ export default function CompleteMain() {
           저장하기
         </RectButton>
       </S.ButtonLine>
-      <S.DetailContainer></S.DetailContainer>
+      <S.DetailContainer>
+        <Detail />
+      </S.DetailContainer>
     </S.MainContainer>
   );
 }
