@@ -1,8 +1,8 @@
 import * as S from './CompleteMain.style';
 import { useState } from 'react';
-import Summary from '../Summary/Summary';
+import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
-import Detail from '../Detail/Detail';
+import Detail from '@/components/complete/Detail/Detail';
 
 export default function CompleteMain() {
   const [endPoint, setEndPoint] = useState<string>('selective_option/4_1.png');
