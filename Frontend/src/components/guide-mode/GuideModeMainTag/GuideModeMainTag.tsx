@@ -1,4 +1,4 @@
-import * as Style from './GuideModeMainTag.style';
+import * as Style from './GuideMainTag.style';
 import GuideModeIndicator from '@/components/guide-mode/GuideModeIndicator/GuideModeIndicator';
 import GuideModeSingleTag from '@/components/guide-mode/GuideModeSingleTag/GuideModeSingleTag';
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
@@ -6,6 +6,7 @@ import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import GuideModeMultiTag from '@/components/guide-mode/GuideModeMultiTag/GuideModeMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import { Dispatch, useState } from 'react';
+import { GUIDE_MAX_STEP } from '@/constants';
 
 interface MainProps {
   setComplete: Dispatch<React.SetStateAction<boolean>>;
@@ -31,7 +32,7 @@ export default function GuideModeMainTag({ setComplete }: MainProps) {
           </Style.MainDescriptionBold>
           <Style.SubDescription>{guideDescriptionData[currentIndex].subDescription}</Style.SubDescription>
 
-          <Style.ButtonContainer $hidden={!showButton || GuideModeStep !== 3}>
+          <Style.ButtonContainer $hidden={!showButton || GuideModeStep !== GUIDE_MAX_STEP}>
             <RectButton type="recommended" page="guide" onClick={clickHandler}>
               선택 완료
             </RectButton>
@@ -39,7 +40,11 @@ export default function GuideModeMainTag({ setComplete }: MainProps) {
         </Style.MainLeftContainer>
 
         <Style.MainRightContainer>
-          {currentIndex === 2 ? <GuideModeMultiTag setShowButton={setShowButton} /> : <GuideModeSingleTag />}
+          {currentIndex === GUIDE_MAX_STEP - 1 ? (
+            <GuideModeMultiTag setShowButton={setShowButton} />
+          ) : (
+            <GuideModeSingleTag />
+          )}
         </Style.MainRightContainer>
       </Style.MainContainer>
     </>

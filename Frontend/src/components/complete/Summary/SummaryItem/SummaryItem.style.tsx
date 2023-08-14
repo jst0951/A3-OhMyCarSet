@@ -27,7 +27,7 @@ export const Price = styled.div`
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: 130%; /* 31.2px */
+  line-height: 31.2px;
   letter-spacing: -0.72px;
 `;
 
@@ -40,8 +40,6 @@ export const MainContainer = styled.div`
 
 export const Main = styled.div<{ $hidden: boolean }>`
   display: flex;
-
-  /* ${({ $hidden }) => $hidden && `opacity: 0;`} */
 `;
 
 export const CategoryName = styled.div`

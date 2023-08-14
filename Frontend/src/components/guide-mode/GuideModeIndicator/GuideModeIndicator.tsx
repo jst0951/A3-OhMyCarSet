@@ -4,6 +4,7 @@ import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 
 export default function GuideModeIndicator() {
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
+
   const handleClick = (page: number) => {
     if (GuideModeStep > page) {
       setGuideModeStep(page);

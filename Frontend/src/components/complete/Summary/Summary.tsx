@@ -2,16 +2,7 @@ import * as S from './Summary.style';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { DEFAULT_PRICE } from '@/constants';
 import SummaryItem from './SummaryItem/SummaryItem';
-
-export interface SectionProps {
-  sectionTitle: string;
-  sectionTotal: number;
-  subList: Array<{
-    stepName: string;
-    selectName: string | null;
-    price: number;
-  }>;
-}
+import { SectionProps } from '@/components/self-mode/SelfModeMain/Estimate/Estimate';
 
 export default function Summary() {
   const selectOptionState = useSelectOptionState();

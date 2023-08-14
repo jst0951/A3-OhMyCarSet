@@ -1,10 +1,10 @@
 import { CorrectionIcon } from '@/asset/icons';
-import { OptionProps } from '../Detail';
+import { OptionData } from '@/components/self-mode/SelfModeMain/SelfModeMain';
 import OptionList from '@/asset/data/optionList.json';
 import * as S from './DetailItem.style';
 
 interface CompleteOptionProps {
-  data: OptionProps;
+  data: OptionData;
   index: number;
 }
 

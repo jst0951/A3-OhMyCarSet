@@ -17,7 +17,7 @@ export const MainTitle = styled.div`
   font-size: 32px;
   font-style: normal;
   font-weight: 500;
-  line-height: 140%; /* 44.8px */
+  line-height: 44.8px;
   letter-spacing: -1.28px;
 `;
 

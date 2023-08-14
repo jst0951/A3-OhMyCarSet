@@ -2,8 +2,6 @@ import { styled } from 'styled-components';
 import { colors } from '@/style/theme';
 import { headMedium5, headRegular5 } from '@/style/typefaces';
 
-export const MainContainer = styled.div``;
-
 export const NavContainer = styled.div`
   position: relative;
   display: flex;

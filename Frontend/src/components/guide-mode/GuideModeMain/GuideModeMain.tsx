@@ -4,5 +4,6 @@ import { useState } from 'react';
 
 export default function GuideModeMain() {
   const [complete, setComplete] = useState<boolean>(false);
+
   return <>{complete ? <GuideModeMainComplete /> : <GuideModeMainTag setComplete={setComplete} />}</>;
 }

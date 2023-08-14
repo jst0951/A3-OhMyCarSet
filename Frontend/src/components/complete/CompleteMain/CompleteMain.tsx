@@ -16,9 +16,7 @@ export default function CompleteMain() {
   return (
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
-      <S.CarImg>
-        <img src={`${import.meta.env.VITE_STATIC_API_URL}/${endPoint}`} alt={`임시`} width={589} height={326} />
-      </S.CarImg>
+      <img src={`${import.meta.env.VITE_STATIC_API_URL}/${endPoint}`} alt={`임시`} width={589} height={326} />
       <S.InternalExternal>
         <S.External onClick={() => clickHandler('selective_option/4_1.png', true)} $isExternal={isExternal}>
           외부

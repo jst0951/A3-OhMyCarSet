@@ -1,5 +1,6 @@
 import * as Style from './GuideModeMultiTag.style';
 import guideMultiTagData from '@/asset/data/guideMultiTagData.json';
+import { GUIDE_MAX_TAG_NUM } from '@/constants';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { Dispatch, useEffect, useState } from 'react';
 
@@ -12,16 +13,15 @@ export default function GuideModeMultiTag({ setShowButton }: MultiProps) {
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const tagCategory = guideMultiTagData[0].category;
-  const MAX_TAG_NUM = 3;
 
   const handleClick = (tag: string) => {
     if (selectedTagList.size !== 0 && selectedTagList.has(tag)) {
       selectedTagList.delete(tag);
-    } else if (!selectedTagList.has(tag) && selectedTagList.size < MAX_TAG_NUM) {
+    } else if (!selectedTagList.has(tag) && selectedTagList.size < GUIDE_MAX_TAG_NUM) {
       selectedTagList.add(tag);
     }
     setSelectedTagList(selectedTagList);
-    if (selectedTagList.size === 3) {
+    if (selectedTagList.size === GUIDE_MAX_TAG_NUM) {
       selectTagList[2].value = selectedTagList;
       setSelectTagList(selectTagList);
       setShowButton(true);
@@ -29,8 +29,9 @@ export default function GuideModeMultiTag({ setShowButton }: MultiProps) {
       setShowButton(false);
     }
   };
+
   const handleMouseEnter = (tag: string) => {
-    if (selectedTagList.size !== 3) {
+    if (selectedTagList.size !== GUIDE_MAX_TAG_NUM) {
       setHoveredTag(tag);
     }
   };

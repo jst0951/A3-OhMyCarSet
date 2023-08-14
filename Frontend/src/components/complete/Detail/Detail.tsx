@@ -2,22 +2,11 @@ import * as S from './Detail.style';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import completeCarData from '@/asset/data/completeCarData.json';
 import DetailItem from './DetailItem/DetailItem';
-
-export interface OptionProps {
-  id: number;
-  name: string;
-  mainDescription?: string;
-  subDescription?: string | null;
-  mainFeedback: string;
-  subFeedback: string;
-  price: number;
-  imgSrc: string;
-  iconSrc?: string | null;
-}
+import { OptionData } from '@/components/self-mode/SelfModeMain/SelfModeMain';
 
 export default function Detail() {
   const selectOptionState = useSelectOptionState();
-  console.log(typeof completeCarData);
+
   return (
     <>
       <S.MainContainer>
@@ -29,7 +18,7 @@ export default function Detail() {
           </S.LeftTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {completeCarData.map((data, index) => (
+          {completeCarData.map((data: OptionData, index) => (
             <DetailItem key={data.id} data={data} index={index} />
           ))}
         </S.SectionContainer>

@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 export default function GuideModeMainComplete() {
   const navigate = useNavigate();
+
   const linkToComplete = () => {
     navigate('/complete');
   };
+
   return (
     <S.MainContainer>
       <img src={`${import.meta.env.VITE_STATIC_API_URL}/selective_option/4_1.png`} alt={`임시`} height={300} />

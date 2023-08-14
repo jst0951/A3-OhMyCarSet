@@ -1,4 +1,4 @@
-import { SectionProps } from '../Summary';
+import { SectionProps } from '@/components/self-mode/SelfModeMain/Estimate/Estimate';
 import * as S from './SummaryItem.style';
 
 interface SummaryProps {

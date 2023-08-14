@@ -14,7 +14,7 @@
     "id": 2,
     "name": "4WD",
     "mainDescription": "전자식 상시 4륜 구동 시스템 입니다도로의 상황이나 주행 환경에 맞춰 전후륜 구동력을 자동배분하여 주행 안전성을 높여줍니다",
-    "subDescription": null,
+    "subDescription": "최고출력 202 ps / 3,800 rpm\n최대토크 45.0 kgf-m / 1750~2750 rpm",
     "mainFeedback": "4WD는 파워풀해요!",
     "subFeedback": "힘있는 주행을 원하신다면, 탁월한 선택입니다.",
     "price": 2370000,

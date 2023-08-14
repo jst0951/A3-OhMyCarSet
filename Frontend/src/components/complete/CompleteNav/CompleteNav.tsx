@@ -3,6 +3,7 @@ import optionList from '@/asset/data/optionList.json';
 
 export default function CompleteNav() {
   const COMPLETE_PAGE = 8;
+
   return (
     <>
       <S.NavContainer>
