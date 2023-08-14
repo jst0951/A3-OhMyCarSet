@@ -102,4 +102,13 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
                 column + "=?";
         return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
     }
+
+    @Override
+    public Long countByTagIdAndPackageNameAndOptionId(Long tagId, String packageName, Long optionId) {
+        String table = "purchase_" + packageName + "_map";
+        String sql = "SELECT COUNT(*) FROM purchase_history AS A \n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
+                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
+    }
 }
