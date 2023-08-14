@@ -63,4 +63,10 @@ public interface PurchaseHistoryRepository {
     List<PurchaseHistory> findAllByGender(Character gender);
 
     Long countByGender(Character gender);
+
+    List<PurchaseHistory> findAllByTagId(Long tagId);
+
+    Long countByTagId(Long tagId);
+
+    Long countByTagIdAndPowerTrainOptionId(Long tagId, Long powerTrainOptionId);
 }

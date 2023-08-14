@@ -218,4 +218,27 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
                 "WHERE gender=?";
         return jdbcTemplate.queryForObject(sql, Long.class, gender);
     }
+
+    @Override
+    public List<PurchaseHistory> findAllByTagId(Long tagID) {
+        String sql = "SELECT A.* FROM purchase_history AS A\n" +
+                "INNER JOIN purchase_tag_map AS M ON A.id=M.purhcase_id\n" +
+                "WHERE M.tag_id=?";
+        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, tagID);
+    }
+
+    @Override
+    public Long countByTagId(Long tagId) {
+        String sql = "SELECT COUNT(*) FROM purchase_tag_map\n" +
+                "WHERE tag_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId);
+    }
+
+    @Override
+    public Long countByTagIdAndPowerTrainOptionId(Long tagId, Long powerTrainOptionId) {
+        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
+                "INNER JOIN purchase_tag_map AS M ON A.id=M.purhcase_id\n" +
+                "WHERE M.tag_id=? AND A.powertrain_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId, powerTrainOptionId);
+    }
 }

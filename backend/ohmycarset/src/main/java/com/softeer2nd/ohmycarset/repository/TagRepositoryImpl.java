@@ -29,6 +29,11 @@ public class TagRepositoryImpl implements TagRepository {
         return tagList.stream().findAny();
     }
 
+    public Optional<Tag> findByName(String name) {
+        List<Tag> tagList = jdbcTemplate.query("SELECT * FROM tag WHERE name=?", tagRowMapper, name);
+        return tagList.stream().findAny();
+    }
+
     @Override
     public List<Tag> findAllByPowerTrainOptionId(Long powerTrainOptionId) {
         String sql = "SELECT A.* FROM tag AS A\n" +
