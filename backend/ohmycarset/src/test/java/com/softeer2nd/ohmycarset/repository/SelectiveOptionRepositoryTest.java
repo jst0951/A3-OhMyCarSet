@@ -1,14 +1,8 @@
 package com.softeer2nd.ohmycarset.repository;
 
-import com.softeer2nd.ohmycarset.domain.selectiveOption.*;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.InternalDeviceOption.InternalDeviceOption;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.InternalDeviceOption.InternalDeviceOptionComponent;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.externalDeviceOption.ExternalDeviceOption;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.externalDeviceOption.ExternalDeviceOptionComponent;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOption;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.systemOption.SystemOptionComponent;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOption;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.temperatureOption.TemperatureOptionComponent;
+import com.softeer2nd.ohmycarset.domain.selective.OptionPackage;
+import com.softeer2nd.ohmycarset.domain.selective.PackageComponent;
+import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +45,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 파워트레인 옵션 정보를 가져옵니다.")
     void findAllPowerTrain() {
-        List<PowerTrainOption> powerTrains = selectiveOptionRepository.findAllPowerTrain();
+        List<RequiredOption> powerTrains = selectiveOptionRepository.findOptionByName("powertrain");
         assertThat(powerTrains).hasSize(2);
 
-        PowerTrainOption powerTrainOption = powerTrains.get(0);
+        RequiredOption powerTrainOption = powerTrains.get(0);
         assertThat(powerTrainOption.getId()).isEqualTo(1L);
         assertThat(powerTrainOption.getName()).isEqualTo("디젤 2.2");
         assertThat(powerTrainOption.getImgSrc()).isEqualTo("selective_option/1_1.png");
@@ -68,10 +62,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 구동방식 옵션 정보를 가져옵니다.")
     void findAllWD() {
-        List<WDOption> wds = selectiveOptionRepository.findAllWD();
+        List<RequiredOption> wds = selectiveOptionRepository.findOptionByName("wd");
         assertThat(wds).hasSize(2);
 
-        WDOption wdOption = wds.get(0);
+        RequiredOption wdOption = wds.get(0);
         assertThat(wdOption.getId()).isEqualTo(1L);
         assertThat(wdOption.getName()).isEqualTo("2WD");
         assertThat(wdOption.getPrice()).isZero();
@@ -84,10 +78,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 바디타입 옵션 정보를 가져옵니다.")
     void findAllBody() {
-        List<BodyOption> bodies = selectiveOptionRepository.findAllBody();
+        List<RequiredOption> bodies = selectiveOptionRepository.findOptionByName("body");
         assertThat(bodies).hasSize(2);
 
-        BodyOption bodyOption = bodies.get(0);
+        RequiredOption bodyOption = bodies.get(0);
         assertThat(bodyOption.getId()).isEqualTo(1L);
         assertThat(bodyOption.getName()).isEqualTo("7인승");
         assertThat(bodyOption.getPrice()).isZero();
@@ -100,10 +94,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 외장색상 옵션 정보를 가져옵니다.")
     void findAllExteriorColor() {
-        List<ExteriorColorOption> exteriorColors = selectiveOptionRepository.findAllExteriorColor();
+        List<RequiredOption> exteriorColors = selectiveOptionRepository.findOptionByName("exterior_color");
         assertThat(exteriorColors).hasSize(6);
 
-        ExteriorColorOption exteriorColorOption = exteriorColors.get(0);
+        RequiredOption exteriorColorOption = exteriorColors.get(0);
         assertThat(exteriorColorOption.getId()).isEqualTo(1L);
         assertThat(exteriorColorOption.getName()).isEqualTo("크리미 화이트 펄");
         assertThat(exteriorColorOption.getPrice()).isEqualTo(100000);
@@ -116,10 +110,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 내장색상 옵션 정보를 가져옵니다.")
     void findAllInteriorColor() {
-        List<InteriorColorOption> interiorColors = selectiveOptionRepository.findAllInteriorColor();
+        List<RequiredOption> interiorColors = selectiveOptionRepository.findOptionByName("interior_color");
         assertThat(interiorColors).hasSize(2);
 
-        InteriorColorOption interiorColorOption = interiorColors.get(0);
+        RequiredOption interiorColorOption = interiorColors.get(0);
         assertThat(interiorColorOption.getId()).isEqualTo(1L);
         assertThat(interiorColorOption.getName()).isEqualTo("퀼팅 천연(블랙)");
         assertThat(interiorColorOption.getPrice()).isZero();
@@ -132,10 +126,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 휠 옵션 정보를 가져옵니다.")
     void findAllWheel() {
-        List<WheelOption> wheels = selectiveOptionRepository.findAllWheel();
+        List<RequiredOption> wheels = selectiveOptionRepository.findOptionByName("wheel");
         assertThat(wheels).hasSize(4);
 
-        WheelOption wheelOption = wheels.get(0);
+        RequiredOption wheelOption = wheels.get(0);
         assertThat(wheelOption.getId()).isEqualTo(1L);
         assertThat(wheelOption.getName()).isEqualTo("20인치 알로이 휠 & 타이어");
         assertThat(wheelOption.getPrice()).isZero();
@@ -148,10 +142,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 시스템옵션 패키지 정보를 가져옵니다.")
     void findAllSystem() {
-        List<SystemOption> systems = selectiveOptionRepository.findAllSystem();
+        List<OptionPackage> systems = selectiveOptionRepository.findPackageByName("system");
         assertThat(systems).hasSize(3);
 
-        SystemOption systemOption = systems.get(0);
+        OptionPackage systemOption = systems.get(0);
         assertThat(systemOption.getId()).isEqualTo(1L);
         assertThat(systemOption.getName()).isEqualTo("현대스마트센스 1");
         assertThat(systemOption.getPrice()).isEqualTo(790000);
@@ -162,12 +156,12 @@ class SelectiveOptionRepositoryTest {
     @DisplayName("시스템옵션 패키지 ID로 해당 패키지의 구성요소 정보를 가져옵니다.")
     void findAllSystemComponentBySystemOptionId() {
         Long systemOptionId = 1L;
-        List<SystemOptionComponent> systemOptionComponents = selectiveOptionRepository.findAllSystemComponentBySystemOptionId(systemOptionId);
+        List<PackageComponent> systemOptionComponents = selectiveOptionRepository.findComponentByPackageNameAndPackageId("system", systemOptionId);
         assertThat(systemOptionComponents).hasSize(3);
 
-        SystemOptionComponent component = systemOptionComponents.get(0);
+        PackageComponent component = systemOptionComponents.get(0);
         assertThat(component.getId()).isEqualTo(1L);
-        assertThat(component.getsOptionId()).isEqualTo(systemOptionId);
+        assertThat(component.getPackageId()).isEqualTo(systemOptionId);
         assertThat(component.getName()).isEqualTo("전방 충돌방지 보조");
         assertThat(component.getDescription()).contains("선행 차량이 갑자기 속도를 줄이거나,");
         assertThat(component.getImgSrc()).isEqualTo("selective_option/7_1.png");
@@ -176,10 +170,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 온도관리옵션 패키지 정보를 가져옵니다.")
     void findAllTemperature() {
-        List<TemperatureOption> temperatures = selectiveOptionRepository.findAllTemperature();
+        List<OptionPackage> temperatures = selectiveOptionRepository.findPackageByName("temperature");
         assertThat(temperatures).hasSize(2);
 
-        TemperatureOption temperatureOption = temperatures.get(1);
+        OptionPackage temperatureOption = temperatures.get(1);
         assertThat(temperatureOption.getId()).isEqualTo(2L);
         assertThat(temperatureOption.getName()).isEqualTo("적외선 무릎워머");
         assertThat(temperatureOption.getPrice()).isEqualTo(300000);
@@ -190,12 +184,12 @@ class SelectiveOptionRepositoryTest {
     @DisplayName("온도관리옵션 패키지 ID로 해당 패키지의 구성요소 정보를 가져옵니다.")
     void findAllTemperatureComponentBySystemOptionId() {
         Long temperatureOptionId = 1L;
-        List<TemperatureOptionComponent> temperatureOptionComponents = selectiveOptionRepository.findAllTemperatureComponentByTemperatureOptionId(temperatureOptionId);
+        List<PackageComponent> temperatureOptionComponents = selectiveOptionRepository.findComponentByPackageNameAndPackageId("temperature", temperatureOptionId);
         assertThat(temperatureOptionComponents).hasSize(1);
 
-        TemperatureOptionComponent component = temperatureOptionComponents.get(0);
+        PackageComponent component = temperatureOptionComponents.get(0);
         assertThat(component.getId()).isEqualTo(1L);
-        assertThat(component.gettOptionId()).isEqualTo(temperatureOptionId);
+        assertThat(component.getPackageId()).isEqualTo(temperatureOptionId);
         assertThat(component.getName()).isNull();
         assertThat(component.getDescription()).contains("시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면");
         assertThat(component.getImgSrc()).isEqualTo("selective_option/8_1.png");
@@ -204,10 +198,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 외부장치옵션 패키지 정보를 가져옵니다.")
     void findAllExternalDevice() {
-        List<ExternalDeviceOption> externalDevices = selectiveOptionRepository.findAllExternalDevice();
+        List<OptionPackage> externalDevices = selectiveOptionRepository.findPackageByName("external_device");
         assertThat(externalDevices).hasSize(3);
 
-        ExternalDeviceOption externalDeviceOption = externalDevices.get(0);
+        OptionPackage externalDeviceOption = externalDevices.get(0);
         assertThat(externalDeviceOption.getId()).isEqualTo(1L);
         assertThat(externalDeviceOption.getName()).isEqualTo("차량 보호 필름");
         assertThat(externalDeviceOption.getPrice()).isEqualTo(490000);
@@ -218,12 +212,12 @@ class SelectiveOptionRepositoryTest {
     @DisplayName("외부장치옵션 패키지 ID로 해당 패키지의 구성요소 정보를 가져옵니다.")
     void findAllExternalDeviceComponentBySystemOptionId() {
         Long externalDeviceOptionId = 1L;
-        List<ExternalDeviceOptionComponent> eDeviceOptionComponents = selectiveOptionRepository.findAllExternalDeviceComponentByExternalDeviceOptionId(externalDeviceOptionId);
+        List<PackageComponent> eDeviceOptionComponents = selectiveOptionRepository.findComponentByPackageNameAndPackageId("external_device", externalDeviceOptionId);
         assertThat(eDeviceOptionComponents).hasSize(1);
 
-        ExternalDeviceOptionComponent component = eDeviceOptionComponents.get(0);
+        PackageComponent component = eDeviceOptionComponents.get(0);
         assertThat(component.getId()).isEqualTo(1L);
-        assertThat(component.geteDOptionId()).isEqualTo(externalDeviceOptionId);
+        assertThat(component.getPackageId()).isEqualTo(externalDeviceOptionId);
         assertThat(component.getName()).isNull();
         assertThat(component.getDescription()).isNull();
         assertThat(component.getImgSrc()).isEqualTo("selective_option/9_1.png");
@@ -232,10 +226,10 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 내부장치옵션 패키지 정보를 가져옵니다.")
     void findAllInternalDevice() {
-        List<InternalDeviceOption> internalDevices = selectiveOptionRepository.findAllInternalDevice();
+        List<OptionPackage> internalDevices = selectiveOptionRepository.findPackageByName("internal_device");
         assertThat(internalDevices).hasSize(4);
 
-        InternalDeviceOption internalDeviceOption = internalDevices.get(1);
+        OptionPackage internalDeviceOption = internalDevices.get(1);
         assertThat(internalDeviceOption.getId()).isEqualTo(2L);
         assertThat(internalDeviceOption.getName()).isEqualTo("프로텍션 매트 패키지 1");
         assertThat(internalDeviceOption.getPrice()).isEqualTo(250000);
@@ -246,12 +240,12 @@ class SelectiveOptionRepositoryTest {
     @DisplayName("내부장치옵션 패키지 ID로 해당 패키지의 구성요소 정보를 가져옵니다.")
     void findAllInternalDeviceComponentBySystemOptionId() {
         Long internalDeviceOptionId = 1L;
-        List<InternalDeviceOptionComponent> iDeviceOptionComponents = selectiveOptionRepository.findAllInternalDeviceComponentByInternalDeviceOptionId(internalDeviceOptionId);
+        List<PackageComponent> iDeviceOptionComponents = selectiveOptionRepository.findComponentByPackageNameAndPackageId("internal_device", internalDeviceOptionId);
         assertThat(iDeviceOptionComponents).hasSize(1);
 
-        InternalDeviceOptionComponent component = iDeviceOptionComponents.get(0);
+        PackageComponent component = iDeviceOptionComponents.get(0);
         assertThat(component.getId()).isEqualTo(1L);
-        assertThat(component.getiDOptionId()).isEqualTo(internalDeviceOptionId);
+        assertThat(component.getPackageId()).isEqualTo(internalDeviceOptionId);
         assertThat(component.getName()).isNull();
         assertThat(component.getDescription()).contains("후석에 고정 글라스를 적용한");
         assertThat(component.getImgSrc()).isEqualTo("selective_option/10_1.png");

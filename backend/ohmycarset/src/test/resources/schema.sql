@@ -153,11 +153,11 @@ CREATE TABLE system_option
 CREATE TABLE system_option_component
 (
     id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    s_option_id   BIGINT,
+    package_id   BIGINT,
     `name`        VARCHAR(40),
     `description` VARCHAR(255),
     img_src       VARCHAR(255),
-    FOREIGN KEY (s_option_id) REFERENCES system_option (id)
+    FOREIGN KEY (package_id) REFERENCES system_option (id)
 );
 
 CREATE TABLE temperature_option
@@ -171,11 +171,11 @@ CREATE TABLE temperature_option
 CREATE TABLE temperature_option_component
 (
     id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    t_option_id   BIGINT,
+    package_id   BIGINT,
     `name`        VARCHAR(40),
     `description` VARCHAR(255),
     img_src       VARCHAR(255),
-    FOREIGN KEY (t_option_id) REFERENCES temperature_option (id)
+    FOREIGN KEY (package_id) REFERENCES temperature_option (id)
 );
 
 CREATE TABLE external_device_option
@@ -189,11 +189,11 @@ CREATE TABLE external_device_option
 CREATE TABLE external_device_option_component
 (
     id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    e_d_option_id BIGINT,
+    package_id BIGINT,
     `name`        VARCHAR(40),
     `description` VARCHAR(255),
     img_src       VARCHAR(255),
-    FOREIGN KEY (e_d_option_id) REFERENCES external_device_option (id)
+    FOREIGN KEY (package_id) REFERENCES external_device_option (id)
 );
 
 CREATE TABLE internal_device_option
@@ -207,9 +207,9 @@ CREATE TABLE internal_device_option
 CREATE TABLE internal_device_option_component
 (
     id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    i_d_option_id BIGINT,
+    package_id BIGINT,
     `name`        VARCHAR(40),
     `description` VARCHAR(255),
     img_src       VARCHAR(255),
-    FOREIGN KEY (i_d_option_id) REFERENCES internal_device_option (id)
+    FOREIGN KEY (package_id) REFERENCES internal_device_option (id)
 );

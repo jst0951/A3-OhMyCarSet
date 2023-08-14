@@ -1,7 +1,6 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.InteriorColor;
-import com.softeer2nd.ohmycarset.domain.selectiveOption.InternalDeviceOption.InternalDeviceOptionComponent;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
