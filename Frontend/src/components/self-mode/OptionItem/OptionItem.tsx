@@ -49,7 +49,12 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
   const checkShowMore = () => {
     if ('mainDescription' in optionData && optionData.mainDescription) return true;
-    else if ('components' in optionData && optionData.components) return true;
+    else if (
+      'components' in optionData &&
+      optionData.components &&
+      (optionData.components[0].name !== null || optionData.components[0].description !== null)
+    )
+      return true;
     return false;
   };
 
