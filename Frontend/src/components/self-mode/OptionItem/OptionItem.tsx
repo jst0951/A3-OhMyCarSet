@@ -8,6 +8,7 @@ import OptionImage from './OptionImage/OptionImage';
 import ShowMore from './ShowMore/ShowMore';
 import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
+import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -110,12 +111,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
           ))}
         <S.OptionBottomContainer $isActive={isActive}>
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
-          {checkShowMore() && (
-            <S.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
-              {showMore ? '접기' : '자세히 보기'}
-              <Icon icon="OptionShowMoreIcon" size={14} />
-            </S.ShowMoreButton>
-          )}
+          {checkShowMore() && <ShowMoreButton isActive={isActive} showMore={showMore} onClick={toggleShowMore} />}
         </S.OptionBottomContainer>
         <S.FeedbackContainer $show={showFeedback === optionData.id}>
           <FeedbackItem show={showFeedback === optionData.id} optionData={optionData} />

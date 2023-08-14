@@ -1,5 +1,5 @@
 import { colors } from '@/style/theme';
-import { bodyMedium3, bodyRegular2, headMedium2 } from '@/style/typefaces';
+import { bodyRegular2, headMedium2 } from '@/style/typefaces';
 import { css, styled } from 'styled-components';
 
 const inactiveOptionCss = css`
@@ -31,30 +31,6 @@ export const OptionBottomContainer = styled.div<{ $isActive: boolean }>`
 
 export const OptionPrice = styled.div`
   ${bodyRegular2}
-`;
-
-export const ShowMoreButton = styled.div<{ $isActive: boolean; $showMore: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  /* z-index: 1; */
-
-  ${bodyMedium3}
-  color: ${colors.coolGrey003};
-
-  cursor: pointer;
-
-  & > svg {
-    transition: 0.2s ease-in-out;
-
-    ${({ $showMore }) =>
-      $showMore &&
-      `
-      transform: scaleY(-1);
-  `}
-  }
-
-  ${({ $isActive }) => !$isActive && `pointer-events: none`}
 `;
 
 export const ItemContainer = styled.div<{ $isActive: boolean }>`
