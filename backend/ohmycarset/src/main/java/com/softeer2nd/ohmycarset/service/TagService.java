@@ -117,4 +117,56 @@ public class TagService {
 
         return optionTagDtoList;
     }
+
+    public List<SelectiveOptionTagDto> getKeywordTagOptionPackage(UserInfoDto userInfoDto, String packageName) {
+        List<Tag> tagList = new ArrayList<>();
+        List<String> tagNameList = userInfoDto.getTagNameList();
+        for (String tagName : tagNameList) {
+            tagList.add(tagRepository.findByName(tagName).orElse(null));
+        }
+
+        // 본 카테고리의 모든 옵션의 목록을 가져옵니다.
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(packageName);
+
+        // 모든 태그들을 담을 목록을 만듭니다.
+        List<SelectiveOptionTagDto> optionTagDtoList = new ArrayList<>();
+        // 각 옵션에 대해 태그 목록을 구합니다.
+        for (RequiredOption option : optionList) {
+            List<SelectiveOptionTagDto> tagDtoList = new ArrayList<>();
+
+            // 유저가 선택한 태그와 옵션에 정의된 태그 중 겹치는 태그만 연산합니다.
+            List<Tag> intersectionTagList = new ArrayList<>();
+            List<Tag> optionTagList = tagRepository.findAllByOptionNameAndOptionId(packageName, option.getId());
+            for (Tag tag : tagList) {
+                for (Tag optionTag : optionTagList) {
+                    if (Objects.equals(tag.getId(), optionTag.getId())) {
+                        intersectionTagList.add(tag);
+                    }
+                }
+            }
+
+            // 유저가 선택한 3가지 태그에 대해 유사도를 연산합니다.
+            for (Tag tag : intersectionTagList) {
+                // 해당 태그를 선택한 구매 내역 수를 받아옵니다.
+                Long purchaseCount = purchaseHistoryRepository.countByTagId(tag.getId());
+
+                // 해당 태그를 선택하고, 해당 옵션을 구매한 내역 수를 받아옵니다.
+                Long intersectionPurchaseCount = purchaseHistoryRepository.countByTagIdAndPackageNameAndOptionId(tag.getId(), packageName, option.getId());
+
+                // 선택 비율을 연산합니다.
+                Double selectionPercentage = (double) intersectionPurchaseCount / purchaseCount * 100;
+
+                // 태그 목록에 추가합니다.
+                tagDtoList.add(new SelectiveOptionTagDto(option, tag, selectionPercentage));
+            }
+
+            // 높은 유사도순으로 재정렬합니다.
+            tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
+
+            // 목록에 담습니다.
+            optionTagDtoList.addAll(tagDtoList);
+        }
+
+        return optionTagDtoList;
+    }
 }
