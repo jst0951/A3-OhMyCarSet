@@ -1,7 +1,7 @@
 import * as Style from './GuideModeMultiTag.style';
 import guideMultiTagData from '@/asset/data/guideMultiTagData.json';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 interface MultiProps {
   setComplete: Dispatch<React.SetStateAction<boolean>>;
@@ -34,6 +34,10 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
       setHoveredTag(tag);
     }
   };
+
+  useEffect(() => {
+    setComplete(false);
+  }, []);
 
   return (
     <Style.TagListContainer>

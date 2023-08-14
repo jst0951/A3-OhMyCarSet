@@ -29,8 +29,8 @@ export default function Detail() {
           </S.LeftTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {completeCarData.map((data) => (
-            <DetailItem key={data.id} data={data} />
+          {completeCarData.map((data, index) => (
+            <DetailItem key={data.id} data={data} index={index} />
           ))}
         </S.SectionContainer>
       </S.MainContainer>

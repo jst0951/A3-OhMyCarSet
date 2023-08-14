@@ -1,17 +1,19 @@
 import { CorrectionIcon } from '@/asset/icons';
 import { OptionProps } from '../Detail';
+import OptionList from '@/asset/data/optionList.json';
 import * as S from './DetailItem.style';
 
 interface CompleteOptionProps {
   data: OptionProps;
+  index: number;
 }
 
-export default function DetailItem({ data }: CompleteOptionProps) {
+export default function DetailItem({ data, index }: CompleteOptionProps) {
   return (
     <>
       <S.Section>
         <S.TitleContainer>
-          <S.Title>{data.name}</S.Title>
+          <S.Title>{OptionList[index].name}</S.Title>
           <S.Price>{data.price.toLocaleString()}원</S.Price>
         </S.TitleContainer>
         <S.MainContainer>
