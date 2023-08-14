@@ -2,9 +2,11 @@ package com.softeer2nd.ohmycarset.dto;
 
 import com.softeer2nd.ohmycarset.domain.CoreOption;
 import com.softeer2nd.ohmycarset.domain.Trim;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class CoreOptionDto {
 
     private final Long trimId;
@@ -15,17 +17,5 @@ public class CoreOptionDto {
         this.trimId = trim.getId();
         this.trimName = trim.getName();
         this.coreOptionList = coreOptionList;
-    }
-
-    public Long getTrimId() {
-        return trimId;
-    }
-
-    public String getTrimName() {
-        return trimName;
-    }
-
-    public List<CoreOption> getCoreOptionList() {
-        return coreOptionList;
     }
 }

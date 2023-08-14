@@ -49,17 +49,16 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public List<PurchaseHistory> findAllByTagId(Long tagID) {
-        String sql = "SELECT A.* FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_tag_map AS M ON A.id=M.purhcase_id\n" +
-                "WHERE M.tag_id=?";
-        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, tagID);
+        String sql = "SELECT * FROM purchase_history WHERE \n" +
+                "tag1_id=? OR tag2_id=? OR tag3_id=?";
+        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, tagID, tagID, tagID);
     }
 
     @Override
     public Long countByTagId(Long tagId) {
-        String sql = "SELECT COUNT(*) FROM purchase_tag_map\n" +
-                "WHERE tag_id=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, tagId);
+        String sql = "SELECT COUNT(*) FROM purchase_history WHERE \n" +
+                "tag1_id=? OR tag2_id=? OR tag3_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId);
     }
 
     @Override
@@ -97,10 +96,19 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId) {
-        String table = optionName + "_id";
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +
-                "INNER JOIN purchase_tag_map AS M ON A.id=M.purhcase_id\n" +
-                "WHERE M.tag_id=? AND A." + table + "=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, tagId, optionId);
+        String column = optionName + "_id";
+        String sql = "SELECT COUNT(*) FROM purchase_history WHERE\n" +
+                "(tag1_id=? OR tag2_id=? OR tag3_id=?) AND\n" +
+                column + "=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
+    }
+
+    @Override
+    public Long countByTagIdAndPackageNameAndOptionId(Long tagId, String packageName, Long optionId) {
+        String table = "purchase_" + packageName + "_map";
+        String sql = "SELECT COUNT(*) FROM purchase_history AS A \n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
+                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
     }
 }
