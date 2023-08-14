@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import OptionFooter from '../OptionFooter/OptionFooter';
-import * as Style from './SelfModeSingle.style';
+import * as S from './SelfModeSingle.style';
 import fetchData from '@/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionData } from '../SelfModeMain';
@@ -73,21 +73,21 @@ export default function SelfModeSingle() {
 
   return (
     <>
-      <Style.SelfModeSingleContainer>
-        <Style.SelfModeImage>
+      <S.SelfModeSingleContainer>
+        <S.SelfModeImage>
           {stepData[selectedOption - 1] && (
             <img
               src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData[selectedOption - 1]?.imgSrc}`}
               alt={stepData[selectedOption - 1]?.name}
             />
           )}
-        </Style.SelfModeImage>
-        <Style.SelfModeOption>
-          <Style.TitleContainer>
-            <Style.Title>{categoryNameList[selfModeStep - 1].text}</Style.Title>
-            <Style.TitleText>을 선택해주세요.</Style.TitleText>
-          </Style.TitleContainer>
-          <Style.OptionContainer>
+        </S.SelfModeImage>
+        <S.SelfModeOption>
+          <S.TitleContainer>
+            <S.Title>{categoryNameList[selfModeStep - 1].text}</S.Title>
+            <S.TitleText>을 선택해주세요.</S.TitleText>
+          </S.TitleContainer>
+          <S.OptionContainer>
             {stepData.map((data) => (
               <OptionItem
                 key={data.id}
@@ -97,15 +97,15 @@ export default function SelfModeSingle() {
                 showFeedback={showFeedback}
               />
             ))}
-          </Style.OptionContainer>
+          </S.OptionContainer>
           <OptionFooter
             selectedData={stepData[selectedOption - 1]}
             prevTotal={prevTotal}
             tempTotal={tempTotal}
             setShowFeedback={setShowFeedback}
           />
-        </Style.SelfModeOption>
-      </Style.SelfModeSingleContainer>
+        </S.SelfModeOption>
+      </S.SelfModeSingleContainer>
     </>
   );
 }

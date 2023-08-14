@@ -1,48 +1,53 @@
-import * as Style from './GuideModeMultiTag.style';
+import * as S from './GuideMultiTag.style';
 import guideMultiTagData from '@/asset/data/guideMultiTagData.json';
+import { GUIDE_MAX_TAG_NUM } from '@/constants';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 interface MultiProps {
-  setComplete: Dispatch<React.SetStateAction<boolean>>;
+  setShowButton: Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function GuideModeMultiTag({ setComplete }: MultiProps) {
+export default function GuideMultiTag({ setShowButton }: MultiProps) {
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const tagCategory = guideMultiTagData[0].category;
-  const MAX_TAG_NUM = 3;
 
   const handleClick = (tag: string) => {
     if (selectedTagList.size !== 0 && selectedTagList.has(tag)) {
       selectedTagList.delete(tag);
-    } else if (!selectedTagList.has(tag) && selectedTagList.size < MAX_TAG_NUM) {
+    } else if (!selectedTagList.has(tag) && selectedTagList.size < GUIDE_MAX_TAG_NUM) {
       selectedTagList.add(tag);
     }
     setSelectedTagList(selectedTagList);
-    if (selectedTagList.size === 3) {
+    if (selectedTagList.size === GUIDE_MAX_TAG_NUM) {
       selectTagList[2].value = selectedTagList;
       setSelectTagList(selectTagList);
-      setComplete(true);
+      setShowButton(true);
     } else {
-      setComplete(false);
+      setShowButton(false);
     }
   };
+
   const handleMouseEnter = (tag: string) => {
-    if (selectedTagList.size !== 3) {
+    if (selectedTagList.size !== GUIDE_MAX_TAG_NUM) {
       setHoveredTag(tag);
     }
   };
 
+  useEffect(() => {
+    setShowButton(false);
+  }, []);
+
   return (
-    <Style.TagListContainer>
+    <S.TagListContainer>
       {tagCategory.map((category) => (
-        <Style.TagSubContainer key={category.id}>
-          <Style.TagSubListTitle>{category.title}</Style.TagSubListTitle>
-          <Style.TagSubListContainer>
+        <S.TagSubContainer key={category.id}>
+          <S.TagSubListTitle>{category.title}</S.TagSubListTitle>
+          <S.TagSubListContainer>
             {category.tagList.map((tag, index) => (
-              <Style.TagContainer
+              <S.TagContainer
                 key={index}
                 onMouseEnter={() => handleMouseEnter(tag)}
                 onMouseLeave={() => setHoveredTag(null)}
@@ -50,18 +55,18 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
                 $disable={selectedTagList.size === 3}
                 $selected={selectedTagList.has(tag)}
               >
-                <Style.TagName>{tag}</Style.TagName>
+                <S.TagName>{tag}</S.TagName>
 
                 {selectedTagList.has(tag) ? (
-                  <Style.TagOrder>{Array.from(selectedTagList).findIndex((value) => value === tag) + 1}</Style.TagOrder>
+                  <S.TagOrder>{Array.from(selectedTagList).findIndex((value) => value === tag) + 1}</S.TagOrder>
                 ) : (
-                  hoveredTag === tag && <Style.TagOrder>{selectedTagList.size + 1}</Style.TagOrder>
+                  hoveredTag === tag && <S.TagOrder>{selectedTagList.size + 1}</S.TagOrder>
                 )}
-              </Style.TagContainer>
+              </S.TagContainer>
             ))}
-          </Style.TagSubListContainer>
-        </Style.TagSubContainer>
+          </S.TagSubListContainer>
+        </S.TagSubContainer>
       ))}
-    </Style.TagListContainer>
+    </S.TagListContainer>
   );
 }

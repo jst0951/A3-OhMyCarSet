@@ -1,4 +1,4 @@
-import * as Style from './Item.style';
+import * as S from './Item.style';
 type Item = {
   optionId: number;
   optionName: string;
@@ -11,11 +11,11 @@ interface ItemProps {
 
 export default function Item({ item }: ItemProps) {
   return (
-    <Style.ItemContainer>
-      <Style.Item>
+    <S.ItemContainer>
+      <S.Item>
         <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} />
-      </Style.Item>
-      <Style.ItemDescription>{item.optionName}</Style.ItemDescription>
-    </Style.ItemContainer>
+      </S.Item>
+      <S.ItemDescription>{item.optionName}</S.ItemDescription>
+    </S.ItemContainer>
   );
 }

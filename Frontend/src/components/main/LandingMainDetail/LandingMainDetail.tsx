@@ -1,7 +1,7 @@
 import Header from './Header/Header';
 import Main from './MainDetailLayout/MainDetail';
 import { useState, useEffect } from 'react';
-import * as Style from './LandingMainDetail.style';
+import * as S from './LandingMainDetail.style';
 import fetchData from '@/apis/fetchData';
 
 type HeaderData = {
@@ -34,10 +34,10 @@ export default function LandingMainDetail() {
 
   return (
     <>
-      <Style.Container>
+      <S.Container>
         <Header trimData={detailHeaderData} />
         <Main trimData={detailHeaderData} />
-      </Style.Container>
+      </S.Container>
     </>
   );
 }
