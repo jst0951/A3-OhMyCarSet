@@ -4,10 +4,10 @@ import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { Dispatch, useEffect, useState } from 'react';
 
 interface MultiProps {
-  setComplete: Dispatch<React.SetStateAction<boolean>>;
+  setShowButton: Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function GuideModeMultiTag({ setComplete }: MultiProps) {
+export default function GuideModeMultiTag({ setShowButton }: MultiProps) {
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
@@ -24,9 +24,9 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
     if (selectedTagList.size === 3) {
       selectTagList[2].value = selectedTagList;
       setSelectTagList(selectTagList);
-      setComplete(true);
+      setShowButton(true);
     } else {
-      setComplete(false);
+      setShowButton(false);
     }
   };
   const handleMouseEnter = (tag: string) => {
@@ -36,7 +36,7 @@ export default function GuideModeMultiTag({ setComplete }: MultiProps) {
   };
 
   useEffect(() => {
-    setComplete(false);
+    setShowButton(false);
   }, []);
 
   return (

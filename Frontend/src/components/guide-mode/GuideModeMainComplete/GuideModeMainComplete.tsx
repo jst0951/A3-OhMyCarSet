@@ -1,7 +1,12 @@
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import * as S from './GuideModeMainComplete.style';
+import { useNavigate } from 'react-router-dom';
 
 export default function GuideModeMainComplete() {
+  const navigate = useNavigate();
+  const linkToComplete = () => {
+    navigate('/complete');
+  };
   return (
     <S.MainContainer>
       <img src={`${import.meta.env.VITE_STATIC_API_URL}/selective_option/4_1.png`} alt={`임시`} height={300} />
@@ -12,7 +17,7 @@ export default function GuideModeMainComplete() {
       </S.SelectedTrim>
       <S.SubTitle>준비된 견적을 바로 확인하거나, {`\n`}옵션을 차례로 살펴보며 변경할 수 있어요.</S.SubTitle>
       <S.ButtonLine>
-        <RectButton type="recommended" page="ready">
+        <RectButton type="recommended" page="ready" onClick={linkToComplete}>
           완성된 견적을 바로 볼게요
         </RectButton>
         <RectButton type="notrecommended" page="ready">
