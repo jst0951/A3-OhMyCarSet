@@ -79,6 +79,23 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    public List<PurchaseHistory> findAllByPackageNameAndOptionId(String packageName, Long optionId) {
+        String table = "purchase_" + packageName + "_map";
+        String sql = "SELECT A.* FROM purchase_history AS A\n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
+                "WHERE M.option_id=?";
+        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, optionId);
+    }
+
+    @Override
+    public Long countByPackageNameAndOptionId(String packageName, Long optionId) {
+        String table = "purchase_" + packageName + "_map";
+        String sql = "SELECT COUNT(*) FROM " + table + "\n" +
+                "WHERE " + table + ".option_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, optionId);
+    }
+
+    @Override
     public Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId) {
         String table = optionName + "_id";
         String sql = "SELECT COUNT(*) FROM purchase_history AS A\n" +

@@ -24,5 +24,9 @@ public interface PurchaseHistoryRepository {
 
     Long countByOptionNameAndOptionId(String optionName, Long optionId);
 
+    List<PurchaseHistory> findAllByPackageNameAndOptionId(String packageName, Long optionId);
+
+    Long countByPackageNameAndOptionId(String packageName, Long optionId);
+
     Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId);
 }
