@@ -1,7 +1,9 @@
 package com.softeer2nd.ohmycarset.dto;
 
 import com.softeer2nd.ohmycarset.domain.DefaultOption;
+import lombok.Getter;
 
+@Getter
 public class DefaultOptionDetailDto {
     private final Long optionId;
     private final String optionName;
@@ -11,17 +13,5 @@ public class DefaultOptionDetailDto {
         this.optionId = defaultOption.getId();
         this.optionName = defaultOption.getName();
         this.imgSrc = defaultOption.getImgSrc();
-    }
-
-    public Long getOptionId() {
-        return optionId;
-    }
-
-    public String getOptionName() {
-        return optionName;
-    }
-
-    public String getImgSrc() {
-        return imgSrc;
     }
 }

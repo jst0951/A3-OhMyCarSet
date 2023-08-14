@@ -38,4 +38,9 @@ public class TagController {
     public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
         return tagService.getKeywordTagRequiredOption(userInfoDto, optionName);
     }
+
+    @PostMapping(value = "/tag/option_package/{packageName}")
+    public List<SelectiveOptionTagDto> getKeywordTagOptionPackage(@RequestBody UserInfoDto userInfoDto, @PathVariable String packageName) {
+        return tagService.getKeywordTagOptionPackage(userInfoDto, packageName);
+    }
 }

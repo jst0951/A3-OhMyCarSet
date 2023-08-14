@@ -2,9 +2,11 @@ package com.softeer2nd.ohmycarset.dto;
 
 import com.softeer2nd.ohmycarset.domain.ExteriorColor;
 import com.softeer2nd.ohmycarset.domain.Trim;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class ExteriorColorDto {
     private final Long trimId;
     private final String trimName;
@@ -14,17 +16,5 @@ public class ExteriorColorDto {
         this.trimId = trim.getId();
         this.trimName = trim.getName();
         this.eColorList = exteriorColorList;
-    }
-
-    public Long getTrimId() {
-        return trimId;
-    }
-
-    public String getTrimName() {
-        return trimName;
-    }
-
-    public List<ExteriorColor> geteColorList() {
-        return eColorList;
     }
 }
