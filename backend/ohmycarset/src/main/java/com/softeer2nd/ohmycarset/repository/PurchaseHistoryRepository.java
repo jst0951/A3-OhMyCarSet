@@ -16,51 +16,17 @@ public interface PurchaseHistoryRepository {
 
     Long countByTrimId(Long trimId);
 
-    List<PurchaseHistory> findAllByPowerTrainOptionId(Long powerTrainOptionId);
+    List<PurchaseHistory> findAllByTagId(Long tagID);
 
-    Long countByPowerTrainOptionId(Long powerTrainOptionId);
+    Long countByTagId(Long tagId);
 
-    List<PurchaseHistory> findAllByWdOptionId(Long wdOptionId);
+    List<PurchaseHistory> findAllByOptionNameAndOptionId(String optionName, Long optionId);
 
-    Long countByWdOptionId(Long wdOptionId);
+    Long countByOptionNameAndOptionId(String optionName, Long optionId);
 
-    List<PurchaseHistory> findAllByBodyOptionId(Long bodyOptionId);
+    List<PurchaseHistory> findAllByPackageNameAndOptionId(String packageName, Long optionId);
 
-    Long countByBodyOptionId(Long bodyOptionId);
+    Long countByPackageNameAndOptionId(String packageName, Long optionId);
 
-    List<PurchaseHistory> findAllByExteriorColorOptionId(Long externalColorOptionId);
-
-    Long countByExteriorColorOptionId(Long externalColorOptionId);
-
-    List<PurchaseHistory> findAllByInteriorColorOptionId(Long internalColorOptionId);
-
-    Long countByInteriorColorOptionId(Long internalColorOptionId);
-
-    List<PurchaseHistory> findAllByWheelOptionId(Long wheelOptionId);
-
-    Long countByWheelOptionId(Long wheelOptionId);
-
-    List<PurchaseHistory> findAllBySystemOptionId(Long systemOptionId);
-
-    Long countBySystemOptionId(Long systemOptionId);
-
-    List<PurchaseHistory> findAllByTemperatureOptionId(Long temperatureOptionId);
-
-    Long countByTemperatureOptionId(Long temperatureOptionId);
-
-    List<PurchaseHistory> findAllByExternalDeviceOptionId(Long externalDeviceOptionId);
-
-    Long countByExternalDeviceOptionId(Long externalDeviceOptionId);
-
-    List<PurchaseHistory> findAllByInternalDeviceOptionId(Long internalDeviceOptionId);
-
-    Long countByInternalDeviceOptionId(Long internalDeviceOptionId);
-
-    List<PurchaseHistory> findAllByAge(Integer age);
-
-    Long countByAge(Integer age);
-
-    List<PurchaseHistory> findAllByGender(Character gender);
-
-    Long countByGender(Character gender);
+    Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId);
 }

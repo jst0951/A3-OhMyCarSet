@@ -10,19 +10,7 @@ public interface TagRepository {
 
     Optional<Tag> findById(Long id);
 
-    List<Tag> findAllByPowerTrainOptionId(Long powerTrainOptionId);
+    Optional<Tag> findByName(String name);
 
-    List<Tag> findAllByWdOptionId(Long wdOptionId);
-
-    List<Tag> findAllByBodyOptionId(Long bodyOptionId);
-
-    List<Tag> findAllByWheelOptionId(Long wheelOptionId);
-
-    List<Tag> findAllBySystemOptionId(Long systemOptionId);
-
-    List<Tag> findAllByTemperatureOptionId(Long temperatureOptionId);
-
-    List<Tag> findAllByExternalDeviceOptionId(Long externalDeviceOptionId);
-
-    List<Tag> findAllByInternalDeviceOptionId(Long internalDeviceOptionId);
+    List<Tag> findAllByOptionNameAndOptionId(String optionName, Long powerTrainOptionId);
 }
