@@ -1,5 +1,5 @@
 import { colors } from '@/style/theme';
-import { bodyRegular3 } from '@/style/typefaces';
+import { bodyMedium3, bodyRegular3 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const ShowMoreWrapper = styled.div<{ $showMore: boolean }>`
@@ -14,28 +14,37 @@ export const ShowMoreWrapper = styled.div<{ $showMore: boolean }>`
 
 export const ShowMoreContainer = styled.div`
   position: absolute;
+  width: 100%;
   margin-top: 10px;
   padding-bottom: 13px;
 `;
 
-export const ShowMoreMainText = styled.div`
-  padding: 12px 0 17px;
+export const NameContainer = styled.div`
+  width: 100%;
+  padding: 12px 0 8px;
   border-top: 1px solid ${colors.coolGrey001};
+`;
 
+export const ShowMoreMainText = styled.span`
   ${bodyRegular3}
-  line-height: 16.8px;
-  color: ${colors.coolGreyBlack};
+  color: ${colors.coolGrey003};
 
   word-break: keep-all;
 `;
 
-export const ShowMoreSubText = styled.div`
-  padding: 12px;
-  border-radius: 6px;
-  background-color: #f3f3f3;
+export const Name = styled.span<{ $selected: boolean }>`
+  line-height: 21.5px;
+  ${({ $selected }) =>
+    $selected &&
+    `
+  ${bodyMedium3}
+  line-height: 21.5px;
+  color: ${colors.coolGreyBlack};
+`}
+`;
 
+export const ShowMoreSubText = styled.div`
   ${bodyRegular3}
-  color: #4b4b4b;
-  line-height: 20px;
-  white-space: pre-line;
+  color: ${colors.coolGreyBlack};
+  line-height: 17px;
 `;

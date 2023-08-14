@@ -6,6 +6,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import FeedbackItem from '../FeedbackItem/FeedbackItem';
 import OptionImage from './OptionImage/OptionImage';
 import ShowMore from './ShowMore/ShowMore';
+import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -46,6 +47,12 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
     }
   };
 
+  const checkShowMore = () => {
+    if ('mainDescription' in optionData && optionData.mainDescription) return true;
+    else if ('components' in optionData) return true;
+    return false;
+  };
+
   useEffect(() => {
     if (!isActive) {
       setShowMore(false);
@@ -65,17 +72,27 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
         <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
         <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
         <OptionImage />
-        {'mainDescription' in optionData && optionData.mainDescription && (
-          <ShowMore
-            contentBoxRef={contentBoxRef}
-            contentRef={contentRef}
-            description={{ main: optionData.mainDescription, sub: optionData.subDescription }}
-            showMore={showMore}
-          />
-        )}
+        {checkShowMore() &&
+          ('mainDescription' in optionData && optionData.mainDescription ? (
+            <ShowMore
+              contentBoxRef={contentBoxRef}
+              contentRef={contentRef}
+              description={{ main: optionData.mainDescription, sub: optionData.subDescription }}
+              showMore={showMore}
+            />
+          ) : (
+            'components' in optionData && (
+              <ShowMoreMulti
+                contentBoxRef={contentBoxRef}
+                contentRef={contentRef}
+                optionList={optionData.components}
+                showMore={showMore}
+              />
+            )
+          ))}
         <S.OptionBottomContainer $isActive={isActive}>
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
-          {'mainDescription' in optionData && optionData.mainDescription && (
+          {checkShowMore() && (
             <S.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
               {showMore ? '접기' : '자세히 보기'}
               <Icon icon="OptionShowMoreIcon" size={14} />

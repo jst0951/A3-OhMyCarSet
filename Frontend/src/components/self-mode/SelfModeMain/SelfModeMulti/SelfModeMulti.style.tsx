@@ -90,8 +90,6 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* padding: 20px 0; */
-  /* margin: 0 26px; */
   height: calc(100vh - 340px);
   overflow: scroll;
 

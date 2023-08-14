@@ -99,6 +99,7 @@ export const ItemContainer = styled.div<{ $isActive: boolean }>`
 
   & > svg {
     overflow: visible;
+    fill: ${colors.mainHyundaiBlue};
   }
 `;
 
