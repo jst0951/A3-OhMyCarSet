@@ -25,7 +25,7 @@ export const OptionBottomContainer = styled.div<{ $isActive: boolean }>`
   justify-content: space-between;
   width: 100%;
   padding-top: 13px;
-  background-color: ${({ $isActive }) => ($isActive ? colors.hyundaiWhite : colors.coolGrey001)};
+  /* background-color: ${({ $isActive }) => ($isActive ? colors.hyundaiWhite : colors.coolGrey001)}; */
   color: ${({ $isActive }) => ($isActive ? colors.mainHyundaiBlue : colors.coolGrey003)};
 `;
 

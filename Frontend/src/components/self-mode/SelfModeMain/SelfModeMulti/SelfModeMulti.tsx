@@ -28,7 +28,7 @@ type OptionPackageListT = OptionPackageT[];
 
 export default function SelfModeMulti() {
   const [currentFilter, setCurrentFilter] = useState<number>(1);
-  const [selectedOption, setSelectedOption] = useState(new Set());
+  const [selectedOption, setSelectedOption] = useState<Set<number>>(new Set());
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
 
   const handleFilterOption = (idx: number) => {
@@ -59,8 +59,21 @@ export default function SelfModeMulti() {
     }
   };
 
+  const getPackageId = (filterId: number, selectedId: number) => {
+    return filterId * 10 + selectedId;
+  };
+
   const handleClickOption = (currentFilter: number, selectedId: number) => {
-    setSelectedOption((prev) => new Set([...prev, currentFilter * 10 + selectedId]));
+    const packageId = getPackageId(currentFilter, selectedId);
+    if (selectedOption.has(packageId)) {
+      setSelectedOption((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(packageId);
+        return newSet;
+      });
+    } else {
+      setSelectedOption((prev) => new Set([...prev, packageId]));
+    }
   };
 
   useEffect(() => {
@@ -90,6 +103,7 @@ export default function SelfModeMulti() {
           <S.TitleContainer>
             <S.Title>옵션</S.Title>
             <S.TitleText>을 선택해주세요.</S.TitleText>
+            {selectedOption.size !== 0 && <S.Count>선택 옵션 {selectedOption.size}</S.Count>}
           </S.TitleContainer>
           <S.OptionContainer>
             {optionPackage[currentFilter - 1] &&
@@ -97,7 +111,7 @@ export default function SelfModeMulti() {
                 <OptionItem
                   key={data.id}
                   optionData={data}
-                  isActive={selectedOption.has(data.id)}
+                  isActive={selectedOption.has(getPackageId(currentFilter, data.id))}
                   onClick={() => handleClickOption(currentFilter, data.id)}
                   showFeedback={0}
                 />

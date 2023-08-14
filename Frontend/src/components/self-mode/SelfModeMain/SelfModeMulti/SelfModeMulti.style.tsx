@@ -76,6 +76,16 @@ export const TitleText = styled.div`
   letter-spacing: -0.96px;
 `;
 
+export const Count = styled.div`
+  margin-left: 12px;
+  font-family: 'Hyundai Sans Text KR';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -0.42px;
+  color: ${colors.subActiveBlue};
+`;
+
 export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
