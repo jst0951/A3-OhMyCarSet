@@ -22,7 +22,7 @@ public class SelectiveOptionService {
     public List<RequiredOptionDto> getAllOptionByName(String optionName) {
         List<RequiredOptionDto> requiredOptionDtoList = new ArrayList<>();
 
-        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findOptionByName(optionName);
+        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByName(optionName);
 
         for (RequiredOption requiredOption : requiredOptionList) {
             requiredOptionDtoList.add(new RequiredOptionDto(requiredOption));
@@ -34,10 +34,10 @@ public class SelectiveOptionService {
     public List<OptionPackageDto> getAllPackageByName(String packageName) {
         List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
 
-        List<OptionPackage> packageList = selectiveOptionRepository.findPackageByName(packageName);
+        List<OptionPackage> packageList = selectiveOptionRepository.findAllPackageByName(packageName);
 
         for (OptionPackage optionPackage : packageList) {
-            List<PackageComponent> packageComponentList = selectiveOptionRepository.findComponentByPackageNameAndPackageId(packageName, optionPackage.getId());
+            List<PackageComponent> packageComponentList = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(packageName, optionPackage.getId());
             optionPackageDtoList.add(new OptionPackageDto(optionPackage, packageComponentList));
         }
 
