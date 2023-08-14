@@ -48,6 +48,21 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    public List<PurchaseHistory> findAllByTagId(Long tagID) {
+        String sql = "SELECT A.* FROM purchase_history AS A\n" +
+                "INNER JOIN purchase_tag_map AS M ON A.id=M.purhcase_id\n" +
+                "WHERE M.tag_id=?";
+        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, tagID);
+    }
+
+    @Override
+    public Long countByTagId(Long tagId) {
+        String sql = "SELECT COUNT(*) FROM purchase_tag_map\n" +
+                "WHERE tag_id=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId);
+    }
+
+    @Override
     public List<PurchaseHistory> findAllByOptionNameAndOptionId(String optionName, Long optionId) {
         String column = optionName + "_id";
         String sql = "SELECT * FROM purchase_history\n" +

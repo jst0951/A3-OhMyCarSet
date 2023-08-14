@@ -16,6 +16,10 @@ public interface PurchaseHistoryRepository {
 
     Long countByTrimId(Long trimId);
 
+    List<PurchaseHistory> findAllByTagId(Long tagID);
+
+    Long countByTagId(Long tagId);
+
     List<PurchaseHistory> findAllByOptionNameAndOptionId(String optionName, Long optionId);
 
     Long countByOptionNameAndOptionId(String optionName, Long optionId);
