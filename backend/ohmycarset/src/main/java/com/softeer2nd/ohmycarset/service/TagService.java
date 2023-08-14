@@ -26,7 +26,7 @@ public class TagService {
         // 각 카운트 조회
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
 
-        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(optionName);
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(optionName);
         for(RequiredOption option: optionList) {
             Long purchaseCount = purchaseHistoryRepository.countByOptionNameAndOptionId(optionName, option.getId());
             purchaseCountMap.put(option, purchaseCount);
@@ -48,7 +48,7 @@ public class TagService {
         // 각 카운트 조회
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
 
-        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(packageName);
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(packageName);
         for(RequiredOption option: optionList) {
             Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, option.getId());
             purchaseCountMap.put(option, purchaseCount);
@@ -74,7 +74,7 @@ public class TagService {
         }
 
         // 본 카테고리의 모든 옵션의 목록을 가져옵니다.
-        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(optionName);
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(optionName);
 
         // 모든 태그들을 담을 목록을 만듭니다.
         List<SelectiveOptionTagDto> optionTagDtoList = new ArrayList<>();
