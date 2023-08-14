@@ -3,7 +3,7 @@ import OptionFooter from '../OptionFooter/OptionFooter';
 import * as S from './SelfModeSingle.style';
 import fetchData from '@/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { OptionData } from '../SelfModeMain';
+import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
@@ -37,7 +37,7 @@ const categoryNameList = [
 export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
-  const [stepData, setStepData] = useState<OptionData[]>([]);
+  const [stepData, setStepData] = useState<OptionDataT[]>([]);
   const [tempTotal, setTempTotal] = useState<number>(0);
   const [prevTotal, setPrevTotal] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(1);
@@ -45,7 +45,7 @@ export default function SelfModeSingle() {
 
   const fetchStepData = async () => {
     try {
-      const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
+      const response = await fetchData(`selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {

@@ -1,13 +1,14 @@
 import Icon from '@/components/common/Icon';
 import * as S from './OptionItem.style';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { OptionData } from '../SelfModeMain/SelfModeMain';
+import { OptionDataT, OptionPackageT } from '../SelfModeMain/SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import FeedbackItem from '../FeedbackItem/FeedbackItem';
 import OptionImage from './OptionImage/OptionImage';
+import ShowMore from './ShowMore/ShowMore';
 
 export interface OptionDataProps {
-  optionData: OptionData;
+  optionData: OptionDataT | OptionPackageT;
   isActive: boolean;
   onClick: () => void;
   showFeedback: number;
@@ -64,17 +65,17 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
         <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
         <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
         <OptionImage />
-        {(optionData.mainDescription || optionData.subDescription) && (
-          <S.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore}>
-            <S.ShowMoreContainer ref={contentRef}>
-              {optionData.mainDescription && <S.ShowMoreMainText>{optionData.mainDescription}</S.ShowMoreMainText>}
-              {optionData.subDescription && <S.ShowMoreSubText>{optionData.subDescription}</S.ShowMoreSubText>}
-            </S.ShowMoreContainer>
-          </S.ShowMoreWrapper>
+        {'mainDescription' in optionData && optionData.mainDescription && (
+          <ShowMore
+            contentBoxRef={contentBoxRef}
+            contentRef={contentRef}
+            description={{ main: optionData.mainDescription, sub: optionData.subDescription }}
+            showMore={showMore}
+          />
         )}
         <S.OptionBottomContainer $isActive={isActive}>
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
-          {optionData.mainDescription && (
+          {'mainDescription' in optionData && optionData.mainDescription && (
             <S.ShowMoreButton $isActive={isActive} $showMore={showMore} onClick={toggleShowMore}>
               {showMore ? '접기' : '자세히 보기'}
               <Icon icon="OptionShowMoreIcon" size={14} />

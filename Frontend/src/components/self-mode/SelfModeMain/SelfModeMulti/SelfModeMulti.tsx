@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import * as S from './SelfModeMulti.style';
 import fetchData from '@/apis/fetchData';
+import { OptionPackageT } from '../SelfModeMain';
+import OptionItem from '../../OptionItem/OptionItem';
 
 const optionList = [
   {
@@ -22,23 +24,11 @@ const optionList = [
   },
 ];
 
-interface OptionPackageT {
-  id: number;
-  name: string;
-  price: number;
-  iconSrc: string | null;
-  components: Array<{
-    id: number;
-    name: string;
-    description: string;
-    imgSrc: string;
-  }>;
-}
-
 type OptionPackageListT = OptionPackageT[];
 
 export default function SelfModeMulti() {
   const [currentFilter, setCurrentFilter] = useState<number>(1);
+  const [selectedOption, setSelectedOption] = useState(new Set());
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
 
   const handleFilterOption = (idx: number) => {
@@ -47,7 +37,7 @@ export default function SelfModeMulti() {
 
   const fetchOptionData = async (key: string) => {
     try {
-      const response = await fetchData(`selective_option/${key}`);
+      const response = await fetchData(`selective_option/option_package/${key}`);
       console.log(response);
       return response;
     } catch (error) {
@@ -62,11 +52,15 @@ export default function SelfModeMulti() {
         const response = await fetchOptionData(option.key);
         allData.push(response);
       }
-      console.log(allData[0][0]);
+      console.log(allData[0]);
       setOptionPackage(allData);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
     }
+  };
+
+  const handleClickOption = (currentFilter: number, selectedId: number) => {
+    setSelectedOption((prev) => new Set([...prev, currentFilter * 10 + selectedId]));
   };
 
   useEffect(() => {
@@ -97,6 +91,18 @@ export default function SelfModeMulti() {
             <S.Title>옵션</S.Title>
             <S.TitleText>을 선택해주세요.</S.TitleText>
           </S.TitleContainer>
+          <S.OptionContainer>
+            {optionPackage[currentFilter - 1] &&
+              optionPackage[currentFilter - 1].map((data) => (
+                <OptionItem
+                  key={data.id}
+                  optionData={data}
+                  isActive={selectedOption.has(data.id)}
+                  onClick={() => handleClickOption(currentFilter, data.id)}
+                  showFeedback={0}
+                />
+              ))}
+          </S.OptionContainer>
         </S.SelfModeOption>
       </S.SelfModeMultiContainer>
     </>
