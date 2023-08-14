@@ -7,6 +7,7 @@ import FeedbackItem from '../FeedbackItem/FeedbackItem';
 import OptionImage from './OptionImage/OptionImage';
 import ShowMore from './ShowMore/ShowMore';
 import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
+import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -20,6 +21,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
   const [showMore, setShowMore] = useState<boolean>(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { optionId } = useCurrentPackageState();
 
   const toggleShowMore = useCallback(
     (event: React.MouseEvent) => {
@@ -38,6 +40,16 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
     },
     [showMore]
   );
+
+  useEffect(() => {
+    if (contentBoxRef.current !== null && contentRef.current !== null) {
+      if (showMore) {
+        contentBoxRef.current.style.height = `${contentRef.current.clientHeight}px`;
+      } else {
+        contentBoxRef.current.style.height = '0';
+      }
+    }
+  }, [optionId]);
 
   const initContentBoxHeight = () => {
     if (contentBoxRef.current !== null && contentRef.current !== null) {

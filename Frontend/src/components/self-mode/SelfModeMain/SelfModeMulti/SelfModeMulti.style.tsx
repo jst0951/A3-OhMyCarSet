@@ -53,7 +53,7 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  margin: 26px 0;
+  margin: 26px 0 16px;
 `;
 
 export const Title = styled.div`
@@ -90,6 +90,8 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 20px 0 10px;
+  /* margin: 0 26px; */
   height: calc(100vh - 340px);
   overflow: scroll;
 
