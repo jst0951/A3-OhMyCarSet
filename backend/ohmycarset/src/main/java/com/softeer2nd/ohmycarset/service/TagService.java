@@ -44,6 +44,28 @@ public class TagService {
         return selectiveOptionTagDtoList;
     }
 
+    public List<SelectiveOptionTagDto> getPurchaseTagByPackageName(String packageName) {
+        // 각 카운트 조회
+        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
+
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(packageName);
+        for(RequiredOption option: optionList) {
+            Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, option.getId());
+            purchaseCountMap.put(option, purchaseCount);
+        }
+
+        // 확률 계산 및 태그로 전송
+        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
+
+        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
+        for(RequiredOption option: optionList) {
+            Double purchasePercentage = (double) purchaseCountMap.get(option) / purchaseCountSum * 100;
+            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(option, purchasePercentage));
+        }
+
+        return selectiveOptionTagDtoList;
+    }
+
     public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(UserInfoDto userInfoDto, String optionName) {
         List<Tag> tagList = new ArrayList<>();
         List<String> tagNameList = userInfoDto.getTagNameList();
