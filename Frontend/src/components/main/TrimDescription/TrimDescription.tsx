@@ -1,4 +1,4 @@
-import * as Style from './TrimDescription.style';
+import * as S from './TrimDescription.style';
 import type { TrimCardProps } from '../TrimCard/TrimCard';
 import TrimInfoWithText from '../LandingMain/TrimInfo/TrimInfoWithText/TrimInfoWithText';
 import TrimInfoWithImage from '../LandingMain/TrimInfo/TrimInfoWithImage/TrimInfoWithImage';
@@ -39,15 +39,15 @@ export default function TrimDescription({ trimData }: TrimCardProps) {
   const { name, descriptionCard } = trimData;
   return (
     <>
-      <Style.TrimDescriptionCard>
-        <Style.TrimDescriptionBorder>
-          <Style.TitleContainer>
-            <Style.TrimSubTitle>{subTitle}</Style.TrimSubTitle>
-            <Style.TrimTitle>{name}</Style.TrimTitle>
-          </Style.TitleContainer>
+      <S.TrimDescriptionCard>
+        <S.TrimDescriptionBorder>
+          <S.TitleContainer>
+            <S.TrimSubTitle>{subTitle}</S.TrimSubTitle>
+            <S.TrimTitle>{name}</S.TrimTitle>
+          </S.TitleContainer>
           {descriptionCard && <TrimInformation trimInfo={descriptionCard} />}
-        </Style.TrimDescriptionBorder>
-      </Style.TrimDescriptionCard>
+        </S.TrimDescriptionBorder>
+      </S.TrimDescriptionCard>
     </>
   );
 }

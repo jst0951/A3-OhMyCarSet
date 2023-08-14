@@ -1,12 +1,12 @@
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
-import * as Style from './GuideModeSingleTag.style';
+import * as S from './GuideSingleTag.style';
 import guideSingleTagData from '@/asset/data/guideSingleTagData.json';
 import { CheckIcon } from '@/asset/icons';
 import { UncheckIcon } from '@/asset/icons';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useState } from 'react';
 
-export default function GuideModeSingleTag() {
+export default function GuideSingleTag() {
   const [hovered, setHovered] = useState<number | null>(null);
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();
@@ -20,18 +20,18 @@ export default function GuideModeSingleTag() {
   };
 
   return (
-    <Style.TagListContainer>
+    <S.TagListContainer>
       {TagList.map((tag, index) => (
-        <Style.TagContainer
+        <S.TagContainer
           key={index}
           onClick={() => handleClick(tag)}
           onMouseEnter={() => setHovered(index)}
           onMouseLeave={() => setHovered(null)}
         >
-          <Style.TagName>{tag}</Style.TagName>
+          <S.TagName>{tag}</S.TagName>
           {hovered === index ? <CheckIcon /> : <UncheckIcon />}
-        </Style.TagContainer>
+        </S.TagContainer>
       ))}
-    </Style.TagListContainer>
+    </S.TagListContainer>
   );
 }

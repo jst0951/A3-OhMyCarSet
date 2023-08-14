@@ -1,8 +1,8 @@
 import RectButton from '@/components/common/button/RectButton/RectButton';
-import * as S from './GuideModeMainComplete.style';
+import * as S from './GuideMainComplete.style';
 import { useNavigate } from 'react-router-dom';
 
-export default function GuideModeMainComplete() {
+export default function GuideMainComplete() {
   const navigate = useNavigate();
 
   const linkToComplete = () => {

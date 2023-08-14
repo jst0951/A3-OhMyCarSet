@@ -1,6 +1,6 @@
 import Icon from '@/components/common/Icon';
 import trimData from '@/asset/data/trimData.json';
-import * as Style from './TrimCard.style';
+import * as S from './TrimCard.style';
 import TrimDescription from '../TrimDescription/TrimDescription';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -44,23 +44,23 @@ function TrimCard({ trimData }: TrimCardProps) {
 
   return (
     <>
-      <Style.TrimCardContainer
+      <S.TrimCardContainer
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => handleClickTrimCard(route)}
       >
-        <Style.TrimDescription>{`#${tag}`}</Style.TrimDescription>
-        <Style.TrimName>{name}</Style.TrimName>
-        <Style.TrimPriceContainer>
-          <Style.TrimPrice>{`${price.toLocaleString()} 원 부터`}</Style.TrimPrice>
+        <S.TrimDescription>{`#${tag}`}</S.TrimDescription>
+        <S.TrimName>{name}</S.TrimName>
+        <S.TrimPriceContainer>
+          <S.TrimPrice>{`${price.toLocaleString()} 원 부터`}</S.TrimPrice>
           <Icon icon="ArrowRightIcon" size={20} />
-        </Style.TrimPriceContainer>
+        </S.TrimPriceContainer>
         {isHovered && (
-          <Style.TrimDescriptionWrapper $id={id}>
+          <S.TrimDescriptionWrapper $id={id}>
             {descriptionCard && <TrimDescription trimData={trimData} />}
-          </Style.TrimDescriptionWrapper>
+          </S.TrimDescriptionWrapper>
         )}
-      </Style.TrimCardContainer>
+      </S.TrimCardContainer>
     </>
   );
 }
@@ -68,11 +68,11 @@ function TrimCard({ trimData }: TrimCardProps) {
 export default function TrimCardList() {
   return (
     <>
-      <Style.TrimCardListContainer>
+      <S.TrimCardListContainer>
         {trimData.map((trim) => (
           <TrimCard key={trim.id} trimData={trim} />
         ))}
-      </Style.TrimCardListContainer>
+      </S.TrimCardListContainer>
     </>
   );
 }

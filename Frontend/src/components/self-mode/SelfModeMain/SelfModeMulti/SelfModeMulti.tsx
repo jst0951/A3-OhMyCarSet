@@ -1,10 +1,10 @@
 // import OptionFooter from '../OptionFooter/OptionFooter';
-import * as Style from './SelfModeMulti.style';
+import * as S from './SelfModeMulti.style';
 
 export default function SelfModeMulti() {
   return (
     <>
-      <Style.SelfModeMultiContainer>{/* TO DO */}</Style.SelfModeMultiContainer>
+      <S.SelfModeMultiContainer>{/* TO DO */}</S.SelfModeMultiContainer>
     </>
   );
 }

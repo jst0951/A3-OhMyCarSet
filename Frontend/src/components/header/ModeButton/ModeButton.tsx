@@ -1,5 +1,5 @@
 import Icon from '@/components/common/Icon';
-import * as Style from './ModeButton.style';
+import * as S from './ModeButton.style';
 import { colors } from '@/style/theme';
 
 type modeType = 'default' | 'self' | 'guide';
@@ -19,15 +19,15 @@ export default function ModeButton({ type }: ModeButtonType) {
 
   return (
     <>
-      <Style.HeaderModeContainer type={type}>
+      <S.HeaderModeContainer type={type}>
         내 차 만들기
         {modeText && (
-          <Style.ModeText>
+          <S.ModeText>
             {modeText}
             <Icon icon="HeaderMoreIcon" color={type === 'guide' ? colors.subActiveBlue : undefined} />
-          </Style.ModeText>
+          </S.ModeText>
         )}
-      </Style.HeaderModeContainer>
+      </S.HeaderModeContainer>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import * as Style from './Header.style';
+import * as S from './Header.style';
 import HeaderItem from '../HeaderItem/HeaderItem';
 
 type TrimData = {
@@ -21,14 +21,14 @@ export interface DetailHeaderProps {
 export default function Header({ trimData }: DetailHeaderProps) {
   return (
     <>
-      <Style.TitleContainer>
-        <Style.Title>모델 한 눈에 비교하기</Style.Title>
-      </Style.TitleContainer>
-      <Style.Container>
-        <Style.TrimContainer>
+      <S.TitleContainer>
+        <S.Title>모델 한 눈에 비교하기</S.Title>
+      </S.TitleContainer>
+      <S.Container>
+        <S.TrimContainer>
           {trimData && trimData.map((trim) => <HeaderItem key={trim.id} headerData={trim} />)}
-        </Style.TrimContainer>
-      </Style.Container>
+        </S.TrimContainer>
+      </S.Container>
     </>
   );
 }
