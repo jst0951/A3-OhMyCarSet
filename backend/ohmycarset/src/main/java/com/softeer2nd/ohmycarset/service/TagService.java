@@ -1,17 +1,15 @@
 package com.softeer2nd.ohmycarset.service;
 
-import com.softeer2nd.ohmycarset.domain.selective.OptionPackage;
+import com.softeer2nd.ohmycarset.domain.Tag;
 import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.SelectiveOptionTagDto;
+import com.softeer2nd.ohmycarset.dto.UserInfoDto;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
 import com.softeer2nd.ohmycarset.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TagService {
@@ -24,223 +22,77 @@ public class TagService {
         this.purchaseHistoryRepository = purchaseHistoryRepository;
     }
 
-    public List<SelectiveOptionTagDto> getPurchaseTagPowerTrainOption() {
+    public List<SelectiveOptionTagDto> getPurchaseTagByOptionName(String optionName) {
         // 각 카운트 조회
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
 
-        List<RequiredOption> powerTrainOptionList = selectiveOptionRepository.findAllOptionByName("powertrain");
-        for(RequiredOption powerTrainOption: powerTrainOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByPowerTrainOptionId(powerTrainOption.getId());
-            purchaseCountMap.put(powerTrainOption, purchaseCount);
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(optionName);
+        for(RequiredOption option: optionList) {
+            Long purchaseCount = purchaseHistoryRepository.countByOptionNameAndOptionId(optionName, option.getId());
+            purchaseCountMap.put(option, purchaseCount);
         }
 
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
         Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption powerTrainOption: powerTrainOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(powerTrainOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(powerTrainOption, purchasePercentage));
+        for(RequiredOption option: optionList) {
+            Double purchasePercentage = (double) purchaseCountMap.get(option) / purchaseCountSum * 100;
+            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(option, purchasePercentage));
         }
 
         return selectiveOptionTagDtoList;
     }
 
-    public List<SelectiveOptionTagDto> getPurchaseTagWDOption() {
-        // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
-
-        List<RequiredOption> wdOptionList = selectiveOptionRepository.findAllOptionByName("wd");
-        for(RequiredOption wdOption: wdOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByWdOptionId(wdOption.getId());
-            purchaseCountMap.put(wdOption, purchaseCount);
+    public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(UserInfoDto userInfoDto, String optionName) {
+        List<Tag> tagList = new ArrayList<>();
+        List<String> tagNameList = userInfoDto.getTagNameList();
+        for (String tagName : tagNameList) {
+            tagList.add(tagRepository.findByName(tagName).orElse(null));
         }
 
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
+        // 본 카테고리의 모든 옵션의 목록을 가져옵니다.
+        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByName(optionName);
 
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption wdOption: wdOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(wdOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(wdOption, purchasePercentage));
+        // 모든 태그들을 담을 목록을 만듭니다.
+        List<SelectiveOptionTagDto> optionTagDtoList = new ArrayList<>();
+        // 각 옵션에 대해 태그 목록을 구합니다.
+        for (RequiredOption option : optionList) {
+            List<SelectiveOptionTagDto> tagDtoList = new ArrayList<>();
+
+            // 유저가 선택한 태그와 옵션에 정의된 태그 중 겹치는 태그만 연산합니다.
+            List<Tag> intersectionTagList = new ArrayList<>();
+            List<Tag> optionTagList = tagRepository.findAllByOptionNameAndOptionId(optionName, option.getId());
+            for (Tag tag : tagList) {
+                for (Tag optionTag : optionTagList) {
+                    if (Objects.equals(tag.getId(), optionTag.getId())) {
+                        intersectionTagList.add(tag);
+                    }
+                }
+            }
+
+            // 유저가 선택한 3가지 태그에 대해 유사도를 연산합니다.
+            for (Tag tag : intersectionTagList) {
+                // 해당 태그를 선택한 구매 내역 수를 받아옵니다.
+                Long purchaseCount = purchaseHistoryRepository.countByTagId(tag.getId());
+
+                // 해당 태그를 선택하고, 해당 옵션을 구매한 내역 수를 받아옵니다.
+                Long intersectionPurchaseCount = purchaseHistoryRepository.countByTagIdAndOptionNameAndOptionId(tag.getId(), optionName, option.getId());
+
+                // 선택 비율을 연산합니다.
+                Double selectionPercentage = (double) intersectionPurchaseCount / purchaseCount * 100;
+
+                // 태그 목록에 추가합니다.
+                tagDtoList.add(new SelectiveOptionTagDto(option, tag, selectionPercentage));
+            }
+
+            // 높은 유사도순으로 재정렬합니다.
+            tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
+
+            // 목록에 담습니다.
+            optionTagDtoList.addAll(tagDtoList);
         }
 
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagBodyOption() {
-        // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
-
-        List<RequiredOption> bodyOptionList = selectiveOptionRepository.findAllOptionByName("body");
-        for(RequiredOption bodyOption: bodyOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByBodyOptionId(bodyOption.getId());
-            purchaseCountMap.put(bodyOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption bodyOption: bodyOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(bodyOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(bodyOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagExteriorColorOption() {
-        // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
-
-        List<RequiredOption> exteriorColorOptionList = selectiveOptionRepository.findAllOptionByName("exterior_color");
-        for(RequiredOption exteriorColorOption: exteriorColorOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByExteriorColorOptionId(exteriorColorOption.getId());
-            purchaseCountMap.put(exteriorColorOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption exteriorColorOption: exteriorColorOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(exteriorColorOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(exteriorColorOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagInteriorColorOption() {
-        // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
-
-        List<RequiredOption> interiorColorOptionList = selectiveOptionRepository.findAllOptionByName("interior_color");
-        for(RequiredOption interiorColorOption: interiorColorOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByInteriorColorOptionId(interiorColorOption.getId());
-            purchaseCountMap.put(interiorColorOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption interiorColorOption: interiorColorOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(interiorColorOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(interiorColorOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagWheelOption() {
-        // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
-
-        List<RequiredOption> wheelOptionList = selectiveOptionRepository.findAllOptionByName("wheel");
-        for(RequiredOption wheelOption: wheelOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByWheelOptionId(wheelOption.getId());
-            purchaseCountMap.put(wheelOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for(RequiredOption wheelOption: wheelOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(wheelOption) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(wheelOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagSystemOption() {
-        // 각 카운트 조회
-        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
-
-        List<OptionPackage> systemOptionList = selectiveOptionRepository.findAllPackageByName("system");
-        for(OptionPackage systemOption: systemOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countBySystemOptionId(systemOption.getId());
-            purchaseCountMap.put(systemOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCount = purchaseHistoryRepository.count();
-        for(OptionPackage systemOption: systemOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(systemOption) / purchaseCount * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(systemOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagTemperatureOption() {
-        // 각 카운트 조회
-        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
-
-        List<OptionPackage> temperatureOptionList = selectiveOptionRepository.findAllPackageByName("temperature");
-        for(OptionPackage temperatureOption: temperatureOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByTemperatureOptionId(temperatureOption.getId());
-            purchaseCountMap.put(temperatureOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCount = purchaseHistoryRepository.count();
-        for(OptionPackage temperatureOption: temperatureOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(temperatureOption) / purchaseCount * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(temperatureOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagExternalDeviceOption() {
-        // 각 카운트 조회
-        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
-
-        List<OptionPackage> externalDeviceOptionList = selectiveOptionRepository.findAllPackageByName("external_device");
-        for(OptionPackage externalDeviceOption: externalDeviceOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByExternalDeviceOptionId(externalDeviceOption.getId());
-            purchaseCountMap.put(externalDeviceOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCount = purchaseHistoryRepository.count();
-        for(OptionPackage externalDeviceOption: externalDeviceOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(externalDeviceOption) / purchaseCount * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(externalDeviceOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
-    }
-
-    public List<SelectiveOptionTagDto> getPurchaseTagInternalDeviceOption() {
-        // 각 카운트 조회
-        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
-
-        List<OptionPackage> internalDeviceOptionList = selectiveOptionRepository.findAllPackageByName("internal_device");
-        for(OptionPackage internalDeviceOption: internalDeviceOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByInternalDeviceOptionId(internalDeviceOption.getId());
-            purchaseCountMap.put(internalDeviceOption, purchaseCount);
-        }
-
-        // 확률 계산 및 태그로 전송
-        List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
-
-        Long purchaseCount = purchaseHistoryRepository.count();
-        for(OptionPackage internalDeviceOption: internalDeviceOptionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(internalDeviceOption) / purchaseCount * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(internalDeviceOption, purchasePercentage));
-        }
-
-        return selectiveOptionTagDtoList;
+        return optionTagDtoList;
     }
 }
