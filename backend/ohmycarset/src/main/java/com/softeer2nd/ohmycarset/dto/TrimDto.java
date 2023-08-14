@@ -17,7 +17,7 @@ public class TrimDto {
         this.description = trim.getDescription();
         this.defaultPrice = trim.getDefaultPrice();
         this.repColor = repColor;
-        this.isBest = trim.isBest();
+        this.isBest = trim.getIsBest();
     }
 
     public Long getId() {
