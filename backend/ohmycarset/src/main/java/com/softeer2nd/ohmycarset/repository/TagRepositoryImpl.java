@@ -38,7 +38,7 @@ public class TagRepositoryImpl implements TagRepository {
     public List<Tag> findAllByOptionNameAndOptionId(String optionName, Long optionId) {
         String table = "tag_" + optionName + "_map";
         String sql = "SELECT A.* FROM tag AS A\n" +
-                "INNER JOIN" + table +" AS M ON A.id=M.tag_id\n" +
+                "INNER JOIN " + table +" AS M ON A.id=M.tag_id\n" +
                 "WHERE M.option_id=?";
         return jdbcTemplate.query(sql, tagRowMapper, optionId);
     }
