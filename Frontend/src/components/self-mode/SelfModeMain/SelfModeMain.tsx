@@ -22,7 +22,7 @@ export interface OptionPackageT {
   iconSrc: string | null;
   components: Array<{
     id: number;
-    name: string;
+    name: string | null;
     description: string;
     imgSrc: string;
   }>;

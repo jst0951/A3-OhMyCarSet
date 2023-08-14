@@ -4,12 +4,12 @@ import RectButton from '@/components/common/button/RectButton/RectButton.style';
 import { Dispatch, useEffect, useRef, useState } from 'react';
 import Estimate from '../Estimate/Estimate';
 import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
-import { OptionData } from '../SelfModeMain';
+import { OptionDataT } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
 
 interface OptionFooterProps {
-  selectedData: OptionData;
+  selectedData: OptionDataT;
   prevTotal: number;
   tempTotal: number;
   setShowFeedback: Dispatch<React.SetStateAction<number>>;
@@ -34,7 +34,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
 
   const selectOptionDispatch = useSelectOptionDispatch();
 
-  const handleClickNext = (optionId: number, selectedData: OptionData) => {
+  const handleClickNext = (optionId: number, selectedData: OptionDataT) => {
     setDisableNext(true);
     setShowFeedback(selectedData.id);
     selectOptionDispatch({

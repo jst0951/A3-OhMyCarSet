@@ -1,25 +1,40 @@
 import { RefObject, useEffect, useState } from 'react';
 import * as S from './ShowMoreMulti.style';
+import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
 
 interface ShowMoreProps {
   contentBoxRef: RefObject<HTMLDivElement>;
   contentRef: RefObject<HTMLDivElement>;
+  optionId: number;
   optionList: Array<{
-    name: string;
+    name: string | null;
     description: string;
   }>;
   showMore: boolean;
 }
 
-export default function ShowMoreMulti({ contentBoxRef, contentRef, optionList, showMore }: ShowMoreProps) {
+export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, optionList, showMore }: ShowMoreProps) {
   const [selectedId, setSelectedId] = useState<number>(1);
+  const currentPackageDispatch = useCurrentPackageDispatch();
 
   const handleClick = (idx: number, event: React.MouseEvent) => {
     event.stopPropagation();
+    currentPackageDispatch({
+      type: 'UPDATE_PACKAGE',
+      payload: optionId,
+    });
+    currentPackageDispatch({
+      type: 'UPDATE_OPTION',
+      payload: idx,
+    });
     setSelectedId(idx);
   };
 
   useEffect(() => {
+    currentPackageDispatch({
+      type: 'UPDATE_OPTION',
+      payload: 1,
+    });
     setSelectedId(1);
   }, [optionList]);
 

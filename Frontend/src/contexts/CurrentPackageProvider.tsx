@@ -1,9 +1,9 @@
 import { createContext, useContext, useReducer } from 'react';
 
 interface CurrentPackageStateT {
-  filter: number;
-  package: number;
-  option: number;
+  filterId: number;
+  packageId: number;
+  optionId: number;
 }
 
 type CurrentPackageActionT = {
@@ -12,9 +12,9 @@ type CurrentPackageActionT = {
 };
 
 const initialState: CurrentPackageStateT = {
-  filter: 1,
-  package: 1,
-  option: 1,
+  filterId: 1,
+  packageId: 1,
+  optionId: 1,
 };
 
 type CurrentPackageDispatchT = (action: CurrentPackageActionT) => void;
@@ -23,18 +23,19 @@ const currentPackageReducer = (state: CurrentPackageStateT, action: CurrentPacka
   switch (action.type) {
     case 'UPDATE_FILTER':
       return {
-        ...state,
-        filter: action.payload,
+        filterId: action.payload,
+        packageId: 1,
+        optionId: 1,
       };
     case 'UPDATE_PACKAGE':
       return {
         ...state,
-        package: action.payload,
+        packageId: action.payload,
       };
     case 'UPDATE_OPTION':
       return {
         ...state,
-        option: action.payload,
+        optionId: action.payload,
       };
     default:
       return state;
