@@ -29,7 +29,7 @@ public class TagController {
     }
 
     @PostMapping(value = "/tag/required_option/{optionName}")
-    public List<SelectiveOptionTagDto> getKeywordTagPowerTrainOption(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
+    public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
         return tagService.getKeywordTagRequiredOption(userInfoDto, optionName);
     }
 }
