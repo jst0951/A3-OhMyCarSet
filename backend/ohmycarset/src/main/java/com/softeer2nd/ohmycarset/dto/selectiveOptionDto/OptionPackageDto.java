@@ -13,7 +13,7 @@ public class OptionPackageDto {
     private final String name;
     private final Integer price;
     private final String iconSrc;
-    private final List<PackageComponentDto> packageComponentDtoList;
+    private final List<PackageComponentDto> components;
 
     public OptionPackageDto(OptionPackage optionPackage, List<PackageComponent> componentList) {
         this.id = optionPackage.getId();
@@ -24,6 +24,6 @@ public class OptionPackageDto {
         for(PackageComponent systemOptionComponent: componentList) {
             componentDtoList.add(new PackageComponentDto(systemOptionComponent));
         }
-        this.packageComponentDtoList = componentDtoList;
+        this.components = componentDtoList;
     }
 }
