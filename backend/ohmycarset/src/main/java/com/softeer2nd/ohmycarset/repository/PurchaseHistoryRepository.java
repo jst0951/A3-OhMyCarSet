@@ -16,57 +16,9 @@ public interface PurchaseHistoryRepository {
 
     Long countByTrimId(Long trimId);
 
-    List<PurchaseHistory> findAllByPowerTrainOptionId(Long powerTrainOptionId);
+    List<PurchaseHistory> findAllByOptionNameAndOptionId(String optionName, Long optionId);
 
-    Long countByPowerTrainOptionId(Long powerTrainOptionId);
+    Long countByOptionNameAndOptionId(String optionName, Long optionId);
 
-    List<PurchaseHistory> findAllByWdOptionId(Long wdOptionId);
-
-    Long countByWdOptionId(Long wdOptionId);
-
-    List<PurchaseHistory> findAllByBodyOptionId(Long bodyOptionId);
-
-    Long countByBodyOptionId(Long bodyOptionId);
-
-    List<PurchaseHistory> findAllByExteriorColorOptionId(Long externalColorOptionId);
-
-    Long countByExteriorColorOptionId(Long externalColorOptionId);
-
-    List<PurchaseHistory> findAllByInteriorColorOptionId(Long internalColorOptionId);
-
-    Long countByInteriorColorOptionId(Long internalColorOptionId);
-
-    List<PurchaseHistory> findAllByWheelOptionId(Long wheelOptionId);
-
-    Long countByWheelOptionId(Long wheelOptionId);
-
-    List<PurchaseHistory> findAllBySystemOptionId(Long systemOptionId);
-
-    Long countBySystemOptionId(Long systemOptionId);
-
-    List<PurchaseHistory> findAllByTemperatureOptionId(Long temperatureOptionId);
-
-    Long countByTemperatureOptionId(Long temperatureOptionId);
-
-    List<PurchaseHistory> findAllByExternalDeviceOptionId(Long externalDeviceOptionId);
-
-    Long countByExternalDeviceOptionId(Long externalDeviceOptionId);
-
-    List<PurchaseHistory> findAllByInternalDeviceOptionId(Long internalDeviceOptionId);
-
-    Long countByInternalDeviceOptionId(Long internalDeviceOptionId);
-
-    List<PurchaseHistory> findAllByAge(Integer age);
-
-    Long countByAge(Integer age);
-
-    List<PurchaseHistory> findAllByGender(Character gender);
-
-    Long countByGender(Character gender);
-
-    List<PurchaseHistory> findAllByTagId(Long tagId);
-
-    Long countByTagId(Long tagId);
-
-    Long countByTagIdAndPowerTrainOptionId(Long tagId, Long powerTrainOptionId);
+    Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId);
 }
