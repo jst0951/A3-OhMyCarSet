@@ -40,6 +40,7 @@ public class TagController {
     }
 
     @PostMapping(value = "/tag/option_package/{packageName}")
+    @Operation(summary = "[가이드페이지]부가옵션 태그별 비율", description = "각 옵션의 태그별 비율을 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
     public List<SelectiveOptionTagDto> getKeywordTagOptionPackage(@RequestBody UserInfoDto userInfoDto, @PathVariable String packageName) {
         return tagService.getKeywordTagOptionPackage(userInfoDto, packageName);
     }
