@@ -3,6 +3,7 @@ package com.softeer2nd.ohmycarset.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +17,7 @@ public class OpenApiConfig {
                 .description("오마카세(OhMyCarSet) 프로젝트의 API 문서입니다.");
 
         return new OpenAPI()
+                .addServersItem(new Server().url("/"))
                 .components(new Components())
                 .info(info);
     }
