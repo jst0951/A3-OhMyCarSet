@@ -75,12 +75,12 @@ const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageA
         return data;
       });
 
-      const existingOption = state.packageList[filterId].selectedList.get(newData.id);
+      const existingOption = state.packageList[filterId - 1].selectedList.get(newData.id);
 
       return {
         packageList: updatedPackageList,
         totalCount: state.totalCount + (existingOption ? -1 : 1),
-        totalPrice: state.totalPrice + (existingOption ? -existingOption.price : newData.price),
+        totalPrice: state.totalPrice + (existingOption ? existingOption.price * -1 : newData.price),
       };
     }
     default:

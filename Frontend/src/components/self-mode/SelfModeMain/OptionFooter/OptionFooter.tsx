@@ -9,10 +9,10 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
 
 interface OptionFooterProps {
-  selectedData: OptionDataT;
+  selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
-  setShowFeedback: Dispatch<React.SetStateAction<number>>;
+  setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
 }
 
 export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
@@ -34,26 +34,31 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
 
   const selectOptionDispatch = useSelectOptionDispatch();
 
-  const handleClickNext = (optionId: number, selectedData: OptionDataT) => {
-    setDisableNext(true);
-    setShowFeedback(selectedData.id);
-    selectOptionDispatch({
-      type: 'UPDATE_LIST',
-      payload: {
-        optionId,
-        newOptionData: {
-          selectedId: selectedData.id,
-          selectedName: selectedData.name,
-          price: selectedData.price,
-          imgSrc: selectedData.imgSrc,
+  const handleClickNext = (optionId: number) => {
+    if (selfModeStep < 7 && setShowFeedback !== undefined) {
+      if (selectedData === undefined) return;
+      setDisableNext(true);
+      setShowFeedback(selectedData.id);
+      selectOptionDispatch({
+        type: 'UPDATE_LIST',
+        payload: {
+          optionId,
+          newOptionData: {
+            selectedId: selectedData.id,
+            selectedName: selectedData.name,
+            price: selectedData.price,
+            imgSrc: selectedData.imgSrc,
+          },
         },
-      },
-    });
-    setTimeout(() => {
-      setShowFeedback(0);
-      setDisableNext(false);
-      setSelfModeStep((prev) => prev + 1);
-    }, 2000);
+      });
+      setTimeout(() => {
+        setShowFeedback(0);
+        setDisableNext(false);
+        setSelfModeStep((prev) => prev + 1);
+      }, 2000);
+    } else {
+      console.log('견적 완료 페이지');
+    }
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -96,7 +101,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
               이전
             </S.PrevButton>
             <S.NextButton $disable={disableNext}>
-              <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep, selectedData)}>
+              <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
                 선택완료
               </RectButton>
             </S.NextButton>

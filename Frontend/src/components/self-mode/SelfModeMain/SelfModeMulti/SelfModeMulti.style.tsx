@@ -23,12 +23,13 @@ export const SelfModeImage = styled.div`
 
 export const SelfModeOption = styled.div`
   width: 40%;
-  padding: 12px 27px;
+  padding: 12px 0;
 `;
 
 export const FilterContainer = styled.div`
   display: flex;
   gap: 8px;
+  padding: 0 27px;
 `;
 
 export const FilterButton = styled.div<{ $active: boolean }>`
@@ -54,6 +55,7 @@ export const TitleContainer = styled.div`
   align-items: center;
   height: 36px;
   margin: 26px 0 16px;
+  padding: 0 27px;
 `;
 
 export const Title = styled.div`
@@ -90,7 +92,7 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 20px 0 10px;
+  padding: 20px 26px 10px;
   /* margin: 0 26px; */
   height: calc(100vh - 340px);
   overflow: scroll;

@@ -1,4 +1,4 @@
-// import OptionFooter from '../OptionFooter/OptionFooter';
+import OptionFooter from '../OptionFooter/OptionFooter';
 import { useEffect, useState } from 'react';
 import * as S from './SelfModeMulti.style';
 import fetchData from '@/apis/fetchData';
@@ -6,6 +6,7 @@ import { OptionPackageT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
 const optionList = [
   {
@@ -31,9 +32,12 @@ type OptionPackageListT = OptionPackageT[];
 export default function SelfModeMulti() {
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
   const { filterId, packageId, optionId } = useCurrentPackageState();
-  const { packageList, totalCount } = useSelectPackageState();
+  const { packageList, totalCount, totalPrice } = useSelectPackageState();
   const currentPackageDispatch = useCurrentPackageDispatch();
   const selectPackageDispatch = useSelectPackageDispatch();
+  const selectOptionState = useSelectOptionState();
+  const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice);
+  const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice);
 
   const handleFilterOption = (idx: number) => {
     currentPackageDispatch({
@@ -59,6 +63,7 @@ export default function SelfModeMulti() {
         const response = await fetchOptionData(option.key);
         allData.push(response);
       }
+
       setOptionPackage(allData);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
@@ -92,6 +97,11 @@ export default function SelfModeMulti() {
   useEffect(() => {
     fetchAllData();
   }, []);
+
+  useEffect(() => {
+    setPrevTotal(tempTotal);
+    setTempTotal(selectOptionState.totalPrice + totalPrice);
+  }, [totalCount]);
 
   return (
     <>
@@ -134,6 +144,7 @@ export default function SelfModeMulti() {
                 />
               ))}
           </S.OptionContainer>
+          <OptionFooter prevTotal={prevTotal} tempTotal={tempTotal} />
         </S.SelfModeOption>
       </S.SelfModeMultiContainer>
     </>
