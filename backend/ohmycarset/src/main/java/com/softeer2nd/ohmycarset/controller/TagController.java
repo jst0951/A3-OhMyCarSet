@@ -22,7 +22,7 @@ public class TagController {
     }
 
     @GetMapping(value = "/tag/required_option/{optionName}")
-    @Operation(summary = "[셀프페이지]필수옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : powertrain, wd, body, wheel")
+    @Operation(summary = "[셀프페이지]필수옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
     public List<SelectiveOptionTagDto> getPurchaseTagRequiredOption(@PathVariable String optionName) {
         return tagService.getPurchaseTagByOptionName(optionName);
     }
@@ -35,7 +35,7 @@ public class TagController {
 
     @PostMapping(value = "/tag/required_option/{optionName}")
     @Cacheable(value = "keywordTagRequiredOption", key = "{#userInfoDto.age, #userInfoDto.gender, #userInfoDto.tag1, #userInfoDto.tag2, #userInfoDto.tag3}")
-    @Operation(summary = "[가이드페이지]필수옵션 태그별 비율", description = "각 옵션의 태그별 비율을 제공합니다.\n선택지 : powertrain, wd, body, wheel")
+    @Operation(summary = "[가이드페이지]필수옵션 태그별 비율", description = "각 옵션의 태그별 비율을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
     public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
         return tagService.getKeywordTagRequiredOption(userInfoDto, optionName);
     }
