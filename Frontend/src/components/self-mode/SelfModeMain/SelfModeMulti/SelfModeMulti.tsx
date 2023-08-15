@@ -45,7 +45,7 @@ export default function SelfModeMulti() {
   const fetchOptionData = async (key: string) => {
     try {
       const response = await fetchData(`selective_option/option_package/${key}`);
-      console.log(response);
+
       return response;
     } catch (error) {
       console.error('Error fetching option data:', error);
@@ -59,7 +59,6 @@ export default function SelfModeMulti() {
         const response = await fetchOptionData(option.key);
         allData.push(response);
       }
-      console.log(allData[0]);
       setOptionPackage(allData);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
