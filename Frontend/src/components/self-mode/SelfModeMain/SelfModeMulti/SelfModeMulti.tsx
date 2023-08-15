@@ -5,6 +5,7 @@ import fetchData from '@/apis/fetchData';
 import { OptionPackageT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
+import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
 const optionList = [
   {
@@ -28,10 +29,11 @@ const optionList = [
 type OptionPackageListT = OptionPackageT[];
 
 export default function SelfModeMulti() {
-  const [selectedOption, setSelectedOption] = useState<Set<number>>(new Set());
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
   const { filterId, packageId, optionId } = useCurrentPackageState();
+  const { packageList, totalCount } = useSelectPackageState();
   const currentPackageDispatch = useCurrentPackageDispatch();
+  const selectPackageDispatch = useSelectPackageDispatch();
 
   const handleFilterOption = (idx: number) => {
     currentPackageDispatch({
@@ -64,25 +66,23 @@ export default function SelfModeMulti() {
     }
   };
 
-  const getPackageId = (filterId: number, selectedId: number) => {
-    return filterId * 10 + selectedId;
-  };
-
-  const handleClickOption = (currentFilter: number, selectedId: number) => {
-    const packageId = getPackageId(currentFilter, selectedId);
-    if (selectedOption.has(packageId)) {
-      setSelectedOption((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(packageId);
-        return newSet;
-      });
-    } else {
-      setSelectedOption((prev) => new Set([...prev, packageId]));
-    }
+  const handleClickOption = (currentFilter: number, selectedData: OptionPackageT) => {
+    selectPackageDispatch({
+      type: 'UPDATE_LIST',
+      payload: {
+        filterId: currentFilter,
+        newData: {
+          id: selectedData.id,
+          name: selectedData.name,
+          price: selectedData.price,
+          imgSrc: selectedData.components[0].imgSrc,
+        },
+      },
+    });
 
     currentPackageDispatch({
       type: 'UPDATE_PACKAGE',
-      payload: selectedId,
+      payload: selectedData.id,
     });
     currentPackageDispatch({
       type: 'UPDATE_OPTION',
@@ -121,7 +121,7 @@ export default function SelfModeMulti() {
           <S.TitleContainer>
             <S.Title>옵션</S.Title>
             <S.TitleText>을 선택해주세요.</S.TitleText>
-            {selectedOption.size !== 0 && <S.Count>선택 옵션 {selectedOption.size}</S.Count>}
+            {totalCount !== 0 && <S.Count>선택 옵션 {totalCount}</S.Count>}
           </S.TitleContainer>
           <S.OptionContainer>
             {optionPackage[filterId - 1] &&
@@ -129,8 +129,8 @@ export default function SelfModeMulti() {
                 <OptionItem
                   key={data.id}
                   optionData={data}
-                  isActive={selectedOption.has(getPackageId(filterId, data.id))}
-                  onClick={() => handleClickOption(filterId, data.id)}
+                  isActive={packageList[filterId - 1].selectedList.has(data.id)}
+                  onClick={() => handleClickOption(filterId, data)}
                   showFeedback={0}
                 />
               ))}

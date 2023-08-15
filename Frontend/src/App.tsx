@@ -5,6 +5,7 @@ import { SelectOptionProvider } from './contexts/SelectOptionProvider';
 import GuideModeProvider from './contexts/GuideModeProvider';
 import SelectTagProvider from './contexts/SelectTagProvide';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
+import { SelectPackageProvider } from './contexts/SelectPackageProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -29,6 +30,7 @@ export default function App() {
           GuideModeProvider,
           SelectTagProvider,
           CurrentPackageProvider,
+          SelectPackageProvider,
         ]}
       >
         <Router />
