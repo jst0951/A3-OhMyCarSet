@@ -13,8 +13,8 @@ type CurrentPackageActionT = {
 
 const initialState: CurrentPackageStateT = {
   filterId: 1,
-  packageId: 1,
-  optionId: 1,
+  packageId: 0,
+  optionId: 0,
 };
 
 type CurrentPackageDispatchT = (action: CurrentPackageActionT) => void;
@@ -24,8 +24,8 @@ const currentPackageReducer = (state: CurrentPackageStateT, action: CurrentPacka
     case 'UPDATE_FILTER':
       return {
         filterId: action.payload,
-        packageId: 1,
-        optionId: 1,
+        packageId: 0,
+        optionId: 0,
       };
     case 'UPDATE_PACKAGE':
       return {

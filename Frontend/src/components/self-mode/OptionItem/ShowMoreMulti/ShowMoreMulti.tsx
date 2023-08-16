@@ -7,6 +7,7 @@ interface ShowMoreProps {
   contentRef: RefObject<HTMLDivElement>;
   optionId: number;
   optionList: Array<{
+    id: number;
     name: string | null;
     description: string;
   }>;
@@ -17,7 +18,7 @@ export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, opt
   const [selectedId, setSelectedId] = useState<number>(1);
   const currentPackageDispatch = useCurrentPackageDispatch();
 
-  const handleClick = (idx: number, event: React.MouseEvent) => {
+  const handleClick = (id: number, event: React.MouseEvent) => {
     event.stopPropagation();
     currentPackageDispatch({
       type: 'UPDATE_PACKAGE',
@@ -25,17 +26,17 @@ export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, opt
     });
     currentPackageDispatch({
       type: 'UPDATE_OPTION',
-      payload: idx,
+      payload: id,
     });
-    setSelectedId(idx);
+    setSelectedId(id);
   };
 
   useEffect(() => {
     currentPackageDispatch({
       type: 'UPDATE_OPTION',
-      payload: 1,
+      payload: optionList[0].id,
     });
-    setSelectedId(1);
+    setSelectedId(optionList[0].id);
   }, [optionList]);
 
   return (
@@ -45,7 +46,7 @@ export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, opt
           <S.NameContainer>
             {optionList.map((option, idx) => (
               <S.ShowMoreMainText key={option.name}>
-                <S.Name onClick={(e) => handleClick(idx + 1, e)} $selected={selectedId === idx + 1}>
+                <S.Name onClick={(e) => handleClick(option.id, e)} $selected={selectedId === option.id}>
                   {option.name}
                 </S.Name>
                 {idx !== optionList.length - 1 && 'ㆍ'}

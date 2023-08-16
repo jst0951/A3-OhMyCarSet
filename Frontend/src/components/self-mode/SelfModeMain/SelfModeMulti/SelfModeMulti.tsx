@@ -38,6 +38,7 @@ export default function SelfModeMulti() {
   const selectOptionState = useSelectOptionState();
   const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice);
   const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice);
+  const [imgSrc, setImgSrc] = useState('');
 
   const handleFilterOption = (idx: number) => {
     currentPackageDispatch({
@@ -63,8 +64,8 @@ export default function SelfModeMulti() {
         const response = await fetchOptionData(option.key);
         allData.push(response);
       }
-
       setOptionPackage(allData);
+      setImgSrc(allData[0][0].components[0].imgSrc);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
     }
@@ -90,7 +91,7 @@ export default function SelfModeMulti() {
     });
     currentPackageDispatch({
       type: 'UPDATE_OPTION',
-      payload: 1,
+      payload: selectedData.components[0].id,
     });
   };
 
@@ -103,22 +104,29 @@ export default function SelfModeMulti() {
     setTempTotal(selectOptionState.totalPrice + totalPrice);
   }, [totalCount]);
 
+  useEffect(() => {
+    if (optionPackage.length !== 0) {
+      setImgSrc(optionPackage[filterId - 1][0]?.components[0]?.imgSrc);
+    }
+  }, [filterId]);
+
+  useEffect(() => {
+    if (packageId === 0) return;
+    const filterData = optionPackage[filterId - 1];
+    const packageData = filterData?.find((data) => data.id === packageId)?.components;
+    const optionData = packageData?.find((option) => option.id === optionId);
+    if (optionData) {
+      setImgSrc(optionData.imgSrc);
+    } else {
+      if (!packageData) return;
+      setImgSrc(packageData[0].imgSrc);
+    }
+  }, [packageId, optionId]);
+
   return (
     <>
       <S.SelfModeMultiContainer>
-        <S.SelfModeImage>
-          {optionPackage[filterId - 1] && (
-            <img
-              src={`${import.meta.env.VITE_STATIC_API_URL}/${optionPackage[filterId - 1][packageId - 1]?.components[
-                optionId - 1
-              ]?.imgSrc}`}
-              alt={
-                optionPackage[filterId - 1][packageId - 1]?.components[optionId - 1]?.name ??
-                optionPackage[filterId - 1][packageId - 1]?.name
-              }
-            />
-          )}
-        </S.SelfModeImage>
+        <S.SelfModeImage>{imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} />}</S.SelfModeImage>
         <S.SelfModeOption>
           <S.FilterContainer>
             {optionList.map((option, idx) => (
