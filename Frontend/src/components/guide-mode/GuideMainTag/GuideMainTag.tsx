@@ -26,10 +26,15 @@ export default function GuideMainTag({ setComplete }: MainProps) {
       <S.MainContainer>
         <S.MainLeftContainer>
           <GuideIndicator />
-          <S.MainDescription>{guideDescriptionData[currentIndex].mainDescription}</S.MainDescription>
-          <S.MainDescriptionBold>{guideDescriptionData[currentIndex].mainDescriptionBold}</S.MainDescriptionBold>
-          <S.SubDescription>{guideDescriptionData[currentIndex].subDescription}</S.SubDescription>
-
+          <S.DescriptionContainer>
+            {guideDescriptionData.map((data) => (
+              <S.Description key={data.page} $hidden={data.page !== GuideModeStep}>
+                <S.MainDescription>{data.mainDescription}</S.MainDescription>
+                <S.MainDescriptionBold>{data.mainDescriptionBold}</S.MainDescriptionBold>
+                <S.SubDescription>{data.subDescription}</S.SubDescription>
+              </S.Description>
+            ))}
+          </S.DescriptionContainer>
           <S.ButtonContainer $hidden={!showButton || GuideModeStep !== GUIDE_MAX_STEP}>
             <RectButton type="recommended" page="guide" onClick={clickHandler}>
               선택 완료

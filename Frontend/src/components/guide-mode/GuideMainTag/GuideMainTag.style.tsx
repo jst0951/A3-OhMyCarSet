@@ -11,9 +11,35 @@ export const MainContainer = styled.div`
   margin: 0 auto;
 `;
 
-export const MainLeftContainer = styled.div``;
+export const MainLeftContainer = styled.div`
+  height: 222px;
+  margin: auto 0;
+`;
 
 export const MainRightContainer = styled.div``;
+
+export const DescriptionContainer = styled.div`
+  position: relative;
+  width: 454px;
+`;
+
+export const Description = styled.div<{ $hidden: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  ${({ $hidden }) =>
+    $hidden
+      ? `
+      
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  `
+      : `
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  `}
+`;
 
 export const MainDescription = styled.div`
   margin-top: 17px;
@@ -34,6 +60,8 @@ export const MainDescriptionBold = styled.div`
   font-weight: 500;
   line-height: 44.8px;
   letter-spacing: -1.28px;
+
+  white-space: pre-line;
 `;
 
 export const SubDescription = styled.div`

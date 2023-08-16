@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 export const IndicatorContainer = styled.div`
   position: relative;
   height: 33px;
-  margin-bottom: 17px;
 `;
 
 export const Indicator = styled.div<{ $id: number; $isPrev: boolean; $isNext: boolean }>`
