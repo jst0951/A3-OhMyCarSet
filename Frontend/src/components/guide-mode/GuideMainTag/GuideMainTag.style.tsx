@@ -4,6 +4,7 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100vh - 110px);
+  min-height: 600px;
   align-items: center;
   justify-content: space-between;
   width: 1024px;
