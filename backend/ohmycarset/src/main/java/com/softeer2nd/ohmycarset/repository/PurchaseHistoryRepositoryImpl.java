@@ -1,20 +1,29 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.PurchaseHistory;
+import com.softeer2nd.ohmycarset.domain.Tag;
+import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedTemplate;
     private final RowMapper<PurchaseHistory> purchaseHistoryRowMapper = BeanPropertyRowMapper.newInstance(PurchaseHistory.class);
-    public PurchaseHistoryRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    private final RowMapper<PurchaseCountDto> purchaseCountDtoRowMapper = BeanPropertyRowMapper.newInstance(PurchaseCountDto.class);
+    public PurchaseHistoryRepositoryImpl(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -110,5 +119,52 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
                 "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
                 "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
+    }
+
+    @Override
+    public List<PurchaseCountDto> countByOptionNameAndGenderAndAgeAndTags(String optionName, Character gender, Integer age, List<Long> tagIds) {
+        String optionId = optionName + "_id";
+        String query = "SELECT " + optionId + " as option_id, count(*) as count FROM purchase_history \n" +
+                "WHERE (gender=:gender AND age=:age AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n" +
+                "GROUP BY " + optionId;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        List<PurchaseCountDto> purchaseCountDtoList = namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+        return purchaseCountDtoList;
+    }
+
+    @Override
+    public List<PurchaseCountDto> countByPackageNameAndGenderAndAgeAndTags(String packageName, Character gender, Integer age, List<Long> tagIds) {
+        String packageId = packageName + "_id";
+        String mappingTable = "purchase_" + packageName + "_map";
+        String query = "SELECT  M.option_id, count(*) as count FROM purchase_history AS H \n" +
+                "INNER JOIN " + mappingTable + " AS M ON H.id=M.purchase_id \n" +
+                "WHERE (H.gender=:gender AND H.age=:age AND H.tag1_id IN (:tagIds) AND H.tag2_id IN (:tagIds) AND H.tag3_id IN (:tagIds)) \n" +
+                "GROUP BY M.option_id";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        List<PurchaseCountDto> purchaseCountDtoList = namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+        return purchaseCountDtoList;
+    }
+
+    @Override
+    public Long countByGenderAndAgeAndTags(Character gender, Integer age, List<Long> tagIds) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE (gender=:gender AND age=:age AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
     }
 }
