@@ -70,7 +70,7 @@ public class TagService {
     public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(UserInfoDto userInfoDto, String optionName) {
         // 입력된 태그명에 해당하는 Tag 객체들로 변환합니다.
         List<Tag> tagList = new ArrayList<>();
-        List<String> tagNameList = userInfoDto.getTagNameList();
+        List<String> tagNameList = new ArrayList<>(Arrays.asList(userInfoDto.getTag1(), userInfoDto.getTag2(), userInfoDto.getTag3()));
         for (String tagName : tagNameList) {
             tagList.add(tagRepository.findByName(tagName).orElse(null));
         }
@@ -133,7 +133,7 @@ public class TagService {
     public List<SelectiveOptionTagDto> getKeywordTagOptionPackage(UserInfoDto userInfoDto, String packageName) {
         // 입력된 태그명에 해당하는 Tag 객체들로 변환합니다.
         List<Tag> tagList = new ArrayList<>();
-        List<String> tagNameList = userInfoDto.getTagNameList();
+        List<String> tagNameList = new ArrayList<>(Arrays.asList(userInfoDto.getTag1(), userInfoDto.getTag2(), userInfoDto.getTag3()));
         for (String tagName : tagNameList) {
             tagList.add(tagRepository.findByName(tagName).orElse(null));
         }
