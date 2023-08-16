@@ -89,8 +89,8 @@ public class TagService {
             Long optionPurchaseCount = purchaseHistoryRepository.countByOptionNameAndOptionId(optionName, option.getId());
             Double purchaseRate = (double) optionPurchaseCount / totalPurchaseCount * 100;
 
-            // TODO 유사도 연산 로직
-            Double similarity = 0.;
+            // TODO 유사도 연산 로직(purchaseRate 갱신)
+            // purchaseRate = 80;
 
             // 사용자 선택 태그 기반 태그 유사도
             List<TagDto> tagDtoList = new ArrayList<>();
@@ -125,7 +125,7 @@ public class TagService {
             tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
 
             // 목록에 담습니다.
-            optionTagDtoList.add(new SelectiveOptionTagDto(option, purchaseRate, similarity, tagDtoList));
+            optionTagDtoList.add(new SelectiveOptionTagDto(option, purchaseRate, tagDtoList));
         }
 
         return optionTagDtoList;
@@ -152,8 +152,8 @@ public class TagService {
             Long optionPurchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, optionPackage.getId());
             Double purchaseRate = (double) optionPurchaseCount / totalPurchaseCount * 100;
 
-            // TODO 유사도 연산 로직
-            Double similarity = 0.;
+            // TODO 유사도 연산 로직(purchaseRate 갱신)
+            // purchaseRate = 80;
 
             // 사용자 선택 태그 기반 태그 유사도
             List<TagDto> tagDtoList = new ArrayList<>();
@@ -188,7 +188,7 @@ public class TagService {
             tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
 
             // 목록에 담습니다.
-            optionTagDtoList.add(new SelectiveOptionTagDto(optionPackage, purchaseRate, similarity, tagDtoList));
+            optionTagDtoList.add(new SelectiveOptionTagDto(optionPackage, purchaseRate, tagDtoList));
         }
 
         return optionTagDtoList;
