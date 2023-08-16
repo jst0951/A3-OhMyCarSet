@@ -1,9 +1,10 @@
-import * as S from './GuideModeIndicator.style';
+import * as S from './GuideIndicator.style';
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 
-export default function GuideModeIndicator() {
+export default function GuideIndicator() {
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
+
   const handleClick = (page: number) => {
     if (GuideModeStep > page) {
       setGuideModeStep(page);

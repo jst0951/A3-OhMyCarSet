@@ -118,7 +118,7 @@ public class SelectiveOptionService {
         List<TemperatureOption> temperatureList = selectiveOptionRepository.findAllTemperature();
 
         for (TemperatureOption temperature : temperatureList) {
-            List<TemperatureOptionComponent> temperatureOptionComponentList = selectiveOptionRepository.findAllTemperatureComponentBySystemOptionId(temperature.getId());
+            List<TemperatureOptionComponent> temperatureOptionComponentList = selectiveOptionRepository.findAllTemperatureComponentByTemperatureOptionId(temperature.getId());
 
             selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(temperature, temperatureOptionComponentList));
         }
@@ -132,7 +132,7 @@ public class SelectiveOptionService {
         List<ExternalDeviceOption> externalDeviceList = selectiveOptionRepository.findAllExternalDevice();
 
         for (ExternalDeviceOption externalDevice : externalDeviceList) {
-            List<ExternalDeviceOptionComponent> externalDeviceOptionComponentList = selectiveOptionRepository.findAllExternalDeviceComponentBySystemOptionId(externalDevice.getId());
+            List<ExternalDeviceOptionComponent> externalDeviceOptionComponentList = selectiveOptionRepository.findAllExternalDeviceComponentByExternalDeviceOptionId(externalDevice.getId());
 
             selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(externalDevice, externalDeviceOptionComponentList));
         }
@@ -146,7 +146,7 @@ public class SelectiveOptionService {
         List<InternalDeviceOption> internalDeviceList = selectiveOptionRepository.findAllInternalDevice();
 
         for (InternalDeviceOption internalDevice : internalDeviceList) {
-            List<InternalDeviceOptionComponent> internalDeviceOptionComponentList = selectiveOptionRepository.findAllInternalDeviceComponentBySystemOptionId(internalDevice.getId());
+            List<InternalDeviceOptionComponent> internalDeviceOptionComponentList = selectiveOptionRepository.findAllInternalDeviceComponentByInternalDeviceOptionId(internalDevice.getId());
 
             selectiveOptionAdditionalDtoList.add(new SelectiveOptionAdditionalDto(internalDevice, internalDeviceOptionComponentList));
         }

@@ -20,37 +20,23 @@ import java.util.List;
 @Repository
 public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final RowMapper<PowerTrainOption> powerTrainRowMapper;
-    private final RowMapper<WDOption> wdRowMapper;
-    private final RowMapper<BodyOption> bodyRowMapper;
-    private final RowMapper<ExteriorColorOption> eColorRowMapper;
-    private final RowMapper<InteriorColorOption> iColorRowMapper;
-    private final RowMapper<WheelOption> wheelRowMapper;
-    private final RowMapper<SystemOption> systemRowMapper;
-    private final RowMapper<SystemOptionComponent> systemComponentRowMapper;
-    private final RowMapper<TemperatureOption> temperatureRowMapper;
-    private final RowMapper<TemperatureOptionComponent> temperatureComponentRowMapper;
-    private final RowMapper<ExternalDeviceOption> eDeviceRowMapper;
-    private final RowMapper<ExternalDeviceOptionComponent> eDeviceComponentRowMapper;
-    private final RowMapper<InternalDeviceOption> iDeviceRowMapper;
-    private final RowMapper<InternalDeviceOptionComponent> iDeviceComponentRowMapper;
+    private final RowMapper<PowerTrainOption> powerTrainRowMapper = BeanPropertyRowMapper.newInstance(PowerTrainOption.class);;
+    private final RowMapper<WDOption> wdRowMapper = BeanPropertyRowMapper.newInstance(WDOption.class);;
+    private final RowMapper<BodyOption> bodyRowMapper = BeanPropertyRowMapper.newInstance(BodyOption.class);;
+    private final RowMapper<ExteriorColorOption> eColorRowMapper = BeanPropertyRowMapper.newInstance(ExteriorColorOption.class);;
+    private final RowMapper<InteriorColorOption> iColorRowMapper = BeanPropertyRowMapper.newInstance(InteriorColorOption.class);;
+    private final RowMapper<WheelOption> wheelRowMapper = BeanPropertyRowMapper.newInstance(WheelOption.class);;
+    private final RowMapper<SystemOption> systemRowMapper = BeanPropertyRowMapper.newInstance(SystemOption.class);;
+    private final RowMapper<SystemOptionComponent> systemComponentRowMapper = BeanPropertyRowMapper.newInstance(SystemOptionComponent.class);;
+    private final RowMapper<TemperatureOption> temperatureRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOption.class);;
+    private final RowMapper<TemperatureOptionComponent> temperatureComponentRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOptionComponent.class);;
+    private final RowMapper<ExternalDeviceOption> eDeviceRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOption.class);;
+    private final RowMapper<ExternalDeviceOptionComponent> eDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOptionComponent.class);;
+    private final RowMapper<InternalDeviceOption> iDeviceRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOption.class);;
+    private final RowMapper<InternalDeviceOptionComponent> iDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOptionComponent.class);;
 
     public SelectiveOptionRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.powerTrainRowMapper = BeanPropertyRowMapper.newInstance(PowerTrainOption.class);
-        this.wdRowMapper = BeanPropertyRowMapper.newInstance(WDOption.class);
-        this.bodyRowMapper = BeanPropertyRowMapper.newInstance(BodyOption.class);
-        this.eColorRowMapper = BeanPropertyRowMapper.newInstance(ExteriorColorOption.class);
-        this.iColorRowMapper = BeanPropertyRowMapper.newInstance(InteriorColorOption.class);
-        this.wheelRowMapper = BeanPropertyRowMapper.newInstance(WheelOption.class);
-        this.systemRowMapper = BeanPropertyRowMapper.newInstance(SystemOption.class);
-        this.systemComponentRowMapper = BeanPropertyRowMapper.newInstance(SystemOptionComponent.class);
-        this.temperatureRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOption.class);
-        this.temperatureComponentRowMapper = BeanPropertyRowMapper.newInstance(TemperatureOptionComponent.class);
-        this.eDeviceRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOption.class);
-        this.eDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(ExternalDeviceOptionComponent.class);
-        this.iDeviceRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOption.class);
-        this.iDeviceComponentRowMapper = BeanPropertyRowMapper.newInstance(InternalDeviceOptionComponent.class);
     }
 
     @Override
@@ -100,7 +86,7 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<TemperatureOptionComponent> findAllTemperatureComponentBySystemOptionId(Long tOptionId) {
+    public List<TemperatureOptionComponent> findAllTemperatureComponentByTemperatureOptionId(Long tOptionId) {
         String sql = "SELECT * FROM temperature_option_component AS C WHERE C.t_option_id=?";
         return jdbcTemplate.query(sql, temperatureComponentRowMapper, tOptionId);
     }
@@ -111,7 +97,7 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<ExternalDeviceOptionComponent> findAllExternalDeviceComponentBySystemOptionId(Long edOptionId) {
+    public List<ExternalDeviceOptionComponent> findAllExternalDeviceComponentByExternalDeviceOptionId(Long edOptionId) {
         String sql = "SELECT * FROM external_device_option_component AS C WHERE C.e_d_option_id=?";
         return jdbcTemplate.query(sql, eDeviceComponentRowMapper, edOptionId);
     }
@@ -122,7 +108,7 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<InternalDeviceOptionComponent> findAllInternalDeviceComponentBySystemOptionId(Long idOptionId) {
+    public List<InternalDeviceOptionComponent> findAllInternalDeviceComponentByInternalDeviceOptionId(Long idOptionId) {
         String sql = "SELECT * FROM internal_device_option_component AS C WHERE C.i_d_option_id=?";
         return jdbcTemplate.query(sql, iDeviceComponentRowMapper, idOptionId);
     }

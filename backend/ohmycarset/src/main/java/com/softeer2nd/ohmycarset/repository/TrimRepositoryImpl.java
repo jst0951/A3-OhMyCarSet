@@ -25,7 +25,7 @@ public class TrimRepositoryImpl implements TrimRepository {
 
     @Override
     public Optional<Trim> findById(Long id) {
-        List<Trim> trimList = jdbcTemplate.query("SELECT * FROM trim WHERE id=?", trimRowMapper);
+        List<Trim> trimList = jdbcTemplate.query("SELECT * FROM trim WHERE id=?", trimRowMapper, id);
         return trimList.stream().findAny();
     }
 }

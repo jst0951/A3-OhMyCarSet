@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "디젤 2.2",
+    "mainDescription": "높은 토크로 파워풀한 드라이빙이 가능하며, 차급대비 연비 효율이 우수합니다.",
+    "subDescription": "최고출력 202 ps / 3,800 rpm\n최대토크 45.0 kgf-m / 1750~2750 rpm",
+    "mainFeedback": "디젤 엔진은 효율이 좋아요!",
+    "subFeedback": " 효율을 중시한다면, 탁월한 선택입니다.",
+    "price": 1480000,
+    "imgSrc": "selective_option/1_1.png",
+    "iconSrc": null
+  },
+  {
+    "id": 2,
+    "name": "4WD",
+    "mainDescription": "전자식 상시 4륜 구동 시스템 입니다도로의 상황이나 주행 환경에 맞춰 전후륜 구동력을 자동배분하여 주행 안전성을 높여줍니다",
+    "subDescription": "최고출력 202 ps / 3,800 rpm\n최대토크 45.0 kgf-m / 1750~2750 rpm",
+    "mainFeedback": "4WD는 파워풀해요!",
+    "subFeedback": "힘있는 주행을 원하신다면, 탁월한 선택입니다.",
+    "price": 2370000,
+    "imgSrc": "selective_option/2_2.png",
+    "iconSrc": null
+  }
+]

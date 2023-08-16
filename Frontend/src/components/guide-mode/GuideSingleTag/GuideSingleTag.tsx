@@ -1,12 +1,12 @@
 import { useGuideModeContext } from '@/contexts/GuideModeProvider';
-import * as S from './GuideModeSingleTag.style';
+import * as S from './GuideSingleTag.style';
 import guideSingleTagData from '@/asset/data/guideSingleTagData.json';
 import { CheckIcon } from '@/asset/icons';
 import { UncheckIcon } from '@/asset/icons';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useState } from 'react';
 
-export default function GuideModeSingleTag() {
+export default function GuideSingleTag() {
   const [hovered, setHovered] = useState<number | null>(null);
   const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();

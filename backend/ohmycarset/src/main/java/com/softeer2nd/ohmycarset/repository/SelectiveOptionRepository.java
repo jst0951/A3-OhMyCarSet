@@ -22,9 +22,9 @@ public interface SelectiveOptionRepository {
     List<SystemOption> findAllSystem();
     List<SystemOptionComponent> findAllSystemComponentBySystemOptionId(Long sOptionId);
     List<TemperatureOption> findAllTemperature();
-    List<TemperatureOptionComponent> findAllTemperatureComponentBySystemOptionId(Long tOptionId);
+    List<TemperatureOptionComponent> findAllTemperatureComponentByTemperatureOptionId(Long tOptionId);
     List<ExternalDeviceOption> findAllExternalDevice();
-    List<ExternalDeviceOptionComponent> findAllExternalDeviceComponentBySystemOptionId(Long edOptionId);
+    List<ExternalDeviceOptionComponent> findAllExternalDeviceComponentByExternalDeviceOptionId(Long edOptionId);
     List<InternalDeviceOption> findAllInternalDevice();
-    List<InternalDeviceOptionComponent> findAllInternalDeviceComponentBySystemOptionId(Long idOptionId);
+    List<InternalDeviceOptionComponent> findAllInternalDeviceComponentByInternalDeviceOptionId(Long idOptionId);
 }

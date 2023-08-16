@@ -2,7 +2,7 @@ package com.softeer2nd.ohmycarset.domain.selectiveOption.InternalDeviceOption;
 
 public class InternalDeviceOptionComponent {
     private Long id;
-    private Long idOptionId;
+    private Long iDOptionId;
     private String name;
     private String description;
     private String imgSrc;
@@ -15,12 +15,12 @@ public class InternalDeviceOptionComponent {
         this.id = id;
     }
 
-    public Long getIdOptionId() {
-        return idOptionId;
+    public Long getiDOptionId() {
+        return iDOptionId;
     }
 
-    public void setIdOptionId(Long idOptionId) {
-        this.idOptionId = idOptionId;
+    public void setiDOptionId(Long iDOptionId) {
+        this.iDOptionId = iDOptionId;
     }
 
     public String getName() {

@@ -1,39 +1,44 @@
-import * as S from './GuideModeMultiTag.style';
+import * as S from './GuideMultiTag.style';
 import guideMultiTagData from '@/asset/data/guideMultiTagData.json';
+import { GUIDE_MAX_TAG_NUM } from '@/constants';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 interface MultiProps {
-  setComplete: Dispatch<React.SetStateAction<boolean>>;
+  setShowButton: Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function GuideModeMultiTag({ setComplete }: MultiProps) {
+export default function GuideMultiTag({ setShowButton }: MultiProps) {
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const tagCategory = guideMultiTagData[0].category;
-  const MAX_TAG_NUM = 3;
 
   const handleClick = (tag: string) => {
     if (selectedTagList.size !== 0 && selectedTagList.has(tag)) {
       selectedTagList.delete(tag);
-    } else if (!selectedTagList.has(tag) && selectedTagList.size < MAX_TAG_NUM) {
+    } else if (!selectedTagList.has(tag) && selectedTagList.size < GUIDE_MAX_TAG_NUM) {
       selectedTagList.add(tag);
     }
     setSelectedTagList(selectedTagList);
-    if (selectedTagList.size === 3) {
+    if (selectedTagList.size === GUIDE_MAX_TAG_NUM) {
       selectTagList[2].value = selectedTagList;
       setSelectTagList(selectTagList);
-      setComplete(true);
+      setShowButton(true);
     } else {
-      setComplete(false);
+      setShowButton(false);
     }
   };
+
   const handleMouseEnter = (tag: string) => {
-    if (selectedTagList.size !== 3) {
+    if (selectedTagList.size !== GUIDE_MAX_TAG_NUM) {
       setHoveredTag(tag);
     }
   };
+
+  useEffect(() => {
+    setShowButton(false);
+  }, []);
 
   return (
     <S.TagListContainer>
