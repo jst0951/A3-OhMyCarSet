@@ -43,7 +43,10 @@ export default function GuideMainTag({ setComplete }: MainProps) {
         </S.MainLeftContainer>
 
         <S.MainRightContainer>
-          {currentIndex === GUIDE_MAX_STEP - 1 ? <GuideMultiTag setShowButton={setShowButton} /> : <GuideSingleTag />}
+          <GuideSingleTag step={1} show={GuideModeStep === 1} />
+          <GuideSingleTag step={2} show={GuideModeStep === 2} />
+          <GuideMultiTag setShowButton={setShowButton} show={currentIndex === GUIDE_MAX_STEP - 1} />
+          {/* {currentIndex === GUIDE_MAX_STEP - 1 ? <GuideMultiTag setShowButton={setShowButton} /> : <GuideSingleTag />} */}
         </S.MainRightContainer>
       </S.MainContainer>
     </>

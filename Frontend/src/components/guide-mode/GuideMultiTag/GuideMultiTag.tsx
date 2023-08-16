@@ -6,9 +6,10 @@ import { Dispatch, useEffect, useState } from 'react';
 
 interface MultiProps {
   setShowButton: Dispatch<React.SetStateAction<boolean>>;
+  show: boolean;
 }
 
-export default function GuideMultiTag({ setShowButton }: MultiProps) {
+export default function GuideMultiTag({ setShowButton, show }: MultiProps) {
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
@@ -41,7 +42,7 @@ export default function GuideMultiTag({ setShowButton }: MultiProps) {
   }, []);
 
   return (
-    <S.TagListContainer>
+    <S.TagListContainer $show={show}>
       {tagCategory.map((category) => (
         <S.TagSubContainer key={category.id}>
           <S.TagSubListTitle>{category.title}</S.TagSubListTitle>

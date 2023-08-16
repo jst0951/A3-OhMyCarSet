@@ -2,11 +2,26 @@ import { colors } from '@/style/theme';
 import { bodyMedium2 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
-export const TagListContainer = styled.div`
+export const TagListContainer = styled.div<{ $show: boolean; $step: number }>`
+  position: absolute;
+  top: ${({ $step }) => ($step === 1 ? `80px` : `152px`)};
+  left: 0px;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+
+  ${({ $show }) =>
+    $show
+      ? `
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .5s ease-in-out;
+  `
+      : `
+  opacity: 0;
+  pointer-events: none;
+    transition: opacity .5s ease-in-out;`}
 `;
 
 export const TagContainer = styled.div`

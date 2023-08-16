@@ -12,15 +12,20 @@ export const MainContainer = styled.div`
 `;
 
 export const MainLeftContainer = styled.div`
-  height: 222px;
+  height: 310px;
   margin: auto 0;
 `;
 
-export const MainRightContainer = styled.div``;
+export const MainRightContainer = styled.div`
+  position: relative;
+  width: 344px;
+  height: 570px;
+`;
 
 export const DescriptionContainer = styled.div`
   position: relative;
   width: 454px;
+  height: 196px;
 `;
 
 export const Description = styled.div<{ $hidden: boolean }>`
