@@ -1,18 +1,16 @@
 package com.softeer2nd.ohmycarset.dto;
 
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserInfoDto {
-    public final Integer age;
-    public final Character gender;
-    public final String tag1;
-    public final String tag2;
-    public final String tag3;
+    public Integer age;
+    public Character gender;
+    public String tag1;
+    public String tag2;
+    public String tag3;
 
     public UserInfoDto(Integer age, Character gender, String tag1, String tag2, String tag3) {
         this.age = age;
