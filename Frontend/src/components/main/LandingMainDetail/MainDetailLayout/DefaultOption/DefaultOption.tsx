@@ -3,7 +3,7 @@ import * as S from './DefaultOption.style';
 import RectFilterButton from '@/components/common/button/RectFilterButton/RectFilterButton';
 import Item from './Item/Item';
 import Icon from '@/components/common/Icon';
-import fetchData from '@/apis/fetchData';
+import fetchData from '@/utils/apis/fetchData';
 
 type DefaultOption = {
   trimId: number;

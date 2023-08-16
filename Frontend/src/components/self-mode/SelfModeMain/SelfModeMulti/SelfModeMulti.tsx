@@ -1,7 +1,7 @@
 import OptionFooter from '../OptionFooter/OptionFooter';
 import { useEffect, useState } from 'react';
 import * as S from './SelfModeMulti.style';
-import fetchData from '@/apis/fetchData';
+import fetchData from '@/utils/apis/fetchData';
 import { OptionPackageT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
