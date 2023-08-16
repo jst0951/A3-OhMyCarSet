@@ -83,5 +83,17 @@ export const SubDescription = styled.div`
 export const ButtonContainer = styled.div<{ $hidden: boolean }>`
   margin-top: 24px;
 
-  visibility: ${({ $hidden }) => ($hidden ? `hidden` : `visible`)};
+  ${({ $hidden }) =>
+    $hidden
+      ? `
+      
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  `
+      : `
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    pointer-events: all;
+  `}
 `;
