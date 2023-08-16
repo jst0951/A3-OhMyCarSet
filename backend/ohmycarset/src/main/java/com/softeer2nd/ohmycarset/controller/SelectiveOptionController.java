@@ -26,7 +26,7 @@ public class SelectiveOptionController {
     }
 
     @GetMapping(value = "/selective_option/required_option/{optionName}")
-    @Operation(summary = "[셀프페이지]필수 옵션 목록", description = "주어진 옵션 카테고리의 모든 옵션 목록을 제공합니다.\n선택지 : powertrain, wd, body, wheel")
+    @Operation(summary = "[셀프페이지]필수 옵션 목록", description = "주어진 옵션 카테고리의 모든 옵션 목록을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
     public List<RequiredOptionDto> getAllOptionByName(@PathVariable String optionName) {
         validatePath(optionName);
         return selectiveOptionService.getAllOptionByName(optionName);
