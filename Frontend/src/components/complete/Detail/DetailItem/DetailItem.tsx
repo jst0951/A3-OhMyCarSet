@@ -19,17 +19,12 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
         <S.MainContainer>
           <S.MainLeft>
             <S.ImgContainer>
-              <img
-                src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`}
-                alt={`임시`}
-                width={194}
-                height={144}
-              />
+              <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`} />
             </S.ImgContainer>
             <S.SelectedName>{data.name}</S.SelectedName>
           </S.MainLeft>
           <S.MainRight>
-            <S.OptionPrice>+{data.price.toLocaleString()}원</S.OptionPrice>
+            <S.OptionPrice>+ {data.price.toLocaleString()}원</S.OptionPrice>
             <S.Correction>
               <CorrectionIcon />
               수정

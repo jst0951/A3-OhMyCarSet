@@ -33,10 +33,10 @@ export default function Summary() {
       <S.MainContainer>
         <S.TitleContainer>
           <S.Title>견적 요약</S.Title>
-          <S.leftTitle>
+          <S.rightTitle>
             <S.subTitle>차량 총 견적 금액</S.subTitle>
-            <S.TotalPrice>{selectOptionState.totalPrice.toLocaleString()}원</S.TotalPrice>
-          </S.leftTitle>
+            <S.TotalPrice>{selectOptionState.totalPrice.toLocaleString()} 원</S.TotalPrice>
+          </S.rightTitle>
         </S.TitleContainer>
         <S.SectionContainer>
           {sectionList.map((data) => (

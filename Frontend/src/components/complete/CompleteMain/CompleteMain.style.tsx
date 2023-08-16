@@ -43,7 +43,7 @@ export const External = styled.div<{ $isExternal: boolean }>`
     $isExternal
       ? `color:${colors.hyundaiWhite};
   background-color:${colors.mainHyundaiBlue};`
-      : `colors:${colors.mainHyundaiBlue};
+      : `color:${colors.mainHyundaiBlue};
   background-color:${colors.hyundaiGrey002}`}
 `;
 
@@ -58,11 +58,13 @@ export const Internal = styled.div<{ $isExternal: boolean }>`
     !$isExternal
       ? `color:${colors.hyundaiWhite};
   background-color:${colors.mainHyundaiBlue};`
-      : `colors:${colors.mainHyundaiBlue};
+      : `color:${colors.mainHyundaiBlue};
   background-color:${colors.hyundaiGrey002}`}
 `;
 
-export const SummaryContainer = styled.div``;
+export const SummaryContainer = styled.div`
+  margin-top: 52px;
+`;
 
 export const ButtonLine = styled.div`
   display: flex;

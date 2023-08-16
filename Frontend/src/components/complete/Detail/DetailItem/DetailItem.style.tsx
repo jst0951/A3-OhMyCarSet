@@ -42,7 +42,13 @@ export const MainContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const ImgContainer = styled.div``;
+export const ImgContainer = styled.div`
+  & > img {
+    width: 194px;
+    height: 144px;
+    border-radius: 6px;
+  }
+`;
 
 export const MainLeft = styled.div`
   display: flex;
