@@ -41,14 +41,14 @@ export default function Estimate({ onClick, tempTotal }: EstimateProps) {
         return { stepName: data.stepName, selectName: data.selectedName, price: data.price };
       }),
     },
-    // {
-    //   sectionTitle: '휠',
-    //   sectionTotal: selectOptionState.dataList[5]?.price ?? 0,
-    //   subList: [5].map((idx) => {
-    //     const data = selectOptionState.dataList[idx];
-    //     return { stepName: data.stepName, selectName: data.selectedName, price: data.price };
-    //   }),
-    // },
+    {
+      sectionTitle: '휠',
+      sectionTotal: selectOptionState.dataList[5]?.price ?? 0,
+      subList: [5].map((idx) => {
+        const data = selectOptionState.dataList[idx];
+        return { stepName: data.stepName, selectName: data.selectedName, price: data.price };
+      }),
+    },
     {
       sectionTitle: '선택',
       sectionTotal: selectPackageState.totalPrice,
