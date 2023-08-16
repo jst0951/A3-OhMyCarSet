@@ -45,4 +45,11 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
         String query = "SELECT * FROM " + table + " WHERE id=?";
         return jdbcTemplate.queryForObject(query, requiredOptionRowMapper, optionId);
     }
+
+    @Override
+    public OptionPackage findPackageByPackageIdAndPackageName(Long packageId, String categoryName) {
+        String table = categoryName + "_option";
+        String query = "SELECT * FROM " + table + " WHERE id=?";
+        return jdbcTemplate.queryForObject(query, optionPackageRowMapper, packageId);
+    }
 }
