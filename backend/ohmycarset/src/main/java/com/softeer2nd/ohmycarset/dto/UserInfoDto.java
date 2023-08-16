@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter
 public class UserInfoDto {
-    private final List<String> tagNameList;
     public final Integer age;
     public final Character gender;
     public final String tag1;
@@ -21,7 +20,5 @@ public class UserInfoDto {
         this.tag1 = tag1;
         this.tag2 = tag2;
         this.tag3 = tag3;
-
-        this.tagNameList = new ArrayList<>(Arrays.asList(tag1, tag2, tag3));
     }
 }
