@@ -15,7 +15,7 @@ interface ShowMoreProps {
 }
 
 export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, optionList, showMore }: ShowMoreProps) {
-  const [selectedId, setSelectedId] = useState<number>(1);
+  const [selectedId, setSelectedId] = useState<number>(0);
   const currentPackageDispatch = useCurrentPackageDispatch();
 
   const handleClick = (id: number, event: React.MouseEvent) => {
@@ -53,7 +53,7 @@ export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, opt
               </S.ShowMoreMainText>
             ))}
           </S.NameContainer>
-          <S.ShowMoreSubText>{optionList[selectedId - 1]?.description}</S.ShowMoreSubText>
+          <S.ShowMoreSubText>{optionList.find((option) => option.id === selectedId)?.description}</S.ShowMoreSubText>
         </S.ShowMoreContainer>
       </S.ShowMoreWrapper>
     </>
