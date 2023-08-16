@@ -36,7 +36,7 @@ export default function Summary() {
       }),
     },
     {
-      sectionTitle: '선택',
+      sectionTitle: '옵션',
       sectionTotal: selectPackageState.totalPrice,
       subList: Array.from(selectPackageState.packageList)
         .map((packageData) =>
@@ -61,8 +61,8 @@ export default function Summary() {
           </S.rightTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {sectionList.map((data) => (
-            <SummaryItem key={data.sectionTitle} data={data} />
+          {sectionList.map((data, index) => (
+            <SummaryItem key={index} data={data} />
           ))}
         </S.SectionContainer>
       </S.MainContainer>
