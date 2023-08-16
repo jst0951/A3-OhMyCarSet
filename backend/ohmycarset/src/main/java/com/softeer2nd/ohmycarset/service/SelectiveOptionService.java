@@ -75,11 +75,24 @@ public class SelectiveOptionService {
     }
 
     public List<OptionPackageDto> getAllPackageByName(String packageName) {
-        List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
-
+        // 해당 카테고리의 모든 옵션 패키지 목록을 받아옵니다.
         List<OptionPackage> packageList = selectiveOptionRepository.findAllPackageByPackageName(packageName);
 
-        for (OptionPackage optionPackage : packageList) {
+        // 각 옵션에 대해 구매 건수를 조회합니다.
+        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
+        for(OptionPackage optionPackage: packageList) {
+            Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, optionPackage.getId());
+            purchaseCountMap.put(optionPackage, purchaseCount);
+        }
+
+        // 내림차순으로 정렬합니다.
+        List<OptionPackage> sortedKeys = purchaseCountMap.entrySet().stream()
+                .sorted(Map.Entry.<OptionPackage, Long>comparingByValue().reversed())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
+        for (OptionPackage optionPackage : sortedKeys) {
             List<PackageComponent> packageComponentList = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(packageName, optionPackage.getId());
             optionPackageDtoList.add(new OptionPackageDto(optionPackage, packageComponentList));
         }
