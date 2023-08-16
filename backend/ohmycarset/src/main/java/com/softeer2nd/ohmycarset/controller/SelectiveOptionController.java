@@ -46,7 +46,7 @@ public class SelectiveOptionController {
         return selectiveOptionService.getAllOptionByName(optionName);
     }
 
-    @PostMapping(value = "/selctive_option/option_package/{packageName}")
+    @PostMapping(value = "/selective_option/option_package/{packageName}")
     @Operation(summary = "[가이드페이지]부가 옵션 목록", description = "주어진 패키지 카테고리의 모든 옵션 목록을 사용자에 맞춰 정렬하여 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
     public List<OptionPackageDto> getAllPackageByName(@RequestBody UserInfoDto userInfoDto, @PathVariable String packageName) {
         validatePath(packageName);
