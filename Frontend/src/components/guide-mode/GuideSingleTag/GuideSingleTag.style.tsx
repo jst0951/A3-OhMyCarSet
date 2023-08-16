@@ -20,6 +20,7 @@ export const TagContainer = styled.div`
   padding-right: 15px;
   border-radius: 6px;
   background-color: ${colors.coolGrey001};
+  border: 2px solid ${colors.coolGrey001};
   color: ${colors.coolGrey003};
 
   cursor: pointer;
@@ -28,6 +29,7 @@ export const TagContainer = styled.div`
     color: #212121;
     background-color: ${colors.hyundaiWhite};
     border: 2px solid ${colors.mainHyundaiBlue};
+    transition: all 0.3s ease;
   }
 
   &:hover svg {
