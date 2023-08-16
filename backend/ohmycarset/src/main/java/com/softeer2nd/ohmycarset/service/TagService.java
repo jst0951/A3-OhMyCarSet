@@ -3,6 +3,7 @@ package com.softeer2nd.ohmycarset.service;
 import com.softeer2nd.ohmycarset.domain.Tag;
 import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.SelectiveOptionTagDto;
+import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.TagDto;
 import com.softeer2nd.ohmycarset.dto.UserInfoDto;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
@@ -67,6 +68,7 @@ public class TagService {
     }
 
     public List<SelectiveOptionTagDto> getKeywordTagRequiredOption(UserInfoDto userInfoDto, String optionName) {
+        // 입력된 태그명에 해당하는 Tag 객체들로 변환합니다.
         List<Tag> tagList = new ArrayList<>();
         List<String> tagNameList = userInfoDto.getTagNameList();
         for (String tagName : tagNameList) {
@@ -76,11 +78,21 @@ public class TagService {
         // 본 카테고리의 모든 옵션의 목록을 가져옵니다.
         List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(optionName);
 
-        // 모든 태그들을 담을 목록을 만듭니다.
+        // 모든 부가 정보들을 담을 목록을 만듭니다.
         List<SelectiveOptionTagDto> optionTagDtoList = new ArrayList<>();
-        // 각 옵션에 대해 태그 목록을 구합니다.
+
+        // 각 옵션에 대해 구매비율, 유사도 및 태그 목록을 구합니다.
+        Long totalPurchaseCount = purchaseHistoryRepository.count(); // 구매비율 연산용
         for (RequiredOption option : optionList) {
-            List<SelectiveOptionTagDto> tagDtoList = new ArrayList<>();
+            // 구매비율
+            Long optionPurchaseCount = purchaseHistoryRepository.countByOptionNameAndOptionId(optionName, option.getId());
+            Double purchaseRate = (double) optionPurchaseCount / totalPurchaseCount * 100;
+
+            // TODO 유사도 연산 로직
+            Double similarity = 0.;
+
+            // 사용자 선택 태그 기반 태그 유사도
+            List<TagDto> tagDtoList = new ArrayList<>();
 
             // 유저가 선택한 태그와 옵션에 정의된 태그 중 겹치는 태그만 연산합니다.
             List<Tag> intersectionTagList = new ArrayList<>();
@@ -105,20 +117,21 @@ public class TagService {
                 Double selectionPercentage = (double) intersectionPurchaseCount / purchaseCount * 100;
 
                 // 태그 목록에 추가합니다.
-                tagDtoList.add(new SelectiveOptionTagDto(option, tag, selectionPercentage));
+                tagDtoList.add(new TagDto(tag, selectionPercentage));
             }
 
             // 높은 유사도순으로 재정렬합니다.
             tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
 
             // 목록에 담습니다.
-            optionTagDtoList.addAll(tagDtoList);
+            optionTagDtoList.add(new SelectiveOptionTagDto(option, purchaseRate, similarity, tagDtoList));
         }
 
         return optionTagDtoList;
     }
 
     public List<SelectiveOptionTagDto> getKeywordTagOptionPackage(UserInfoDto userInfoDto, String packageName) {
+        // 입력된 태그명에 해당하는 Tag 객체들로 변환합니다.
         List<Tag> tagList = new ArrayList<>();
         List<String> tagNameList = userInfoDto.getTagNameList();
         for (String tagName : tagNameList) {
@@ -128,11 +141,21 @@ public class TagService {
         // 본 카테고리의 모든 옵션의 목록을 가져옵니다.
         List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(packageName);
 
-        // 모든 태그들을 담을 목록을 만듭니다.
+        // 모든 부가 정보들을 담을 목록을 만듭니다.
         List<SelectiveOptionTagDto> optionTagDtoList = new ArrayList<>();
-        // 각 옵션에 대해 태그 목록을 구합니다.
+
+        // 각 옵션에 대해 구매비율, 유사도 및 태그 목록을 구합니다.
+        Long totalPurchaseCount = purchaseHistoryRepository.count(); // 구매비율 연산용
         for (RequiredOption option : optionList) {
-            List<SelectiveOptionTagDto> tagDtoList = new ArrayList<>();
+            // 구매비율
+            Long optionPurchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, option.getId());
+            Double purchaseRate = (double) optionPurchaseCount / totalPurchaseCount * 100;
+
+            // TODO 유사도 연산 로직
+            Double similarity = 0.;
+
+            // 사용자 선택 태그 기반 태그 유사도
+            List<TagDto> tagDtoList = new ArrayList<>();
 
             // 유저가 선택한 태그와 옵션에 정의된 태그 중 겹치는 태그만 연산합니다.
             List<Tag> intersectionTagList = new ArrayList<>();
@@ -157,14 +180,14 @@ public class TagService {
                 Double selectionPercentage = (double) intersectionPurchaseCount / purchaseCount * 100;
 
                 // 태그 목록에 추가합니다.
-                tagDtoList.add(new SelectiveOptionTagDto(option, tag, selectionPercentage));
+                tagDtoList.add(new TagDto(tag, selectionPercentage));
             }
 
             // 높은 유사도순으로 재정렬합니다.
             tagDtoList.sort((t0, t1) -> Double.compare(t1.getPercentage(), t0.getPercentage()));
 
             // 목록에 담습니다.
-            optionTagDtoList.addAll(tagDtoList);
+            optionTagDtoList.add(new SelectiveOptionTagDto(option, purchaseRate, similarity, tagDtoList));
         }
 
         return optionTagDtoList;
