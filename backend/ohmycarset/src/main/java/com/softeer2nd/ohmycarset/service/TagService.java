@@ -93,11 +93,6 @@ public class TagService {
         // tag dto 생성
         List<TagDto> tagDtoList = new ArrayList<>();
 
-        /**
-         * 1. 옵션에 포함되어 있는 태그와 사용자가 선택한 태그의 교집합을 구한다.
-         * 2. 해당 태그와 옵션이 포함되어있는 구매내역 수 / 해당 태그가 포함되어있는 구매내역 수
-         */
-
         // 총 유사유저 수
         Long totalSimilarUserCount = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
 
@@ -112,7 +107,7 @@ public class TagService {
                 .collect(Collectors.toList());
 
         for (Tag tag : intersectTags) {
-            Double percentage = (double)purchaseHistoryRepository.countByTagIdAndOptionNameAndOptionId(tag.getId(), optionName, mostSimilarOption.getId()) / purchaseHistoryRepository.countByTagId(tag.getId()) * 100;
+            Double percentage = (double) purchaseHistoryRepository.countByTagIdAndOptionNameAndOptionId(tag.getId(), optionName, mostSimilarOption.getId()) / purchaseHistoryRepository.countByTagId(tag.getId()) * 100;
             tagDtoList.add(new TagDto(tag.getId(), tag.getName(), percentage));
         }
         tagDtoList.sort(Comparator.comparing(TagDto::getPercentage).reversed());
@@ -171,7 +166,7 @@ public class TagService {
                 .collect(Collectors.toList());
 
         for (Tag tag : intersectTags) {
-            Double percentage = (double)purchaseHistoryRepository.countByTagIdAndPackageNameAndOptionId(tag.getId(), packageName, mostSimilarPackage.getId()) / purchaseHistoryRepository.countByTagId(tag.getId()) * 100;
+            Double percentage = (double) purchaseHistoryRepository.countByTagIdAndPackageNameAndOptionId(tag.getId(), packageName, mostSimilarPackage.getId()) / purchaseHistoryRepository.countByTagId(tag.getId()) * 100;
             tagDtoList.add(new TagDto(tag.getId(), tag.getName(), percentage));
         }
         tagDtoList.sort(Comparator.comparing(TagDto::getPercentage).reversed());
