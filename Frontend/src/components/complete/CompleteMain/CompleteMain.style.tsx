@@ -12,7 +12,7 @@ export const MainContainer = styled.div`
 
 export const GuideText = styled.div`
   width: 294px;
-  height: 96px;
+  /* height: 96px; */
   margin-top: 64px;
   color: #212121;
   text-align: center;
@@ -20,7 +20,7 @@ export const GuideText = styled.div`
   font-size: 34px;
   font-style: normal;
   font-weight: 500;
-  line-height: 44.2px;
+  line-height: 47.6px;
   letter-spacing: -1.36px;
 `;
 

@@ -3,7 +3,7 @@ import { colors } from '@/style/theme';
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: calc(100vh - 110px);
   align-items: center;
   justify-content: space-between;
   width: 1024px;
