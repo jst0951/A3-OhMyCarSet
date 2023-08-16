@@ -1,15 +1,16 @@
 import Icon from '@/components/common/Icon';
 import * as S from './FeedbackItem.style';
-import { OptionData } from '../SelfModeMain/SelfModeMain';
-import { useEffect, useState } from 'react';
+import { OptionDataT } from '../SelfModeMain/SelfModeMain';
+import { RefObject, useEffect, useState } from 'react';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 
 type FeedbackProps = {
   show: boolean;
-  optionData: OptionData;
+  optionData: OptionDataT;
+  feedbackRef: RefObject<HTMLDivElement>;
 };
 
-export default function FeedbackItem({ show, optionData }: FeedbackProps) {
+export default function FeedbackItem({ show, optionData, feedbackRef }: FeedbackProps) {
   const { selfModeStep } = useSelfModeContext();
   const [showIcon, setShowIcon] = useState<boolean>(false);
 
@@ -31,7 +32,7 @@ export default function FeedbackItem({ show, optionData }: FeedbackProps) {
 
   return (
     <>
-      <S.FeedbackContainer $show={showIcon}>
+      <S.FeedbackContainer $show={showIcon} ref={feedbackRef}>
         <Icon icon="SmileBeforeIcon" size={30} />
         <S.NextIcon>
           <Icon icon="SmileAfterIcon" size={30} />

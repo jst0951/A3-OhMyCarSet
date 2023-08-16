@@ -22,6 +22,8 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
   const [showMore, setShowMore] = useState<boolean>(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const optionRef = useRef<HTMLDivElement>(null);
   const { optionId } = useCurrentPackageState();
 
   const toggleShowMore = useCallback(
@@ -60,6 +62,12 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
     }
   };
 
+  const initfeedbackBoxHeight = () => {
+    if (optionRef.current !== null && feedbackRef.current !== null) {
+      optionRef.current.style.height = `${feedbackRef.current.clientHeight + 4}px`;
+    }
+  };
+
   const checkShowMore = () => {
     if ('mainDescription' in optionData && optionData.mainDescription) return true;
     else if (
@@ -81,11 +89,15 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
   useEffect(() => {
     setShowMore(false);
     initContentBoxHeight();
+
+    if (showFeedback === optionData.id) {
+      initfeedbackBoxHeight();
+    }
   }, [selfModeStep, showFeedback]);
 
   return (
     <>
-      <S.ItemContainer $isActive={isActive} onClick={onClick}>
+      <S.ItemContainer $isActive={isActive} onClick={onClick} ref={optionRef}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
         <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
@@ -113,9 +125,11 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
           {checkShowMore() && <ShowMoreButton isActive={isActive} showMore={showMore} onClick={toggleShowMore} />}
         </S.OptionBottomContainer>
-        <S.FeedbackContainer $show={showFeedback === optionData.id}>
-          <FeedbackItem show={showFeedback === optionData.id} optionData={optionData} />
-        </S.FeedbackContainer>
+        {'mainFeedback' in optionData && (
+          <S.FeedbackContainer $show={showFeedback === optionData.id}>
+            <FeedbackItem show={showFeedback === optionData.id} optionData={optionData} feedbackRef={feedbackRef} />
+          </S.FeedbackContainer>
+        )}
       </S.ItemContainer>
     </>
   );
