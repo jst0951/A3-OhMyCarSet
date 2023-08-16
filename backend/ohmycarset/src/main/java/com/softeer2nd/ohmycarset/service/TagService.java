@@ -1,9 +1,11 @@
 package com.softeer2nd.ohmycarset.service;
 
+import com.softeer2nd.ohmycarset.domain.Tag;
 import com.softeer2nd.ohmycarset.domain.selective.OptionPackage;
 import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.SelectiveOptionTagDto;
+import com.softeer2nd.ohmycarset.dto.SelectiveOptionTagDto.TagDto;
 import com.softeer2nd.ohmycarset.dto.UserInfoDto;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
@@ -49,21 +51,23 @@ public class TagService {
 
     public List<SelectiveOptionTagDto> getPurchaseTagByPackageName(String packageName) {
         // 각 카운트 조회
-        Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
+        Map<OptionPackage, Long> purchaseCountMap = new HashMap<>();
 
-        List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(packageName);
-        for (RequiredOption option : optionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, option.getId());
-            purchaseCountMap.put(option, purchaseCount);
+
+        List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByPackageName(packageName);
+        for(OptionPackage optionPackage: optionPackageList) {
+            Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, optionPackage.getId());
+            purchaseCountMap.put(optionPackage, purchaseCount);
         }
 
         // 확률 계산 및 태그로 전송
         List<SelectiveOptionTagDto> selectiveOptionTagDtoList = new ArrayList<>();
 
         Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum();
-        for (RequiredOption option : optionList) {
-            Double purchasePercentage = (double) purchaseCountMap.get(option) / purchaseCountSum * 100;
-            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(option, purchasePercentage));
+
+        for(OptionPackage optionPackage: optionPackageList) {
+            Double purchasePercentage = (double) purchaseCountMap.get(optionPackage) / purchaseCountSum * 100;
+            selectiveOptionTagDtoList.add(new SelectiveOptionTagDto(optionPackage, purchasePercentage));
         }
 
         return selectiveOptionTagDtoList;
@@ -92,14 +96,14 @@ public class TagService {
                 .collect(Collectors.toList());
 
         // tag dto 생성
-
+        List<TagDto> tagDtoList = new ArrayList<>();
 
         // 총 유사유저 수
         Long totalSimilarUserCount = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
 
         // 유사유저 정보
         RequiredOption mostSimilarOption = selectiveOptionRepository.findOptionByOptionIdAndOptionName(purchaseCountDtoList.get(0).getOptionId(), optionName);
-        response.add(new SelectiveOptionTagDto(mostSimilarOption.getId(), mostSimilarOption.getName(), "유사유저", (double) purchaseCountDtoList.get(0).getCount() / totalSimilarUserCount * 100));
+        response.add(new SelectiveOptionTagDto(mostSimilarOption.getId(), mostSimilarOption.getName(), (double) purchaseCountDtoList.get(0).getCount() / totalSimilarUserCount * 100, tagDtoList));
 
         // 전체 판매량
         Long totalPurchaseCount = purchaseHistoryRepository.count();
@@ -114,7 +118,7 @@ public class TagService {
                 .forEach(dto -> {
                     Long purchaseCount = purchaseHistoryRepository.countByOptionNameAndOptionId(optionName, dto.getOptionId());
                     RequiredOption option = selectiveOptionRepository.findOptionByOptionIdAndOptionName(dto.getOptionId(), optionName);
-                    response.add(new SelectiveOptionTagDto(option.getId(), option.getName(), "구매비율", (double) purchaseCount / totalPurchaseCount * 100));
+                    response.add(new SelectiveOptionTagDto(option.getId(), option.getName(), (double) purchaseCount / totalPurchaseCount * 100, tagDtoList));
                 });
 
         return response;
@@ -142,12 +146,15 @@ public class TagService {
                 .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
                 .collect(Collectors.toList());
 
+        // tag dto 생성
+        List<TagDto> tagDtoList = new ArrayList<>();
+
         // 총 유사유저 수
         Long totalSimilarUserCount = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
 
         // 유사유저 정보
         RequiredOption mostSimilarOption = selectiveOptionRepository.findOptionByOptionIdAndOptionName(purchaseCountDtoList.get(0).getOptionId(), packageName);
-        response.add(new SelectiveOptionTagDto(mostSimilarOption.getId(), mostSimilarOption.getName(), "유사유저", (double) purchaseCountDtoList.get(0).getCount() / totalSimilarUserCount * 100));
+        response.add(new SelectiveOptionTagDto(mostSimilarOption.getId(), mostSimilarOption.getName(),  (double) purchaseCountDtoList.get(0).getCount() / totalSimilarUserCount * 100, tagDtoList));
 
         // 전체 판매량
         Long totalPurchaseCount = purchaseHistoryRepository.count();
@@ -162,7 +169,7 @@ public class TagService {
                 .forEach(dto -> {
                     Long purchaseCount = purchaseHistoryRepository.countByPackageNameAndOptionId(packageName, dto.getOptionId());
                     RequiredOption option = selectiveOptionRepository.findOptionByOptionIdAndOptionName(dto.getOptionId(), packageName);
-                    response.add(new SelectiveOptionTagDto(option.getId(), option.getName(), "구매비율", (double) purchaseCount / totalPurchaseCount * 100));
+                    response.add(new SelectiveOptionTagDto(option.getId(), option.getName(),  (double) purchaseCount / totalPurchaseCount * 100, tagDtoList));
                 });
 
         return response;

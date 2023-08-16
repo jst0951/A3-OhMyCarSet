@@ -6,50 +6,48 @@ import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import lombok.Getter;
 
 import java.beans.ConstructorProperties;
+import java.util.List;
 
 @Getter
 public class SelectiveOptionTagDto {
-    private static final String PURCHASE_PERCENTAGE = "구매비율";
-
     private final Long optionId;
     private final String optionName;
-    private final String tagName;
-    private final Double percentage;
+    private final Double purchaseRate;
+    private final List<TagDto> tags;
 
-    @ConstructorProperties({"optionId", "optionName", "tagName", "percentage"})
-    public SelectiveOptionTagDto(Long optionId, String optionName, String tagName, Double percentage) {
+    @ConstructorProperties({"optionId", "optionName", "purchaseRate", "tags"})
+    public SelectiveOptionTagDto(Long optionId, String optionName, Double purchaseRate, List<TagDto> tagDtoList) {
         this.optionId = optionId;
         this.optionName = optionName;
-        this.tagName = tagName;
-        this.percentage = percentage;
+        this.purchaseRate = purchaseRate;
+        this.tags = tagDtoList;
     }
 
-    public SelectiveOptionTagDto(RequiredOption requiredOption, Double percentage) {
+    public SelectiveOptionTagDto(RequiredOption requiredOption, Double purchaseRate) {
         this.optionId = requiredOption.getId();
         this.optionName = requiredOption.getName();
-        this.tagName = PURCHASE_PERCENTAGE;
-        this.percentage = percentage;
+        this.purchaseRate = purchaseRate;
+        this.tags = null;
     }
 
-    public SelectiveOptionTagDto(RequiredOption requiredOption, Tag tag, Double percentage) {
+    public SelectiveOptionTagDto(RequiredOption requiredOption, Double purchaseRate, List<TagDto> tagDtoList) {
         this.optionId = requiredOption.getId();
         this.optionName = requiredOption.getName();
-        this.tagName = tag.getName();
-        this.percentage = percentage;
+        this.purchaseRate = purchaseRate;
+        this.tags = tagDtoList;
     }
 
-
-    public SelectiveOptionTagDto(OptionPackage requiredOption, Double percentage) {
+    public SelectiveOptionTagDto(OptionPackage requiredOption, Double purchaseRate) {
         this.optionId = requiredOption.getId();
         this.optionName = requiredOption.getName();
-        this.tagName = PURCHASE_PERCENTAGE;
-        this.percentage = percentage;
+        this.purchaseRate = purchaseRate;
+        this.tags = null;
     }
 
-    public SelectiveOptionTagDto(OptionPackage requiredOption, Tag tag, Double percentage) {
+    public SelectiveOptionTagDto(OptionPackage requiredOption, Double purchaseRate, List<TagDto> tagDtoList) {
         this.optionId = requiredOption.getId();
         this.optionName = requiredOption.getName();
-        this.tagName = tag.getName();
-        this.percentage = percentage;
+        this.purchaseRate = purchaseRate;
+        this.tags = tagDtoList;
     }
 }

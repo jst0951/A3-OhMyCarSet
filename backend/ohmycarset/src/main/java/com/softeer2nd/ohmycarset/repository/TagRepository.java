@@ -12,5 +12,5 @@ public interface TagRepository {
 
     Optional<Tag> findByName(String name);
 
-    List<Tag> findAllByOptionNameAndOptionId(String optionName, Long powerTrainOptionId);
+    List<Tag> findAllByOptionNameAndOptionId(String optionName, Long optionId);
 }
