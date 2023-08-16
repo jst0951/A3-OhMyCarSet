@@ -65,9 +65,9 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
     @Override
     public Long countByTagId(Long tagId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history WHERE \n" +
-                "tag1_id=? OR tag2_id=? OR tag3_id=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId);
+        String sql = "SELECT COUNT(*) FROM purchase_history \n" +
+                "WHERE ? IN (tag1_id, tag2_id, tag3_id)";
+        return jdbcTemplate.queryForObject(sql, Long.class, tagId);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     public List<PurchaseCountDto> countByOptionNameAndGenderAndAgeAndTags(String optionName, Character gender, Integer age, List<Long> tagIds) {
         String optionId = optionName + "_id";
         String query = "SELECT " + optionId + " as option_id, count(*) as count FROM purchase_history \n" +
-                "WHERE (gender=:gender AND age=:age AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n" +
+                "WHERE (gender=:gender AND age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n" +
                 "GROUP BY " + optionId;
 
         Map<String, Object> params = new HashMap<>();
@@ -143,7 +143,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         String mappingTable = "purchase_" + packageName + "_map";
         String query = "SELECT  M.option_id, count(*) as count FROM purchase_history AS H \n" +
                 "INNER JOIN " + mappingTable + " AS M ON H.id=M.purchase_id \n" +
-                "WHERE (H.gender=:gender AND H.age=:age AND H.tag1_id IN (:tagIds) AND H.tag2_id IN (:tagIds) AND H.tag3_id IN (:tagIds)) \n" +
+                "WHERE (H.gender=:gender AND H.age >= :age AND H.age <= :age+9 AND H.tag1_id IN (:tagIds) AND H.tag2_id IN (:tagIds) AND H.tag3_id IN (:tagIds)) \n" +
                 "GROUP BY M.option_id";
 
         Map<String, Object> params = new HashMap<>();
@@ -158,7 +158,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     @Override
     public Long countByGenderAndAgeAndTags(Character gender, Integer age, List<Long> tagIds) {
         String query = "SELECT count(*) as count FROM purchase_history \n" +
-                "WHERE (gender=:gender AND age=:age AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+                "WHERE (gender=:gender AND age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
 
         Map<String, Object> params = new HashMap<>();
         params.put("gender", gender.toString());
