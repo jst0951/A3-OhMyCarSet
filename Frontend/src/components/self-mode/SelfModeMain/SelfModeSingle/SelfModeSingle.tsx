@@ -71,16 +71,15 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
-    // console.log(tempTotal, selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
     setPrevTotal(tempTotal);
     if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
       setTempTotal(
         selectOptionState.totalPrice -
           selectOptionState.dataList[selfModeStep - 1].price +
-          stepData[selectedOption - 1]?.price
+          (stepData.find((data) => data.id === selectedOption)?.price || 0)
       );
     } else {
-      setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+      setTempTotal(selectOptionState.totalPrice + (stepData.find((data) => data.id === selectedOption)?.price || 0));
     }
   }, [selectedOption]);
 
@@ -88,10 +87,11 @@ export default function SelfModeSingle() {
     <>
       <S.SelfModeSingleContainer>
         <S.SelfModeImage>
-          {stepData[selectedOption - 1] && (
+          {stepData.find((data) => data.id === selectedOption) && (
             <img
-              src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData[selectedOption - 1]?.imgSrc}`}
-              alt={stepData[selectedOption - 1]?.name}
+              src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData.find((data) => data.id === selectedOption)
+                ?.imgSrc}`}
+              alt={stepData.find((data) => data.id === selectedOption)?.name}
             />
           )}
         </S.SelfModeImage>
@@ -112,7 +112,7 @@ export default function SelfModeSingle() {
             ))}
           </S.OptionContainer>
           <OptionFooter
-            selectedData={stepData[selectedOption - 1]}
+            selectedData={stepData.find((data) => data.id === selectedOption)}
             prevTotal={prevTotal}
             tempTotal={tempTotal}
             setShowFeedback={setShowFeedback}
