@@ -39,7 +39,7 @@ export default function Header() {
 
   return (
     <>
-      <HeaderContainer $scrollPosition={scrollPosition}>
+      <HeaderContainer $isComplete={pathname === '/complete'} $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo />
@@ -57,14 +57,17 @@ export default function Header() {
   );
 }
 
-const HeaderContainer = styled.div<{ $scrollPosition: number }>`
+const HeaderContainer = styled.div<{ $isComplete: boolean; $scrollPosition: number }>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.coolGrey001)};
-  transition: all 0.3s ease;
   width: 100vw;
+
+  background-color: ${(props) =>
+    props.$isComplete ? `white` : props.$scrollPosition < 30 ? `transparent` : `${colors.coolGrey001}`};
+
+  transition: all 0.3s ease;
 `;
 
 const HeaderSection = styled.div`

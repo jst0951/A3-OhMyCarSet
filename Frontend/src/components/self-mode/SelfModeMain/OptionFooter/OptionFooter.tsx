@@ -7,6 +7,7 @@ import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { OptionDataT } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
+import { useNavigate } from 'react-router-dom';
 
 interface OptionFooterProps {
   selectedData?: OptionDataT;
@@ -16,6 +17,7 @@ interface OptionFooterProps {
 }
 
 export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
+  const navigate = useNavigate();
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
@@ -57,7 +59,8 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
         setSelfModeStep((prev) => prev + 1);
       }, 2000);
     } else {
-      console.log('견적 완료 페이지');
+      // 로딩 인디케이터
+      navigate('/complete');
     }
   };
 
