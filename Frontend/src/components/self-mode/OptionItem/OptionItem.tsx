@@ -101,7 +101,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
         <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
-        <OptionImage />
+        {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
         {checkShowMore() &&
           ('mainDescription' in optionData && optionData.mainDescription ? (
             <ShowMore
