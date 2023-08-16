@@ -10,4 +10,6 @@ public interface SelectiveOptionRepository {
     List<RequiredOption> findAllOptionByOptionName(String optionName);
     List<OptionPackage> findAllPackageByPackageName(String packageName);
     List<PackageComponent> findAllComponentByPackageNameAndPackageId(String packageName, Long packageId);
+
+    RequiredOption findOptionByOptionIdAndOptionName(Long optionId, String optionName);
 }
