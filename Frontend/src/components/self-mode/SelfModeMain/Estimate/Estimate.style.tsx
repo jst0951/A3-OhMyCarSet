@@ -5,6 +5,9 @@ import { styled } from 'styled-components';
 export const EstimateContainer = styled.div`
   width: 100%;
   height: 100%;
+
+  /* pointer-events: none;
+  overflow: auto; */
 `;
 
 export const CloseContainer = styled.div`
@@ -15,6 +18,7 @@ export const CloseContainer = styled.div`
 
   & > svg {
     cursor: pointer;
+    pointer-events: all;
   }
 `;
 

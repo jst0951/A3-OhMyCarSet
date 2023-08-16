@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import OptionFooter from '../OptionFooter/OptionFooter';
 import * as S from './SelfModeSingle.style';
-import fetchData from '@/apis/fetchData';
+import fetchData from '@/utils/apis/fetchData';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { OptionData } from '../SelfModeMain';
+import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
@@ -37,7 +37,7 @@ const categoryNameList = [
 export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
-  const [stepData, setStepData] = useState<OptionData[]>([]);
+  const [stepData, setStepData] = useState<OptionDataT[]>([]);
   const [tempTotal, setTempTotal] = useState<number>(0);
   const [prevTotal, setPrevTotal] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(1);
@@ -45,13 +45,18 @@ export default function SelfModeSingle() {
 
   const fetchStepData = async () => {
     try {
-      const response = await fetchData(`selective_option/${categoryNameList[selfModeStep - 1].key}`);
+      const response = await fetchData(`selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`);
       setStepData(response);
-      // console.log(response);
       // 옵션 초기화
-      setSelectedOption(1);
-      setTempTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
-      setPrevTotal(selectOptionState.totalPrice + response[selectedOption - 1].price);
+      if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
+        setSelectedOption(selectOptionState.dataList[selfModeStep - 1].selectedId);
+        setTempTotal(selectOptionState.totalPrice);
+        setPrevTotal(selectOptionState.totalPrice);
+      } else {
+        setSelectedOption(1);
+        setTempTotal(selectOptionState.totalPrice + response[0].price);
+        setPrevTotal(selectOptionState.totalPrice + response[0].price);
+      }
     } catch (error) {
       console.error('Error fetching core option data:', error);
     }
@@ -66,9 +71,17 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
-    console.log(prevTotal, tempTotal);
+    // console.log(tempTotal, selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
     setPrevTotal(tempTotal);
-    setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+    if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
+      setTempTotal(
+        selectOptionState.totalPrice -
+          selectOptionState.dataList[selfModeStep - 1].price +
+          stepData[selectedOption - 1]?.price
+      );
+    } else {
+      setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+    }
   }, [selectedOption]);
 
   return (

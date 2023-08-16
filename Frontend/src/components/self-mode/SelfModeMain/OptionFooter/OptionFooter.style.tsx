@@ -96,6 +96,14 @@ export const PrevButton = styled.div<{ $disable: boolean }>`
   `}
 `;
 
+export const NextButton = styled.div<{ $disable: boolean }>`
+  ${({ $disable }) =>
+    $disable &&
+    `
+      pointer-events: none;
+  `}
+`;
+
 export const EstimateContainer = styled.div<{ $show: boolean }>`
   position: absolute;
   top: 0;

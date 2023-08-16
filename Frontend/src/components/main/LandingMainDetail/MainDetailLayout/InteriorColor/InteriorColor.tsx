@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import * as S from './InteriorColor.style';
-import fetchData from '@/apis/fetchData';
+import fetchData from '@/utils/apis/fetchData';
 
 type InteriorColor = Array<{
   trimId: number;
   trimName: string;
-  iColorList: Array<{
+  icolorList: Array<{
     id: number;
     name: string;
     imgSrc: string;
@@ -33,7 +33,7 @@ export default function InteriorColor() {
       <S.InteriorColorContainer>
         {interiorColor.map((line) => (
           <S.InteriorColorItemLine key={line.trimId}>
-            {line.iColorList.map((item) => (
+            {line.icolorList.map((item) => (
               <S.InteriorColorItemContainer key={item.id}>
                 <S.InteriorColorItem>
                   <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} />

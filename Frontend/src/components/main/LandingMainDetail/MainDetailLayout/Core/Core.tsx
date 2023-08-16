@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as S from './Core.style';
-import fetchData from '@/apis/fetchData';
+import fetchData from '@/utils/apis/fetchData';
 
 type CoreOption = Array<{
   trimId: number;

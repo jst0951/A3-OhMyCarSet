@@ -2,7 +2,7 @@ import * as S from './Detail.style';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import completeCarData from '@/asset/data/completeCarData.json';
 import DetailItem from './DetailItem/DetailItem';
-import { OptionData } from '@/components/self-mode/SelfModeMain/SelfModeMain';
+import { OptionDataT } from '@/components/self-mode/SelfModeMain/SelfModeMain';
 
 export default function Detail() {
   const selectOptionState = useSelectOptionState();
@@ -18,7 +18,7 @@ export default function Detail() {
           </S.LeftTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {completeCarData.map((data: OptionData, index) => (
+          {completeCarData.map((data: OptionDataT, index) => (
             <DetailItem key={data.id} data={data} index={index} />
           ))}
         </S.SectionContainer>

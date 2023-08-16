@@ -4,15 +4,15 @@ import RectButton from '@/components/common/button/RectButton/RectButton.style';
 import { Dispatch, useEffect, useRef, useState } from 'react';
 import Estimate from '../Estimate/Estimate';
 import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
-import { OptionData } from '../SelfModeMain';
+import { OptionDataT } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
 
 interface OptionFooterProps {
-  selectedData: OptionData;
+  selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
-  setShowFeedback: Dispatch<React.SetStateAction<number>>;
+  setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
 }
 
 export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
@@ -20,6 +20,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
+  const [disableNext, setDisableNext] = useState<boolean>(false);
 
   const handleClickEstimate = () => {
     setShowEstimate((prev) => !prev);
@@ -33,23 +34,31 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
 
   const selectOptionDispatch = useSelectOptionDispatch();
 
-  const handleClickNext = (optionId: number, selectedData: OptionData) => {
-    setShowFeedback(selectedData.id);
-    selectOptionDispatch({
-      type: 'UPDATE_LIST',
-      payload: {
-        optionId,
-        newOptionData: {
-          selectedName: selectedData.name,
-          price: selectedData.price,
-          imgSrc: selectedData.imgSrc,
+  const handleClickNext = (optionId: number) => {
+    if (selfModeStep < 7 && setShowFeedback !== undefined) {
+      if (selectedData === undefined) return;
+      setDisableNext(true);
+      setShowFeedback(selectedData.id);
+      selectOptionDispatch({
+        type: 'UPDATE_LIST',
+        payload: {
+          optionId,
+          newOptionData: {
+            selectedId: selectedData.id,
+            selectedName: selectedData.name,
+            price: selectedData.price,
+            imgSrc: selectedData.imgSrc,
+          },
         },
-      },
-    });
-    setTimeout(() => {
-      setShowFeedback(0);
-      setSelfModeStep((prev) => prev + 1);
-    }, 2000);
+      });
+      setTimeout(() => {
+        setShowFeedback(0);
+        setDisableNext(false);
+        setSelfModeStep((prev) => prev + 1);
+      }, 2000);
+    } else {
+      console.log('견적 완료 페이지');
+    }
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
@@ -69,7 +78,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, []);
+  }, [estimateRef]);
 
   return (
     <>
@@ -91,9 +100,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </S.PrevButton>
-            <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep, selectedData)}>
-              선택완료
-            </RectButton>
+            <S.NextButton $disable={disableNext}>
+              <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
+                선택완료
+              </RectButton>
+            </S.NextButton>
           </S.CompleteButtonContainer>
         </S.OptionFooterWrapper>
         <S.EstimateContainer ref={estimateRef} $show={showEstimate}>

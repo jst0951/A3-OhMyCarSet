@@ -6,6 +6,10 @@ interface EstimateSectionProps {
 }
 
 export default function EstimateSection({ data }: EstimateSectionProps) {
+  const hideStepName = (stepName: string, idx: number) => {
+    if (stepName === '선택 옵션' && idx !== 0) return true;
+    return false;
+  };
   return (
     <>
       <S.Section>
@@ -15,9 +19,9 @@ export default function EstimateSection({ data }: EstimateSectionProps) {
         </S.SectionTitleContainer>
         <S.SectionMainContainer>
           {data.subList &&
-            data.subList.map((sub) => (
-              <S.SectionMain key={sub.stepName} $hidden={sub.selectName === null}>
-                <S.CategoryName>{sub.stepName}</S.CategoryName>
+            data.subList.map((sub, idx) => (
+              <S.SectionMain key={idx} $hidden={sub.selectName === null}>
+                <S.CategoryName>{!hideStepName(sub.stepName, idx) && sub.stepName}</S.CategoryName>
                 {sub.selectName !== null && (
                   <S.SelectedContainer>
                     <S.SelectedName>{sub.selectName}</S.SelectedName>

@@ -1,3 +1,5 @@
+import { colors } from '@/style/theme';
+import { bodyMedium2, popupRegular } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const SelfModeMultiContainer = styled.div`
@@ -10,6 +12,7 @@ export const SelfModeMultiContainer = styled.div`
 export const SelfModeImage = styled.div`
   width: 60%;
   height: 100%;
+  background-color: ${colors.coolGrey001};
 
   & > img {
     width: 100%;
@@ -20,14 +23,39 @@ export const SelfModeImage = styled.div`
 
 export const SelfModeOption = styled.div`
   width: 40%;
-  margin: 44px 0 0;
+  padding: 12px 0;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  padding: 0 27px;
+`;
+
+export const FilterButton = styled.div<{ $active: boolean }>`
+  padding: 6px 20px;
+  border-radius: 6px;
+  background-color: ${colors.coolGrey001};
+  ${popupRegular}
+  color: ${colors.coolGrey003};
+
+  ${({ $active }) =>
+    $active &&
+    `  
+      background-color: ${colors.mainHyundaiBlue};
+      ${bodyMedium2}
+      color: ${colors.hyundaiWhite};`}
+  line-height: 21px;
+
+  cursor: pointer;
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  margin: 26px 26px 10px;
+  margin: 26px 0 16px;
+  padding: 0 27px;
 `;
 
 export const Title = styled.div`
@@ -50,12 +78,22 @@ export const TitleText = styled.div`
   letter-spacing: -0.96px;
 `;
 
+export const Count = styled.div`
+  margin-left: 12px;
+  font-family: 'Hyundai Sans Text KR';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -0.42px;
+  color: ${colors.subActiveBlue};
+`;
+
 export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 20px 0;
-  margin: 0 26px;
+  padding: 20px 26px 10px;
+  /* margin: 0 26px; */
   height: calc(100vh - 340px);
   overflow: scroll;
 

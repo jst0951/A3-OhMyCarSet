@@ -1,10 +1,19 @@
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import * as S from './OptionImage.style';
 
-export default function OptionImage() {
+interface Props {
+  icon: string;
+}
+
+export default function OptionImage({ icon }: Props) {
   const { selfModeStep } = useSelfModeContext();
-  // 5, 6 데이터 받아온 후 수정
-  const imageMap: Record<number, JSX.Element> = { 4: <S.Exterior />, 5: <S.Interior /> };
+
+  const iconSrc = `${import.meta.env.VITE_STATIC_API_URL}/${icon}`;
+  const imageMap: Record<number, JSX.Element> = {
+    4: <S.Exterior $icon={iconSrc} />,
+    5: <S.Interior $icon={iconSrc} />,
+    6: <S.Wheel $icon={iconSrc} />,
+  };
 
   return (
     <>

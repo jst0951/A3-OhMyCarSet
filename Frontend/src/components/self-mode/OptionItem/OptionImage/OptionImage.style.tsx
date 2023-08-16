@@ -3,30 +3,32 @@ import { styled } from 'styled-components';
 
 export const OptionImageContainer = styled.div`
   position: absolute;
-  top: 45px;
+  top: 23px;
   right: 20px;
 `;
 
-export const Image = styled.div`
+export const Exterior = styled.div<{ $icon: string }>`
   width: 60px;
   height: 60px;
+  margin-top: 22px;
   border-radius: 50%;
   border: 1px solid ${colors.coolGrey002};
-  background-color: ${colors.hyundaiWhite};
+  background-image: url(${(props) => props.$icon});
+  background-size: cover;
 `;
 
-export const Exterior = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 1px solid ${colors.coolGrey002};
-  background-color: ${colors.hyundaiWhite};
+export const Interior = styled.div<{ $icon: string }>`
+  width: 150px;
+  height: 50px;
+  margin-top: 22px;
+  border-radius: 2px;
+  background-image: url(${(props) => props.$icon});
+  background-size: cover;
 `;
 
-export const Interior = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 1px solid ${colors.coolGrey002};
-  background-color: ${colors.hyundaiWhite};
+export const Wheel = styled.div<{ $icon: string }>`
+  width: 90px;
+  height: 16.8px;
+  background-image: url(${(props) => props.$icon});
+  background-size: cover;
 `;

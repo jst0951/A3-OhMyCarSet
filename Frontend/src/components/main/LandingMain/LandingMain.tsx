@@ -3,6 +3,10 @@ import TrimCardList from '../TrimCard/TrimCard';
 import * as S from './LandingMain.style';
 
 function LandingMain() {
+  const handleClick = () => {
+    window.scrollTo({ top: innerHeight - 50, behavior: 'smooth' });
+  };
+
   return (
     <>
       <S.LandingMainContainer>
@@ -15,7 +19,7 @@ function LandingMain() {
         <S.ShowMoreContainer>
           <TrimCardList />
           <S.ShowMoreText>자세한 설명과 비교를 원한다면</S.ShowMoreText>
-          <S.IconWrapper>
+          <S.IconWrapper onClick={handleClick}>
             <Icon icon="ShowMoreIcon" size={26} />
             <Icon icon="ShowMoreIcon" size={26} />
           </S.IconWrapper>

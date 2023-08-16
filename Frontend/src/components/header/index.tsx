@@ -6,9 +6,25 @@ import CarModelButton from './CarModelButton/CarModelButton';
 import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
+import { useLocation } from 'react-router-dom';
 
 export default function Header() {
+  const { pathname } = useLocation();
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+
+  const getCurrentMode = () => {
+    switch (pathname) {
+      case '/':
+        return 'default';
+      case '/self-mode':
+        return 'self';
+      case '/guide-mode':
+        return 'guide';
+      default:
+        return 'default';
+    }
+  };
+
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
@@ -28,7 +44,7 @@ export default function Header() {
           <HeaderLeftContainer>
             <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton type="default" />
+            <ModeButton type={getCurrentMode()} />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />

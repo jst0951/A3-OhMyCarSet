@@ -3,7 +3,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import SelfModeSingle from './SelfModeSingle/SelfModeSingle';
 import SelfModeMulti from './SelfModeMulti/SelfModeMulti';
 
-export type OptionData = {
+export type OptionDataT = {
   id: number;
   name: string;
   mainDescription?: string;
@@ -14,6 +14,19 @@ export type OptionData = {
   imgSrc: string;
   iconSrc?: string | null;
 };
+
+export interface OptionPackageT {
+  id: number;
+  name: string;
+  price: number;
+  iconSrc: string | null;
+  components: Array<{
+    id: number;
+    name: string | null;
+    description: string;
+    imgSrc: string;
+  }>;
+}
 
 type SystemData = {
   description: string;
