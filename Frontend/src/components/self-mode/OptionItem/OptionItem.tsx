@@ -9,6 +9,7 @@ import ShowMore from './ShowMore/ShowMore';
 import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
+import HighlightWord from '@/utils/HighlightWord';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -100,7 +101,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
       <S.ItemContainer $isActive={isActive} onClick={onClick} ref={optionRef}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
-        <S.OptionName $isActive={isActive}>{optionData.name}</S.OptionName>
+        <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
         {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
         {checkShowMore() &&
           ('mainDescription' in optionData && optionData.mainDescription ? (
