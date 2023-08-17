@@ -1,13 +1,11 @@
 import * as S from './Detail.style';
-import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import DetailItem from './DetailItem/DetailItem';
-import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import DetailMultiItem from './DetailMultiItem/DetailMultiItem';
+import { SelectOptionData } from './DetailItem/DetailItem';
 
 export default function Detail() {
-  const selectOptionState = useSelectOptionState();
-  const selectPackageState = useSelectPackageState();
-  const tempTotal = selectOptionState.totalPrice + selectPackageState.totalPrice;
+  const myPalisadeValue = JSON.parse(sessionStorage.getItem('myPalisade') || '');
+  const tempTotal = myPalisadeValue.single.totalPrice + myPalisadeValue.multi.totalPrice;
 
   return (
     <>
@@ -20,7 +18,7 @@ export default function Detail() {
           </S.RightTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {selectOptionState.dataList.map((data, index) => (
+          {myPalisadeValue.single.dataList.map((data: SelectOptionData, index: number) => (
             <DetailItem key={data.id} data={data} index={index} />
           ))}
           <DetailMultiItem />

@@ -5,7 +5,8 @@ import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
 
 export default function CompleteMain() {
-  const [endPoint, setEndPoint] = useState<string>('selective_option/4_1.png');
+  const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
+  const [endPoint, setEndPoint] = useState<string>(getSingleDataList[3].imgSrc);
   const [isExternal, setIsExternal] = useState<boolean>(true);
 
   const clickHandler = (end: string, external: boolean) => {
@@ -16,12 +17,14 @@ export default function CompleteMain() {
   return (
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
-      <img src={`${import.meta.env.VITE_STATIC_API_URL}/${endPoint}`} alt={`임시`} width={589} height={326} />
+      <S.CarImg>
+        <img src={`${import.meta.env.VITE_STATIC_API_URL}/${endPoint}`} alt={`임시`} />
+      </S.CarImg>
       <S.InternalExternal>
-        <S.External onClick={() => clickHandler('selective_option/4_1.png', true)} $isExternal={isExternal}>
+        <S.External onClick={() => clickHandler(getSingleDataList[3].imgSrc, true)} $isExternal={isExternal}>
           외부
         </S.External>
-        <S.Internal onClick={() => clickHandler('selective_option/5_1.png', false)} $isExternal={isExternal}>
+        <S.Internal onClick={() => clickHandler(getSingleDataList[4].imgSrc, false)} $isExternal={isExternal}>
           내부
         </S.Internal>
       </S.InternalExternal>

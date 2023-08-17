@@ -145,3 +145,18 @@ export const Correction = styled.div`
   line-height: 23.4px;
   letter-spacing: -0.54px;
 `;
+
+export const EmptyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 144px;
+  align-items: center;
+  justify-content: centergit;
+  color: ${colors.coolGrey003};
+  font-family: 'Hyundai Sans Text Regular';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: -0.6px;
+`;

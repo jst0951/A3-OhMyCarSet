@@ -1,7 +1,13 @@
 import { CorrectionIcon } from '@/asset/icons';
 import * as S from './DetailMultiItem.style';
-import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
+
+type SelectOptionData = {
+  id: number;
+  name: string;
+  price: number;
+  imgSrc: string;
+};
 
 const optionList = [
   {
@@ -23,7 +29,7 @@ const optionList = [
 ];
 
 export default function DetailMultiItem() {
-  const selectPackageState = useSelectPackageState();
+  const selectPackageState = JSON.parse(sessionStorage.getItem('myPalisade') || '').multi;
   const { filterId } = useCurrentPackageState();
   const currentPackageDispatch = useCurrentPackageDispatch();
 
@@ -52,23 +58,27 @@ export default function DetailMultiItem() {
           ))}
         </S.FilterContainer>
         <S.ListContainer>
-          {Array.from(selectPackageState.packageList[filterId - 1].selectedList).map((data, index) => (
-            <S.ItemContainer key={index}>
-              <S.MainLeft>
-                <S.ImgContainer>
-                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data[1].imgSrc}`} />
-                </S.ImgContainer>
-                <S.SelectedName>{data[1].name}</S.SelectedName>
-              </S.MainLeft>
-              <S.MainRight>
-                <S.OptionPrice>+ {data[1].price} 원</S.OptionPrice>
-                <S.Correction>
-                  <CorrectionIcon />
-                  수정
-                </S.Correction>
-              </S.MainRight>
-            </S.ItemContainer>
-          ))}
+          {selectPackageState.subList[filterId - 1].length > 0 ? (
+            selectPackageState.subList[filterId - 1].map((data: SelectOptionData) => (
+              <S.ItemContainer key={data.id}>
+                <S.MainLeft>
+                  <S.ImgContainer>
+                    <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`} />
+                  </S.ImgContainer>
+                  <S.SelectedName>{data.name}</S.SelectedName>
+                </S.MainLeft>
+                <S.MainRight>
+                  <S.OptionPrice>+ {data.price} 원</S.OptionPrice>
+                  <S.Correction>
+                    <CorrectionIcon />
+                    수정
+                  </S.Correction>
+                </S.MainRight>
+              </S.ItemContainer>
+            ))
+          ) : (
+            <S.EmptyContainer>Empty Option</S.EmptyContainer>
+          )}
         </S.ListContainer>
       </S.Section>
     </>

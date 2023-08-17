@@ -1,13 +1,31 @@
 import * as S from './Summary.style';
-import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { DEFAULT_PRICE } from '@/constants';
 import SummaryItem from './SummaryItem/SummaryItem';
 import { SectionProps } from '@/components/self-mode/SelfModeMain/Estimate/Estimate';
-import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { SelectOptionData } from '@/contexts/SelectOptionProvider';
+
+interface SelectOptionStateT {
+  dataList: SelectOptionData[];
+  totalPrice: number;
+}
+
+interface SelectPackageStateT {
+  sectionTitle: string;
+  totalPrice: number;
+  subList: Array<
+    Array<{
+      id: number;
+      name: string;
+      price: number;
+      imgSrc: string | null;
+    }>
+  >;
+}
 
 export default function Summary() {
-  const selectOptionState = useSelectOptionState();
-  const selectPackageState = useSelectPackageState();
+  const myPalisadeValue = JSON.parse(sessionStorage.getItem('myPalisade') || '');
+  const selectOptionState: SelectOptionStateT = myPalisadeValue.single;
+  const selectPackageState: SelectPackageStateT = myPalisadeValue.multi;
   const tempTotal = selectOptionState.totalPrice + selectPackageState.totalPrice;
 
   const sectionList: SectionProps[] = [
@@ -38,12 +56,12 @@ export default function Summary() {
     {
       sectionTitle: '옵션',
       sectionTotal: selectPackageState.totalPrice,
-      subList: Array.from(selectPackageState.packageList)
-        .map((packageData) =>
-          Array.from(packageData.selectedList.values()).map((optionData) => ({
+      subList: selectPackageState.subList
+        .map((subItem) =>
+          subItem.map((item) => ({
             stepName: '선택 옵션',
-            selectName: optionData.name,
-            price: optionData.price,
+            selectName: item.name,
+            price: item.price,
           }))
         )
         .flat(),

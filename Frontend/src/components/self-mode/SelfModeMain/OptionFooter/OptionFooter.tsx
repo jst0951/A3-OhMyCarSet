@@ -8,12 +8,37 @@ import { OptionDataT } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
 import { useNavigate } from 'react-router-dom';
+import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
 interface OptionFooterProps {
   selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
   setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
+}
+
+interface SelectOptionStateT {
+  dataList: SelectOptionData[];
+  totalPrice: number;
+}
+
+interface SelectPackageStateT {
+  sectionTitle: string;
+  totalPrice: number;
+  subList: Array<
+    Array<{
+      id: number;
+      name: string;
+      price: number;
+      imgSrc: string | null;
+    }>
+  >;
+}
+
+interface myPalisadeProps {
+  single: SelectOptionStateT;
+  multi: SelectPackageStateT;
 }
 
 export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
@@ -23,6 +48,22 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
   const [disableNext, setDisableNext] = useState<boolean>(false);
+
+  const selectOptionState = useSelectOptionState();
+  const selectPackageState = useSelectPackageState();
+
+  const sectionList: SelectPackageStateT = {
+    sectionTitle: '옵션',
+    totalPrice: selectPackageState.totalPrice,
+    subList: Array.from(selectPackageState.packageList).map((packageData) =>
+      Array.from(packageData.selectedList.values())
+    ),
+  };
+
+  const myPalisade: myPalisadeProps = {
+    single: selectOptionState,
+    multi: sectionList,
+  };
 
   const handleClickEstimate = () => {
     setShowEstimate((prev) => !prev);
@@ -60,6 +101,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       }, 2000);
     } else {
       // 로딩 인디케이터
+      sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
       navigate('/complete');
     }
   };

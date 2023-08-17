@@ -25,6 +25,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
     navigate('/self-mode');
     setSelfModeStep(index + 1);
   };
+
   return (
     <>
       <S.Section>

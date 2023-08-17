@@ -24,7 +24,15 @@ export const GuideText = styled.div`
   letter-spacing: -1.36px;
 `;
 
-export const CarImg = styled.div``;
+export const CarImg = styled.div`
+  width: 589px;
+  height: 326px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export const InternalExternal = styled.div`
   display: flex;
