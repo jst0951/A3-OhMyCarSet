@@ -8,6 +8,7 @@ export type SelectOptionData = {
   selectedName: string | null;
   price: number;
   imgSrc: string | null;
+  IconSrc?: string | null;
 };
 
 interface SelectOptionStateT {

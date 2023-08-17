@@ -21,7 +21,7 @@ export default function SummaryItem({ data }: SummaryProps) {
         <S.MainContainer>
           {data.subList &&
             data.subList.map((sub, index) => (
-              <S.Main key={sub.stepName} $hidden={sub.selectName === null}>
+              <S.Main key={index} $hidden={sub.selectName === null}>
                 <S.CategoryName>{!hideStepName(sub.stepName, index) && sub.stepName}</S.CategoryName>
                 {sub.selectName !== null && (
                   <S.SelectedContainer>
