@@ -6,6 +6,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import CarDictBox from '@/components/car-dict/CarDictBox';
 
 const categoryNameList = [
   {
@@ -93,7 +94,9 @@ export default function SelfModeSingle() {
         </S.SelfModeImage>
         <S.SelfModeOption>
           <S.TitleContainer>
-            <S.Title>{categoryNameList[selfModeStep - 1].text}</S.Title>
+            <S.Title>
+              <CarDictBox>{categoryNameList[selfModeStep - 1].text}</CarDictBox>
+            </S.Title>
             <S.TitleText>을 선택해주세요.</S.TitleText>
           </S.TitleContainer>
           <S.OptionContainer>

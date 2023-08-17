@@ -44,6 +44,7 @@ export type OptionSystemData = {
 
 export default function SelfModeMain() {
   const { selfModeStep } = useSelfModeContext();
+
   return (
     <>
       <S.SelfModeMainContainer>{selfModeStep < 7 ? <SelfModeSingle /> : <SelfModeMulti />}</S.SelfModeMainContainer>

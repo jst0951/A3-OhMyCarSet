@@ -1,5 +1,5 @@
 import fetchData from '@/utils/apis/fetchData';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 interface CarDictData {
   id: number;
@@ -37,7 +37,10 @@ export default function CarDictProvider({ children }: CarDictProviderProps) {
       console.error('Error fetching car dictionary data:', error);
     }
   };
-  fetchCarDict();
+
+  useEffect(() => {
+    fetchCarDict();
+  }, []);
 
   const contextValue: CarDictContextProps = {
     carDict,

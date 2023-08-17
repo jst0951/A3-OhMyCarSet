@@ -7,6 +7,7 @@ import SelectTagProvider from './contexts/SelectTagProvide';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
 import CarDictProvider from './contexts/CarDictProvider';
+import DictionaryOnProvider from './contexts/DictionaryOnProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -33,6 +34,7 @@ export default function App() {
           CurrentPackageProvider,
           SelectPackageProvider,
           CarDictProvider,
+          DictionaryOnProvider,
         ]}
       >
         <Router />
