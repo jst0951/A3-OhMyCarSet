@@ -14,6 +14,7 @@ export const TitleContainer = styled.div`
   margin-top: 60px;
   padding-bottom: 12px;
   border-bottom: 1px solid ${colors.coolGrey003};
+  cursor: pointer;
 `;
 
 export const TitleTextContainer = styled.div`
