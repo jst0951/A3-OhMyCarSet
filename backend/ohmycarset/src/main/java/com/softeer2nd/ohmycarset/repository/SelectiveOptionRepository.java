@@ -5,9 +5,12 @@ import com.softeer2nd.ohmycarset.domain.selective.PackageComponent;
 import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SelectiveOptionRepository {
     List<RequiredOption> findAllOptionByOptionName(String optionName);
     List<OptionPackage> findAllPackageByPackageName(String packageName);
     List<PackageComponent> findAllComponentByPackageNameAndPackageId(String packageName, Long packageId);
+
+    Optional<RequiredOption> findOptionByCategoryNameAndOptionId(String categoryName, Long optionId);
 }

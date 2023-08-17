@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository {
@@ -37,5 +38,12 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     public List<PackageComponent> findAllComponentByPackageNameAndPackageId(String packageName, Long packageId) {
         String table = packageName + "_option_component";
         return jdbcTemplate.query("SELECT * FROM " + table + " AS C WHERE C.package_id=?", packageComponentRowMapper, packageId);
+    }
+
+    @Override
+    public Optional<RequiredOption> findOptionByCategoryNameAndOptionId(String categoryName, Long optionId) {
+        String table = categoryName + "_option";
+        List<RequiredOption> requiredOptionList =  jdbcTemplate.query("SELECT * FROM " + table + " AS C WHERE C.id=?", requiredOptionRowMapper, optionId);
+        return requiredOptionList.stream().findAny();
     }
 }

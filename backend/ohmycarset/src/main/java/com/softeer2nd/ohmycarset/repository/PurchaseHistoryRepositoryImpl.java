@@ -1,20 +1,28 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.PurchaseHistory;
+import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedTemplate;
     private final RowMapper<PurchaseHistory> purchaseHistoryRowMapper = BeanPropertyRowMapper.newInstance(PurchaseHistory.class);
-    public PurchaseHistoryRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    private final RowMapper<PurchaseCountDto> purchaseCountDtoRowMapper = BeanPropertyRowMapper.newInstance(PurchaseCountDto.class);
+    public PurchaseHistoryRepositoryImpl(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -110,5 +118,32 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
                 "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
                 "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
+    }
+
+    @Override
+    public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
+        String optionId = categoryName + "_id";
+        String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
+                "WHERE gender=:gender AND age >= :age AND age <= :age+9 \n" +
+                "GROUP BY " + optionId;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+
+        return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    public List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId) {
+        String optionId = categoryName + "_id";
+        String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
+                "WHERE exterior_color_id=:exterior_color_id \n" +
+                "GROUP BY " + optionId;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("exterior_color_id", exteriorColorId);
+
+        return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
     }
 }
