@@ -26,13 +26,13 @@ export const LoadingIcon = styled.div<{ $fade: number }>`
     $fade === 1
       ? css`
           animation: fade1 1.5s forwards;
-          animation-delay: 0.5s;
+          animation-delay: 0.7s;
           animation-iteration-count: 2;
         `
       : css`
           opacity: 0;
           animation: fade2 1.5s forwards;
-          animation-delay: 0.5s;
+          animation-delay: 0.7s;
           animation-iteration-count: 2;
         `};
 
@@ -40,7 +40,10 @@ export const LoadingIcon = styled.div<{ $fade: number }>`
     0% {
       opacity: 1;
     }
-    50% {
+    40% {
+      opacity: 0;
+    }
+    60% {
       opacity: 0;
     }
     100% {
@@ -49,13 +52,13 @@ export const LoadingIcon = styled.div<{ $fade: number }>`
   }
 
   @keyframes fade2 {
-    0% {
+    10% {
       opacity: 0;
     }
     50% {
       opacity: 1;
     }
-    100% {
+    90% {
       opacity: 0;
     }
   }
