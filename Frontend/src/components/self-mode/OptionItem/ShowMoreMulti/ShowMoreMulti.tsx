@@ -1,6 +1,7 @@
 import { RefObject, useEffect, useState } from 'react';
 import * as S from './ShowMoreMulti.style';
 import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
+import HighlightWord from '@/utils/HighlightWord';
 
 interface ShowMoreProps {
   contentBoxRef: RefObject<HTMLDivElement>;
@@ -53,7 +54,11 @@ export default function ShowMoreMulti({ contentBoxRef, contentRef, optionId, opt
               </S.ShowMoreMainText>
             ))}
           </S.NameContainer>
-          <S.ShowMoreSubText>{optionList.find((option) => option.id === selectedId)?.description}</S.ShowMoreSubText>
+          {
+            <S.ShowMoreSubText>
+              {HighlightWord({ children: optionList.find((option) => option.id === selectedId)?.description })}
+            </S.ShowMoreSubText>
+          }
         </S.ShowMoreContainer>
       </S.ShowMoreWrapper>
     </>

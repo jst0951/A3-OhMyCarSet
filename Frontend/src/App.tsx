@@ -6,6 +6,9 @@ import GuideModeProvider from './contexts/GuideModeProvider';
 import SelectTagProvider from './contexts/SelectTagProvide';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
+import CarDictProvider from './contexts/CarDictProvider';
+import DictionaryOnProvider from './contexts/DictionaryOnProvider';
+import WaitingProvider from './contexts/WaitingProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -31,6 +34,9 @@ export default function App() {
           SelectTagProvider,
           CurrentPackageProvider,
           SelectPackageProvider,
+          CarDictProvider,
+          DictionaryOnProvider,
+          WaitingProvider,
         ]}
       >
         <Router />
