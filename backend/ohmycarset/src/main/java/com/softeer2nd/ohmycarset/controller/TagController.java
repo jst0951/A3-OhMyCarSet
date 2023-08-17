@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Tag(name = "태그", description = "태그 관련 API입니다.")
+@Tag(name = "태그[Depreceated]", description = "태그 관련 API입니다.")
 public class TagController {
 
     private final TagService tagService;
@@ -21,17 +21,17 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping(value = "/tag/required_option/{optionName}")
-    @Operation(summary = "[셀프페이지]필수옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
-    public List<SelectiveOptionTagDto> getPurchaseTagRequiredOption(@PathVariable String optionName) {
-        return tagService.getPurchaseTagByOptionName(optionName);
-    }
-
-    @GetMapping(value = "/tag/option_package/{packageName}")
-    @Operation(summary = "[셀프페이지]부가옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
-    public List<SelectiveOptionTagDto> getPurchaseTagOptionPackage(@PathVariable String packageName) {
-        return tagService.getPurchaseTagByPackageName(packageName);
-    }
+//    @GetMapping(value = "/tag/required_option/{optionName}")
+//    @Operation(summary = "[셀프페이지]필수옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
+//    public List<SelectiveOptionTagDto> getPurchaseTagRequiredOption(@PathVariable String optionName) {
+//        return tagService.getPurchaseTagByOptionName(optionName);
+//    }
+//
+//    @GetMapping(value = "/tag/option_package/{packageName}")
+//    @Operation(summary = "[셀프페이지]부가옵션 구매비율", description = "각 옵션의 구매비율을 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
+//    public List<SelectiveOptionTagDto> getPurchaseTagOptionPackage(@PathVariable String packageName) {
+//        return tagService.getPurchaseTagByPackageName(packageName);
+//    }
 
     @PostMapping(value = "/tag/required_option/{optionName}")
     @Cacheable(value = "keywordTagRequiredOption", key = "{#userInfoDto.age, #userInfoDto.gender, #userInfoDto.tag1, #userInfoDto.tag2, #userInfoDto.tag3}")
