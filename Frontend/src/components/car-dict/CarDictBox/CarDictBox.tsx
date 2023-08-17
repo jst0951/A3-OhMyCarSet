@@ -1,5 +1,5 @@
 import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
-import Icon from '../common/Icon';
+import Icon from '../../common/Icon';
 import * as S from './CarDictBox.style';
 import { useCarDictContext } from '@/contexts/CarDictProvider';
 
@@ -12,7 +12,7 @@ export default function CarDictBox({ children }: Props) {
   const { carDict } = useCarDictContext();
 
   const handleClick = () => {
-    console.log(children?.toString());
+    console.log(carDict.find((data) => data.keyword === children?.toString()));
   };
 
   const checkInDict = () => {

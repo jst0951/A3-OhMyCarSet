@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import * as S from './ShowMore.style';
-import HighlightWord from '@/utils/highlightWord';
+import HighlightWord from '@/utils/HighlightWord';
 
 interface ShowMoreProps {
   contentBoxRef: RefObject<HTMLDivElement>;

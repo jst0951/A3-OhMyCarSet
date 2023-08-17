@@ -9,7 +9,7 @@ import ShowMore from './ShowMore/ShowMore';
 import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
-import HighlightWord from '@/utils/highlightWord';
+import HighlightWord from '@/utils/HighlightWord';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;

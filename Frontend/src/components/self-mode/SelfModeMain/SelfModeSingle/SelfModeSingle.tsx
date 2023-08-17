@@ -6,7 +6,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
-import CarDictBox from '@/components/car-dict/CarDictBox';
+import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
 
 const categoryNameList = [
   {

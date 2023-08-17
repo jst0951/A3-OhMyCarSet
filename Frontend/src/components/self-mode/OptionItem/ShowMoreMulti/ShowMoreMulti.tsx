@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useState } from 'react';
 import * as S from './ShowMoreMulti.style';
 import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
-import HighlightWord from '@/utils/highlightWord';
+import HighlightWord from '@/utils/HighlightWord';
 
 interface ShowMoreProps {
   contentBoxRef: RefObject<HTMLDivElement>;
