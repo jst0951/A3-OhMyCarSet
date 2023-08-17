@@ -5,11 +5,26 @@ import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.RequiredOptionDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.beans.ConstructorProperties;
 import java.util.List;
 
-@RequiredArgsConstructor
 @Getter
 public class RecommendDto {
+
+    @ConstructorProperties({"powertrain", "wd", "body", "exteriorColor", "interiorColor", "wheel", "system", "temperature", "externalDevice", "internalDevice"})
+    public RecommendDto(RequiredOptionDto powertrain, RequiredOptionDto wd, RequiredOptionDto body, RequiredOptionDto exteriorColor, RequiredOptionDto interiorColor, RequiredOptionDto wheel, List<OptionPackageDto> system, List<OptionPackageDto> temperature, List<OptionPackageDto> externalDevice, List<OptionPackageDto> internalDevice) {
+        this.powertrain = powertrain;
+        this.wd = wd;
+        this.body = body;
+        this.exteriorColor = exteriorColor;
+        this.interiorColor = interiorColor;
+        this.wheel = wheel;
+        this.system = system;
+        this.temperature = temperature;
+        this.externalDevice = externalDevice;
+        this.internalDevice = internalDevice;
+    }
+
     private final RequiredOptionDto powertrain;
     private final RequiredOptionDto wd;
     private final RequiredOptionDto body;
