@@ -6,6 +6,8 @@ import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -14,11 +16,13 @@ import java.util.List;
 @Repository
 public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedTemplate;
     private final RowMapper<RequiredOption> requiredOptionRowMapper = BeanPropertyRowMapper.newInstance(RequiredOption.class);
     private final RowMapper<OptionPackage> optionPackageRowMapper = BeanPropertyRowMapper.newInstance(OptionPackage.class);
     private final RowMapper<PackageComponent> packageComponentRowMapper = BeanPropertyRowMapper.newInstance(PackageComponent.class);
     public SelectiveOptionRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -51,5 +55,15 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
         String table = categoryName + "_option";
         String query = "SELECT * FROM " + table + " WHERE id=?";
         return jdbcTemplate.queryForObject(query, optionPackageRowMapper, packageId);
+    }
+
+    @Override
+    public List<RequiredOption> findOptionsByOptionIdsAndCategoryName(List<Long> optionIds, String categoryName) {
+        String table = categoryName + "_option";
+        String query = "SELECT * FROM " + table + " WHERE id IN (:optionIds) ORDER BY FIELD(id, :optionIds)";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource("optionIds", optionIds);
+
+        return namedTemplate.query(query, parameters, requiredOptionRowMapper);
     }
 }

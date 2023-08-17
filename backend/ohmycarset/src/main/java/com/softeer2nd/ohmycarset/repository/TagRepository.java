@@ -13,4 +13,6 @@ public interface TagRepository {
     Optional<Tag> findByName(String name);
 
     List<Tag> findAllByOptionNameAndOptionId(String optionName, Long optionId);
+
+    List<Long> findIdsByNames(List<String> tagNames);
 }

@@ -16,4 +16,6 @@ public interface SelectiveOptionRepository {
     RequiredOption findOptionByOptionIdAndOptionName(Long optionId, String optionName);
 
     OptionPackage findPackageByPackageIdAndPackageName(Long optionId, String optionName);
+
+    List<RequiredOption> findOptionsByOptionIdsAndCategoryName(List<Long> optionIds, String categoryName);
 }

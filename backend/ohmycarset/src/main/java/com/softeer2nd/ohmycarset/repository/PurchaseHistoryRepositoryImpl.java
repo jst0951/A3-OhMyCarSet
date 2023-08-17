@@ -6,6 +6,7 @@ import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     private final NamedParameterJdbcTemplate namedTemplate;
     private final RowMapper<PurchaseHistory> purchaseHistoryRowMapper = BeanPropertyRowMapper.newInstance(PurchaseHistory.class);
     private final RowMapper<PurchaseCountDto> purchaseCountDtoRowMapper = BeanPropertyRowMapper.newInstance(PurchaseCountDto.class);
+
     public PurchaseHistoryRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -45,14 +47,14 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     @Override
     public List<PurchaseHistory> findAllByTrimId(Long trimId) {
         String sql = "SELECT * FROM purchase_history\n" +
-                    "WHERE trim_id=?";
+                "WHERE trim_id=?";
         return jdbcTemplate.query(sql, purchaseHistoryRowMapper, trimId);
     }
 
     @Override
     public Long countByTrimId(Long trimId) {
         String sql = "SELECT COUNT(*) FROM purchase_history\n" +
-                    "WHERE trim_id=?";
+                "WHERE trim_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, trimId);
     }
 
@@ -122,7 +124,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public List<PurchaseCountDto> countByOptionNameAndGenderAndAgeAndTags(String optionName, Character gender, Integer age, List<Long> tagIds) {
+    public List<PurchaseCountDto> countByCategoryNameAndGenderAndAgeAndTags(String optionName, Character gender, Integer age, List<Long> tagIds) {
         String optionId = optionName + "_id";
         String query = "SELECT " + optionId + " as option_id, count(*) as count FROM purchase_history \n" +
                 "WHERE (gender=:gender AND age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n" +
@@ -166,5 +168,75 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("tagIds", tagIds);
 
         return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public PurchaseCountDto findOptionByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
+        String option = categoryName + "_id";
+        String query = "SELECT " + option + " as option_id, count(*) as count FROM purchase_history \n" +
+                "WHERE (gender=:gender AND age >= :age AND age <= :age+9) \n" +
+                "GROUP BY option_id \n" +
+                "ORDER BY count DESC \n" +
+                "LIMIT 1";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+
+        return namedTemplate.queryForObject(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    public List<PurchaseCountDto> findAllByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
+        String option = categoryName + "_id";
+        String query = "SELECT " + option + " as option_id, count(*) as count FROM purchase_history \n" +
+                "WHERE (gender=:gender AND age >= :age AND age <= :age+9) \n" +
+                "GROUP BY option_id \n" +
+                "ORDER BY count DESC";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+
+        return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    public Double countByCategoryNameAndOptionIdAndGender(String categoryName, Long id, Character gender) {
+        String option = categoryName + "_id";
+        String query = "SELECT (COUNT(CASE WHEN " + option + "=:id THEN 1 END) / COUNT(*)) * 100 FROM purchase_history \n" +
+                "WHERE gender=:gender";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("id", id);
+
+        return namedTemplate.queryForObject(query, params, Double.class);
+    }
+
+    @Override
+    public Double countByCategoryNameAndOptionIdAndAge(String categoryName, Long id, Integer age) {
+        String option = categoryName + "_id";
+        String query = "SELECT (COUNT(CASE WHEN " + option + "=:id THEN 1 END) / COUNT(*)) * 100 FROM purchase_history \n" +
+                "WHERE age >= :age AND age <= :age+9";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+        params.put("id", id);
+
+        return namedTemplate.queryForObject(query, params, Double.class);
+    }
+
+    @Override
+    public List<Long> countByCategoryNameAndOptionIds(String categoryName, List<Long> optionIds) {
+        String column = categoryName + "_id";
+        String query = "SELECT count(*) AS count FROM purchase_history \n" +
+                "WHERE " + column + " IN (:optionIds) \n" +
+                "GROUP BY " + column + " \n" +
+                "ORDER BY count DESC";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource("optionIds", optionIds);
+
+        return namedTemplate.queryForList(query, parameters, Long.class);
     }
 }

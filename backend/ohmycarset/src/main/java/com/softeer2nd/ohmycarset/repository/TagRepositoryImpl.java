@@ -4,18 +4,24 @@ import com.softeer2nd.ohmycarset.domain.Tag;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class TagRepositoryImpl implements TagRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedTemplate;
     private final RowMapper<Tag> tagRowMapper = BeanPropertyRowMapper.newInstance(Tag.class);
 
-    public TagRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public TagRepositoryImpl(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -41,5 +47,13 @@ public class TagRepositoryImpl implements TagRepository {
                 "INNER JOIN " + table +" AS M ON A.id=M.tag_id\n" +
                 "WHERE M.option_id=?";
         return jdbcTemplate.query(sql, tagRowMapper, optionId);
+    }
+
+    @Override
+    public List<Long> findIdsByNames(List<String> tagNames) {
+        String query = "SELECT id FROM tag WHERE name IN (:tagNames)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("tagNames", tagNames);
+        return namedTemplate.queryForList(query, params, Long.class);
     }
 }
