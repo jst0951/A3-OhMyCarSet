@@ -31,8 +31,8 @@ export default function CarDictProvider({ children }: CarDictProviderProps) {
 
   const fetchCarDict = async () => {
     try {
-      const coreOptionData = await fetchData('car_dict');
-      setCarDict(coreOptionData);
+      const response = await fetchData('car_dict');
+      setCarDict(response);
     } catch (error) {
       console.error('Error fetching car dictionary data:', error);
     }

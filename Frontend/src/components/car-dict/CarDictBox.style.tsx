@@ -2,7 +2,7 @@ import { colors } from '@/style/theme';
 import { styled } from 'styled-components';
 
 export const CarDictBoxContainer = styled.div`
-  display: flex;
+  display: inline-flex;
   gap: 4px;
   align-items: center;
   padding: 7px 8px 6px;
