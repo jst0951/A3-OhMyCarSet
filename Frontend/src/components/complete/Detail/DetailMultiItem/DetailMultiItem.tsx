@@ -1,8 +1,8 @@
-import { CorrectionIcon } from '@/asset/icons';
 import * as S from './DetailMultiItem.style';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useEffect, useState } from 'react';
 import fetchData from '@/utils/apis/fetchData';
+import ItemMain from './ItemMain/ItemMain';
 
 type SelectOptionData = {
   id: number;
@@ -106,19 +106,7 @@ export default function DetailMultiItem() {
               {selectPackageState.subList[filterId - 1].length > 0 ? (
                 selectPackageState.subList[filterId - 1].map((data: SelectOptionData) => (
                   <S.ItemContainer key={data.id}>
-                    <S.MainLeft>
-                      <S.ImgContainer>
-                        <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`} />
-                      </S.ImgContainer>
-                      <S.SelectedName>{data.name}</S.SelectedName>
-                    </S.MainLeft>
-                    <S.MainRight>
-                      <S.OptionPrice>+ {data.price} 원</S.OptionPrice>
-                      <S.Correction>
-                        <CorrectionIcon />
-                        수정
-                      </S.Correction>
-                    </S.MainRight>
+                    <ItemMain imgSrc={data.imgSrc} name={data.name} price={data.price} />
                   </S.ItemContainer>
                 ))
               ) : (
@@ -145,15 +133,7 @@ export default function DetailMultiItem() {
                   defaultOption.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
                       <S.ItemContainer key={item.optionId}>
-                        <S.MainLeft>
-                          <S.ImgContainer>
-                            <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} />
-                          </S.ImgContainer>
-                          <S.SelectedName>{item.optionName}</S.SelectedName>
-                        </S.MainLeft>
-                        <S.MainRight>
-                          <S.OptionPrice>기본 포함</S.OptionPrice>
-                        </S.MainRight>
+                        <ItemMain imgSrc={item.imgSrc} name={item.optionName} />
                       </S.ItemContainer>
                     ))
                   )
@@ -161,15 +141,7 @@ export default function DetailMultiItem() {
                   defaultOption.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
                     (item: ItemProps) => (
                       <S.ItemContainer key={item.optionId}>
-                        <S.MainLeft>
-                          <S.ImgContainer>
-                            <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} />
-                          </S.ImgContainer>
-                          <S.SelectedName>{item.optionName}</S.SelectedName>
-                        </S.MainLeft>
-                        <S.MainRight>
-                          <S.OptionPrice>기본 포함</S.OptionPrice>
-                        </S.MainRight>
+                        <ItemMain imgSrc={item.imgSrc} name={item.optionName} />
                       </S.ItemContainer>
                     )
                   )}
