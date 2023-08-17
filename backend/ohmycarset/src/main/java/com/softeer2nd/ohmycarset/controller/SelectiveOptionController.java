@@ -1,14 +1,13 @@
 package com.softeer2nd.ohmycarset.controller;
 
+import com.softeer2nd.ohmycarset.dto.UserInfoDto;
 import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.*;
 import com.softeer2nd.ohmycarset.exception.CustomException;
 import com.softeer2nd.ohmycarset.service.SelectiveOptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +35,22 @@ public class SelectiveOptionController {
     @Operation(summary = "[셀프페이지]부가 옵션 목록", description = "주어진 패키지 카테고리의 모든 옵션 목록을 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
     public List<OptionPackageDto> getAllPackageByName(@PathVariable String packageName) {
         validatePath(packageName);
+        return selectiveOptionService.getAllPackageByName(packageName);
+    }
+
+    @PostMapping(value = "/selective_option/required_option/{optionName}")
+    @Operation(summary = "[가이드페이지]필수 옵션 목록", description = "주어진 옵션 카테고리의 모든 옵션 목록을 사용자에 맞춰 정렬하여 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
+    public List<RequiredOptionDto> getAllOptionByName(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
+        validatePath(optionName);
+        // TODO 실제로 정렬하여 전달합니다.
+        return selectiveOptionService.getAllOptionByName(optionName);
+    }
+
+    @PostMapping(value = "/selective_option/option_package/{packageName}")
+    @Operation(summary = "[가이드페이지]부가 옵션 목록", description = "주어진 패키지 카테고리의 모든 옵션 목록을 사용자에 맞춰 정렬하여 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
+    public List<OptionPackageDto> getAllPackageByName(@RequestBody UserInfoDto userInfoDto, @PathVariable String packageName) {
+        validatePath(packageName);
+        // TODO 실제로 정렬하여 전달합니다.
         return selectiveOptionService.getAllPackageByName(packageName);
     }
 

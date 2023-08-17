@@ -14,6 +14,6 @@ public class PurchaseCountDto {
         this.count = count;
     }
 
-    public PurchaseCountDto() {
-    }
+    // NamedParameterJdbcTemplate 제약조건
+    public PurchaseCountDto() {}
 }

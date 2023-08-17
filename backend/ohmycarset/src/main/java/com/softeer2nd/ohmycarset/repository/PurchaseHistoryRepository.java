@@ -33,17 +33,7 @@ public interface PurchaseHistoryRepository {
 
     Long countByTagIdAndPackageNameAndOptionId(Long tagId, String packageName, Long optionId);
 
-    List<PurchaseCountDto> countByCategoryNameAndGenderAndAgeAndTags(String optionName, Character gender, Integer age, List<Long> tagIds);
-    List<PurchaseCountDto> countByPackageNameAndGenderAndAgeAndTags(String packageName, Character gender, Integer age, List<Long> tagIds);
-    Long countByGenderAndAgeAndTags(Character gender, Integer age, List<Long> tagIds);
+    List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
 
-    PurchaseCountDto findOptionByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
-
-    List<PurchaseCountDto> findAllByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
-
-    Double countByCategoryNameAndOptionIdAndGender(String categoryName, Long id, Character gender);
-
-    Double countByCategoryNameAndOptionIdAndAge(String categoryName, Long id, Integer age);
-
-    List<Long> countByCategoryNameAndOptionIds(String categoryName, List<Long> optionIds);
+    List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId);
 }

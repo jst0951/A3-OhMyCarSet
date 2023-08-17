@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository {
@@ -44,26 +45,9 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public RequiredOption findOptionByOptionIdAndOptionName(Long optionId, String optionName) {
-        String table = optionName + "_option";
-        String query = "SELECT * FROM " + table + " WHERE id=?";
-        return jdbcTemplate.queryForObject(query, requiredOptionRowMapper, optionId);
-    }
-
-    @Override
-    public OptionPackage findPackageByPackageIdAndPackageName(Long packageId, String categoryName) {
+    public Optional<RequiredOption> findOptionByCategoryNameAndOptionId(String categoryName, Long optionId) {
         String table = categoryName + "_option";
-        String query = "SELECT * FROM " + table + " WHERE id=?";
-        return jdbcTemplate.queryForObject(query, optionPackageRowMapper, packageId);
-    }
-
-    @Override
-    public List<RequiredOption> findOptionsByOptionIdsAndCategoryName(List<Long> optionIds, String categoryName) {
-        String table = categoryName + "_option";
-        String query = "SELECT * FROM " + table + " WHERE id IN (:optionIds) ORDER BY FIELD(id, :optionIds)";
-
-        MapSqlParameterSource parameters = new MapSqlParameterSource("optionIds", optionIds);
-
-        return namedTemplate.query(query, parameters, requiredOptionRowMapper);
+        List<RequiredOption> requiredOptionList =  jdbcTemplate.query("SELECT * FROM " + table + " AS C WHERE C.id=?", requiredOptionRowMapper, optionId);
+        return requiredOptionList.stream().findAny();
     }
 }
