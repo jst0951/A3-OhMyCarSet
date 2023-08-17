@@ -1,6 +1,7 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.PurchaseHistory;
+import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,4 +32,8 @@ public interface PurchaseHistoryRepository {
     Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId);
 
     Long countByTagIdAndPackageNameAndOptionId(Long tagId, String packageName, Long optionId);
+
+    List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
+
+    List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId);
 }
