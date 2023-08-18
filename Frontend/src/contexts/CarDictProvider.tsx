@@ -5,7 +5,7 @@ type CarDictDataT = {
   id: number;
   keyword: string;
   description: string;
-  imgSrc: string;
+  imgSrc: string | null;
 };
 
 interface CarDictStateT {
