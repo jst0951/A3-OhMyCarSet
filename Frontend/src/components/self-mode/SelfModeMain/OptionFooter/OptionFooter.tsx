@@ -7,7 +7,7 @@ import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { OptionDataT } from '../SelfModeMain';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import CountingAnimation from '@/utils/CountingAnimation';
-import { useNavigate } from 'react-router-dom';
+import { useWaitingContext } from '@/contexts/WaitingProvider';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
@@ -42,12 +42,12 @@ interface myPalisadeProps {
 }
 
 export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
-  const navigate = useNavigate();
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
   const [disableNext, setDisableNext] = useState<boolean>(false);
+  const { setWaiting } = useWaitingContext();
 
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
@@ -81,6 +81,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
     if (selfModeStep < 7 && setShowFeedback !== undefined) {
       if (selectedData === undefined) return;
       setDisableNext(true);
+      setWaiting(true);
       setShowFeedback(selectedData.id);
       selectOptionDispatch({
         type: 'UPDATE_LIST',
@@ -97,12 +98,12 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       setTimeout(() => {
         setShowFeedback(0);
         setDisableNext(false);
+        setWaiting(false);
         setSelfModeStep((prev) => prev + 1);
       }, 2000);
     } else {
-      // 로딩 인디케이터
       sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
-      navigate('/complete');
+      setSelfModeStep(8);
     }
   };
 

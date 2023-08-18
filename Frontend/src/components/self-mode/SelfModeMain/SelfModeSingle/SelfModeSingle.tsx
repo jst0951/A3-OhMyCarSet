@@ -6,6 +6,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
 
 const categoryNameList = [
   {
@@ -40,7 +41,7 @@ export default function SelfModeSingle() {
   const [stepData, setStepData] = useState<OptionDataT[]>([]);
   const [tempTotal, setTempTotal] = useState<number>(0);
   const [prevTotal, setPrevTotal] = useState<number>(0);
-  const [selectedOption, setSelectedOption] = useState<number>(1);
+  const [selectedOption, setSelectedOption] = useState<OptionDataT>();
   const [showFeedback, setShowFeedback] = useState<number>(0);
 
   const fetchStepData = async () => {
@@ -49,11 +50,13 @@ export default function SelfModeSingle() {
       setStepData(response);
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
-        setSelectedOption(selectOptionState.dataList[selfModeStep - 1].selectedId);
+        setSelectedOption(
+          response.find((data: OptionDataT) => data.id === selectOptionState.dataList[selfModeStep - 1].id)
+        );
         setTempTotal(selectOptionState.totalPrice);
         setPrevTotal(selectOptionState.totalPrice);
       } else {
-        setSelectedOption(1);
+        setSelectedOption(response[0]);
         setTempTotal(selectOptionState.totalPrice + response[0].price);
         setPrevTotal(selectOptionState.totalPrice + response[0].price);
       }
@@ -62,8 +65,8 @@ export default function SelfModeSingle() {
     }
   };
 
-  const handleClickOption = (selectedOptionId: number) => {
-    setSelectedOption(selectedOptionId);
+  const handleClickOption = (selectedOption: OptionDataT) => {
+    setSelectedOption(selectedOption);
   };
 
   useEffect(() => {
@@ -71,16 +74,13 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
-    // console.log(tempTotal, selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
     setPrevTotal(tempTotal);
     if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
       setTempTotal(
-        selectOptionState.totalPrice -
-          selectOptionState.dataList[selfModeStep - 1].price +
-          stepData[selectedOption - 1]?.price
+        selectOptionState.totalPrice - selectOptionState.dataList[selfModeStep - 1].price + (selectedOption?.price || 0)
       );
     } else {
-      setTempTotal(selectOptionState.totalPrice + stepData[selectedOption - 1]?.price);
+      setTempTotal(selectOptionState.totalPrice + (selectedOption?.price || 0));
     }
   }, [selectedOption]);
 
@@ -88,16 +88,15 @@ export default function SelfModeSingle() {
     <>
       <S.SelfModeSingleContainer>
         <S.SelfModeImage>
-          {stepData[selectedOption - 1] && (
-            <img
-              src={`${import.meta.env.VITE_STATIC_API_URL}/${stepData[selectedOption - 1]?.imgSrc}`}
-              alt={stepData[selectedOption - 1]?.name}
-            />
+          {selectedOption && (
+            <img src={`${import.meta.env.VITE_STATIC_API_URL}/${selectedOption?.imgSrc}`} alt={selectedOption?.name} />
           )}
         </S.SelfModeImage>
         <S.SelfModeOption>
           <S.TitleContainer>
-            <S.Title>{categoryNameList[selfModeStep - 1].text}</S.Title>
+            <S.Title>
+              <CarDictBox>{categoryNameList[selfModeStep - 1].text}</CarDictBox>
+            </S.Title>
             <S.TitleText>을 선택해주세요.</S.TitleText>
           </S.TitleContainer>
           <S.OptionContainer>
@@ -105,14 +104,14 @@ export default function SelfModeSingle() {
               <OptionItem
                 key={data.id}
                 optionData={data}
-                isActive={selectedOption === data.id}
-                onClick={() => handleClickOption(data.id)}
+                isActive={selectedOption?.id === data.id}
+                onClick={() => handleClickOption(data)}
                 showFeedback={showFeedback}
               />
             ))}
           </S.OptionContainer>
           <OptionFooter
-            selectedData={stepData[selectedOption - 1]}
+            selectedData={selectedOption}
             prevTotal={prevTotal}
             tempTotal={tempTotal}
             setShowFeedback={setShowFeedback}

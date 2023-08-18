@@ -6,21 +6,25 @@ import { UncheckIcon } from '@/asset/icons';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useState } from 'react';
 
-export default function GuideSingleTag() {
+interface Props {
+  step: number;
+  show: boolean;
+}
+
+export default function GuideSingleTag({ step, show }: Props) {
   const [hovered, setHovered] = useState<number | null>(null);
-  const { GuideModeStep, setGuideModeStep } = useGuideModeContext();
+  const { setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();
-  const currentPage = GuideModeStep - 1;
-  const TagList = guideSingleTagData[currentPage].tagList;
+  const TagList = guideSingleTagData[step - 1].tagList;
 
   const handleClick = (tag: string) => {
-    selectTagList[currentPage].value = tag;
-    setGuideModeStep(GuideModeStep + 1);
+    selectTagList[step - 1].value = tag;
+    setGuideModeStep(step + 1);
     setSelectTagList(selectTagList);
   };
 
   return (
-    <S.TagListContainer>
+    <S.TagListContainer $show={show} $step={step}>
       {TagList.map((tag, index) => (
         <S.TagContainer
           key={index}

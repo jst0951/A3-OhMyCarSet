@@ -2,6 +2,7 @@ import * as S from './SelfModeMain.style';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import SelfModeSingle from './SelfModeSingle/SelfModeSingle';
 import SelfModeMulti from './SelfModeMulti/SelfModeMulti';
+import Loading from '@/components/loading/Loading';
 
 export type OptionDataT = {
   id: number;
@@ -47,7 +48,9 @@ export default function SelfModeMain() {
 
   return (
     <>
-      <S.SelfModeMainContainer>{selfModeStep < 7 ? <SelfModeSingle /> : <SelfModeMulti />}</S.SelfModeMainContainer>
+      <S.SelfModeMainContainer>
+        {selfModeStep < 7 ? <SelfModeSingle /> : selfModeStep === 7 ? <SelfModeMulti /> : <Loading />}
+      </S.SelfModeMainContainer>
     </>
   );
 }
