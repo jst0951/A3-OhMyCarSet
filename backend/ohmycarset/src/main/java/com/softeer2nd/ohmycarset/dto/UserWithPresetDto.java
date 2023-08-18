@@ -3,6 +3,8 @@ package com.softeer2nd.ohmycarset.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class UserWithPresetDto {
@@ -11,9 +13,9 @@ public class UserWithPresetDto {
     private String tag1;
     private String tag2;
     private String tag3;
-    private Long recommendOptionId;
+    private List<Long> recommendOptionId;
 
-    public UserWithPresetDto(Integer age, Character gender, String tag1, String tag2, String tag3, Long recommendOptionId) {
+    public UserWithPresetDto(Integer age, Character gender, String tag1, String tag2, String tag3, List<Long> recommendOptionId) {
         this.age = age;
         this.gender = gender;
         this.tag1 = tag1;
