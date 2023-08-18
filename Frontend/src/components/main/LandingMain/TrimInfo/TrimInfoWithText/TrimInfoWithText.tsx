@@ -1,20 +1,20 @@
 import { TrimInfoWithTextProps } from '@/components/main/TrimDescription/TrimDescription';
-import * as Style from './TrimInfoWithText.style';
+import * as S from './TrimInfoWithText.style';
 
 export default function TrimInfoWithText({ descriptionData }: TrimInfoWithTextProps) {
   return (
     <>
-      <Style.TrimInfoWithTextContainer>
+      <S.TrimInfoWithTextContainer>
         {descriptionData.map((data, idx) => (
-          <Style.TrimInfo key={idx}>
-            <Style.TrimInfoIndex>{idx + 1}</Style.TrimInfoIndex>
-            <Style.TrimInfoTextContainer>
-              <Style.InfoMainText>{data.main}</Style.InfoMainText>
-              <Style.InfoSubText>{data.sub}</Style.InfoSubText>
-            </Style.TrimInfoTextContainer>
-          </Style.TrimInfo>
+          <S.TrimInfo key={idx}>
+            <S.TrimInfoIndex>{idx + 1}</S.TrimInfoIndex>
+            <S.TrimInfoTextContainer>
+              <S.InfoMainText>{data.main}</S.InfoMainText>
+              <S.InfoSubText>{data.sub}</S.InfoSubText>
+            </S.TrimInfoTextContainer>
+          </S.TrimInfo>
         ))}
-      </Style.TrimInfoWithTextContainer>
+      </S.TrimInfoWithTextContainer>
     </>
   );
 }

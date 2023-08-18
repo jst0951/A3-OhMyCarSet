@@ -1,4 +1,4 @@
-import * as Style from './HeaderItem.style';
+import * as S from './HeaderItem.style';
 
 type HeaderData = {
   id: number;
@@ -22,13 +22,13 @@ export default function HeaderItem({ headerData }: LandingHeaderProps) {
 
   return (
     <>
-      <Style.HeaderTrimContainer>
-        {best && <Style.HeaderItemBest>Best</Style.HeaderItemBest>}
-        <Style.HeaderItemContainer>
-          <Style.HeaderItemName>{name}</Style.HeaderItemName>
-          <Style.HeaderItemDescription>{description}</Style.HeaderItemDescription>
-        </Style.HeaderItemContainer>
-      </Style.HeaderTrimContainer>
+      <S.HeaderTrimContainer>
+        {best && <S.HeaderItemBest>Best</S.HeaderItemBest>}
+        <S.HeaderItemContainer>
+          <S.HeaderItemName>{name}</S.HeaderItemName>
+          <S.HeaderItemDescription>{description}</S.HeaderItemDescription>
+        </S.HeaderItemContainer>
+      </S.HeaderTrimContainer>
     </>
   );
 }

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import * as Style from './InteriorColor.style';
-import fetchData from '@/apis/fetchData';
+import * as S from './InteriorColor.style';
+import fetchData from '@/utils/apis/fetchData';
 
 type InteriorColor = Array<{
   trimId: number;
   trimName: string;
-  iColorList: Array<{
+  icolorList: Array<{
     id: number;
     name: string;
     imgSrc: string;
@@ -30,20 +30,20 @@ export default function InteriorColor() {
 
   return (
     <>
-      <Style.InteriorColorContainer>
+      <S.InteriorColorContainer>
         {interiorColor.map((line) => (
-          <Style.InteriorColorItemLine key={line.trimId}>
-            {line.iColorList.map((item) => (
-              <Style.InteriorColorItemContainer key={item.id}>
-                <Style.InteriorColorItem>
+          <S.InteriorColorItemLine key={line.trimId}>
+            {line.icolorList.map((item) => (
+              <S.InteriorColorItemContainer key={item.id}>
+                <S.InteriorColorItem>
                   <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} />
-                </Style.InteriorColorItem>
-                <Style.InteriorColorItemDescription>{item.name}</Style.InteriorColorItemDescription>
-              </Style.InteriorColorItemContainer>
+                </S.InteriorColorItem>
+                <S.InteriorColorItemDescription>{item.name}</S.InteriorColorItemDescription>
+              </S.InteriorColorItemContainer>
             ))}
-          </Style.InteriorColorItemLine>
+          </S.InteriorColorItemLine>
         ))}
-      </Style.InteriorColorContainer>
+      </S.InteriorColorContainer>
     </>
   );
 }

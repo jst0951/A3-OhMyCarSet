@@ -6,15 +6,31 @@ import CarModelButton from './CarModelButton/CarModelButton';
 import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
+import { useLocation } from 'react-router-dom';
 
 export default function Header() {
+  const { pathname } = useLocation();
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+
+  const getCurrentMode = () => {
+    switch (pathname) {
+      case '/':
+        return 'default';
+      case '/self-mode':
+        return 'self';
+      case '/guide-mode':
+        return 'guide';
+      default:
+        return 'default';
+    }
+  };
+
   const updateScroll = () => {
-    console.log(window.scrollY);
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
 
   useEffect(() => {
+    if (pathname !== '/') return;
     window.addEventListener('scroll', updateScroll);
 
     return () => {
@@ -24,12 +40,12 @@ export default function Header() {
 
   return (
     <>
-      <HeaderContainer $scrollPosition={scrollPosition}>
+      <HeaderContainer $isComplete={pathname === '/complete'} $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo />
             <Icon icon="HeaderDividerIcon" />
-            <ModeButton type="default" />
+            <ModeButton type={getCurrentMode()} />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
@@ -42,14 +58,17 @@ export default function Header() {
   );
 }
 
-const HeaderContainer = styled.div<{ $scrollPosition: number }>`
+const HeaderContainer = styled.div<{ $isComplete: boolean; $scrollPosition: number }>`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: ${(props) => (props.$scrollPosition < 30 ? null : colors.coolGrey001)};
-  transition: all 0.3s ease;
   width: 100vw;
+
+  background-color: ${(props) =>
+    props.$isComplete ? `white` : props.$scrollPosition < 30 ? `transparent` : `${colors.coolGrey001}`};
+
+  transition: all 0.3s ease;
 `;
 
 const HeaderSection = styled.div`

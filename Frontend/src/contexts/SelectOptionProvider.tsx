@@ -4,9 +4,11 @@ import { createContext, useContext, useReducer } from 'react';
 export type SelectOptionData = {
   id: number;
   stepName: string;
+  selectedId: number;
   selectedName: string | null;
   price: number;
   imgSrc: string | null;
+  IconSrc?: string | null;
 };
 
 interface SelectOptionStateT {
@@ -27,6 +29,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 1,
       stepName: '파워트레인',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
@@ -34,6 +37,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 2,
       stepName: '구동 방식',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
@@ -41,6 +45,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 3,
       stepName: '바디 타입',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
@@ -48,6 +53,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 4,
       stepName: '외장 색상',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
@@ -55,6 +61,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 5,
       stepName: '내장 색상',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
@@ -62,6 +69,7 @@ const initialState: SelectOptionStateT = {
     {
       id: 6,
       stepName: '휠 선택',
+      selectedId: 0,
       selectedName: null,
       price: 0,
       imgSrc: null,
