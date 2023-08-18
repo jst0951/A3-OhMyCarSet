@@ -4,8 +4,19 @@ import DetailMultiItem from './DetailMultiItem/DetailMultiItem';
 import { SelectOptionData } from '@/contexts/SelectOptionProvider';
 
 export default function Detail() {
-  const myPalisadeValue = JSON.parse(sessionStorage.getItem('myPalisade') || '');
-  const totalPrice = myPalisadeValue.single.totalPrice + myPalisadeValue.multi.totalPrice;
+  const myPalisadeSession = JSON.parse(sessionStorage.getItem('myPalisade') || '');
+  const totalPrice = myPalisadeSession.single.totalPrice + myPalisadeSession.multi.totalPrice;
+  const myPalisadeTrim = [
+    {
+      id: 0,
+      imgSrc: 'selective_option/4_1.png',
+      price: 43460000,
+      selectedId: 1,
+      selectedName: '팰리세이드 Le Blanc (르블랑)',
+      stepName: '트림',
+    },
+  ];
+  const myPalisadeArray = [...myPalisadeTrim, ...myPalisadeSession.single.dataList];
 
   return (
     <>
@@ -18,7 +29,7 @@ export default function Detail() {
           </S.RightTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {myPalisadeValue.single.dataList.map((data: SelectOptionData, index: number) => (
+          {myPalisadeArray.map((data: SelectOptionData, index: number) => (
             <DetailItem key={data.id} data={data} index={index} />
           ))}
           <DetailMultiItem />
