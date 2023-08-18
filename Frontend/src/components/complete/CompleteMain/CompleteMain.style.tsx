@@ -12,7 +12,6 @@ export const MainContainer = styled.div`
 
 export const GuideText = styled.div`
   width: 294px;
-  /* height: 96px; */
   margin-top: 64px;
   color: #212121;
   text-align: center;
@@ -40,7 +39,7 @@ export const InternalExternal = styled.div`
   margin-top: 13px;
 `;
 
-export const External = styled.div<{ $isExternal: boolean }>`
+export const Button = styled.div<{ $isExternal: boolean }>`
   display: flex;
   padding: 8px 32px;
   justify-content: center;
@@ -49,21 +48,6 @@ export const External = styled.div<{ $isExternal: boolean }>`
   ${headRegular4}
   ${({ $isExternal }) =>
     $isExternal
-      ? `color:${colors.hyundaiWhite};
-  background-color:${colors.mainHyundaiBlue};`
-      : `color:${colors.mainHyundaiBlue};
-  background-color:${colors.hyundaiGrey002}`}
-`;
-
-export const Internal = styled.div<{ $isExternal: boolean }>`
-  display: flex;
-  padding: 8px 32px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  ${headRegular4}
-  ${({ $isExternal }) =>
-    !$isExternal
       ? `color:${colors.hyundaiWhite};
   background-color:${colors.mainHyundaiBlue};`
       : `color:${colors.mainHyundaiBlue};

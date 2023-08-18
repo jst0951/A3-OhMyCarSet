@@ -1,11 +1,11 @@
 import * as S from './Detail.style';
 import DetailItem from './DetailItem/DetailItem';
 import DetailMultiItem from './DetailMultiItem/DetailMultiItem';
-import { SelectOptionData } from './DetailItem/DetailItem';
+import { SelectOptionData } from '@/contexts/SelectOptionProvider';
 
 export default function Detail() {
   const myPalisadeValue = JSON.parse(sessionStorage.getItem('myPalisade') || '');
-  const tempTotal = myPalisadeValue.single.totalPrice + myPalisadeValue.multi.totalPrice;
+  const totalPrice = myPalisadeValue.single.totalPrice + myPalisadeValue.multi.totalPrice;
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Detail() {
           <S.Title>견적 자세히 보기</S.Title>
           <S.RightTitle>
             <S.SubTitle>차량 총 견적 금액</S.SubTitle>
-            <S.TotalPrice>{tempTotal.toLocaleString()} 원</S.TotalPrice>
+            <S.TotalPrice>{totalPrice.toLocaleString()} 원</S.TotalPrice>
           </S.RightTitle>
         </S.TitleContainer>
         <S.SectionContainer>

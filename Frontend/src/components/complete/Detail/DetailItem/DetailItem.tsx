@@ -2,15 +2,7 @@ import { CorrectionIcon } from '@/asset/icons';
 import * as S from './DetailItem.style';
 import { useNavigate } from 'react-router-dom';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-
-export type SelectOptionData = {
-  id: number;
-  stepName: string;
-  selectedId: number;
-  selectedName: string | null;
-  price: number;
-  imgSrc: string | null;
-};
+import { SelectOptionData } from '@/contexts/SelectOptionProvider';
 
 interface CompleteOptionProps {
   data: SelectOptionData;

@@ -6,11 +6,9 @@ import Detail from '@/components/complete/Detail/Detail';
 
 export default function CompleteMain() {
   const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
-  const [endPoint, setEndPoint] = useState<string>(getSingleDataList[3].imgSrc);
   const [isExternal, setIsExternal] = useState<boolean>(true);
 
-  const clickHandler = (end: string, external: boolean) => {
-    setEndPoint(end);
+  const clickHandler = (external: boolean) => {
     setIsExternal(external);
   };
 
@@ -18,15 +16,18 @@ export default function CompleteMain() {
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
       <S.CarImg>
-        <img src={`${import.meta.env.VITE_STATIC_API_URL}/${endPoint}`} alt={`임시`} />
+        <img
+          src={`${import.meta.env.VITE_STATIC_API_URL}/${getSingleDataList[isExternal ? 3 : 4].imgSrc}`}
+          alt={getSingleDataList[isExternal ? 3 : 4].name}
+        />
       </S.CarImg>
       <S.InternalExternal>
-        <S.External onClick={() => clickHandler(getSingleDataList[3].imgSrc, true)} $isExternal={isExternal}>
+        <S.Button onClick={() => clickHandler(true)} $isExternal={isExternal}>
           외부
-        </S.External>
-        <S.Internal onClick={() => clickHandler(getSingleDataList[4].imgSrc, false)} $isExternal={isExternal}>
+        </S.Button>
+        <S.Button onClick={() => clickHandler(false)} $isExternal={!isExternal}>
           내부
-        </S.Internal>
+        </S.Button>
       </S.InternalExternal>
       <S.SummaryContainer>
         <Summary />

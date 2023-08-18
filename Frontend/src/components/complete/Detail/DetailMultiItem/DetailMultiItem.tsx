@@ -1,5 +1,4 @@
 import * as S from './DetailMultiItem.style';
-import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useEffect, useState } from 'react';
 import fetchData from '@/utils/apis/fetchData';
 import ItemMain from './ItemMain/ItemMain';
@@ -49,17 +48,13 @@ const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', 
 
 export default function DetailMultiItem() {
   const selectPackageState = JSON.parse(sessionStorage.getItem('myPalisade') || '').multi;
-  const { filterId } = useCurrentPackageState();
   const [defaultOption, setDefaultOption] = useState<DefaultOption>();
+  const [selectedFilter, setSelectedFilter] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [isOption, setIsOption] = useState(true);
-  const currentPackageDispatch = useCurrentPackageDispatch();
 
   const handleFilterOption = (idx: number) => {
-    currentPackageDispatch({
-      type: 'UPDATE_FILTER',
-      payload: idx + 1,
-    });
+    setSelectedFilter(idx);
   };
 
   const changeOption = () => {
@@ -97,14 +92,14 @@ export default function DetailMultiItem() {
           <>
             <S.FilterContainer>
               {optionList.map((option, idx) => (
-                <S.FilterButton key={idx} $active={filterId === idx + 1} onClick={() => handleFilterOption(idx)}>
+                <S.FilterButton key={idx} $active={selectedFilter === idx} onClick={() => handleFilterOption(idx)}>
                   {option.text}
                 </S.FilterButton>
               ))}
             </S.FilterContainer>
             <S.ListContainer>
-              {selectPackageState.subList[filterId - 1].length > 0 ? (
-                selectPackageState.subList[filterId - 1].map((data: SelectOptionData) => (
+              {selectPackageState.subList[selectedFilter].length > 0 ? (
+                selectPackageState.subList[selectedFilter].map((data: SelectOptionData) => (
                   <S.ItemContainer key={data.id}>
                     <ItemMain imgSrc={data.imgSrc} name={data.name} price={data.price} />
                   </S.ItemContainer>
