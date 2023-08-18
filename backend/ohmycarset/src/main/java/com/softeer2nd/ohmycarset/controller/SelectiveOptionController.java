@@ -1,6 +1,7 @@
 package com.softeer2nd.ohmycarset.controller;
 
 import com.softeer2nd.ohmycarset.dto.UserInfoDto;
+import com.softeer2nd.ohmycarset.dto.UserWithPresetDto;
 import com.softeer2nd.ohmycarset.dto.selectiveOptionDto.*;
 import com.softeer2nd.ohmycarset.exception.CustomException;
 import com.softeer2nd.ohmycarset.service.SelectiveOptionService;
@@ -24,34 +25,34 @@ public class SelectiveOptionController {
         this.selectiveOptionService = selectiveOptionService;
     }
 
-    @GetMapping(value = "/selective_option/required_option/{optionName}")
+    @GetMapping(value = "/selective_option/required_option/{categoryName}")
     @Operation(summary = "[셀프페이지]필수 옵션 목록", description = "주어진 옵션 카테고리의 모든 옵션 목록을 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
-    public List<RequiredOptionDto> getAllOptionByName(@PathVariable String optionName) {
-        validatePath(optionName);
-        return selectiveOptionService.getAllOptionByName(optionName);
+    public List<RequiredOptionDto> getAllOptionByName(@PathVariable String categoryName) {
+        validatePath(categoryName);
+        return selectiveOptionService.getAllOptionByName(categoryName);
     }
 
-    @GetMapping(value = "/selective_option/option_package/{packageName}")
+    @GetMapping(value = "/selective_option/option_package/{categoryName}")
     @Operation(summary = "[셀프페이지]부가 옵션 목록", description = "주어진 패키지 카테고리의 모든 옵션 목록을 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
-    public List<OptionPackageDto> getAllPackageByName(@PathVariable String packageName) {
-        validatePath(packageName);
-        return selectiveOptionService.getAllPackageByName(packageName);
+    public List<OptionPackageDto> getAllPackageByName(@PathVariable String categoryName) {
+        validatePath(categoryName);
+        return selectiveOptionService.getAllPackageByName(categoryName);
     }
 
-    @PostMapping(value = "/selective_option/required_option/{optionName}")
+    @PostMapping(value = "/selective_option/required_option/{categoryName}")
     @Operation(summary = "[가이드페이지]필수 옵션 목록", description = "주어진 옵션 카테고리의 모든 옵션 목록을 사용자에 맞춰 정렬하여 제공합니다.\n선택지 : powertrain, wd, body, exterior_color, interior_color, wheel")
-    public List<RequiredOptionDto> getAllOptionByName(@RequestBody UserInfoDto userInfoDto, @PathVariable String optionName) {
-        validatePath(optionName);
+    public List<RequiredOptionDto> getAllOptionByName(@RequestBody UserWithPresetDto userWithPresetDto, @PathVariable String categoryName) {
+        validatePath(categoryName);
         // TODO 실제로 정렬하여 전달합니다.
-        return selectiveOptionService.getAllOptionByName(optionName);
+        return selectiveOptionService.getAllOptionByCategory(userWithPresetDto, categoryName);
     }
 
     @PostMapping(value = "/selective_option/option_package/{packageName}")
     @Operation(summary = "[가이드페이지]부가 옵션 목록", description = "주어진 패키지 카테고리의 모든 옵션 목록을 사용자에 맞춰 정렬하여 제공합니다.\n선택지 : system, temperature, external_device, internal_device")
-    public List<OptionPackageDto> getAllPackageByName(@RequestBody UserInfoDto userInfoDto, @PathVariable String packageName) {
-        validatePath(packageName);
+    public List<OptionPackageDto> getAllPackageByName(@RequestBody UserWithPresetDto userWithPresetDto, @PathVariable String categoryName) {
+        validatePath(categoryName);
         // TODO 실제로 정렬하여 전달합니다.
-        return selectiveOptionService.getAllPackageByName(packageName);
+        return selectiveOptionService.getAllPackageByCategory(userWithPresetDto, categoryName);
     }
 
     private void validatePath(String path) {
