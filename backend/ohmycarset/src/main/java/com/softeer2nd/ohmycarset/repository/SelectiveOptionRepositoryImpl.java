@@ -50,4 +50,11 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
         List<RequiredOption> requiredOptionList =  jdbcTemplate.query("SELECT * FROM " + table + " AS C WHERE C.id=?", requiredOptionRowMapper, optionId);
         return requiredOptionList.stream().findAny();
     }
+
+    @Override
+    public List<RequiredOption> findRemainOptionByCategoryNameAndOptionId(String categoryName, Long optionId) {
+        String table = categoryName + "_option";
+        List<RequiredOption> remainOptionList = jdbcTemplate.query("SELECT * FROM " + table + " WHERE id!=?", requiredOptionRowMapper, optionId);
+        return remainOptionList;
+    }
 }
