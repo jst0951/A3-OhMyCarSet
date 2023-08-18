@@ -15,3 +15,5 @@ export { ReactComponent as SmileBeforeIcon } from './smile_before.svg';
 export { ReactComponent as SmileAfterIcon } from './smile_after.svg';
 export { ReactComponent as FeedbackIcon } from './feedback_icon.svg';
 export { ReactComponent as CorrectionIcon } from './correction_icon.svg';
+export { ReactComponent as LoadingCarIcon } from './loading_car.svg';
+export { ReactComponent as LoadingToolIcon } from './loading_tool.svg';
