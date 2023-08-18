@@ -1,26 +1,38 @@
 import * as S from './Detail.style';
-import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
-import completeCarData from '@/asset/data/completeCarData.json';
 import DetailItem from './DetailItem/DetailItem';
-import { OptionDataT } from '@/components/self-mode/SelfModeMain/SelfModeMain';
+import DetailMultiItem from './DetailMultiItem/DetailMultiItem';
+import { SelectOptionData } from '@/contexts/SelectOptionProvider';
 
 export default function Detail() {
-  const selectOptionState = useSelectOptionState();
+  const myPalisadeSession = JSON.parse(sessionStorage.getItem('myPalisade') || '');
+  const totalPrice = myPalisadeSession.single.totalPrice + myPalisadeSession.multi.totalPrice;
+  const myPalisadeTrim = [
+    {
+      id: 0,
+      imgSrc: 'selective_option/4_1.png',
+      price: 43460000,
+      selectedId: 1,
+      selectedName: '팰리세이드 Le Blanc (르블랑)',
+      stepName: '트림',
+    },
+  ];
+  const myPalisadeArray = [...myPalisadeTrim, ...myPalisadeSession.single.dataList];
 
   return (
     <>
       <S.MainContainer>
         <S.TitleContainer>
           <S.Title>견적 자세히 보기</S.Title>
-          <S.LeftTitle>
+          <S.RightTitle>
             <S.SubTitle>차량 총 견적 금액</S.SubTitle>
-            <S.TotalPrice>{selectOptionState.totalPrice.toLocaleString()}원</S.TotalPrice>
-          </S.LeftTitle>
+            <S.TotalPrice>{totalPrice.toLocaleString()} 원</S.TotalPrice>
+          </S.RightTitle>
         </S.TitleContainer>
         <S.SectionContainer>
-          {completeCarData.map((data: OptionDataT, index) => (
+          {myPalisadeArray.map((data: SelectOptionData, index: number) => (
             <DetailItem key={data.id} data={data} index={index} />
           ))}
+          <DetailMultiItem />
         </S.SectionContainer>
       </S.MainContainer>
     </>

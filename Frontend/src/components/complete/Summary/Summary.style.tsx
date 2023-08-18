@@ -9,17 +9,19 @@ export const MainContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  height: 68px;
+  align-items: baseline;
+  height: 44px;
+  margin-bottom: 24px;
 `;
 
 export const Title = styled.div`
   ${headMedium3}
   color: #212121;
   margin-left: 24px;
+  margin-bottom: 4px;
 `;
 
-export const leftTitle = styled.div`
+export const rightTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -29,6 +31,7 @@ export const subTitle = styled.div`
   ${headRegular4}
   color: #212121;
   margin-right: 14px;
+  padding-bottom: 6px;
 `;
 
 export const TotalPrice = styled.div`
@@ -45,6 +48,6 @@ export const TotalPrice = styled.div`
 export const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  margin-bottom: 60px;
+  gap: 32px;
+  margin-bottom: 28px;
 `;

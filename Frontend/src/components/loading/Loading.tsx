@@ -11,7 +11,8 @@ export default function Loading() {
     setTimeout(() => {
       navigate('/complete');
     }, 3000);
-  });
+  }, []);
+
   return (
     <>
       <S.LoadingIndicator>

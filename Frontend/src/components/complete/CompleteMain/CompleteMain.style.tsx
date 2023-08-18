@@ -12,7 +12,6 @@ export const MainContainer = styled.div`
 
 export const GuideText = styled.div`
   width: 294px;
-  /* height: 96px; */
   margin-top: 64px;
   color: #212121;
   text-align: center;
@@ -24,7 +23,15 @@ export const GuideText = styled.div`
   letter-spacing: -1.36px;
 `;
 
-export const CarImg = styled.div``;
+export const CarImg = styled.div`
+  width: 589px;
+  height: 326px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export const InternalExternal = styled.div`
   display: flex;
@@ -32,7 +39,7 @@ export const InternalExternal = styled.div`
   margin-top: 13px;
 `;
 
-export const External = styled.div<{ $isExternal: boolean }>`
+export const Button = styled.div<{ $isExternal: boolean }>`
   display: flex;
   padding: 8px 32px;
   justify-content: center;
@@ -43,26 +50,13 @@ export const External = styled.div<{ $isExternal: boolean }>`
     $isExternal
       ? `color:${colors.hyundaiWhite};
   background-color:${colors.mainHyundaiBlue};`
-      : `colors:${colors.mainHyundaiBlue};
+      : `color:${colors.mainHyundaiBlue};
   background-color:${colors.hyundaiGrey002}`}
 `;
 
-export const Internal = styled.div<{ $isExternal: boolean }>`
-  display: flex;
-  padding: 8px 32px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  ${headRegular4}
-  ${({ $isExternal }) =>
-    !$isExternal
-      ? `color:${colors.hyundaiWhite};
-  background-color:${colors.mainHyundaiBlue};`
-      : `colors:${colors.mainHyundaiBlue};
-  background-color:${colors.hyundaiGrey002}`}
+export const SummaryContainer = styled.div`
+  margin-top: 52px;
 `;
-
-export const SummaryContainer = styled.div``;
 
 export const ButtonLine = styled.div`
   display: flex;

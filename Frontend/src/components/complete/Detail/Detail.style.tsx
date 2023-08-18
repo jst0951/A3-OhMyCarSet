@@ -11,16 +11,17 @@ export const MainContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  height: 68px;
+  align-items: baseline;
+  height: 44px;
 `;
 
 export const Title = styled.div`
   color: ${colors.coolGreyBlack};
+  margin-bottom: 2px;
   ${headMedium2}
 `;
 
-export const LeftTitle = styled.div`
+export const RightTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -30,6 +31,7 @@ export const SubTitle = styled.div`
   ${headRegular4}
   color: ${colors.coolGreyBlack};
   margin-right: 14px;
+  margin-bottom: 6px;
 `;
 
 export const TotalPrice = styled.div`

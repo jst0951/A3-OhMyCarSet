@@ -34,8 +34,8 @@ export const Price = styled.div`
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 20px;
+  gap: 32px;
+  padding: 32px 24px 32px 18px;
 `;
 
 export const Main = styled.div<{ $hidden: boolean }>`
@@ -43,7 +43,7 @@ export const Main = styled.div<{ $hidden: boolean }>`
 `;
 
 export const CategoryName = styled.div`
-  min-width: 80px;
+  min-width: 118px;
   ${headRegular4}
   color:#8F8F8F;
 `;

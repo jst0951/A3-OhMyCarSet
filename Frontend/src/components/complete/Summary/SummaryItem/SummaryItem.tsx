@@ -6,6 +6,11 @@ interface SummaryProps {
 }
 
 export default function SummaryItem({ data }: SummaryProps) {
+  const hideStepName = (stepName: string, idx: number) => {
+    if (stepName === '선택 옵션' && idx !== 0) return true;
+    return false;
+  };
+
   return (
     <>
       <S.Section>
@@ -15,9 +20,9 @@ export default function SummaryItem({ data }: SummaryProps) {
         </S.TitleContainer>
         <S.MainContainer>
           {data.subList &&
-            data.subList.map((sub) => (
-              <S.Main key={sub.stepName} $hidden={sub.selectName === null}>
-                <S.CategoryName>{sub.stepName}</S.CategoryName>
+            data.subList.map((sub, index) => (
+              <S.Main key={index} $hidden={sub.selectName === null}>
+                <S.CategoryName>{!hideStepName(sub.stepName, index) && sub.stepName}</S.CategoryName>
                 {sub.selectName !== null && (
                   <S.SelectedContainer>
                     <S.SelectedName>{sub.selectName}</S.SelectedName>

@@ -50,7 +50,7 @@ export default function Estimate({ onClick, tempTotal }: EstimateProps) {
       }),
     },
     {
-      sectionTitle: '선택',
+      sectionTitle: '옵션',
       sectionTotal: selectPackageState.totalPrice,
       subList: Array.from(selectPackageState.packageList)
         .map((packageData) =>
@@ -76,8 +76,8 @@ export default function Estimate({ onClick, tempTotal }: EstimateProps) {
             <S.TotalPrice>{tempTotal.toLocaleString()}원</S.TotalPrice>
           </S.TitleContainer>
           <S.SectionContainer>
-            {sectionList.map((data) => (
-              <EstimateSection key={data.sectionTitle} data={data} />
+            {sectionList.map((data, index) => (
+              <EstimateSection key={index} data={data} />
             ))}
           </S.SectionContainer>
         </S.MainContainer>
