@@ -105,7 +105,7 @@ export default function DetailMultiItem() {
                   </S.ItemContainer>
                 ))
               ) : (
-                <S.EmptyContainer>Empty Option</S.EmptyContainer>
+                <S.EmptyContainer>해당 카테고리에 선택된 옵션이 없습니다.</S.EmptyContainer>
               )}
             </S.ListContainer>
           </>

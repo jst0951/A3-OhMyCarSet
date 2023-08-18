@@ -1,6 +1,6 @@
 import { colors } from '@/style/theme';
 import { headRegular4 } from '@/style/typefaces';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export const MainContainer = styled.div`
   display: flex;
@@ -41,17 +41,26 @@ export const InternalExternal = styled.div`
 
 export const Button = styled.div<{ $isExternal: boolean }>`
   display: flex;
-  padding: 8px 32px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  padding: 8px 32px;
+
   ${headRegular4}
+
+  cursor: pointer;
+
   ${({ $isExternal }) =>
     $isExternal
-      ? `color:${colors.hyundaiWhite};
-  background-color:${colors.mainHyundaiBlue};`
-      : `color:${colors.mainHyundaiBlue};
-  background-color:${colors.hyundaiGrey002}`}
+      ? css`
+          color: ${colors.hyundaiWhite};
+          background-color: ${colors.mainHyundaiBlue};
+        `
+      : css`
+          color: ${colors.mainHyundaiBlue};
+          background-color: ${colors.hyundaiGrey002};
+        `}
 `;
 
 export const SummaryContainer = styled.div`

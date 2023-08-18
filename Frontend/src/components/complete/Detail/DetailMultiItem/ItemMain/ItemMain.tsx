@@ -19,7 +19,7 @@ export default function ItemMain({ imgSrc, name, price }: ItemProps) {
       <S.MainRight>
         {price ? (
           <>
-            <S.OptionPrice>+ {price} 원</S.OptionPrice>
+            <S.OptionPrice>+ {price.toLocaleString()} 원</S.OptionPrice>
             <S.Correction>
               <CorrectionIcon />
               수정

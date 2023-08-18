@@ -150,9 +150,9 @@ export const Correction = styled.div`
 export const EmptyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 144px;
+  height: 200px;
   align-items: center;
-  justify-content: centergit;
+  justify-content: center;
   color: ${colors.coolGrey003};
   font-family: 'Hyundai Sans Text Regular';
   font-size: 20px;

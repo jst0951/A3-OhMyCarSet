@@ -3,12 +3,16 @@ import * as S from './Loading.style';
 import LoadingCircle from './LoadingCircle/LoadingCircle';
 import LoadingStep from './LoadingStep/LoadingStep';
 import { useNavigate } from 'react-router-dom';
+import { useWaitingContext } from '@/contexts/WaitingProvider';
 
 export default function Loading() {
   const navigate = useNavigate();
+  const { setWaiting } = useWaitingContext();
 
   useEffect(() => {
+    setWaiting(true);
     setTimeout(() => {
+      setWaiting(false);
       navigate('/complete');
     }, 3000);
   }, []);

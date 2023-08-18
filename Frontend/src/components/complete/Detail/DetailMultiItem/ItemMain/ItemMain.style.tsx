@@ -9,6 +9,7 @@ export const ImgContainer = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 6px;
+    object-fit: cover;
   }
 `;
 

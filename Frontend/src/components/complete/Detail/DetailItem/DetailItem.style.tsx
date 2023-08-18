@@ -47,6 +47,7 @@ export const ImgContainer = styled.div`
     width: 194px;
     height: 144px;
     border-radius: 6px;
+    object-fit: cover;
   }
 `;
 
