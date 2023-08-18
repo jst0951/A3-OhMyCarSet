@@ -79,7 +79,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByOptionNameAndOptionId(String optionName, Long optionId) {
+    public Long countByCategoryNameAndOptionId(String optionName, Long optionId) {
         String column = optionName + "_id";
         String sql = "SELECT COUNT(*) FROM purchase_history\n" +
                 "WHERE " + column + "=?";
@@ -104,7 +104,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByTagIdAndOptionNameAndOptionId(Long tagId, String optionName, Long optionId) {
+    public Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String optionName, Long optionId) {
         String column = optionName + "_id";
         String sql = "SELECT COUNT(*) FROM purchase_history WHERE\n" +
                 "(tag1_id=? OR tag2_id=? OR tag3_id=?) AND\n" +
@@ -147,5 +147,107 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("exterior_color_id", exteriorColorId);
 
         return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndGenderAndAgeAndTags(String categoryName, Long id, Character gender, Integer age, List<Long> tagIds) {
+        String column = categoryName + "_id";
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE " + column + "=:id AND (gender=:gender AND age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByGenderAndAgeAndTags(Character gender, Integer age, List<Long> tagIds) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE (gender=:gender AND age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndGender(String categoryName, Long id, Character gender) {
+        String option = categoryName + "_id";
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE gender=:gender AND " + option + "=:id";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("id", id);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndAge(String categoryName, Long id, Integer age) {
+        String option = categoryName + "_id";
+        String query = "SELECT COUNT(*) FROM purchase_history \n" +
+                "WHERE age >= :age AND age <= :age+9 AND " + option + "=:id";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+        params.put("id", id);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndGenderAndAge(String categoryName, Long id, Character gender, Integer age) {
+        String column = categoryName + "_id";
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE " + column + "=:id AND gender=:gender AND age >= :age AND age <= :age+9";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("gender", gender.toString());
+        params.put("age", age);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByGenderAndAge(Character gender, Integer age) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE gender=:gender AND age >= :age AND age <= :age+9";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+        params.put("age", age);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByGender(Character gender) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE gender=:gender";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("gender", gender.toString());
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByAge(Integer age) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE age>=:age AND age<=:age+9";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
     }
 }
