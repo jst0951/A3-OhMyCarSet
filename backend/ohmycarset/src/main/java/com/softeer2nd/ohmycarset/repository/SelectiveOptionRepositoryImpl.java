@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -33,7 +35,7 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<OptionPackage> findAllPackageByPackageName(String packageName) {
+    public List<OptionPackage> findAllPackageByCategoryName(String packageName) {
         String table = packageName + "_option";
         return jdbcTemplate.query("SELECT * FROM " + table, optionPackageRowMapper);
     }
@@ -54,7 +56,28 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     @Override
     public List<RequiredOption> findRemainOptionByCategoryNameAndOptionId(String categoryName, Long optionId) {
         String table = categoryName + "_option";
-        List<RequiredOption> remainOptionList = jdbcTemplate.query("SELECT * FROM " + table + " WHERE id!=?", requiredOptionRowMapper, optionId);
-        return remainOptionList;
+        return jdbcTemplate.query("SELECT * FROM " + table + " WHERE id!=?", requiredOptionRowMapper, optionId);
+    }
+
+    @Override
+    public List<OptionPackage> findAllPackageByCategoryNameAndPackageId(String categoryName, List<Long> recommendOptionIds) {
+        String table = categoryName + "_option";
+        String query = "SELECT * FROM " + table + " WHERE id in (:ids)";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ids", recommendOptionIds);
+
+        return namedTemplate.query(query, params, optionPackageRowMapper);
+    }
+
+    @Override
+    public List<OptionPackage> findAllRemainPackageByCategoryNameAndPackageId(String categoryName, List<Long> recommendOptionIds) {
+        String table = categoryName + "_option";
+        String query = "SELECT * FROM " + table + " WHERE id NOT IN (:ids)";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ids", recommendOptionIds);
+
+        return namedTemplate.query(query, params, optionPackageRowMapper);
     }
 }

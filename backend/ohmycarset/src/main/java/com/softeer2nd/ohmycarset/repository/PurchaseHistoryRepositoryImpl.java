@@ -50,32 +50,10 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByTrimId(Long trimId) {
-        String sql = "SELECT COUNT(*) FROM purchase_history\n" +
-                "WHERE trim_id=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, trimId);
-    }
-
-    @Override
-    public List<PurchaseHistory> findAllByTagId(Long tagID) {
-        String sql = "SELECT * FROM purchase_history WHERE \n" +
-                "tag1_id=? OR tag2_id=? OR tag3_id=?";
-        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, tagID, tagID, tagID);
-    }
-
-    @Override
     public Long countByTagId(Long tagId) {
         String sql = "SELECT COUNT(*) FROM purchase_history \n" +
                 "WHERE ? IN (tag1_id, tag2_id, tag3_id)";
         return jdbcTemplate.queryForObject(sql, Long.class, tagId);
-    }
-
-    @Override
-    public List<PurchaseHistory> findAllByOptionNameAndOptionId(String optionName, Long optionId) {
-        String column = optionName + "_id";
-        String sql = "SELECT * FROM purchase_history\n" +
-                "WHERE " + column + "=?";
-        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, optionId);
     }
 
     @Override
@@ -87,20 +65,11 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public List<PurchaseHistory> findAllByPackageNameAndOptionId(String packageName, Long optionId) {
-        String table = "purchase_" + packageName + "_map";
-        String sql = "SELECT A.* FROM purchase_history AS A\n" +
-                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
-                "WHERE M.option_id=?";
-        return jdbcTemplate.query(sql, purchaseHistoryRowMapper, optionId);
-    }
-
-    @Override
-    public Long countByPackageNameAndOptionId(String packageName, Long optionId) {
-        String table = "purchase_" + packageName + "_map";
+    public Long countByCategoryNameAndPackageId(String categoryName, Long packageId) {
+        String table = "purchase_" + categoryName + "_map";
         String sql = "SELECT COUNT(*) FROM " + table + "\n" +
                 "WHERE " + table + ".option_id=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, optionId);
+        return jdbcTemplate.queryForObject(sql, Long.class, packageId);
     }
 
     @Override
@@ -113,16 +82,6 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByTagIdAndPackageNameAndOptionId(Long tagId, String packageName, Long optionId) {
-        String table = "purchase_" + packageName + "_map";
-        String sql = "SELECT COUNT(*) FROM purchase_history AS A \n" +
-                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id\n" +
-                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
-        return jdbcTemplate.queryForObject(sql, Long.class, tagId, tagId, tagId, optionId);
-    }
-
-    @Override
-
     public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         String optionId = categoryName + "_id";
         String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
@@ -247,6 +206,31 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
         Map<String, Object> params = new HashMap<>();
         params.put("age", age);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByTagIdAndCategoryNameAndPackageId(Long tagId, String categoryName, Long packageId) {
+        String table = "purchase_" + categoryName + "_map";
+        String query = "SELECT COUNT(*) FROM purchase_history AS A \n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
+                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
+        return jdbcTemplate.queryForObject(query, Long.class, tagId, tagId, tagId, packageId);
+    }
+
+    @Override
+    public Long countByCategoryNameAndPackageIdAndGenderAndAgeAndTags(String categoryName, Long packageId, Character gender, Integer age, List<Long> tagIds) {
+        String table = "purchase_" + categoryName + "_map";
+        String query = "SELECT count(*) as count FROM purchase_history AS A\n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
+                "WHERE M.option_id=:packageId AND (A.gender=:gender AND A.age >= :age AND A.age <= :age+9 AND A.tag1_id IN (:tagIds) AND A.tag2_id IN (:tagIds) AND A.tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("packageId", packageId);
+        params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
 
         return namedTemplate.queryForObject(query, params, Long.class);
     }
