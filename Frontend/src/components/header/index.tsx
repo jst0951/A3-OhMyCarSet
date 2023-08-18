@@ -30,6 +30,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    if (pathname !== '/') return;
     window.addEventListener('scroll', updateScroll);
 
     return () => {
