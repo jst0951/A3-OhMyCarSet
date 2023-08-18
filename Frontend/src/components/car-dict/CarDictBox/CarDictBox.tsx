@@ -1,7 +1,7 @@
 import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
 import Icon from '../../common/Icon';
 import * as S from './CarDictBox.style';
-import { useCarDictContext } from '@/contexts/CarDictProvider';
+import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
 
 interface Props {
   children: React.ReactNode;
@@ -9,16 +9,17 @@ interface Props {
 
 export default function CarDictBox({ children }: Props) {
   const { dictionaryOn } = useDictionaryOnContext();
-  const { carDict } = useCarDictContext();
+  const { dataList } = useCarDictState();
+  const CarDictDispatch = useCarDictDispatch();
 
   const handleClick = () => {
-    console.log(carDict.find((data) => data.keyword === children?.toString()));
+    CarDictDispatch({ type: 'CLICK_WORD', payload: { keyword: children?.toString() } });
   };
 
   const checkInDict = () => {
     if (children) {
       const targetName = children.toString();
-      return carDict.some((item) => item.keyword === targetName);
+      return dataList.some((item) => item.keyword === targetName);
     }
 
     return false;

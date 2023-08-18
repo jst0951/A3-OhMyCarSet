@@ -1,4 +1,4 @@
-import { useCarDictContext } from '@/contexts/CarDictProvider';
+import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
 import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
 import { colors } from '@/style/theme';
 import { MouseEvent } from 'react';
@@ -9,17 +9,20 @@ interface Props {
 }
 
 export default function HighlightWord({ children }: Props) {
-  const { carDict } = useCarDictContext();
+  const { dataList } = useCarDictState();
+  const CarDictDispatch = useCarDictDispatch();
   const { dictionaryOn } = useDictionaryOnContext();
 
   if (!dictionaryOn) return children;
 
-  const keywordArr = carDict.map((item) => item.keyword);
+  const keywordArr = dataList.map((item) => item.keyword);
   let highlightedStr = children || '';
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLDivElement;
-    if (target.tagName === 'SPAN') console.log(target.textContent);
+    if (target.tagName === 'SPAN') {
+      CarDictDispatch({ type: 'CLICK_WORD', payload: { keyword: target.textContent || '' } });
+    }
   };
 
   keywordArr.forEach((keyword) => {
