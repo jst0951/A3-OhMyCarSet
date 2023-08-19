@@ -46,7 +46,6 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
-  const [disableNext, setDisableNext] = useState<boolean>(false);
   const { setWaiting } = useWaitingContext();
 
   const selectOptionState = useSelectOptionState();
@@ -80,7 +79,6 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const handleClickNext = (optionId: number) => {
     if (selfModeStep < 7 && setShowFeedback !== undefined) {
       if (selectedData === undefined) return;
-      setDisableNext(true);
       setWaiting(true);
       setShowFeedback(selectedData.id);
       selectOptionDispatch({
@@ -97,7 +95,6 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       });
       setTimeout(() => {
         setShowFeedback(0);
-        setDisableNext(false);
         setWaiting(false);
         setSelfModeStep((prev) => prev + 1);
       }, 2000);
@@ -146,11 +143,9 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </S.PrevButton>
-            <S.NextButton $disable={disableNext}>
-              <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
-                선택완료
-              </RectButton>
-            </S.NextButton>
+            <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
+              선택완료
+            </RectButton>
           </S.CompleteButtonContainer>
         </S.OptionFooterWrapper>
         <S.EstimateContainer ref={estimateRef} $show={showEstimate}>

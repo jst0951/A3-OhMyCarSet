@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState(0);
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const TagList = guideSingleTagData[step - 1].tagList;
 
@@ -29,7 +29,7 @@ export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) 
           key={index}
           onClick={() => handleClick(tag)}
           onMouseEnter={() => setHovered(index)}
-          onMouseLeave={() => setHovered(null)}
+          onMouseLeave={() => setHovered(0)}
         >
           <S.TagName>{tag}</S.TagName>
           {hovered === index ? <CheckIcon /> : <UncheckIcon />}
