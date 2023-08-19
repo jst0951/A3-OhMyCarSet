@@ -39,7 +39,7 @@ public class SelectiveOptionService {
         // 각 옵션에 대해 구매 건수를 조회합니다.
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
         for (RequiredOption requiredOption : requiredOptionList) {
-            Long purchaseCount = purchaseHistoryRepository.countByCategoryNameAndPackageId(categoryName, requiredOption.getId());
+            Long purchaseCount = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, requiredOption.getId());
             purchaseCountMap.put(requiredOption, purchaseCount);
         }
 
