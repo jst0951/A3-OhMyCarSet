@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -209,7 +210,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "system";
 
         // When
-        List<OptionPackage> systems = selectiveOptionRepository.findAllPackageByPackageName(categoryName);
+        List<OptionPackage> systems = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -257,7 +258,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "temperature";
 
         // When
-        List<OptionPackage> temperatures = selectiveOptionRepository.findAllPackageByPackageName(categoryName);
+        List<OptionPackage> temperatures = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -303,7 +304,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "external_device";
 
         // When
-        List<OptionPackage> externalDevices = selectiveOptionRepository.findAllPackageByPackageName(categoryName);
+        List<OptionPackage> externalDevices = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -351,7 +352,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "internal_device";
 
         // When
-        List<OptionPackage> internalDevices = selectiveOptionRepository.findAllPackageByPackageName(categoryName);
+        List<OptionPackage> internalDevices = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -414,5 +415,70 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(requiredOption.get().getPrice()).isEqualTo(1480000);
         softAssertions.assertThat(requiredOption.get().getImgSrc()).isEqualTo("selective_option/1_1.png");
         softAssertions.assertThat(requiredOption.get().getIconSrc()).isNull();
+    }
+
+    @Test
+    @DisplayName("카테고리명[필수옵션]과 옵션ID를 받아, 해당 옵션ID의 옵션을 제외한 해당 카테고리의 옵션들을 가져옵니다.")
+    void findRemainOptionByCategoryNameAndOptionId() {
+        // Given
+        String categoryName = "powertrain";
+        Long optionId = 1L;
+
+        // When
+        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findRemainOptionByCategoryNameAndOptionId(categoryName, optionId);
+
+        // Then
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(requiredOptionList.size()).isEqualTo(1);
+
+        RequiredOption requiredOption = requiredOptionList.get(0);
+        softAssertions.assertThat(requiredOption.getId()).isEqualTo(2L);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("카테고리명[옵션 패키지]와 패키지 ID 목록을 받아, 해당 패키지ID 목록에 해당하는 해당 카테고리의 옵션들을 가져옵니다.")
+    void findAllPackageByCategoryNameAndPackageId() {
+        // Given
+        String categoryName = "system";
+        List<Long> recommendOptionIds = new ArrayList<>(List.of(1L, 2L));
+
+        // When
+        List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, recommendOptionIds);
+
+        // Then
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(optionPackageList.size()).isEqualTo(2L);
+
+        OptionPackage optionPackage1 = optionPackageList.get(0);
+        softAssertions.assertThat(optionPackage1.getId()).isEqualTo(1L);
+        OptionPackage optionPackage2 = optionPackageList.get(1);
+        softAssertions.assertThat(optionPackage2.getId()).isEqualTo(2L);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("카테고리명[옵션 패키지]와 패키지 ID 목록을 받아, 해당 패키지ID의 옵션을 제외한 해당 카테고리의 옵션들을 가져옵니다.")
+    void findAllRemainPackageByCategoryNameAndPackageId() {
+        // Given
+        String categoryName = "system";
+        List<Long> recommendOptionIds = new ArrayList<>(List.of(1L, 2L));
+
+        // When
+        List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, recommendOptionIds);
+
+        // Then
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(optionPackageList.size()).isEqualTo(1L);
+
+        OptionPackage optionPackage = optionPackageList.get(0);
+        softAssertions.assertThat(optionPackage.getId()).isEqualTo(3L);
+
+        softAssertions.assertAll();
     }
 }
