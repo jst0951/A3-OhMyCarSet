@@ -9,6 +9,7 @@ import { SelectPackageProvider } from './contexts/SelectPackageProvider';
 import DictionaryOnProvider from './contexts/DictionaryOnProvider';
 import WaitingProvider from './contexts/WaitingProvider';
 import { CarDictProvider } from './contexts/CarDictProvider';
+import ModalProvider from './contexts/ModalProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -37,6 +38,7 @@ export default function App() {
           CarDictProvider,
           DictionaryOnProvider,
           WaitingProvider,
+          ModalProvider,
         ]}
       >
         <Router />

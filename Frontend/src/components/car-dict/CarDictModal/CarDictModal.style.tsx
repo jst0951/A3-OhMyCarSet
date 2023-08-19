@@ -1,8 +1,20 @@
 import { colors } from '@/style/theme';
 import { bodyRegular3, headMedium4, popupRegular } from '@/style/typefaces';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export const ModalContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 999;
+`;
+
+export const Modal = styled.div<{ $inMode: boolean }>`
+  position: absolute;
+
   width: 375px;
   min-height: 165px;
   padding: 16px 20px 21px;
@@ -12,6 +24,17 @@ export const ModalContainer = styled.div`
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.3);
 
   z-index: 5;
+
+  ${({ $inMode }) =>
+    $inMode
+      ? css`
+          right: calc(40vw - 401px);
+          bottom: 110px;
+        `
+      : css`
+          right: 40px;
+          bottom: 40px;
+        `}
 `;
 
 export const Header = styled.div`

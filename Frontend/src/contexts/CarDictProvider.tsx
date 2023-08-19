@@ -11,10 +11,11 @@ type CarDictDataT = {
 interface CarDictStateT {
   dataList: CarDictDataT[];
   clickedData: CarDictDataT | null;
+  isOpen: boolean;
 }
 
 type CarDictActionT = {
-  type: 'INIT_LIST' | 'CLICK_WORD';
+  type: 'INIT_LIST' | 'CLICK_WORD' | 'CLOSE_MODAL';
   payload?: {
     dataList?: CarDictDataT[];
     keyword?: string;
@@ -24,6 +25,7 @@ type CarDictActionT = {
 const initialState: CarDictStateT = {
   dataList: [],
   clickedData: null,
+  isOpen: false,
 };
 
 type CarDictDispatchT = (action: CarDictActionT) => void;
@@ -43,8 +45,14 @@ const carDictReducer = (state: CarDictStateT, action: CarDictActionT): CarDictSt
       return {
         ...state,
         clickedData: clickedData,
+        isOpen: true,
       };
     }
+    case 'CLOSE_MODAL':
+      return {
+        ...state,
+        isOpen: false,
+      };
     default:
       return state;
   }
