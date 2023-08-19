@@ -1,28 +1,28 @@
 package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.ExteriorColor;
-import com.softeer2nd.ohmycarset.domain.InteriorColor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@JdbcTest
+@SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 @Sql(scripts = {
-        "classpath:/insert/insert_exterior_color.sql",
-        "classpath:/insert/insert_trim.sql",
-        "classpath:/insert/insert_trim_exterior_color_map.sql"
+        "classpath:/init.sql",
+        "classpath:/insert/exterior_color.sql",
+        "classpath:/insert/trim.sql",
+        "classpath:/insert/trim_exterior_color_map.sql"
 })
 class ExteriorColorRepositoryTest {
 
