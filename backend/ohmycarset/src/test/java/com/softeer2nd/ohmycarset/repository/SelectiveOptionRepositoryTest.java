@@ -144,7 +144,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(exteriorColorOption.getMainFeedback()).isEmpty();
         softAssertions.assertThat(exteriorColorOption.getSubFeedback()).isEmpty();
         softAssertions.assertThat(exteriorColorOption.getImgSrc()).isEqualTo("selective_option/4_1.png");
-        softAssertions.assertThat(exteriorColorOption.getIconSrc()).isEmpty();
+        softAssertions.assertThat(exteriorColorOption.getIconSrc()).isEqualTo("exterior_color/1_color.png");
 
         softAssertions.assertAll();
     }
@@ -170,7 +170,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(interiorColorOption.getMainFeedback()).contains("블랙 컬러는 클래식한 분위기에요!");
         softAssertions.assertThat(interiorColorOption.getSubFeedback()).contains("클래식한 분위기를 원하신다면,");
         softAssertions.assertThat(interiorColorOption.getImgSrc()).isEqualTo("selective_option/5_1.png");
-        softAssertions.assertThat(interiorColorOption.getIconSrc()).isEmpty();
+        softAssertions.assertThat(interiorColorOption.getIconSrc()).isEqualTo("interior_color/2.png");
 
         softAssertions.assertAll();
     }
@@ -196,7 +196,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(wheelOption.getMainFeedback()).contains("20인치 알로이 휠은 충격흡수가 잘돼요!");
         softAssertions.assertThat(wheelOption.getSubFeedback()).contains("뛰어난 승차감을 원하신다면,");
         softAssertions.assertThat(wheelOption.getImgSrc()).isEqualTo("selective_option/6_1.png");
-        softAssertions.assertThat(wheelOption.getIconSrc()).isEqualTo("selective_option/NPerformance.svg");
+        softAssertions.assertThat(wheelOption.getIconSrc()).isEqualTo("selective_option/nperformance.png");
 
         softAssertions.assertAll();
     }
@@ -244,7 +244,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(component.getPackageId()).isEqualTo(systemOptionId);
         softAssertions.assertThat(component.getName()).isEqualTo("전방 충돌방지 보조");
         softAssertions.assertThat(component.getDescription()).contains("선행 차량이 갑자기 속도를 줄이거나,");
-        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/7_1.png");
+        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/system_option/1.png");
 
         softAssertions.assertAll();
     }
@@ -290,7 +290,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(component.getPackageId()).isEqualTo(temperatureOptionId);
         softAssertions.assertThat(component.getName()).isNull();
         softAssertions.assertThat(component.getDescription()).contains("시동이 걸린 상태에서 해당 좌석의 통풍 스위치를 누르면");
-        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/8_1.png");
+        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/temperature_option/1.png");
 
         softAssertions.assertAll();
     }
@@ -313,7 +313,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(externalDeviceOption.getId()).isEqualTo(1L);
         softAssertions.assertThat(externalDeviceOption.getName()).isEqualTo("차량 보호 필름");
         softAssertions.assertThat(externalDeviceOption.getPrice()).isEqualTo(490000);
-        softAssertions.assertThat(externalDeviceOption.getIconSrc()).isEqualTo("selective_option/HGenuineAccessories.svg");
+        softAssertions.assertThat(externalDeviceOption.getIconSrc()).isEqualTo("selective_option/hgenuine.png");
 
         softAssertions.assertAll();
     }
@@ -338,7 +338,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(component.getPackageId()).isEqualTo(externalDeviceOptionId);
         softAssertions.assertThat(component.getName()).isNull();
         softAssertions.assertThat(component.getDescription()).isNull();
-        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/9_1.png");
+        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/external_device_option/1.png");
 
         softAssertions.assertAll();
     }
@@ -361,7 +361,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(internalDeviceOption.getId()).isEqualTo(2L);
         softAssertions.assertThat(internalDeviceOption.getName()).isEqualTo("프로텍션 매트 패키지 1");
         softAssertions.assertThat(internalDeviceOption.getPrice()).isEqualTo(250000);
-        softAssertions.assertThat(internalDeviceOption.getIconSrc()).isEqualTo("selective_option/HGenuineAccessories.svg");
+        softAssertions.assertThat(internalDeviceOption.getIconSrc()).isEqualTo("selective_option/hgenuine.png");
 
         softAssertions.assertAll();
     }
@@ -386,7 +386,7 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(component.getPackageId()).isEqualTo(internalDeviceOptionId);
         softAssertions.assertThat(component.getName()).isNull();
         softAssertions.assertThat(component.getDescription()).contains("후석에 고정 글라스를 적용한");
-        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/10_1.png");
+        softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/internal_device_option/1.png");
 
         softAssertions.assertAll();
     }
