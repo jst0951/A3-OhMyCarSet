@@ -100,7 +100,7 @@ class TagRepositoryTest {
         Long optionId = 1L;
 
         // When
-        List<Tag> tagList = tagRepository.findAllByOptionNameAndOptionId(categoryName, optionId);
+        List<Tag> tagList = tagRepository.findAllByCategoryNameAndOptionId(categoryName, optionId);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -125,7 +125,7 @@ class TagRepositoryTest {
         Long optionId = 1L;
 
         // When
-        List<Tag> tagList = tagRepository.findAllByOptionNameAndOptionId(categoryName, optionId);
+        List<Tag> tagList = tagRepository.findAllByCategoryNameAndPackageId(categoryName, optionId);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
