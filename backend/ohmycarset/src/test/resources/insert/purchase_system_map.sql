@@ -1,0 +1,10 @@
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (1, 6, 2);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (2, 14, 2);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (3, 14, 3);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (4, 15, 3);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (5, 18, 1);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (6, 20, 2);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (7, 22, 2);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (8, 23, 3);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (9, 28, 3);
+INSERT INTO ohmycarset.purchase_system_map (id, purchase_id, option_id) VALUES (10, 32, 1);

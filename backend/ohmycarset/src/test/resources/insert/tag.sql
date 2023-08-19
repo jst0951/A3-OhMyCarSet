@@ -1,0 +1,13 @@
+INSERT INTO ohmycarset.tag (id, name) VALUES (1, '디자인 중시');
+INSERT INTO ohmycarset.tag (id, name) VALUES (2, '차박 매니아');
+INSERT INTO ohmycarset.tag (id, name) VALUES (3, '편의성');
+INSERT INTO ohmycarset.tag (id, name) VALUES (4, '건강');
+INSERT INTO ohmycarset.tag (id, name) VALUES (5, '차보호');
+INSERT INTO ohmycarset.tag (id, name) VALUES (6, '온도 조절');
+INSERT INTO ohmycarset.tag (id, name) VALUES (7, '효율');
+INSERT INTO ohmycarset.tag (id, name) VALUES (8, '안전성');
+INSERT INTO ohmycarset.tag (id, name) VALUES (9, '조용함');
+INSERT INTO ohmycarset.tag (id, name) VALUES (10, '주행');
+INSERT INTO ohmycarset.tag (id, name) VALUES (11, '신기술');
+INSERT INTO ohmycarset.tag (id, name) VALUES (12, '파워');
+INSERT INTO ohmycarset.tag (id, name) VALUES (13, '가족과 함께');
