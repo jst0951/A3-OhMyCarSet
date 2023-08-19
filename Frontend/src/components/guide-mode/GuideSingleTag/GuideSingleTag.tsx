@@ -1,4 +1,3 @@
-import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 import * as S from './GuideSingleTag.style';
 import guideSingleTagData from '@/asset/data/guideSingleTagData.json';
 import { CheckIcon } from '@/asset/icons';
@@ -9,11 +8,11 @@ import { useState } from 'react';
 interface Props {
   step: number;
   show: boolean;
+  setGuideModeStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function GuideSingleTag({ step, show }: Props) {
+export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) {
   const [hovered, setHovered] = useState<number | null>(null);
-  const { setGuideModeStep } = useGuideModeContext();
   const { selectTagList, setSelectTagList } = useSelectTagContext();
   const TagList = guideSingleTagData[step - 1].tagList;
 
