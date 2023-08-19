@@ -20,43 +20,22 @@ interface ItemProps {
   imgSrc: string;
 }
 
-interface ItemContainerProps {
-  item: ItemProps;
-  showMore: string;
-  index?: number;
-}
-
 const MAX_ITEM_NUM = 5;
+const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
-
-function ItemContianer({ item, showMore, index }: ItemContainerProps) {
-  if (index === undefined) {
-    return (
-      <S.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
-        <Item item={item}></Item>
-      </S.ItemContainer>
-    );
-  } else {
-    return (
-      <S.ItemContainer $more={index < MAX_ITEM_NUM} $showMore={showMore}>
-        <Item item={item}></Item>
-      </S.ItemContainer>
-    );
-  }
-}
 
 export default function DefaultOption() {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
-  const [showMore, setShowMore] = useState('none');
+  const [showMore, setShowMore] = useState(0);
 
   const moreEventHandler = () => {
-    showMore === 'none' ? setShowMore('flex') : setShowMore('none');
+    setShowMore(showMore + 1);
   };
 
   const filterEventHandler = (index: number) => {
     setSelectedCategory(index - 1);
-    setShowMore('none');
+    setShowMore(0);
   };
 
   const fetchSetDefaultOption = async () => {
@@ -72,6 +51,7 @@ export default function DefaultOption() {
     fetchSetDefaultOption();
   }, []);
 
+  console.log(defaultOption);
   return (
     <>
       <S.Container>
@@ -95,31 +75,41 @@ export default function DefaultOption() {
               {selectedCategory === -1
                 ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <ItemContianer key={item.optionId} item={item} showMore={showMore} />
+                      <S.ItemContainer
+                        key={item.optionId}
+                        $showMore={Math.floor((item.optionId - 1) / MAX_ITEM_NUM) <= showMore}
+                      >
+                        <Item item={item} />
+                      </S.ItemContainer>
                     ))
                   )
                 : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
                     (item: ItemProps, optionIndex: number) => (
-                      <ItemContianer key={item.optionId} item={item} showMore={showMore} index={optionIndex} />
+                      <S.ItemContainer
+                        key={item.optionId}
+                        $showMore={Math.floor(optionIndex / MAX_ITEM_NUM) <= showMore}
+                      >
+                        <Item item={item} />
+                      </S.ItemContainer>
                     )
                   )}
             </S.ItemLine>
           ))}
         </S.OptionContainer>
-        {selectedCategory === -1 ? (
-          <S.MoreButtonContainer onClick={moreEventHandler}>
-            더보기
-            <Icon icon="ArrowBottomIcon" size={20} />
-          </S.MoreButtonContainer>
-        ) : (
-          defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
-            MAX_ITEM_NUM && (
-            <S.MoreButtonContainer onClick={moreEventHandler}>
-              더보기
-              <Icon icon="ArrowBottomIcon" size={20} />
-            </S.MoreButtonContainer>
-          )
-        )}
+        {selectedCategory === -1
+          ? MAX_ALL_ITEM_NUM > (showMore + 1) * MAX_ITEM_NUM && (
+              <S.MoreButtonContainer onClick={moreEventHandler}>
+                더보기
+                <Icon icon="ArrowBottomIcon" size={20} />
+              </S.MoreButtonContainer>
+            )
+          : defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
+              (showMore + 1) * MAX_ITEM_NUM && (
+              <S.MoreButtonContainer onClick={moreEventHandler}>
+                더보기
+                <Icon icon="ArrowBottomIcon" size={20} />
+              </S.MoreButtonContainer>
+            )}
       </S.Container>
     </>
   );
