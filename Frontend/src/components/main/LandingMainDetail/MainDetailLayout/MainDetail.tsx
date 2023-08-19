@@ -48,7 +48,11 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
     },
   ];
 
-  const eventHandler = () => {
+  const handleClickMyCar = (name: string) => {
+    if (name === 'Le Blanc (르블랑)') window.location.href = '/self-mode';
+  };
+
+  const handleClickGuide = () => {
     window.location.href = '/self-mode';
   };
 
@@ -69,12 +73,12 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
         ))}
         <S.SelfButtonContainer>
           {trimData.map((trim) => (
-            <RectButton key={trim.id} onClick={eventHandler} type="recommended" page="main">
+            <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.name)} type="recommended" page="main">
               내 차 만들기
             </RectButton>
           ))}
         </S.SelfButtonContainer>
-        <S.GuideButtonContainer>
+        <S.GuideButtonContainer onClick={handleClickGuide}>
           <S.GuideButtonInside>
             <S.GuideButtonExplain>무엇을 골라야 할 지 모르겠다면?</S.GuideButtonExplain>
             <S.GuideButtonLogoContainer>
