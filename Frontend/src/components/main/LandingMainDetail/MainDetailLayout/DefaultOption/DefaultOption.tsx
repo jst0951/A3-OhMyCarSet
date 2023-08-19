@@ -59,7 +59,7 @@ export default function DefaultOption({ isFetched }: Props) {
     setShowMore(0);
   };
 
-  const fetchSetDefaultOption = async () => {
+  const fetchDefaultOption = async () => {
     try {
       const defaultOpion = await fetchData('default_option');
       setDefaultOption(defaultOpion);
@@ -70,7 +70,7 @@ export default function DefaultOption({ isFetched }: Props) {
 
   useEffect(() => {
     if (isFetched) return;
-    fetchSetDefaultOption();
+    fetchDefaultOption();
   }, [isFetched]);
 
   return (

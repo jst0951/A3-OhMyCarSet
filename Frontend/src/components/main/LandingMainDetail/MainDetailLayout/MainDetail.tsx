@@ -7,6 +7,7 @@ import InteriorColor from './InteriorColor/InteriorColor';
 import DefaultOption from './DefaultOption/DefaultOption';
 import Icon from '@/components/common/Icon';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type TrimData = {
   id: number;
@@ -26,6 +27,7 @@ interface DetailHeaderProps {
 }
 
 export default function MainDetail({ trimData }: DetailHeaderProps) {
+  const navigate = useNavigate();
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [isFetched, setIsFetched] = useState(false);
 
@@ -47,12 +49,12 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
     },
   ];
 
-  const handleClickMyCar = (name: string) => {
-    if (name === 'Le Blanc (르블랑)') window.location.href = '/self-mode';
+  const handleClickMyCar = (id: number) => {
+    if (id === 2) navigate('/self-mode');
   };
 
   const handleClickGuide = () => {
-    window.location.href = '/self-mode';
+    navigate('/guide-mode');
   };
 
   const updateScroll = () => {
@@ -87,10 +89,10 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
           </S.OptionContainer>
         ))}
         <S.LineTitle>기본 포함 품목</S.LineTitle>
-        <DefaultOption isFetched={isFetched} />,
+        <DefaultOption isFetched={isFetched} />
         <S.SelfButtonContainer>
           {trimData.map((trim) => (
-            <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.name)} type="recommended" page="main">
+            <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.id)} type="recommended" page="main">
               내 차 만들기
             </RectButton>
           ))}

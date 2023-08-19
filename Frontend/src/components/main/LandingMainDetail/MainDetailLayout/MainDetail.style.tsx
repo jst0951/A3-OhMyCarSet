@@ -55,6 +55,8 @@ export const GuideButtonContainer = styled.div`
   height: 90px;
   border-radius: 6px;
   background: ${colors.coolGrey001};
+
+  cursor: pointer;
 `;
 
 export const GuideButtonInside = styled.div`

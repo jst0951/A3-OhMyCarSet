@@ -65,7 +65,7 @@ export default function DetailMultiItem() {
     }
   };
 
-  const fetchSetDefaultOption = async () => {
+  const fetchDefaultOption = async () => {
     try {
       const defaultOpion = await fetchData('default_option');
       setDefaultOption(defaultOpion[1]);
@@ -75,7 +75,7 @@ export default function DetailMultiItem() {
   };
 
   useEffect(() => {
-    fetchSetDefaultOption();
+    fetchDefaultOption();
   }, []);
 
   return (
