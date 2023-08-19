@@ -6,6 +6,9 @@ import { MouseEvent, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { useLocation } from 'react-router-dom';
 
+const UTF_KR = 44032;
+const NO_CONSONANT = 28;
+
 export default function CarDictModal() {
   const { pathname } = useLocation();
   const { clickedData, isOpen } = useCarDictState();
@@ -22,6 +25,17 @@ export default function CarDictModal() {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       handleCloseModal();
     }
+  };
+
+  const generateTitle = (keyword: string) => {
+    const charCode = keyword.charCodeAt(keyword.length - 1);
+
+    const consonantCode = (charCode - UTF_KR) % NO_CONSONANT;
+
+    if (consonantCode === 0) {
+      return `${keyword}가 뭔가요?`;
+    }
+    return `${keyword}이 뭔가요?`;
   };
 
   const checkInMode = () => {
@@ -42,7 +56,7 @@ export default function CarDictModal() {
             <S.Header>
               <S.TitleContainer>
                 <Icon icon="DictionaryOnIcon" size={18} color={colors.iconYellow} />
-                <S.Title>{clickedData.keyword}</S.Title>
+                <S.Title>{generateTitle(clickedData.keyword)}</S.Title>
               </S.TitleContainer>
               <S.CloseButton onClick={handleCloseModal}>이해했어요!</S.CloseButton>
             </S.Header>
