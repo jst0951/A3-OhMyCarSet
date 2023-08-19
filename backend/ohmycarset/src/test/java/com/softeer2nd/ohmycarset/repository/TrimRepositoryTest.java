@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.*;
 @ActiveProfiles("test")
 @Sql(scripts = {
         "classpath:/init.sql",
-        "classpath:/insert/exterior_color.sql",
         "classpath:/insert/trim.sql",
 })
 @DisplayName("trim Repository 테스트")
