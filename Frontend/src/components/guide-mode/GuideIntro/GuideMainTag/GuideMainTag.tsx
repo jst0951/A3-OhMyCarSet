@@ -1,8 +1,8 @@
 import * as S from './GuideMainTag.style';
-import GuideIndicator from '@/components/guide-mode/GuideIndicator/GuideIndicator';
-import GuideSingleTag from '@/components/guide-mode/GuideSingleTag/GuideSingleTag';
+import GuideIndicator from '@/components/guide-mode/GuideIntro/GuideIndicator/GuideIndicator';
+import GuideSingleTag from '@/components/guide-mode/GuideIntro/GuideSingleTag/GuideSingleTag';
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
-import GuideMultiTag from '@/components/guide-mode/GuideMultiTag/GuideMultiTag';
+import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import { Dispatch, useState } from 'react';
 import { GUIDE_MAX_STEP } from '@/constants';

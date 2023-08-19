@@ -1,6 +1,6 @@
 import Layout from '@/components/layout/Layout';
 import * as S from './GuideModePage.style';
-import GuideMain from '../../components/guide-mode/GuideMain/GuideMain';
+import GuideMain from '../../components/guide-mode/GuideIntro/GuideMain/GuideMain';
 
 export default function GuideModePage() {
   return (

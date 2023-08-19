@@ -1,4 +1,4 @@
-import GuideMainTag from '@/components/guide-mode/GuideMainTag/GuideMainTag';
+import GuideMainTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMainTag';
 import GuideMainComplete from '../GuideMainComplete/GuideMainComplete';
 import { useState } from 'react';
 
