@@ -24,6 +24,6 @@ INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (23, 
 INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (24, '벤트', '공기를 배출하거나 유입하는 구멍으로, 자동차 내부의 통기성을 제공해요.', null);
 INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (25, '센터페시아', '대시보드에서 운전석과 조수석 사이의 앞부분에 위치하여, 오디오와 에어컨 등의 기능을 조작하는 각종 버튼을 컨트롤하는 부분이에요.', null);
 INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (26, '테일게이트', '트렁크 공간을 가리는 문이에요.', 'car_dict/9.png');
-INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (27, '구동 방식', '엔진에서 발생하는 동력이 바퀴에 전달되어 자동차가 움직이는 방식을 말해요. 동력은 전달받은 바퀴 개수에 따라 \'2WD\'와 \'4WD\'로 나뉘어요.', 'car_dict/10.png');
+INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (27, '구동 방식', '엔진에서 발생하는 동력이 바퀴에 전달되어 자동차가 움직이는 방식을 말해요. 동력은 전달받은 바퀴 개수에 따라 2WD와 4WD로 나뉘어요.', 'car_dict/10.png');
 INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (28, '단조 소재', '금속이 고압 하에서 고 강도 부품으로 소성변형(재료의 탄성한계를 넘어섰을 때 영구적인 변형의 부분)을 하여 성형되는 제조공법이에요.', null);
 INSERT INTO ohmycarset.car_dict (id, keyword, description, img_src) VALUES (29, '전동식 틸트 & 스티어링 휠', '운전자에게 적합하도록 운전대 또는 핸들이라고 불리는 스티어링 휠의 위치를 조정할 수 있는 기능이에요.', null);
