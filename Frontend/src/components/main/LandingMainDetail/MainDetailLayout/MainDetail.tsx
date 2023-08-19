@@ -6,6 +6,7 @@ import ExteriorColor from './ExteriorColor/ExteriorColor';
 import InteriorColor from './InteriorColor/InteriorColor';
 import DefaultOption from './DefaultOption/DefaultOption';
 import Icon from '@/components/common/Icon';
+import { useEffect, useState } from 'react';
 
 type TrimData = {
   id: number;
@@ -25,6 +26,9 @@ interface DetailHeaderProps {
 }
 
 export default function MainDetail({ trimData }: DetailHeaderProps) {
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [getAPI, setGetAPI] = useState(false);
+
   const mainDetailList = [
     {
       key: 'core',
@@ -41,11 +45,6 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
       name: '내장 색상',
       component: <InteriorColor />,
     },
-    {
-      key: 'default',
-      name: '기본 포함 품목',
-      component: <DefaultOption />,
-    },
   ];
 
   const handleClickMyCar = (name: string) => {
@@ -56,6 +55,22 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
     window.location.href = '/self-mode';
   };
 
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+
+  useEffect(() => {
+    if (scrollPosition > 1) {
+      setGetAPI(true);
+      return;
+    }
+    window.addEventListener('scroll', updateScroll);
+
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+    };
+  }, [scrollPosition]);
+
   return (
     <>
       <S.Container>
@@ -64,13 +79,14 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
             <Trim key={trim.id} trimData={trim} />
           ))}
         </S.Trim>
-
         {mainDetailList.map((detail) => (
           <S.OptionContainer key={detail.key}>
             <S.LineTitle>{detail.name}</S.LineTitle>
             {detail.component}
           </S.OptionContainer>
         ))}
+        <S.LineTitle>기본 포함 품목</S.LineTitle>
+        <DefaultOption getAPI={getAPI} />,
         <S.SelfButtonContainer>
           {trimData.map((trim) => (
             <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.name)} type="recommended" page="main">

@@ -20,11 +20,14 @@ interface ItemProps {
   imgSrc: string;
 }
 
+interface Props {
+  getAPI: boolean;
+}
 const MAX_ITEM_NUM = 5;
 const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
-export default function DefaultOption() {
+export default function DefaultOption({ getAPI }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [showMore, setShowMore] = useState(0);
@@ -48,8 +51,9 @@ export default function DefaultOption() {
   };
 
   useEffect(() => {
+    if (!getAPI) return;
     fetchSetDefaultOption();
-  }, []);
+  }, [getAPI]);
 
   console.log(defaultOption);
   return (
