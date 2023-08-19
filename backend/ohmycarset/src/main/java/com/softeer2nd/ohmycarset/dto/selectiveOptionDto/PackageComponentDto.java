@@ -13,7 +13,7 @@ public class PackageComponentDto {
     private final String name;
     private final String description;
     private final String imgSrc;
-
+    
     @ConstructorProperties({"id", "name", "description", "imgSrc", "purchaseRate", "tags"})
     public PackageComponentDto(Long id, String name, String description, String imgSrc) {
         this.id = id;

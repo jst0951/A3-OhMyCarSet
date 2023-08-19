@@ -142,7 +142,7 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 시스템옵션 패키지 정보를 가져옵니다.")
     void findAllSystem() {
-        List<OptionPackage> systems = selectiveOptionRepository.findAllPackageByPackageName("system");
+        List<OptionPackage> systems = selectiveOptionRepository.findAllPackageByCategoryName("system");
         assertThat(systems).hasSize(3);
 
         OptionPackage systemOption = systems.get(0);
@@ -170,7 +170,7 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 온도관리옵션 패키지 정보를 가져옵니다.")
     void findAllTemperature() {
-        List<OptionPackage> temperatures = selectiveOptionRepository.findAllPackageByPackageName("temperature");
+        List<OptionPackage> temperatures = selectiveOptionRepository.findAllPackageByCategoryName("temperature");
         assertThat(temperatures).hasSize(2);
 
         OptionPackage temperatureOption = temperatures.get(1);
@@ -198,7 +198,7 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 외부장치옵션 패키지 정보를 가져옵니다.")
     void findAllExternalDevice() {
-        List<OptionPackage> externalDevices = selectiveOptionRepository.findAllPackageByPackageName("external_device");
+        List<OptionPackage> externalDevices = selectiveOptionRepository.findAllPackageByCategoryName("external_device");
         assertThat(externalDevices).hasSize(3);
 
         OptionPackage externalDeviceOption = externalDevices.get(0);
@@ -226,7 +226,7 @@ class SelectiveOptionRepositoryTest {
     @Test
     @DisplayName("모든 내부장치옵션 패키지 정보를 가져옵니다.")
     void findAllInternalDevice() {
-        List<OptionPackage> internalDevices = selectiveOptionRepository.findAllPackageByPackageName("internal_device");
+        List<OptionPackage> internalDevices = selectiveOptionRepository.findAllPackageByCategoryName("internal_device");
         assertThat(internalDevices).hasSize(4);
 
         OptionPackage internalDeviceOption = internalDevices.get(1);
