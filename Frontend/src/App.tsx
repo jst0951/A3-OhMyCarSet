@@ -2,13 +2,13 @@ import SelfModeProvider from '@/contexts/SelfModeProvider';
 import { createElement } from 'react';
 import Router from './routes/Router';
 import { SelectOptionProvider } from './contexts/SelectOptionProvider';
-import GuideModeProvider from './contexts/GuideModeProvider';
 import SelectTagProvider from './contexts/SelectTagProvide';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
-import CarDictProvider from './contexts/CarDictProvider';
 import DictionaryOnProvider from './contexts/DictionaryOnProvider';
 import WaitingProvider from './contexts/WaitingProvider';
+import { CarDictProvider } from './contexts/CarDictProvider';
+import ModalProvider from './contexts/ModalProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
@@ -30,13 +30,13 @@ export default function App() {
         contexts={[
           SelfModeProvider,
           SelectOptionProvider,
-          GuideModeProvider,
           SelectTagProvider,
           CurrentPackageProvider,
           SelectPackageProvider,
           CarDictProvider,
           DictionaryOnProvider,
           WaitingProvider,
+          ModalProvider,
         ]}
       >
         <Router />

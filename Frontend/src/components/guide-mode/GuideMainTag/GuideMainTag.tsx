@@ -1,7 +1,6 @@
 import * as S from './GuideMainTag.style';
 import GuideIndicator from '@/components/guide-mode/GuideIndicator/GuideIndicator';
 import GuideSingleTag from '@/components/guide-mode/GuideSingleTag/GuideSingleTag';
-import { useGuideModeContext } from '@/contexts/GuideModeProvider';
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import GuideMultiTag from '@/components/guide-mode/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
@@ -13,8 +12,7 @@ interface MainProps {
 }
 
 export default function GuideMainTag({ setComplete }: MainProps) {
-  const { GuideModeStep } = useGuideModeContext();
-  const currentIndex = GuideModeStep - 1;
+  const [guideModeStep, setGuideModeStep] = useState(1);
   const [showButton, setShowButton] = useState<boolean>(false);
 
   const clickHandler = () => {
@@ -25,17 +23,17 @@ export default function GuideMainTag({ setComplete }: MainProps) {
     <>
       <S.MainContainer>
         <S.MainLeftContainer>
-          <GuideIndicator />
+          <GuideIndicator guideModeStep={guideModeStep} />
           <S.DescriptionContainer>
             {guideDescriptionData.map((data) => (
-              <S.Description key={data.page} $hidden={data.page !== GuideModeStep}>
+              <S.Description key={data.page} $hidden={data.page !== guideModeStep}>
                 <S.MainDescription>{data.mainDescription}</S.MainDescription>
                 <S.MainDescriptionBold>{data.mainDescriptionBold}</S.MainDescriptionBold>
                 <S.SubDescription>{data.subDescription}</S.SubDescription>
               </S.Description>
             ))}
           </S.DescriptionContainer>
-          <S.ButtonContainer $hidden={!showButton || GuideModeStep !== GUIDE_MAX_STEP}>
+          <S.ButtonContainer $hidden={!showButton || guideModeStep !== GUIDE_MAX_STEP}>
             <RectButton type="recommended" page="guide" onClick={clickHandler}>
               선택 완료
             </RectButton>
@@ -43,10 +41,9 @@ export default function GuideMainTag({ setComplete }: MainProps) {
         </S.MainLeftContainer>
 
         <S.MainRightContainer>
-          <GuideSingleTag step={1} show={GuideModeStep === 1} />
-          <GuideSingleTag step={2} show={GuideModeStep === 2} />
-          <GuideMultiTag setShowButton={setShowButton} show={currentIndex === GUIDE_MAX_STEP - 1} />
-          {/* {currentIndex === GUIDE_MAX_STEP - 1 ? <GuideMultiTag setShowButton={setShowButton} /> : <GuideSingleTag />} */}
+          <GuideSingleTag step={1} show={guideModeStep === 1} setGuideModeStep={setGuideModeStep} />
+          <GuideSingleTag step={2} show={guideModeStep === 2} setGuideModeStep={setGuideModeStep} />
+          <GuideMultiTag setShowButton={setShowButton} show={guideModeStep === GUIDE_MAX_STEP} />
         </S.MainRightContainer>
       </S.MainContainer>
     </>
