@@ -47,6 +47,7 @@ export default function SelfModeSingle() {
   const fetchStepData = async () => {
     try {
       const response = await fetchData(`selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`);
+      console.log(response);
       setStepData(response);
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {

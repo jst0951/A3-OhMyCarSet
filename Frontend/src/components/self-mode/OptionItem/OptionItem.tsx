@@ -104,7 +104,9 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
     <>
       <S.ItemContainer $isActive={isActive} onClick={onClick} ref={optionRef}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-        <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
+        <S.SalePercent $isActive={isActive}>{`구매자의 ${Math.floor(
+          optionData.purchaseRate
+        )}%가 선택했어요!`}</S.SalePercent>
         <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
         {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
         {checkShowMore() &&
