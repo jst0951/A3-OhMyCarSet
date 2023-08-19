@@ -34,7 +34,7 @@ public class SelectiveOptionService {
 
     public List<RequiredOptionDto> getAllOptionByCategoryName(String categoryName) {
         // 해당 카테고리의 모든 옵션 목록을 받아옵니다.
-        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // 각 옵션에 대해 구매 건수를 조회합니다.
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
@@ -145,7 +145,7 @@ public class SelectiveOptionService {
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
 
             String genderToKorean = gender.toString().equals("M") ? "남자" : "여자";
-            List<TagDto> tagDtoList = Arrays.asList(new TagDto(1L, genderToKorean, genderRatio), new TagDto(2L, age + "대", ageRatio));
+            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderToKorean, genderRatio), new TagDto(101L, age + "대", ageRatio));
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
@@ -342,7 +342,7 @@ public class SelectiveOptionService {
 
     private RequiredOptionDto getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags(String categoryName, Character gender, Integer age, List<Long> tagIds) {
         // 모든 옵션 목록에 대해 진행합니다.
-        final List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        final List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // 1. 사용자가 선택한 태그가 포함되는 옵션들을 불러옵니다.
         Map<RequiredOption, List<Tag>> optionTagListMap = new LinkedHashMap<>();

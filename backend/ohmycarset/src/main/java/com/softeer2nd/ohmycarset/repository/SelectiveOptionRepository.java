@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SelectiveOptionRepository {
-    List<RequiredOption> findAllOptionByOptionName(String optionName);
+    List<RequiredOption> findAllOptionByCategoryName(String optionName);
 
     List<OptionPackage> findAllPackageByCategoryName(String packageName);
 

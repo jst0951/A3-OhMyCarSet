@@ -12,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +52,7 @@ class SelectiveOptionRepositoryTest {
     @DisplayName("모든 파워트레인 옵션 정보를 가져옵니다.")
     void findAllPowerTrain() {
         // Given, When
-        List<RequiredOption> powerTrains = selectiveOptionRepository.findAllOptionByOptionName("powertrain");
+        List<RequiredOption> powerTrains = selectiveOptionRepository.findAllOptionByCategoryName("powertrain");
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -80,7 +79,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "wd";
 
         // When
-        List<RequiredOption> wds = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> wds = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -106,7 +105,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "body";
 
         // When
-        List<RequiredOption> bodies = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> bodies = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -132,7 +131,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "exterior_color";
 
         // When
-        List<RequiredOption> exteriorColors = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> exteriorColors = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -158,7 +157,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "interior_color";
 
         // When
-        List<RequiredOption> interiorColors = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> interiorColors = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();
@@ -184,7 +183,7 @@ class SelectiveOptionRepositoryTest {
         String categoryName = "wheel";
 
         // When
-        List<RequiredOption> wheels = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> wheels = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // Then
         SoftAssertions softAssertions = new SoftAssertions();

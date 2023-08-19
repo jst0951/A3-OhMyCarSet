@@ -19,9 +19,9 @@ public interface PurchaseHistoryRepository {
 
     Long countByCategoryNameAndPackageId(String categoryName, Long packageId);
 
-    Long countByCategoryNameAndOptionId(String optionName, Long optionId);
+    Long countByCategoryNameAndOptionId(String categoryName, Long optionId);
 
-    Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String optionName, Long optionId);
+    Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId);
 
     List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
 
