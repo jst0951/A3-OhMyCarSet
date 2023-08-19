@@ -1,22 +1,23 @@
 import * as S from './GuideMainTag.style';
 import GuideIndicator from '@/components/guide-mode/GuideIntro/GuideIndicator/GuideIndicator';
-import GuideSingleTag from '@/components/guide-mode/GuideIntro/GuideSingleTag/GuideSingleTag';
+import GuideSingleTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideSingleTag/GuideSingleTag';
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
-import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMultiTag/GuideMultiTag';
+import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import { Dispatch, useState } from 'react';
 import { GUIDE_MAX_STEP } from '@/constants';
+import { guideStepT } from '../../GuideMain/GuideMain';
 
 interface MainProps {
-  setComplete: Dispatch<React.SetStateAction<boolean>>;
+  setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
 }
 
-export default function GuideMainTag({ setComplete }: MainProps) {
+export default function GuideMainTag({ setGuideStep }: MainProps) {
   const [guideModeStep, setGuideModeStep] = useState(1);
   const [showButton, setShowButton] = useState<boolean>(false);
 
   const clickHandler = () => {
-    setComplete(true);
+    setGuideStep('COMPLETE');
   };
 
   return (

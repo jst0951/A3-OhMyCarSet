@@ -1,12 +1,22 @@
 import RectButton from '@/components/common/button/RectButton/RectButton';
-import * as S from './GuideMainComplete.style';
+import * as S from './GuideComplete.style';
 import { useNavigate } from 'react-router-dom';
+import { guideStepT } from '../GuideMain/GuideMain';
+import { Dispatch } from 'react';
 
-export default function GuideMainComplete() {
+interface Props {
+  setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
+}
+
+export default function GuideMainComplete({ setGuideStep }: Props) {
   const navigate = useNavigate();
 
   const linkToComplete = () => {
     navigate('/complete');
+  };
+
+  const handleClickGuideMode = () => {
+    setGuideStep('GUIDE_MODE');
   };
 
   return (
@@ -22,7 +32,7 @@ export default function GuideMainComplete() {
         <RectButton type="recommended" page="ready" onClick={linkToComplete}>
           완성된 견적을 바로 볼게요
         </RectButton>
-        <RectButton type="notrecommended" page="ready">
+        <RectButton type="notrecommended" page="ready" onClick={handleClickGuideMode}>
           옵션을 하나씩 살펴볼래요
         </RectButton>
       </S.ButtonLine>

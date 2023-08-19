@@ -7,6 +7,7 @@ import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
+import { DEFAULT_PRICE } from '@/constants';
 
 const categoryNameList = [
   {
@@ -39,8 +40,8 @@ export default function SelfModeSingle() {
   const { selfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
   const [stepData, setStepData] = useState<OptionDataT[]>([]);
-  const [tempTotal, setTempTotal] = useState<number>(0);
-  const [prevTotal, setPrevTotal] = useState<number>(0);
+  const [tempTotal, setTempTotal] = useState<number>(DEFAULT_PRICE);
+  const [prevTotal, setPrevTotal] = useState<number>(DEFAULT_PRICE);
   const [selectedOption, setSelectedOption] = useState<OptionDataT>();
   const [showFeedback, setShowFeedback] = useState<number>(0);
 
