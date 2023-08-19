@@ -27,7 +27,7 @@ interface DetailHeaderProps {
 
 export default function MainDetail({ trimData }: DetailHeaderProps) {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const [getAPI, setGetAPI] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   const mainDetailList = [
     {
@@ -60,8 +60,9 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
   };
 
   useEffect(() => {
+    if (isFetched) return;
     if (scrollPosition > 1) {
-      setGetAPI(true);
+      setIsFetched(true);
       return;
     }
     window.addEventListener('scroll', updateScroll);
@@ -86,7 +87,7 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
           </S.OptionContainer>
         ))}
         <S.LineTitle>기본 포함 품목</S.LineTitle>
-        <DefaultOption getAPI={getAPI} />,
+        <DefaultOption isFetched={isFetched} />,
         <S.SelfButtonContainer>
           {trimData.map((trim) => (
             <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.name)} type="recommended" page="main">

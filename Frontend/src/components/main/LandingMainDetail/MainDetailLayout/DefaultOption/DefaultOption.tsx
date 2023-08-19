@@ -21,13 +21,31 @@ interface ItemProps {
 }
 
 interface Props {
-  getAPI: boolean;
+  isFetched: boolean;
 }
+
+interface ShowMoreProps {
+  itemArrayLength: number;
+  showLength: number;
+  onClick: () => void;
+}
+
 const MAX_ITEM_NUM = 5;
 const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
-export default function DefaultOption({ getAPI }: Props) {
+const ShowMoreButton = ({ itemArrayLength, showLength, onClick }: ShowMoreProps) => {
+  if (itemArrayLength > showLength) {
+    return (
+      <S.MoreButtonContainer onClick={onClick}>
+        더보기
+        <Icon icon="ArrowBottomIcon" size={20} />
+      </S.MoreButtonContainer>
+    );
+  }
+};
+
+export default function DefaultOption({ isFetched }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [showMore, setShowMore] = useState(0);
@@ -51,11 +69,10 @@ export default function DefaultOption({ getAPI }: Props) {
   };
 
   useEffect(() => {
-    if (!getAPI) return;
+    if (isFetched) return;
     fetchSetDefaultOption();
-  }, [getAPI]);
+  }, [isFetched]);
 
-  console.log(defaultOption);
   return (
     <>
       <S.Container>
@@ -100,20 +117,15 @@ export default function DefaultOption({ getAPI }: Props) {
             </S.ItemLine>
           ))}
         </S.OptionContainer>
-        {selectedCategory === -1
-          ? MAX_ALL_ITEM_NUM > (showMore + 1) * MAX_ITEM_NUM && (
-              <S.MoreButtonContainer onClick={moreEventHandler}>
-                더보기
-                <Icon icon="ArrowBottomIcon" size={20} />
-              </S.MoreButtonContainer>
-            )
-          : defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
-              (showMore + 1) * MAX_ITEM_NUM && (
-              <S.MoreButtonContainer onClick={moreEventHandler}>
-                더보기
-                <Icon icon="ArrowBottomIcon" size={20} />
-              </S.MoreButtonContainer>
-            )}
+        <ShowMoreButton
+          itemArrayLength={
+            selectedCategory === -1
+              ? MAX_ALL_ITEM_NUM
+              : defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length
+          }
+          showLength={(showMore + 1) * MAX_ITEM_NUM}
+          onClick={moreEventHandler}
+        />
       </S.Container>
     </>
   );
