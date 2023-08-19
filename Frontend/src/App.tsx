@@ -2,7 +2,6 @@ import SelfModeProvider from '@/contexts/SelfModeProvider';
 import { createElement } from 'react';
 import Router from './routes/Router';
 import { SelectOptionProvider } from './contexts/SelectOptionProvider';
-import GuideModeProvider from './contexts/GuideModeProvider';
 import SelectTagProvider from './contexts/SelectTagProvide';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
@@ -31,7 +30,6 @@ export default function App() {
         contexts={[
           SelfModeProvider,
           SelectOptionProvider,
-          GuideModeProvider,
           SelectTagProvider,
           CurrentPackageProvider,
           SelectPackageProvider,
