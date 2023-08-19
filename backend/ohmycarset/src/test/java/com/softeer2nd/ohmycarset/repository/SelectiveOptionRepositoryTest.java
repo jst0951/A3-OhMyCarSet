@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -389,5 +390,29 @@ class SelectiveOptionRepositoryTest {
         softAssertions.assertThat(component.getImgSrc()).isEqualTo("selective_option/internal_device_option/1.png");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("카테고리명과 옵션ID로 특정 옵션[필수옵션]을 가져옵니다.")
+    void findOptionByCategoryNameAndOptionId() {
+        // Given
+        String categoryName = "powertrain";
+        Long id = 1L;
+
+        // When
+        Optional<RequiredOption> requiredOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, id);
+
+        // Then
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        assertThat(requiredOption).isPresent();
+        softAssertions.assertThat(requiredOption.get().getName()).isEqualTo("디젤 2.2");
+        softAssertions.assertThat(requiredOption.get().getMainDescription()).contains("높은 토크로");
+        softAssertions.assertThat(requiredOption.get().getSubDescription()).contains("최고출력");
+        softAssertions.assertThat(requiredOption.get().getMainFeedback()).contains("디젤 엔진은");
+        softAssertions.assertThat(requiredOption.get().getSubFeedback()).contains("효율을 중시");
+        softAssertions.assertThat(requiredOption.get().getPrice()).isEqualTo(1480000);
+        softAssertions.assertThat(requiredOption.get().getImgSrc()).isEqualTo("selective_option/1_1.png");
+        softAssertions.assertThat(requiredOption.get().getIconSrc()).isNull();
     }
 }
