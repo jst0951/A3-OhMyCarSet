@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import * as Style from './ExteriorColor.style';
-import fetchData from '@/apis/fetchData';
+import * as S from './ExteriorColor.style';
+import fetchData from '@/utils/apis/fetchData';
 
 type ExteriorColor = Array<{
   trimId: number;
   trimName: string;
-  eColorList: Array<{
+  ecolorList: Array<{
     id: number;
     name: string;
     colorCode: string;
@@ -31,18 +31,18 @@ export default function ExteriorColor() {
 
   return (
     <>
-      <Style.ExteriorColorContainer>
+      <S.ExteriorColorContainer>
         {exteriorColor.map((line) => (
-          <Style.ExteriorColorItemLine key={line.trimId}>
-            {line.eColorList.map((item, index) => (
-              <Style.ExteriorColorItemContainer key={item.id}>
-                <Style.ExteriorColorItem $border={index === 0} $bgColor={item.colorCode}></Style.ExteriorColorItem>
-                <Style.ExteriorColorItemDescription>{item.name}</Style.ExteriorColorItemDescription>
-              </Style.ExteriorColorItemContainer>
+          <S.ExteriorColorItemLine key={line.trimId}>
+            {line.ecolorList.map((item, index) => (
+              <S.ExteriorColorItemContainer key={item.id}>
+                <S.ExteriorColorItem $border={index === 0} $bgColor={item.colorCode}></S.ExteriorColorItem>
+                <S.ExteriorColorItemDescription>{item.name}</S.ExteriorColorItemDescription>
+              </S.ExteriorColorItemContainer>
             ))}
-          </Style.ExteriorColorItemLine>
+          </S.ExteriorColorItemLine>
         ))}
-      </Style.ExteriorColorContainer>
+      </S.ExteriorColorContainer>
     </>
   );
 }

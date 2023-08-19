@@ -138,27 +138,6 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
-
-    @font-face {
-        font-family: 'Hyundai Sans Head Medium';
-        font-style: normal;
-        src: url('/fonts/HyundaiSansHeadKROTFMedium.woff2') format('woff2'); 
-      }
-      @font-face {
-        font-family: 'Hyundai Sans Head Regular';
-        font-style: normal;
-        src: url('/fonts/HyundaiSansHeadKROTFRegular.woff2') format('woff2'); 
-      }
-      @font-face {
-        font-family: 'Hyundai Sans Text Medium';
-        font-style: normal;
-        src: url('/fonts/HyundaiSansTextKROTFMedium.woff2') format('woff2'); 
-      }  
-      @font-face {
-        font-family: 'Hyundai Sans Text Regular';
-        font-style: normal;
-        src: url('/fonts/HyundaiSansTextKROTFRegular.woff2') format('woff2'); 
-      }
 `;
 
 export default GlobalStyle;

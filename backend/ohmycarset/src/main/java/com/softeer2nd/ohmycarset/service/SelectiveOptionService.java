@@ -54,9 +54,12 @@ public class SelectiveOptionService {
             handleExteriorColorOption(sortedKeys);
         }
 
+        // 모든 옵션을 담아 전송합니다.
         List<RequiredOptionDto> requiredOptionDtoList = new ArrayList<>();
+        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum(); // 구매비율 계산용
         for (RequiredOption requiredOption : sortedKeys) {
-            requiredOptionDtoList.add(new RequiredOptionDto(requiredOption));
+            Double purchaseRate = (double) purchaseCountMap.get(requiredOption) / purchaseCountSum * 100;
+            requiredOptionDtoList.add(new RequiredOptionDto(requiredOption, purchaseRate, null));
         }
 
         return requiredOptionDtoList;
@@ -80,9 +83,11 @@ public class SelectiveOptionService {
                 .collect(Collectors.toList());
 
         List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
+        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum(); // 구매비율 계산용
         for (OptionPackage optionPackage : sortedKeys) {
             List<PackageComponent> packageComponentList = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(categoryName, optionPackage.getId());
-            optionPackageDtoList.add(new OptionPackageDto(optionPackage, packageComponentList));
+            Double purchaseRate = (double) purchaseCountMap.get(optionPackage) / purchaseCountSum * 100;
+            optionPackageDtoList.add(new OptionPackageDto(optionPackage, packageComponentList, purchaseRate, null));
         }
 
         return optionPackageDtoList;

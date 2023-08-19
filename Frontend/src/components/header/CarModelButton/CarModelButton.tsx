@@ -1,13 +1,13 @@
 import Icon from '@/components/common/Icon';
 
-import * as Style from './CarModelButton.style';
+import * as S from './CarModelButton.style';
 
 export default function CarModelButton() {
   return (
-    <Style.CarModelContainer>
+    <S.CarModelContainer>
       <Icon icon="HeaderCarIcon" />
-      <Style.CarModelText>펠리세이드</Style.CarModelText>
+      <S.CarModelText>펠리세이드</S.CarModelText>
       <Icon icon="HeaderMoreIcon" />
-    </Style.CarModelContainer>
+    </S.CarModelContainer>
   );
 }

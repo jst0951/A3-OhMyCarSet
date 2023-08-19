@@ -1,9 +1,10 @@
-import * as Style from './SelfModeMain.style';
+import * as S from './SelfModeMain.style';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import SelfModeSingle from './SelfModeSingle/SelfModeSingle';
 import SelfModeMulti from './SelfModeMulti/SelfModeMulti';
+import Loading from '@/components/loading/Loading';
 
-export type OptionData = {
+export type OptionDataT = {
   id: number;
   name: string;
   mainDescription?: string;
@@ -14,6 +15,19 @@ export type OptionData = {
   imgSrc: string;
   iconSrc?: string | null;
 };
+
+export interface OptionPackageT {
+  id: number;
+  name: string;
+  price: number;
+  iconSrc: string | null;
+  components: Array<{
+    id: number;
+    name: string | null;
+    description: string;
+    imgSrc: string;
+  }>;
+}
 
 type SystemData = {
   description: string;
@@ -34,9 +48,9 @@ export default function SelfModeMain() {
 
   return (
     <>
-      <Style.SelfModeMainContainer>
-        {selfModeStep < 7 ? <SelfModeSingle /> : <SelfModeMulti />}
-      </Style.SelfModeMainContainer>
+      <S.SelfModeMainContainer>
+        {selfModeStep < 7 ? <SelfModeSingle /> : selfModeStep === 7 ? <SelfModeMulti /> : <Loading />}
+      </S.SelfModeMainContainer>
     </>
   );
 }

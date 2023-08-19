@@ -1,14 +1,14 @@
 import Layout from '@/components/layout/Layout';
-import * as Style from './GuideModePage.style';
-import GuideModeMain from '../../components/guide-mode/GuideModeMain/GuideModeMain';
+import * as S from './GuideModePage.style';
+import GuideMain from '../../components/guide-mode/GuideMain/GuideMain';
 
 export default function GuideModePage() {
   return (
     <>
       <Layout>
-        <Style.GuideModeContainer>
-          <GuideModeMain />
-        </Style.GuideModeContainer>
+        <S.GuideModeContainer>
+          <GuideMain />
+        </S.GuideModeContainer>
       </Layout>
     </>
   );
