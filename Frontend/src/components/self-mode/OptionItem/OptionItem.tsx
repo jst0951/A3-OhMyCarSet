@@ -93,6 +93,10 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
     if (showFeedback === optionData.id) {
       initfeedbackBoxHeight();
+    } else if (showFeedback === 0) {
+      if (optionRef.current !== null) {
+        optionRef.current.style.height = '';
+      }
     }
   }, [selfModeStep, showFeedback]);
 
