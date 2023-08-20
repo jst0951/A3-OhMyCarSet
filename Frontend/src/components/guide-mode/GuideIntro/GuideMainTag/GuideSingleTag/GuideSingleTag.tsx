@@ -21,10 +21,10 @@ export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) 
   const { setSelectTag } = useSelectTagContext();
   const TagList = guideSingleTagData[step - 1].tagList;
 
-  const handleClick = (tag: TagType, idx: number) => {
-    if (idx === 0) {
+  const handleClick = (tag: TagType, step: number) => {
+    if (step === 1) {
       setSelectTag((prev) => ({ ...prev, age: Number(tag.value) }));
-    } else if (idx === 1) {
+    } else if (step === 2) {
       setSelectTag((prev) => ({ ...prev, gender: tag.value }));
     }
     setGuideModeStep(step + 1);
@@ -35,7 +35,7 @@ export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) 
       {TagList.map((tag, idx) => (
         <S.TagContainer
           key={idx}
-          onClick={() => handleClick(tag, idx)}
+          onClick={() => handleClick(tag, step)}
           onMouseEnter={() => setHovered(idx)}
           onMouseLeave={() => setHovered(null)}
         >
