@@ -171,11 +171,15 @@ public class SelectiveOptionService {
         Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
 
-        List<OptionPackage> recommendedPackages = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
-        List<OptionPackage> remainPackages = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
-        
+        List<OptionPackage> recommendedPackages = new ArrayList<>();
 
-        for (OptionPackage recommendedPackage :recommendedPackages) {
+        if(!userInfoDto.getRecommendOptionId().isEmpty()) {
+            recommendedPackages = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
+        }
+        List<OptionPackage> remainPackages = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
+
+
+        for (OptionPackage recommendedPackage : recommendedPackages) {
             List<Tag> optionTags = tagRepository.findAllByCategoryNameAndPackageId(categoryName, recommendedPackage.getId());
             List<String> userTagNames = Arrays.asList(userInfoDto.getTag1(), userInfoDto.getTag2(), userInfoDto.getTag3());
 
@@ -299,22 +303,71 @@ public class SelectiveOptionService {
 
         // 옵션 선택
         // 외장 색상, 내장 색상의 경우, 연령대 및 성별 별 가장 많이 팔린 옵션으로 설정해줍니다.
+        long startTime = System.nanoTime();
         exteriorColor = getMostPurchasedOptionByCategoryNameAndGenderAndAge("exterior_color", gender, age);
+        long endTime = System.nanoTime();
+        long elapsedTime = endTime - startTime;
+        System.out.println("exterior_color = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
         interiorColor = getMostPurchasedOptionByCategoryNameAndGenderAndAge("interior_color", gender, age);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("interior_color = " + (double) elapsedTime / 1000000);
 
         // 파워트레인, 바디타입, 구동방식은 태그 또한 고려하여 설정합니다.
+        startTime = System.nanoTime();
         powertrain = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("powertrain", gender, age, tagIds);
-        body = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("body", gender, age, tagIds);
-        wd = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("wd", gender, age, tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("powertrain = " + (double) elapsedTime / 1000000);
 
-        // 휠은 별도의 로직이 필요합니다.
+        startTime = System.nanoTime();
+        body = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("body", gender, age, tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("body = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
+        wd = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("wd", gender, age, tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("wd = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
         wheel = getWheelOptionByGenderAndAgeAndTagsAndExteriorColor(gender, age, tagIds, exteriorColor.getId());
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("wheel = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
+        system = getAllPackageByCategoryNameAndTags("system", tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("system = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
+        temperature = getAllPackageByCategoryNameAndTags("temperature", tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("temperature = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
+        externalDevice = getAllPackageByCategoryNameAndTags("external_device", tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("external_device = " + (double) elapsedTime / 1000000);
+
+        startTime = System.nanoTime();
+        internalDevice = getAllPackageByCategoryNameAndTags("internal_device", tagIds);
+        endTime = System.nanoTime();
+        elapsedTime = endTime - startTime;
+        System.out.println("internal_device = " + (double) elapsedTime / 1000000);
+
+        System.out.println("=========================");
+        // 휠은 별도의 로직이 필요합니다.
 
         // 부가옵션은 겹치는 태그가 하나라도 있으면 모두 담습니다.
-        system = getAllPackageByCategoryNameAndTags("system", tagIds);
-        temperature = getAllPackageByCategoryNameAndTags("temperature", tagIds);
-        externalDevice = getAllPackageByCategoryNameAndTags("external_device", tagIds);
-        internalDevice = getAllPackageByCategoryNameAndTags("internal_device", tagIds);
 
         return new RecommendDto(powertrain, wd, body, exteriorColor, interiorColor, wheel, system, temperature, externalDevice, internalDevice);
     }
@@ -331,8 +384,7 @@ public class SelectiveOptionService {
         RequiredOption mostPurchasedOption;
         try {
             mostPurchasedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, purchaseCountDtoList.get(0).getOptionId()).orElseThrow();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             mostPurchasedOption = defaultOption;
         }
 
@@ -438,8 +490,7 @@ public class SelectiveOptionService {
             } else {
                 optionId = 3L;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             optionId = 1L;
         }
         RequiredOption option = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, optionId).orElseThrow();
