@@ -7,21 +7,28 @@ import OptionItem from '../../OptionItem/OptionItem';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useLocation } from 'react-router-dom';
+import fetchPost from '@/utils/apis/fetchPost';
+import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 
 const optionList = [
   {
+    idx: 0,
     key: 'system',
     text: '시스템',
   },
   {
+    idx: 1,
     key: 'temperature',
     text: '온도관리',
   },
   {
+    idx: 2,
     key: 'external_device',
     text: '외부장치',
   },
   {
+    idx: 3,
     key: 'internal_device',
     text: '내부장치',
   },
@@ -30,15 +37,18 @@ const optionList = [
 type OptionPackageListT = OptionPackageT[];
 
 export default function SelfModeMulti() {
+  const { pathname } = useLocation();
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
   const { filterId, packageId, optionId } = useCurrentPackageState();
   const { packageList, totalCount, totalPrice } = useSelectPackageState();
   const currentPackageDispatch = useCurrentPackageDispatch();
   const selectPackageDispatch = useSelectPackageDispatch();
+  const selectPackageState = useSelectPackageState();
   const selectOptionState = useSelectOptionState();
   const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice);
   const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice);
   const [imgSrc, setImgSrc] = useState('');
+  const { selectTag } = useSelectTagContext();
 
   const handleFilterOption = (idx: number) => {
     currentPackageDispatch({
@@ -47,9 +57,21 @@ export default function SelfModeMulti() {
     });
   };
 
-  const fetchOptionData = async (key: string) => {
+  const fetchDataByMode = async (key: string, idx: number) => {
+    const endpoint = `selective_option/option_package/${key}`;
+    if (pathname === '/self-mode') {
+      return await fetchData(endpoint);
+    } else {
+      return await fetchPost(endpoint, {
+        ...selectTag,
+        recommendOptionId: selectPackageState.packageList[idx].recommendList,
+      });
+    }
+  };
+
+  const fetchOptionData = async (key: string, idx: number) => {
     try {
-      const response = await fetchData(`selective_option/option_package/${key}`);
+      const response = await fetchDataByMode(key, idx);
 
       return response;
     } catch (error) {
@@ -61,7 +83,7 @@ export default function SelfModeMulti() {
     try {
       const allData: OptionPackageListT[] = [];
       for (const option of optionList) {
-        const response = await fetchOptionData(option.key);
+        const response = await fetchOptionData(option.key, option.idx);
         allData.push(response);
       }
       setOptionPackage(allData);

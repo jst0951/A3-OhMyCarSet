@@ -7,6 +7,7 @@ type SelectTagWithId = SelectTagData & {
 type BodyType = SelectTagData | SelectTagWithId;
 
 export default function fetchPost(endpoint: string, body: BodyType) {
+  console.log(body);
   const PromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
     method: 'POST',
     headers: {

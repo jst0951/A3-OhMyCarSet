@@ -4,6 +4,9 @@ export const GUIDE_MAX_STEP: number = 3;
 
 export const GUIDE_MAX_TAG_NUM: number = 3;
 
+export const PACKAGE_START_INDEX = 6;
+export const PACKAGE_END_INDEX = 9;
+
 export const optionKeyArr = [
   'powertrain',
   'wd',

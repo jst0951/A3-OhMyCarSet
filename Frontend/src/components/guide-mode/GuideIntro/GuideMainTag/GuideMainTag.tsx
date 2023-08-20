@@ -5,7 +5,7 @@ import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import { Dispatch, useState } from 'react';
-import { GUIDE_MAX_STEP, optionKeyArr } from '@/constants';
+import { GUIDE_MAX_STEP, PACKAGE_END_INDEX, PACKAGE_START_INDEX, optionKeyArr } from '@/constants';
 import { guideStepT } from '../../GuideMain/GuideMain';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
@@ -26,37 +26,41 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
   const fetchRecommend = async () => {
     try {
       const response = await fetchPost('recommend', selectTag);
-      for (let idx = 0; idx < 6; idx++) {
-        const key = optionKeyArr[idx];
+      for (let idx = 0; idx < PACKAGE_START_INDEX; idx++) {
+        const data = response[optionKeyArr[idx]];
 
         SelectOptionDispatch({
           type: 'UPDATE_LIST',
           payload: {
             optionId: idx + 1,
             newOptionData: {
-              selectedId: response[key].id,
-              selectedName: response[key].name,
-              price: response[key].price,
-              imgSrc: response[key].imgSrc,
+              selectedId: data.id,
+              selectedName: data.name,
+              price: data.price,
+              imgSrc: data.imgSrc,
+              recommendList: [data.id],
             },
           },
         });
       }
-      for (let idx = 6; idx < 10; idx++) {
+      for (let idx = PACKAGE_START_INDEX; idx < PACKAGE_END_INDEX + 1; idx++) {
         const key = optionKeyArr[idx];
 
         if (response[key].length === 0) continue;
         for (let option = 0; option < response[key].length - 1; option++) {
+          const data = response[key][option];
+
           SelectPackageDispatch({
             type: 'UPDATE_LIST',
             payload: {
               filterId: idx - 5,
               newData: {
-                id: response[key][option].id,
-                name: response[key][option].name,
-                price: response[key][option].price,
-                imgSrc: response[key][option].imgSrc,
+                id: data.id,
+                name: data.name,
+                price: data.price,
+                imgSrc: data.imgSrc,
               },
+              recommendId: data.id,
             },
           });
         }

@@ -1,16 +1,10 @@
 import { colors } from '@/style/theme';
 import { bodyRegular2, headMedium2 } from '@/style/typefaces';
 import { css, styled } from 'styled-components';
+import { SalePercent } from './OptionHeader/OptionHeader.style';
 
 const inactiveOptionCss = css`
   color: ${colors.coolGrey003};
-`;
-
-export const SalePercent = styled.div<{ $isActive: boolean }>`
-  margin: 10px 0 4px;
-  ${bodyRegular2}
-  line-height: 16px;
-  color: ${({ $isActive }) => ($isActive ? colors.mainHyundaiBlue : colors.coolGrey003)};
 `;
 
 export const OptionName = styled.div<{ $isActive: boolean }>`

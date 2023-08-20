@@ -28,8 +28,10 @@ export default function SelfModeSingle() {
     if (pathname === '/self-mode') {
       return await fetchData(endpoint);
     } else {
-      const recommendId = selectOptionState.dataList[selfModeStep - 1].selectedId;
-      return await fetchPost(endpoint, { ...selectTag, recommendOptionId: [recommendId] });
+      return await fetchPost(endpoint, {
+        ...selectTag,
+        recommendOptionId: selectOptionState.dataList[selfModeStep - 1].recommendList,
+      });
     }
   };
 
