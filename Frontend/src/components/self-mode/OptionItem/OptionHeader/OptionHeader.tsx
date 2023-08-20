@@ -35,10 +35,13 @@ export default function OptionHeader({ isActive, optionData }: Props) {
     <>
       <S.IconContainer $isActive={isActive} $isSelfMode={isSelfMode}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-        {isRecommended && (
+        {isRecommended && optionData.tags && (
           <S.TagContainer>
-            <S.Tag $isActive={isActive}>20대 61%</S.Tag>
-            <S.Tag $isActive={isActive}>여성 65%</S.Tag>
+            {optionData.tags.map((tag) => (
+              <S.Tag key={tag.id} $isActive={isActive}>
+                {`${tag.name} ${Math.floor(tag.percentage)}%`}
+              </S.Tag>
+            ))}
           </S.TagContainer>
         )}
       </S.IconContainer>

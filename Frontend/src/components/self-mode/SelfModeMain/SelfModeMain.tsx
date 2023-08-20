@@ -36,7 +36,7 @@ export interface OptionPackageT {
     imgSrc: string;
   }>;
   purchaseRate: number;
-  tags: TagT;
+  tags: TagT[];
 }
 
 type SystemData = {
@@ -59,7 +59,13 @@ export default function SelfModeMain() {
   return (
     <>
       <S.SelfModeMainContainer>
-        {selfModeStep < 7 ? <SelfModeSingle /> : selfModeStep === 7 ? <SelfModeMulti /> : <Loading />}
+        {selfModeStep < 7 ? (
+          <SelfModeSingle />
+        ) : selfModeStep === 7 ? (
+          <SelfModeMulti />
+        ) : (
+          <Loading redirect="MAIN_COMPLETE" />
+        )}
       </S.SelfModeMainContainer>
     </>
   );
