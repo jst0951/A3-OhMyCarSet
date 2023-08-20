@@ -17,3 +17,6 @@ export { ReactComponent as FeedbackIcon } from './feedback_icon.svg';
 export { ReactComponent as CorrectionIcon } from './correction_icon.svg';
 export { ReactComponent as LoadingCarIcon } from './loading_car.svg';
 export { ReactComponent as LoadingToolIcon } from './loading_tool.svg';
+export { ReactComponent as ModalCryIcon } from './modal_cry.svg';
+export { ReactComponent as ModlaReloadIcon } from './modal_reload.svg';
+export { ReactComponent as ModalToolsIcon } from './modal_tools.svg';

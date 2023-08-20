@@ -43,7 +43,7 @@ export default function Header() {
       <HeaderContainer $isComplete={pathname === '/complete'} $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
-            <HeaderLogo />
+            <HeaderLogo pathName={pathname} />
             <Icon icon="HeaderDividerIcon" />
             <ModeButton type={getCurrentMode()} />
           </HeaderLeftContainer>
