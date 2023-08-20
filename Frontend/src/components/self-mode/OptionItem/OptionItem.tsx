@@ -10,6 +10,7 @@ import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
 import HighlightWord from '@/utils/HighlightWord';
 import OptionHeader from './OptionHeader/OptionHeader';
+import { useLocation } from 'react-router-dom';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -19,6 +20,7 @@ export interface OptionDataProps {
 }
 
 export default function OptionItem({ optionData, isActive, onClick, showFeedback }: OptionDataProps) {
+  const { pathname } = useLocation();
   const { selfModeStep } = useSelfModeContext();
   const [showMore, setShowMore] = useState<boolean>(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
@@ -102,7 +104,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
   return (
     <>
-      <S.ItemContainer $isActive={isActive} onClick={onClick} ref={optionRef}>
+      <S.ItemContainer $isActive={isActive} $isSelfMode={pathname === '/self-mode'} onClick={onClick} ref={optionRef}>
         <OptionHeader isActive={isActive} optionData={optionData} />
         <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
         {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
@@ -125,7 +127,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
               />
             )
           ))}
-        <S.OptionBottomContainer $isActive={isActive}>
+        <S.OptionBottomContainer>
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
           {checkShowMore() && <ShowMoreButton isActive={isActive} showMore={showMore} onClick={toggleShowMore} />}
         </S.OptionBottomContainer>

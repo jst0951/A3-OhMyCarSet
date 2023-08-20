@@ -15,6 +15,7 @@ interface Props {
 
 export default function OptionHeader({ isActive, optionData }: Props) {
   const { pathname } = useLocation();
+  const isSelfMode = pathname === '/self-mode';
   const { dataList } = useSelectOptionState();
   const { packageList } = useSelectPackageState();
   const { filterId } = useCurrentPackageState();
@@ -32,18 +33,18 @@ export default function OptionHeader({ isActive, optionData }: Props) {
 
   return (
     <>
-      <S.IconContainer>
+      <S.IconContainer $isActive={isActive} $isSelfMode={isSelfMode}>
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         {isRecommended && (
           <S.TagContainer>
-            <S.Tag>20대 61%</S.Tag>
-            <S.Tag>여성 65%</S.Tag>
+            <S.Tag $isActive={isActive}>20대 61%</S.Tag>
+            <S.Tag $isActive={isActive}>여성 65%</S.Tag>
           </S.TagContainer>
         )}
       </S.IconContainer>
-      <S.SalePercent $isActive={isActive}>{`${isRecommended ? '나와 비슷한' : '구매자의'} ${Math.floor(
-        optionData.purchaseRate
-      )}%가 선택했어요!`}</S.SalePercent>
+      <S.SalePercent $isActive={isActive} $isSelfMode={isSelfMode}>{`${
+        isRecommended ? '나와 비슷한' : '구매자의'
+      } ${Math.floor(optionData.purchaseRate)}%가 선택했어요!`}</S.SalePercent>
     </>
   );
 }
