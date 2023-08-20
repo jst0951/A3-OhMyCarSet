@@ -23,6 +23,7 @@ export const OptionContainer = styled.div`
 `;
 
 export const LineTitle = styled.div`
+  width: 1024px;
   border-bottom: 1px solid ${colors.coolGrey003};
   padding-bottom: 25px;
   ${headMedium4};
