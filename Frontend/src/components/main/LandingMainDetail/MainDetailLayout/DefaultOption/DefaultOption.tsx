@@ -34,7 +34,7 @@ const MAX_ITEM_NUM = 5;
 const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
-const ShowMoreButton = ({ itemArrayLength, showLength, onClick }: ShowMoreProps) => {
+function ShowMoreButton({ itemArrayLength, showLength, onClick }: ShowMoreProps) {
   if (itemArrayLength > showLength) {
     return (
       <S.MoreButtonContainer onClick={onClick}>
@@ -43,12 +43,21 @@ const ShowMoreButton = ({ itemArrayLength, showLength, onClick }: ShowMoreProps)
       </S.MoreButtonContainer>
     );
   }
-};
+}
 
 export default function DefaultOption({ isFetched }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [showMore, setShowMore] = useState(0);
+  const allOption: ItemProps[][] = [[], [], [], []];
+
+  defaultOption.map((trim, trimIndex) => {
+    trim.defaultOptionCategoryDtoList.map((categoryDto) =>
+      categoryDto.defaultOptionDetailDtoList.map(
+        (item: ItemProps) => (allOption[trimIndex] = [...allOption[trimIndex], item])
+      )
+    );
+  });
 
   const moreEventHandler = () => {
     setShowMore(showMore + 1);
@@ -91,29 +100,16 @@ export default function DefaultOption({ isFetched }: Props) {
           ))}
         </S.ButtonLine>
         <S.OptionContainer>
-          {defaultOption.map((trim) => (
+          {defaultOption.map((trim, trimIndex) => (
             <S.ItemLine key={trim.trimId}>
-              {selectedCategory === -1
-                ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
-                    categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <S.ItemContainer
-                        key={item.optionId}
-                        $showMore={Math.floor((item.optionId - 1) / MAX_ITEM_NUM) <= showMore}
-                      >
-                        <Item item={item} />
-                      </S.ItemContainer>
-                    ))
-                  )
-                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
-                    (item: ItemProps, optionIndex: number) => (
-                      <S.ItemContainer
-                        key={item.optionId}
-                        $showMore={Math.floor(optionIndex / MAX_ITEM_NUM) <= showMore}
-                      >
-                        <Item item={item} />
-                      </S.ItemContainer>
-                    )
-                  )}
+              {(selectedCategory === -1
+                ? allOption[trimIndex]
+                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList
+              ).map((item: ItemProps, itemIndex) => (
+                <S.ItemContainer key={item.optionId} $showMore={Math.floor(itemIndex / MAX_ITEM_NUM) <= showMore}>
+                  <Item item={item} />
+                </S.ItemContainer>
+              ))}
             </S.ItemLine>
           ))}
         </S.OptionContainer>
