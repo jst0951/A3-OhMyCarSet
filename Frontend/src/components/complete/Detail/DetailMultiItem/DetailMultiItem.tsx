@@ -82,9 +82,9 @@ export default function DetailMultiItem() {
     <>
       <S.Section>
         <S.TitleContainer>
-          <S.TitleTextContainer onClick={changeOption}>
+          <S.TitleTextContainer>
             <S.Title>{isOption ? '선택 옵션' : '기본 포함 품목 보기'}</S.Title>
-            <S.SubTitle>{isOption ? '기본 포함 품목 보기' : '선택 옵션'}</S.SubTitle>
+            <S.SubTitle onClick={changeOption}>{isOption ? '기본 포함 품목 보기' : '선택 옵션'}</S.SubTitle>
           </S.TitleTextContainer>
           <S.Price>{isOption && selectPackageState.totalPrice.toLocaleString() + ' 원'} </S.Price>
         </S.TitleContainer>

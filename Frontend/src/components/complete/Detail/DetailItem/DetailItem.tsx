@@ -23,7 +23,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
       <S.Section>
         <S.TitleContainer>
           <S.Title>{data.stepName}</S.Title>
-          <S.Price>{data.price.toLocaleString()}원</S.Price>
+          <S.Price>{data.price.toLocaleString()} 원</S.Price>
         </S.TitleContainer>
         <S.MainContainer>
           <S.MainLeft>
@@ -33,7 +33,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
             <S.SelectedName>{data.selectedName}</S.SelectedName>
           </S.MainLeft>
           <S.MainRight>
-            <S.OptionPrice>+ {data.price.toLocaleString()}원</S.OptionPrice>
+            <S.OptionPrice>+ {data.price.toLocaleString()} 원</S.OptionPrice>
             <S.Correction onClick={correctionClickHandler}>
               <CorrectionIcon />
               수정
