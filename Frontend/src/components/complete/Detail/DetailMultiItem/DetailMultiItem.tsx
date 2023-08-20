@@ -27,6 +27,10 @@ interface ItemProps {
 
 const optionList = [
   {
+    key: 'all',
+    text: '전체',
+  },
+  {
     key: 'system',
     text: '시스템',
   },
@@ -52,6 +56,19 @@ export default function DetailMultiItem() {
   const [selectedFilter, setSelectedFilter] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [isOption, setIsOption] = useState(true);
+  let allOption: ItemProps[] = [];
+  let allSelected: SelectPackageData[] = [];
+
+  defaultOption &&
+    defaultOption.defaultOptionCategoryDtoList.map((categoryDto) => {
+      categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (allOption = [...allOption, item]));
+    });
+
+  selectPackageState.subList.map((selectedCategoryData: SelectPackageData[]) => {
+    selectedCategoryData.map((data: SelectPackageData) => {
+      allSelected = [...allSelected, data];
+    });
+  });
 
   const handleFilterOption = (idx: number) => {
     setSelectedFilter(idx);
@@ -98,7 +115,17 @@ export default function DetailMultiItem() {
               ))}
             </S.FilterContainer>
             <S.ListContainer>
-              {selectPackageState.subList[selectedFilter].length > 0 ? (
+              {selectedFilter === 0 ? (
+                allSelected.length ? (
+                  allSelected.map((data: SelectPackageData) => (
+                    <S.ItemContainer key={data.name}>
+                      <DetailItem data={data} index={selectedFilter} />
+                    </S.ItemContainer>
+                  ))
+                ) : (
+                  <S.EmptyContainer>해당 카테고리에 선택된 옵션이 없습니다.</S.EmptyContainer>
+                )
+              ) : selectPackageState.subList[selectedFilter].length > 0 ? (
                 selectPackageState.subList[selectedFilter].map((data: SelectPackageData) => (
                   <S.ItemContainer key={data.id}>
                     <DetailItem data={data} index={selectedFilter} />
@@ -124,14 +151,11 @@ export default function DetailMultiItem() {
             </S.FilterContainer>
             <S.ListContainer>
               {selectedCategory === -1
-                ? defaultOption &&
-                  defaultOption.defaultOptionCategoryDtoList.map((categoryDto) =>
-                    categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <S.ItemContainer key={item.optionId}>
-                        <DetailItem data={item} />
-                      </S.ItemContainer>
-                    ))
-                  )
+                ? allOption.map((item: ItemProps) => (
+                    <S.ItemContainer key={item.optionId}>
+                      <DetailItem data={item} />
+                    </S.ItemContainer>
+                  ))
                 : defaultOption &&
                   defaultOption.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
                     (item: ItemProps) => (
