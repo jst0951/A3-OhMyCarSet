@@ -6,6 +6,7 @@ import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
+import { useEffect, useState } from 'react';
 
 interface Props {
   isActive: boolean;
@@ -18,19 +19,29 @@ export default function OptionHeader({ isActive, optionData }: Props) {
   const { packageList } = useSelectPackageState();
   const { filterId } = useCurrentPackageState();
   const { selfModeStep } = useSelfModeContext();
+  const [isRecommended, setIsRecommended] = useState(false);
 
-  let rateText = '구매자의';
-  if (pathname === '/guide-mode') {
-    const recommendList =
-      selfModeStep < 7 ? dataList[selfModeStep - 1].recommendList : packageList[filterId - 1].recommendList;
-    if (recommendList === undefined) return;
-    if (recommendList.some((id) => id === optionData.id)) rateText = '나와 비슷한';
-  }
+  useEffect(() => {
+    if (pathname === '/guide-mode') {
+      const recommendList =
+        selfModeStep < 7 ? dataList[selfModeStep - 1].recommendList : packageList[filterId - 1].recommendList;
+      if (recommendList === undefined) return;
+      if (recommendList.some((id) => id === optionData.id)) setIsRecommended(true);
+    }
+  }, []);
 
   return (
     <>
-      <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-      <S.SalePercent $isActive={isActive}>{`${rateText} ${Math.floor(
+      <S.IconContainer>
+        <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
+        {isRecommended && (
+          <S.TagContainer>
+            <S.Tag>20대 61%</S.Tag>
+            <S.Tag>여성 65%</S.Tag>
+          </S.TagContainer>
+        )}
+      </S.IconContainer>
+      <S.SalePercent $isActive={isActive}>{`${isRecommended ? '나와 비슷한' : '구매자의'} ${Math.floor(
         optionData.purchaseRate
       )}%가 선택했어요!`}</S.SalePercent>
     </>
