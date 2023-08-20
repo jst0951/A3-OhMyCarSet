@@ -46,3 +46,7 @@ export const categoryNameList = [
     text: '휠 선택',
   },
 ];
+
+// route
+export const SELF_MODE = '/self-mode';
+export const GUIDE_MODE = '/guide-mode';

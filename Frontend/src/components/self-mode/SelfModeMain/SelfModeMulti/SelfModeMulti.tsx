@@ -10,6 +10,7 @@ import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
+import { SELF_MODE } from '@/constants';
 
 const optionList = [
   {
@@ -59,7 +60,7 @@ export default function SelfModeMulti() {
 
   const fetchDataByMode = async (key: string, idx: number) => {
     const endpoint = `selective_option/option_package/${key}`;
-    if (pathname === '/self-mode') {
+    if (pathname === SELF_MODE) {
       return await fetchData(endpoint);
     } else {
       return await fetchPost(endpoint, {

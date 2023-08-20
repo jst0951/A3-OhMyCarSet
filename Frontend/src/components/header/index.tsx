@@ -7,6 +7,7 @@ import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
 import { useLocation } from 'react-router-dom';
+import { GUIDE_MODE, SELF_MODE } from '@/constants';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -16,9 +17,9 @@ export default function Header() {
     switch (pathname) {
       case '/':
         return 'default';
-      case '/self-mode':
+      case SELF_MODE:
         return 'self';
-      case '/guide-mode':
+      case GUIDE_MODE:
         return 'guide';
       default:
         return 'default';
