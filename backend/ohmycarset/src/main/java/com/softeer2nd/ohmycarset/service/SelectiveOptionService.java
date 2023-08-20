@@ -215,6 +215,7 @@ public class SelectiveOptionService {
             List<PackageComponent> components = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(categoryName, recommendedPackage.getId());
             response.add(new OptionPackageDto(recommendedPackage, components, similarPercentage, tagDtoList));
         }
+        response.sort(Comparator.comparing(OptionPackageDto::getPurchaseRate, Comparator.reverseOrder()));
 
         // 남은 패키지옵션 추가
         Long countTotalUser = purchaseHistoryRepository.count();
