@@ -1,0 +1,22 @@
+import { SelectTagData } from '@/contexts/SelectTagProvide';
+
+type BodyType = SelectTagData;
+
+export default function fetchPost(endpoint: string, body: BodyType) {
+  const PromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => {
+      if (response.ok === true) {
+        return response.json();
+      }
+      throw new Error('에러 발생!');
+    })
+    .catch((error) => console.log(error));
+
+  return PromiseData;
+}
