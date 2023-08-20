@@ -50,7 +50,7 @@ export default function Header() {
           <HeaderRightContainer>
             <DictionaryButton />
             <Icon icon="HeaderDividerIcon" />
-            <CarModelButton />
+            <CarModelButton pathName={pathname} />
           </HeaderRightContainer>
         </HeaderSection>
       </HeaderContainer>
