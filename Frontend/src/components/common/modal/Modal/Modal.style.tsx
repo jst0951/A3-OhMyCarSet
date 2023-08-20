@@ -16,8 +16,6 @@ export const ModalContainer = styled.div`
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.3);
 `;
 
-export const IconContainer = styled.div``;
-
 export const TitleContainer = styled.div`
   margin-top: 8px;
   color: ${colors.mainHyundaiBlue};

@@ -43,9 +43,7 @@ export default function Modal({ icon, title, description, buttonLeft, buttonRigh
   return (
     <S.MainContainer>
       <S.ModalContainer ref={modalRef}>
-        <S.IconContainer>
-          <Icon icon={icon} />
-        </S.IconContainer>
+        <Icon icon={icon} size={36} />
         <S.TitleContainer>{title}</S.TitleContainer>
         <S.DescriptionContainer>
           {description.split('\\n').map((line, index) => (

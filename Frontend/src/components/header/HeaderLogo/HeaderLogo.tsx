@@ -19,7 +19,7 @@ function HeaderLogo({ pathName }: Props) {
     onClick: () => handleOutClick(),
   };
   const buttonRight = {
-    name: '나가지 않을래요',
+    name: '나가지 않을래요!',
     isClose: true,
     onClick: () => handleClick(),
   };
