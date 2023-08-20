@@ -51,7 +51,6 @@ public class SelectiveOptionController {
     public List<OptionPackageDto> getAllPackageByName(@RequestBody UserWithPresetDto userWithPresetDto, @PathVariable String categoryName) {
         validatePath(categoryName);
         // TODO 실제로 정렬하여 전달합니다.
-        System.out.println("controller");
         return selectiveOptionService.getAllPackageByCategory(userWithPresetDto, categoryName);
     }
 
