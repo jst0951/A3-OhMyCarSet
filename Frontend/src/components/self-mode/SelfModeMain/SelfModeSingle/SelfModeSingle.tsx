@@ -7,36 +7,13 @@ import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
-import { DEFAULT_PRICE } from '@/constants';
-
-const categoryNameList = [
-  {
-    key: 'powertrain',
-    text: '파워트레인',
-  },
-  {
-    key: 'wd',
-    text: '구동 방식',
-  },
-  {
-    key: 'body',
-    text: '바디 타입',
-  },
-  {
-    key: 'exterior_color',
-    text: '외장 색상',
-  },
-  {
-    key: 'interior_color',
-    text: '내장 색상',
-  },
-  {
-    key: 'wheel',
-    text: '휠 선택',
-  },
-];
+import { DEFAULT_PRICE, categoryNameList } from '@/constants';
+import { useLocation } from 'react-router-dom';
+import fetchPost from '@/utils/apis/fetchPost';
+import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 
 export default function SelfModeSingle() {
+  const { pathname } = useLocation();
   const { selfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
   const [stepData, setStepData] = useState<OptionDataT[]>([]);
@@ -44,12 +21,22 @@ export default function SelfModeSingle() {
   const [prevTotal, setPrevTotal] = useState<number>(DEFAULT_PRICE);
   const [selectedOption, setSelectedOption] = useState<OptionDataT>();
   const [showFeedback, setShowFeedback] = useState<number>(0);
+  const { selectTag } = useSelectTagContext();
+
+  const fetchDataByMode = async () => {
+    const endpoint = `selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`;
+    if (pathname === '/self-mode') {
+      return await fetchData(endpoint);
+    } else {
+      const recommendId = selectOptionState.dataList[selfModeStep - 1].selectedId;
+      return await fetchPost(endpoint, { ...selectTag, recommendOptionId: [recommendId] });
+    }
+  };
 
   const fetchStepData = async () => {
     try {
-      const response = await fetchData(`selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`);
+      const response = await fetchDataByMode();
       console.log(response);
-      console.log(selectOptionState);
       setStepData(response);
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {

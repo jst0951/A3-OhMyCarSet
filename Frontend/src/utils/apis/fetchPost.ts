@@ -1,6 +1,10 @@
 import { SelectTagData } from '@/contexts/SelectTagProvide';
 
-type BodyType = SelectTagData;
+type SelectTagWithId = SelectTagData & {
+  recommendOptionId: number[];
+};
+
+type BodyType = SelectTagData | SelectTagWithId;
 
 export default function fetchPost(endpoint: string, body: BodyType) {
   const PromiseData = fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
