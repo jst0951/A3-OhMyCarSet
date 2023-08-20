@@ -30,7 +30,13 @@ export default function Detail() {
         </S.TitleContainer>
         <S.SectionContainer>
           {myPalisadeArray.map((data: SelectOptionData, index: number) => (
-            <DetailItem key={data.id} data={data} index={index} />
+            <S.Section key={data.id}>
+              <S.SectionTitleContainer>
+                <S.SectionTitle>{data.stepName}</S.SectionTitle>
+                <S.SectionPrice>{data.price.toLocaleString()} 원</S.SectionPrice>
+              </S.SectionTitleContainer>
+              <DetailItem data={data} index={index} />
+            </S.Section>
           ))}
           <DetailMultiItem />
         </S.SectionContainer>

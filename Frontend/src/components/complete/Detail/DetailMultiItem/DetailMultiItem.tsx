@@ -1,9 +1,9 @@
 import * as S from './DetailMultiItem.style';
 import { useEffect, useState } from 'react';
 import fetchData from '@/utils/apis/fetchData';
-import ItemMain from './ItemMain/ItemMain';
+import DetailItem from '../DetailItem/DetailItem';
 
-type SelectOptionData = {
+type SelectPackageData = {
   id: number;
   name: string;
   price: number;
@@ -99,9 +99,9 @@ export default function DetailMultiItem() {
             </S.FilterContainer>
             <S.ListContainer>
               {selectPackageState.subList[selectedFilter].length > 0 ? (
-                selectPackageState.subList[selectedFilter].map((data: SelectOptionData) => (
+                selectPackageState.subList[selectedFilter].map((data: SelectPackageData) => (
                   <S.ItemContainer key={data.id}>
-                    <ItemMain imgSrc={data.imgSrc} name={data.name} price={data.price} />
+                    <DetailItem data={data} />
                   </S.ItemContainer>
                 ))
               ) : (
@@ -128,7 +128,7 @@ export default function DetailMultiItem() {
                   defaultOption.defaultOptionCategoryDtoList.map((categoryDto) =>
                     categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
                       <S.ItemContainer key={item.optionId}>
-                        <ItemMain imgSrc={item.imgSrc} name={item.optionName} />
+                        <DetailItem data={item} />
                       </S.ItemContainer>
                     ))
                   )
@@ -136,7 +136,7 @@ export default function DetailMultiItem() {
                   defaultOption.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
                     (item: ItemProps) => (
                       <S.ItemContainer key={item.optionId}>
-                        <ItemMain imgSrc={item.imgSrc} name={item.optionName} />
+                        <DetailItem data={item} />
                       </S.ItemContainer>
                     )
                   )}

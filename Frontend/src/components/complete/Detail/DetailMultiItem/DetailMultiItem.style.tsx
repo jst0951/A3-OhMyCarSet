@@ -81,9 +81,8 @@ export const ListContainer = styled.div`
 `;
 
 export const ItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  width: 1024px;
+  height: 100%;
 `;
 
 export const EmptyContainer = styled.div`
