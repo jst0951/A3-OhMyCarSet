@@ -9,7 +9,7 @@ export default function Detail() {
   const myPalisadeTrim = [
     {
       id: 0,
-      imgSrc: 'selective_option/4_1.png',
+      imgSrc: myPalisadeSession.single.dataList[3].imgSrc,
       price: 43460000,
       selectedId: 1,
       selectedName: '팰리세이드 Le Blanc (르블랑)',

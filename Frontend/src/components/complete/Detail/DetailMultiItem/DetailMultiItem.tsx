@@ -101,7 +101,7 @@ export default function DetailMultiItem() {
               {selectPackageState.subList[selectedFilter].length > 0 ? (
                 selectPackageState.subList[selectedFilter].map((data: SelectPackageData) => (
                   <S.ItemContainer key={data.id}>
-                    <DetailItem data={data} />
+                    <DetailItem data={data} index={selectedFilter} />
                   </S.ItemContainer>
                 ))
               ) : (
