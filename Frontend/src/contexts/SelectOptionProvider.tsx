@@ -19,8 +19,8 @@ interface SelectOptionStateT {
 type SelectOptionActionT = {
   type: 'UPDATE_LIST';
   payload: {
-    optionId?: number;
-    newOptionData?: Partial<SelectOptionData>;
+    optionId: number;
+    newOptionData: Partial<SelectOptionData>;
   };
 };
 
@@ -90,7 +90,7 @@ const selectOptionReducer = (state: SelectOptionStateT, action: SelectOptionActi
       );
 
       return {
-        totalPrice: state.totalPrice + (newOptionData?.price || 0),
+        totalPrice: state.totalPrice - state.dataList[optionId - 1].price + (newOptionData?.price || 0),
         dataList: updatedDataList,
       };
     }
