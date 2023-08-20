@@ -73,11 +73,17 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     @Override
     public List<OptionPackage> findAllRemainPackageByCategoryNameAndPackageId(String categoryName, List<Long> recommendOptionIds) {
         String table = categoryName + "_option";
-        String query = "SELECT * FROM " + table + " WHERE id NOT IN (:ids)";
+        if(recommendOptionIds.isEmpty()) {
+            String query = "SELECT * FROM " + table;
+            return namedTemplate.query(query, optionPackageRowMapper);
+        } else {
+            String query = "SELECT * FROM " + table + " WHERE id NOT IN (:ids)";
+            Map<String, Object> params = new HashMap<>();
+            params.put("ids", recommendOptionIds);
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("ids", recommendOptionIds);
+            return namedTemplate.query(query, params, optionPackageRowMapper);
+        }
 
-        return namedTemplate.query(query, params, optionPackageRowMapper);
+
     }
 }
