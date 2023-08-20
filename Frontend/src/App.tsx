@@ -4,7 +4,6 @@ import Router from './routes/Router';
 import { SelectOptionProvider } from './contexts/SelectOptionProvider';
 import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
-import DictionaryOnProvider from './contexts/DictionaryOnProvider';
 import WaitingProvider from './contexts/WaitingProvider';
 import { CarDictProvider } from './contexts/CarDictProvider';
 import ModalProvider from './contexts/ModalProvider';
@@ -34,7 +33,6 @@ export default function App() {
           CurrentPackageProvider,
           SelectPackageProvider,
           CarDictProvider,
-          DictionaryOnProvider,
           WaitingProvider,
           ModalProvider,
         ]}
