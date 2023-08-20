@@ -10,7 +10,15 @@ export default function GuideModeMain() {
   return (
     <>
       <SelfModeNav />
-      <div>{selfModeStep < 7 ? <SelfModeSingle /> : selfModeStep === 7 ? <SelfModeMulti /> : <Loading />}</div>
+      <div>
+        {selfModeStep < 7 ? (
+          <SelfModeSingle />
+        ) : selfModeStep === 7 ? (
+          <SelfModeMulti />
+        ) : (
+          <Loading redirect="MAIN_COMPLETE" />
+        )}
+      </div>
     </>
   );
 }

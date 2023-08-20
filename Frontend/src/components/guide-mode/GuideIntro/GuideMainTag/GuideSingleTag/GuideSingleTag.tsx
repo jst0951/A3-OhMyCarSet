@@ -5,6 +5,11 @@ import { UncheckIcon } from '@/asset/icons';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useState } from 'react';
 
+type TagType = {
+  key: string;
+  value: string;
+};
+
 interface Props {
   step: number;
   show: boolean;
@@ -13,26 +18,29 @@ interface Props {
 
 export default function GuideSingleTag({ step, show, setGuideModeStep }: Props) {
   const [hovered, setHovered] = useState<number | null>(null);
-  const { selectTagList, setSelectTagList } = useSelectTagContext();
+  const { setSelectTag } = useSelectTagContext();
   const TagList = guideSingleTagData[step - 1].tagList;
 
-  const handleClick = (tag: string) => {
-    selectTagList[step - 1].value = tag;
+  const handleClick = (tag: TagType, idx: number) => {
+    if (idx === 0) {
+      setSelectTag((prev) => ({ ...prev, age: Number(tag.value) }));
+    } else if (idx === 1) {
+      setSelectTag((prev) => ({ ...prev, gender: tag.value }));
+    }
     setGuideModeStep(step + 1);
-    setSelectTagList(selectTagList);
   };
 
   return (
     <S.TagListContainer $show={show} $step={step}>
-      {TagList.map((tag, index) => (
+      {TagList.map((tag, idx) => (
         <S.TagContainer
-          key={index}
-          onClick={() => handleClick(tag)}
-          onMouseEnter={() => setHovered(index)}
+          key={idx}
+          onClick={() => handleClick(tag, idx)}
+          onMouseEnter={() => setHovered(idx)}
           onMouseLeave={() => setHovered(null)}
         >
-          <S.TagName>{tag}</S.TagName>
-          {hovered === index ? <CheckIcon /> : <UncheckIcon />}
+          <S.TagName>{tag.key}</S.TagName>
+          {hovered === idx ? <CheckIcon /> : <UncheckIcon />}
         </S.TagContainer>
       ))}
     </S.TagListContainer>

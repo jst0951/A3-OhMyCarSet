@@ -10,7 +10,7 @@ interface MultiProps {
 }
 
 export default function GuideMultiTag({ setShowButton, show }: MultiProps) {
-  const { selectTagList, setSelectTagList } = useSelectTagContext();
+  const { setSelectTag } = useSelectTagContext();
   const [selectedTagList, setSelectedTagList] = useState<Set<string>>(new Set());
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const tagCategory = guideMultiTagData[0].category;
@@ -23,8 +23,8 @@ export default function GuideMultiTag({ setShowButton, show }: MultiProps) {
     }
     setSelectedTagList(selectedTagList);
     if (selectedTagList.size === GUIDE_MAX_TAG_NUM) {
-      selectTagList[2].value = selectedTagList;
-      setSelectTagList(selectTagList);
+      const tagArr = Array.from(selectedTagList);
+      setSelectTag((prev) => ({ ...prev, tag1: tagArr[0], tag2: tagArr[1], tag3: tagArr[2] }));
       setShowButton(true);
     } else {
       setShowButton(false);

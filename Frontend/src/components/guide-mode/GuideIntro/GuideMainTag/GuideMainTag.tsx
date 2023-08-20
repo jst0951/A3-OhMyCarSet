@@ -17,7 +17,7 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
   const [showButton, setShowButton] = useState<boolean>(false);
 
   const clickHandler = () => {
-    setGuideStep('COMPLETE');
+    setGuideStep('LOADING');
   };
 
   return (
@@ -40,7 +40,6 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
             </RectButton>
           </S.ButtonContainer>
         </S.MainLeftContainer>
-
         <S.MainRightContainer>
           <GuideSingleTag step={1} show={guideModeStep === 1} setGuideModeStep={setGuideModeStep} />
           <GuideSingleTag step={2} show={guideModeStep === 2} setGuideModeStep={setGuideModeStep} />
