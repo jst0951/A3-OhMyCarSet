@@ -29,7 +29,7 @@ public class SelectiveOptionRepositoryImpl implements SelectiveOptionRepository 
     }
 
     @Override
-    public List<RequiredOption> findAllOptionByOptionName(String optionName) {
+    public List<RequiredOption> findAllOptionByCategoryName(String optionName) {
         String table = optionName + "_option";
         return jdbcTemplate.query("SELECT * FROM " + table, requiredOptionRowMapper);
     }

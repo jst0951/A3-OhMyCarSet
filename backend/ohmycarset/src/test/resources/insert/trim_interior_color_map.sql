@@ -1,0 +1,10 @@
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (1, 1, 1);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (2, 2, 2);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (3, 3, 2);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (4, 4, 3);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (5, 5, 3);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (6, 6, 3);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (7, 7, 4);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (8, 8, 4);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (9, 9, 4);
+INSERT INTO ohmycarset.trim_interior_color_map (id, i_color_id, trim_id) VALUES (10, 10, 4);

@@ -1,0 +1,2 @@
+INSERT INTO ohmycarset.body_option (id, name, main_description, main_feedback, sub_feedback, price, img_src) VALUES (1, '7인승', '기존 8인승 시트(1열 2명, 2열 3명, 3열 3명)에서 2열 가운데 시트를 없애 2열 탑승객의 편의는 물론, 3열 탑승객의 승하차가 편리합니다', '통로가 있어 쾌적해요!', '쾌적함을 원하신다면, 탁월한 선택입니다.', 0, 'selective_option/3_1.png');
+INSERT INTO ohmycarset.body_option (id, name, main_description, main_feedback, sub_feedback, price, img_src) VALUES (2, '8인승', '1열 2명, 2열 3명, 3열 3명이 탑승할 수 있는 구조로, 많은 인원이 탑승할 수 있도록 배려하였습니다', '공간 활용도가 높아요!', '공간 활용을 원하신다면, 탁월한 선택입니다.', 0, 'selective_option/3_2.png');

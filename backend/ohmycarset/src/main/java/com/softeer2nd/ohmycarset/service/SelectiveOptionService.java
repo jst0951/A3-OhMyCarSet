@@ -34,7 +34,7 @@ public class SelectiveOptionService {
 
     public List<RequiredOptionDto> getAllOptionByCategoryName(String categoryName) {
         // 해당 카테고리의 모든 옵션 목록을 받아옵니다.
-        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // 각 옵션에 대해 구매 건수를 조회합니다.
         Map<RequiredOption, Long> purchaseCountMap = new HashMap<>();
@@ -83,7 +83,7 @@ public class SelectiveOptionService {
                 .collect(Collectors.toList());
 
         List<OptionPackageDto> optionPackageDtoList = new ArrayList<>();
-        Long purchaseCountSum = purchaseCountMap.values().stream().mapToLong(Long::longValue).sum(); // 구매비율 계산용
+        Long purchaseCountSum = purchaseHistoryRepository.count(); // 구매비율 계산용
         for (OptionPackage optionPackage : sortedKeys) {
             List<PackageComponent> packageComponentList = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(categoryName, optionPackage.getId());
             Double purchaseRate = (double) purchaseCountMap.get(optionPackage) / purchaseCountSum * 100;
@@ -145,7 +145,7 @@ public class SelectiveOptionService {
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
 
             String genderToKorean = gender.toString().equals("M") ? "남자" : "여자";
-            List<TagDto> tagDtoList = Arrays.asList(new TagDto(1L, genderToKorean, genderRatio), new TagDto(2L, age + "대", ageRatio));
+            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderToKorean, genderRatio), new TagDto(101L, age + "대", ageRatio));
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
@@ -327,7 +327,14 @@ public class SelectiveOptionService {
                 .collect(Collectors.toList());
 
         // 가장 많이 팔린 옵션을 찾습니다.
-        RequiredOption mostPurchasedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, purchaseCountDtoList.get(0).getOptionId()).orElseThrow();
+        RequiredOption defaultOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, 1L).orElseThrow();
+        RequiredOption mostPurchasedOption;
+        try {
+            mostPurchasedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, purchaseCountDtoList.get(0).getOptionId()).orElseThrow();
+        }
+        catch (Exception e) {
+            mostPurchasedOption = defaultOption;
+        }
 
         // Dto로 변환하여 전달합니다.
         return new RequiredOptionDto(mostPurchasedOption);
@@ -335,7 +342,7 @@ public class SelectiveOptionService {
 
     private RequiredOptionDto getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags(String categoryName, Character gender, Integer age, List<Long> tagIds) {
         // 모든 옵션 목록에 대해 진행합니다.
-        final List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByOptionName(categoryName);
+        final List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
 
         // 1. 사용자가 선택한 태그가 포함되는 옵션들을 불러옵니다.
         Map<RequiredOption, List<Tag>> optionTagListMap = new LinkedHashMap<>();
@@ -416,18 +423,24 @@ public class SelectiveOptionService {
         // 3. 트림(고정)과 외장색상 기준으로, "20인치 다크 스퍼터링 휠"과 "20인치 다크 스퍼터링 휠" 중 가장 많이 팔린 것을 반환합니다. 각각 옵션의 id는 2,3입니다.
         Long optionId;
         List<PurchaseCountDto> purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndExteriorColorId(categoryName, exteriorColorId);
-        Long purchaseCount2 = purchaseCountDtoList.stream()
-                .filter(dto -> dto.getOptionId() == 2L)
-                .findAny().orElseThrow()
-                .getCount();
-        Long purchaseCount3 = purchaseCountDtoList.stream()
-                .filter(dto -> dto.getOptionId() == 3L)
-                .findAny().orElseThrow()
-                .getCount();
-        if (purchaseCount2 > purchaseCount3) {
-            optionId = 2L;
-        } else {
-            optionId = 3L;
+        try {
+            Long purchaseCount2 = purchaseCountDtoList.stream()
+                    .filter(dto -> dto.getOptionId() == 2L)
+                    .findAny().orElseThrow()
+                    .getCount();
+            Long purchaseCount3 = purchaseCountDtoList.stream()
+                    .filter(dto -> dto.getOptionId() == 3L)
+                    .findAny().orElseThrow()
+                    .getCount();
+
+            if (purchaseCount2 > purchaseCount3) {
+                optionId = 2L;
+            } else {
+                optionId = 3L;
+            }
+        }
+        catch (Exception e) {
+            optionId = 1L;
         }
         RequiredOption option = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, optionId).orElseThrow();
         return new RequiredOptionDto(option);

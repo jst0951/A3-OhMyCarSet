@@ -1,0 +1,10 @@
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (1, 4, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (2, 7, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (3, 14, 2);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (4, 19, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (5, 25, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (6, 26, 2);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (7, 31, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (8, 35, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (9, 36, 1);
+INSERT INTO ohmycarset.purchase_temperature_map (id, purchase_id, option_id) VALUES (10, 43, 1);

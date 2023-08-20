@@ -1,0 +1,12 @@
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (13, '12.3인치 내비게이션', 1, 'core_option/1.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (14, '내비게이션 기반 스마트 크루즈 컨트롤', 1, 'core_option/2.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (15, '베젤리스 인사이드 미러', 1, 'core_option/3.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (16, '20인치 알로이 휠', 2, 'core_option/4.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (17, '서라운드 뷰 모니터', 2, 'core_option/5.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (18, '12.3인치 클러스터(컬러 LCD)', 2, 'core_option/6.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (19, '2열 수동식 도어 커튼', 3, 'core_option/7.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (20, '스마트 자세제어', 3, 'core_option/8.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (21, '전후석 통합 터치 공조 컨트롤', 3, 'core_option/9.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (22, 'KRELL 프리미엄 사운드', 4, 'core_option/10.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (23, '원격 스마트 주차 보조', 4, 'core_option/11.png');
+INSERT INTO ohmycarset.core_option (id, name, trim_id, img_src) VALUES (24, '캘리그라피 전용 디자인', 4, 'core_option/12.png');

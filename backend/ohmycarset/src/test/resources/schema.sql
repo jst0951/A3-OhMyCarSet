@@ -1,215 +1,452 @@
-CREATE TABLE exterior_color
+CREATE SCHEMA IF NOT EXISTS ohmycarset;
+USE ohmycarset;
+
+create table body_option
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`     VARCHAR(40),
-    color_code VARCHAR(40),
-    img_src    VARCHAR(200)
+    id               bigint auto_increment
+        primary key,
+    `name`             varchar(40)   null,
+    main_description varchar(1024) null,
+    main_feedback    varchar(255)  null,
+    sub_feedback     varchar(255)  null,
+    price            int           null,
+    img_src          varchar(255)  null
 );
 
-CREATE TABLE trim
+create table car_dict
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`        VARCHAR(40),
-    `description` VARCHAR(40),
-    default_price INT,
-    rep_color_id  BIGINT,
-    isBest        BOOLEAN,
-    FOREIGN KEY (rep_color_id) REFERENCES exterior_color (id)
+    id          bigint auto_increment
+        primary key,
+    keyword     varchar(40)  null,
+    `description` varchar(255) null,
+    img_src     varchar(200) null
 );
 
-CREATE TABLE trim_exterior_color_map
+create table default_category
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
-    e_color_id BIGINT,
-    trim_id    BIGINT,
-    FOREIGN KEY (e_color_id) REFERENCES exterior_color (id),
-    FOREIGN KEY (trim_id) REFERENCES trim (id)
+    id   bigint      not null
+        primary key,
+    `name` varchar(40) null
 );
 
-CREATE TABLE interior_color
+create table default_option
 (
-    id      BIGINT PRIMARY KEY,
-    `name`  VARCHAR(40),
-    img_src VARCHAR(200)
+    id              bigint       not null
+        primary key,
+    `name`            varchar(255) null,
+    img_src         varchar(255) null,
+    def_category_id bigint       null,
+    constraint default_option_ibfk_1
+        foreign key (def_category_id) references default_category (id)
 );
 
-CREATE TABLE trim_interior_color_map
+create table exterior_color
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
-    i_color_id BIGINT,
-    trim_id    BIGINT,
-    FOREIGN KEY (i_color_id) REFERENCES interior_color (id),
-    FOREIGN KEY (trim_id) REFERENCES trim (id)
+    id         bigint       not null
+        primary key,
+    `name`       varchar(40)  null,
+    color_code varchar(40)  null,
+    img_src    varchar(200) null
 );
 
-CREATE TABLE default_category
+create table exterior_color_option
 (
-    id     BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name` varchar(40)
+    id            bigint auto_increment
+        primary key,
+    `name`          varchar(40)  null,
+    main_feedback varchar(255) null,
+    sub_feedback  varchar(255) null,
+    price         int          null,
+    img_src       varchar(255) null,
+    icon_src      varchar(255) null
 );
 
-CREATE TABLE default_option
+create table external_device_option
 (
-    id              BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`          varchar(255),
-    img_src         varchar(255),
-    def_category_id BIGINT,
-    FOREIGN KEY (def_category_id) REFERENCES default_category (id)
+    id       bigint auto_increment
+        primary key,
+    `name`     varchar(40)  null,
+    price    int          null,
+    icon_src varchar(255) null
 );
 
-CREATE TABLE trim_default_option_map
+create table external_device_option_component
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    def_option_id BIGINT,
-    trim_id       BIGINT,
-    FOREIGN KEY (def_option_id) REFERENCES default_option (id),
-    FOREIGN KEY (trim_id) REFERENCES trim (id)
+    id          bigint auto_increment
+        primary key,
+    package_id  bigint       null,
+    `name`        varchar(40)  null,
+    `description` varchar(255) null,
+    img_src     varchar(255) null,
+    constraint external_device_option_component_ibfk_1
+        foreign key (package_id) references external_device_option (id)
 );
 
-CREATE TABLE core_option
+create table interior_color
 (
-    id      BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`  varchar(40),
-    trim_id BIGINT,
-    img_src varchar(200),
-    FOREIGN KEY (trim_id) REFERENCES trim (id)
+    id      bigint       not null
+        primary key,
+    `name`    varchar(40)  null,
+    img_src varchar(200) null
 );
 
-CREATE TABLE powertrain_option
+create table interior_color_option
 (
-    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`           VARCHAR(40),
-    main_description VARCHAR(1024),
-    sub_description  VARCHAR(1024),
-    main_feedback    VARCHAR(255),
-    sub_feedback     VARCHAR(255),
-    price            INT,
-    img_src          VARCHAR(255)
+    id            bigint auto_increment
+        primary key,
+    `name`          varchar(40)  null,
+    main_feedback varchar(255) null,
+    sub_feedback  varchar(255) null,
+    price         int          null,
+    img_src       varchar(255) null,
+    icon_src      varchar(255) null
 );
 
-CREATE TABLE wd_option
+create table internal_device_option
 (
-    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`           VARCHAR(40),
-    main_description VARCHAR(1024),
-    main_feedback    VARCHAR(255),
-    sub_feedback     VARCHAR(255),
-    price            INT,
-    img_src          VARCHAR(255)
+    id       bigint auto_increment
+        primary key,
+    `name`     varchar(40)  null,
+    price    int          null,
+    icon_src varchar(255) null
 );
 
-CREATE TABLE body_option
+create table internal_device_option_component
 (
-    id               BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`           VARCHAR(40),
-    main_description VARCHAR(1024),
-    main_feedback    VARCHAR(255),
-    sub_feedback     VARCHAR(255),
-    price            INT,
-    img_src          VARCHAR(255)
+    id          bigint auto_increment
+        primary key,
+    package_id  bigint       null,
+    `name`        varchar(40)  null,
+    `description` varchar(255) null,
+    img_src     varchar(255) null,
+    constraint internal_device_option_component_ibfk_1
+        foreign key (package_id) references internal_device_option (id)
 );
 
-CREATE TABLE exterior_color_option
+create table powertrain_option
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`        VARCHAR(40),
-    main_feedback VARCHAR(255),
-    sub_feedback  VARCHAR(255),
-    price         INT,
-    img_src       VARCHAR(255),
-    icon_src      VARCHAR(255)
+    id               bigint auto_increment
+        primary key,
+    `name`             varchar(40)   null,
+    main_description varchar(1024) null,
+    sub_description  varchar(1024) null,
+    main_feedback    varchar(255)  null,
+    sub_feedback     varchar(255)  null,
+    price            int           null,
+    img_src          varchar(255)  null
 );
 
-CREATE TABLE interior_color_option
+create table system_option
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`        VARCHAR(40),
-    main_feedback VARCHAR(255),
-    sub_feedback  VARCHAR(255),
-    price         INT,
-    img_src       VARCHAR(255),
-    icon_src      VARCHAR(255)
+    id       bigint auto_increment
+        primary key,
+    `name`     varchar(40)  null,
+    price    int          null,
+    icon_src varchar(255) null
 );
 
-CREATE TABLE wheel_option
+create table system_option_component
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`        VARCHAR(40),
-    main_feedback VARCHAR(255),
-    sub_feedback  VARCHAR(255),
-    price         INT,
-    img_src       VARCHAR(255),
-    icon_src      VARCHAR(255)
+    id          bigint auto_increment
+        primary key,
+    package_id  bigint       null,
+    `name`        varchar(40)  null,
+    `description` varchar(255) null,
+    img_src     varchar(255) null,
+    constraint system_option_component_ibfk_1
+        foreign key (package_id) references system_option (id)
 );
 
-CREATE TABLE system_option
+create table tag
 (
-    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`   VARCHAR(40),
-    price    INT,
-    icon_src VARCHAR(255)
+    id   bigint      not null
+        primary key,
+    `name` varchar(40) null
 );
 
-CREATE TABLE system_option_component
+create table tag_body_map
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    package_id   BIGINT,
-    `name`        VARCHAR(40),
-    `description` VARCHAR(255),
-    img_src       VARCHAR(255),
-    FOREIGN KEY (package_id) REFERENCES system_option (id)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_body_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_body_map_ibfk_2
+        foreign key (option_id) references body_option (id)
 );
 
-CREATE TABLE temperature_option
+create table tag_external_device_map
 (
-    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`   VARCHAR(40),
-    price    INT,
-    icon_src VARCHAR(255)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_external_device_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_external_device_map_ibfk_2
+        foreign key (option_id) references external_device_option (id)
 );
 
-CREATE TABLE temperature_option_component
+create table tag_internal_device_map
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    package_id   BIGINT,
-    `name`        VARCHAR(40),
-    `description` VARCHAR(255),
-    img_src       VARCHAR(255),
-    FOREIGN KEY (package_id) REFERENCES temperature_option (id)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_internal_device_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_internal_device_map_ibfk_2
+        foreign key (option_id) references internal_device_option (id)
 );
 
-CREATE TABLE external_device_option
+create table tag_powertrain_map
 (
-    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`   VARCHAR(40),
-    price    INT,
-    icon_src VARCHAR(255)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_powertrain_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_powertrain_map_ibfk_2
+        foreign key (option_id) references powertrain_option (id)
 );
 
-CREATE TABLE external_device_option_component
+create table tag_system_map
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    package_id BIGINT,
-    `name`        VARCHAR(40),
-    `description` VARCHAR(255),
-    img_src       VARCHAR(255),
-    FOREIGN KEY (package_id) REFERENCES external_device_option (id)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_system_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_system_map_ibfk_2
+        foreign key (option_id) references system_option (id)
 );
 
-CREATE TABLE internal_device_option
+create table temperature_option
 (
-    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
-    `name`   VARCHAR(40),
-    price    INT,
-    icon_src VARCHAR(255)
+    id       bigint auto_increment
+        primary key,
+    `name`     varchar(40)  null,
+    price    int          null,
+    icon_src varchar(255) null
 );
 
-CREATE TABLE internal_device_option_component
+create table tag_temperature_map
 (
-    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    package_id BIGINT,
-    `name`        VARCHAR(40),
-    `description` VARCHAR(255),
-    img_src       VARCHAR(255),
-    FOREIGN KEY (package_id) REFERENCES internal_device_option (id)
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_temperature_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_temperature_map_ibfk_2
+        foreign key (option_id) references temperature_option (id)
+);
+
+create table temperature_option_component
+(
+    id          bigint auto_increment
+        primary key,
+    package_id  bigint       null,
+    `name`        varchar(40)  null,
+    `description` varchar(255) null,
+    img_src     varchar(255) null,
+    constraint temperature_option_component_ibfk_1
+        foreign key (package_id) references temperature_option (id)
+);
+
+create table trim
+(
+    id            bigint      not null
+        primary key,
+    `name`          varchar(40) null,
+    `description`   varchar(40) null,
+    default_price int         null,
+    rep_color_id  bigint      null,
+    isBest        boolean  null,
+    constraint trim_ibfk_1
+        foreign key (rep_color_id) references exterior_color (id)
+);
+
+create table core_option
+(
+    id      bigint auto_increment
+        primary key,
+    `name`    varchar(40)  null,
+    trim_id bigint       null,
+    img_src varchar(200) null,
+    constraint core_option_ibfk_1
+        foreign key (trim_id) references trim (id)
+);
+
+create table trim_default_option_map
+(
+    id            bigint auto_increment
+        primary key,
+    def_option_id bigint null,
+    trim_id       bigint null,
+    constraint trim_default_option_map_ibfk_1
+        foreign key (def_option_id) references default_option (id),
+    constraint trim_default_option_map_ibfk_2
+        foreign key (trim_id) references trim (id)
+);
+
+create table trim_exterior_color_map
+(
+    id         bigint auto_increment
+        primary key,
+    e_color_id bigint null,
+    trim_id    bigint null,
+    constraint trim_exterior_color_map_ibfk_1
+        foreign key (e_color_id) references exterior_color (id),
+    constraint trim_exterior_color_map_ibfk_2
+        foreign key (trim_id) references trim (id)
+);
+
+create table trim_interior_color_map
+(
+    id         bigint auto_increment
+        primary key,
+    i_color_id bigint null,
+    trim_id    bigint null,
+    constraint trim_interior_color_map_ibfk_1
+        foreign key (i_color_id) references interior_color (id),
+    constraint trim_interior_color_map_ibfk_2
+        foreign key (trim_id) references trim (id)
+);
+
+create table wd_option
+(
+    id               bigint auto_increment
+        primary key,
+    `name`             varchar(40)   null,
+    main_description varchar(1024) null,
+    main_feedback    varchar(255)  null,
+    sub_feedback     varchar(255)  null,
+    price            int           null,
+    img_src          varchar(255)  null
+);
+
+create table tag_wd_map
+(
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_wd_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_wd_map_ibfk_2
+        foreign key (option_id) references wd_option (id)
+);
+
+create table wheel_option
+(
+    id            bigint auto_increment
+        primary key,
+    `name`          varchar(40)  null,
+    main_feedback varchar(255) null,
+    sub_feedback  varchar(255) null,
+    price         int          null,
+    img_src       varchar(255) null,
+    icon_src      varchar(255) null
+);
+
+create table purchase_history
+(
+    id                bigint not null
+        primary key,
+    trim_id           bigint null,
+    powertrain_id     bigint null,
+    wd_id             bigint null,
+    body_id           bigint null,
+    exterior_color_id bigint null,
+    interior_color_id bigint null,
+    wheel_id          bigint null,
+    age               int    null,
+    gender            char   null,
+    tag1_id           bigint null,
+    tag2_id           bigint null,
+    tag3_id           bigint null,
+    constraint purchase_history_ibfk_1
+        foreign key (trim_id) references trim (id),
+    constraint purchase_history_ibfk_10
+        foreign key (tag3_id) references tag (id),
+    constraint purchase_history_ibfk_2
+        foreign key (powertrain_id) references powertrain_option (id),
+    constraint purchase_history_ibfk_3
+        foreign key (wd_id) references wd_option (id),
+    constraint purchase_history_ibfk_4
+        foreign key (body_id) references body_option (id),
+    constraint purchase_history_ibfk_5
+        foreign key (exterior_color_id) references exterior_color_option (id),
+    constraint purchase_history_ibfk_6
+        foreign key (interior_color_id) references interior_color_option (id),
+    constraint purchase_history_ibfk_7
+        foreign key (wheel_id) references wheel_option (id),
+    constraint purchase_history_ibfk_8
+        foreign key (tag1_id) references tag (id),
+    constraint purchase_history_ibfk_9
+        foreign key (tag2_id) references tag (id)
+);
+
+create table purchase_external_device_map
+(
+    id          bigint auto_increment
+        primary key,
+    purchase_id bigint null,
+    option_id   bigint null,
+    constraint purchase_external_device_map_ibfk_1
+        foreign key (purchase_id) references purchase_history (id),
+    constraint purchase_external_device_map_ibfk_2
+        foreign key (option_id) references external_device_option (id)
+);
+
+create table purchase_internal_device_map
+(
+    id          bigint auto_increment
+        primary key,
+    purchase_id bigint null,
+    option_id   bigint null,
+    constraint purchase_internal_device_map_ibfk_1
+        foreign key (purchase_id) references purchase_history (id),
+    constraint purchase_internal_device_map_ibfk_2
+        foreign key (option_id) references internal_device_option (id)
+);
+
+create table purchase_system_map
+(
+    id          bigint auto_increment
+        primary key,
+    purchase_id bigint null,
+    option_id   bigint null,
+    constraint purchase_system_map_ibfk_1
+        foreign key (purchase_id) references purchase_history (id),
+    constraint purchase_system_map_ibfk_2
+        foreign key (option_id) references system_option (id)
+);
+
+create table purchase_temperature_map
+(
+    id          bigint auto_increment
+        primary key,
+    purchase_id bigint null,
+    option_id   bigint null,
+    constraint purchase_temperature_map_ibfk_1
+        foreign key (purchase_id) references purchase_history (id),
+    constraint purchase_temperature_map_ibfk_2
+        foreign key (option_id) references temperature_option (id)
+);
+
+create table tag_wheel_map
+(
+    id        bigint auto_increment
+        primary key,
+    tag_id    bigint null,
+    option_id bigint null,
+    constraint tag_wheel_map_ibfk_1
+        foreign key (tag_id) references tag (id),
+    constraint tag_wheel_map_ibfk_2
+        foreign key (option_id) references wheel_option (id)
 );

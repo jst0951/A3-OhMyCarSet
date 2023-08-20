@@ -1,0 +1,10 @@
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (1, 1, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (2, 4, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (3, 7, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (4, 16, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (5, 20, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (6, 20, 3);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (7, 21, 1);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (8, 21, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (9, 25, 2);
+INSERT INTO ohmycarset.purchase_external_device_map (id, purchase_id, option_id) VALUES (10, 32, 2);

@@ -1,0 +1,11 @@
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (1, 8, 1);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (2, 11, 1);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (3, 10, 1);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (4, 8, 2);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (5, 11, 2);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (6, 8, 3);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (7, 5, 3);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (8, 6, 3);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (9, 11, 3);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (10, 13, 3);
+INSERT INTO ohmycarset.tag_system_map (id, tag_id, option_id) VALUES (11, 2, 3);

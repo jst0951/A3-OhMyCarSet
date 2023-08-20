@@ -1,0 +1,6 @@
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (1, '크리미 화이트 펄', '', '', 100000, 'selective_option/4_1.png', 'exterior_color/1_color.png');
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (2, '어비스 블랙펄', '', '', 0, 'selective_option/4_2.png', 'exterior_color/2_color.png');
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (3, '그라파이트 그레이 메탈릭', '', '', 0, 'selective_option/4_3.png', 'exterior_color/4_color.png');
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (4, '쉬머링 실버 메탈릭', '', '', 0, 'selective_option/4_4.png', 'exterior_color/3_color.png');
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (5, '문라이트 블루 펄', '', '', 0, 'selective_option/4_5.png', 'exterior_color/5_color.png');
+INSERT INTO ohmycarset.exterior_color_option (id, name, main_feedback, sub_feedback, price, img_src, icon_src) VALUES (6, '가이아 브라운 펄', '', '', 0, 'selective_option/4_6.png', 'exterior_color/6_color.png');
