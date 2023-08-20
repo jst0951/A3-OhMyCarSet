@@ -26,7 +26,7 @@ export default function CarModelButton({ pathName }: Props) {
   };
 
   const handleClick = () => {
-    if (pathName !== '/') {
+    if (pathName !== '/' && pathName !== '/guide-mode') {
       setOpen(true);
       setIsModel(true);
     }
