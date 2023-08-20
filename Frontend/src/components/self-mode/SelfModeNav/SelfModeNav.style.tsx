@@ -16,11 +16,10 @@ export const SelfModeNavContainer = styled.div`
 `;
 
 export const NavCategoryContainer = styled.div<{ $active: boolean; $disabled: boolean }>`
-  width: 120px;
+  width: 128px;
   padding-top: 2px;
 
   cursor: pointer;
-  // TO DO 현재 옵션 다음 옵션들은 클릭 안되게 수정하기
 
   ${({ $active }) =>
     $active &&
@@ -36,14 +35,14 @@ export const NavCategoryContainer = styled.div<{ $active: boolean; $disabled: bo
 
 export const CategoryActiveBorder = styled.div<{ $activeCategory: number }>`
   position: absolute;
-  left: ${({ $activeCategory }) => `${($activeCategory - 1) * 120}px`};
+  left: ${({ $activeCategory }) => `${($activeCategory - 1) * 128}px`};
   bottom: 0;
 
   display: flex;
   justify-content: center;
   text-align: center;
 
-  width: 120px;
+  width: 128px;
   height: 2px;
 
   background-color: ${colors.mainHyundaiBlue};
