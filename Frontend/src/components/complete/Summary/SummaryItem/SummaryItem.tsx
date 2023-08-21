@@ -16,7 +16,7 @@ export default function SummaryItem({ data }: SummaryProps) {
       <S.Section>
         <S.TitleContainer>
           <S.Title>{data.sectionTitle}</S.Title>
-          <S.Price>+ {data.sectionTotal?.toLocaleString()}원</S.Price>
+          <S.Price>+ {data.sectionTotal?.toLocaleString()} 원</S.Price>
         </S.TitleContainer>
         <S.MainContainer>
           {data.subList &&
