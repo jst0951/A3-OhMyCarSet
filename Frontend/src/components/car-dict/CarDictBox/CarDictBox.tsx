@@ -1,4 +1,3 @@
-import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
 import Icon from '../../common/Icon';
 import * as S from './CarDictBox.style';
 import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
@@ -8,8 +7,7 @@ interface Props {
 }
 
 export default function CarDictBox({ children }: Props) {
-  const { dictionaryOn } = useDictionaryOnContext();
-  const { dataList } = useCarDictState();
+  const { dataList, dictionaryOn } = useCarDictState();
   const CarDictDispatch = useCarDictDispatch();
 
   const handleClick = () => {

@@ -8,7 +8,7 @@ export type SelectOptionData = {
   selectedName: string | null;
   price: number;
   imgSrc: string | null;
-  IconSrc?: string | null;
+  recommendList?: number[];
 };
 
 interface SelectOptionStateT {
@@ -19,8 +19,8 @@ interface SelectOptionStateT {
 type SelectOptionActionT = {
   type: 'UPDATE_LIST';
   payload: {
-    optionId?: number;
-    newOptionData?: Partial<SelectOptionData>;
+    optionId: number;
+    newOptionData: Partial<SelectOptionData>;
   };
 };
 
@@ -33,6 +33,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 2,
@@ -41,6 +42,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 3,
@@ -49,6 +51,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 4,
@@ -57,6 +60,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 5,
@@ -65,6 +69,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 6,
@@ -73,6 +78,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
   ],
   totalPrice: DEFAULT_PRICE,
@@ -90,7 +96,7 @@ const selectOptionReducer = (state: SelectOptionStateT, action: SelectOptionActi
       );
 
       return {
-        totalPrice: state.totalPrice + (newOptionData?.price || 0),
+        totalPrice: state.totalPrice - state.dataList[optionId - 1].price + (newOptionData?.price || 0),
         dataList: updatedDataList,
       };
     }

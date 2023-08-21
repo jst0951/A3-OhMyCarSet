@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { SelectOptionData } from '@/contexts/SelectOptionProvider';
 import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
+import { SELF_MODE_URL } from '@/constants';
 
 interface ItemProps {
   optionId: number;
@@ -32,11 +33,11 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
     if ('stepName' in data && index === 0) {
       navigate('/');
     } else if ('stepName' in data && index !== undefined) {
-      navigate('/self-mode');
+      navigate(SELF_MODE_URL);
       setSelfModeStep(index);
     }
     if ('name' in data && index !== undefined) {
-      navigate('/self-mode');
+      navigate(SELF_MODE_URL);
       setSelfModeStep(7);
       currentPackageDispatch({
         type: 'UPDATE_FILTER',

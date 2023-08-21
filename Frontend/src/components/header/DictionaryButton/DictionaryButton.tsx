@@ -1,13 +1,13 @@
 import Icon from '@/components/common/Icon';
-
 import * as S from './DictionaryButton.style';
-import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
+import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
 
 export default function DictionaryButton() {
-  const { dictionaryOn, setDictionaryOn } = useDictionaryOnContext();
+  const { dictionaryOn } = useCarDictState();
+  const CarDictDispatch = useCarDictDispatch();
 
   const toggleDictionary = () => {
-    setDictionaryOn((prev) => !prev);
+    CarDictDispatch({ type: 'TOGGLE_DICT' });
   };
 
   return (
