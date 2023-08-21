@@ -6,8 +6,8 @@ import { CurrentPackageProvider } from './contexts/CurrentPackageProvider';
 import { SelectPackageProvider } from './contexts/SelectPackageProvider';
 import WaitingProvider from './contexts/WaitingProvider';
 import { CarDictProvider } from './contexts/CarDictProvider';
-import ModalProvider from './contexts/ModalProvider';
 import SelectTagProvider from './contexts/SelectTagProvide';
+import { ModalProvider } from './contexts/ModalProvider';
 
 interface AppProviderProps {
   contexts: React.ElementType[];
