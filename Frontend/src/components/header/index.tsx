@@ -44,14 +44,14 @@ export default function Header() {
       <HeaderContainer $isComplete={pathname === COMPLETE_URL} $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
-            <HeaderLogo />
+            <HeaderLogo pathName={pathname} />
             <Icon icon="HeaderDividerIcon" />
             <ModeButton type={getCurrentMode()} />
           </HeaderLeftContainer>
           <HeaderRightContainer>
             <DictionaryButton />
             <Icon icon="HeaderDividerIcon" />
-            <CarModelButton />
+            <CarModelButton pathName={pathname} />
           </HeaderRightContainer>
         </HeaderSection>
       </HeaderContainer>
