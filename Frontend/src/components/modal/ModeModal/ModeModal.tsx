@@ -60,14 +60,15 @@ export default function ModeModal({ mode }: Props) {
   };
 
   const selfToGuide = {
-    title: '[셀프 모드]로 변경하시겠어요?',
-    description: '지금까지 선택했던 옵션들이 \n 유지된 채로 변경됩니다.',
-    buttonRight: selfbuttonRight,
-  };
-  const guideToSelf = {
     title: '[가이드 모드]로 변경하시겠어요?',
     description: '변경하면 지금까지 선택했던 옵션들은 \n 저장되지 않아요.',
     buttonRight: guidebuttonRight,
+  };
+
+  const guideToSelf = {
+    title: '[셀프 모드]로 변경하시겠어요?',
+    description: '지금까지 선택했던 옵션들이 \n 유지된 채로 변경됩니다.',
+    buttonRight: selfbuttonRight,
   };
 
   const data = mode === 'SELF' ? selfToGuide : guideToSelf;
