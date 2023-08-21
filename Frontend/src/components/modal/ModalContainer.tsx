@@ -15,7 +15,7 @@ export default function ModalContainer() {
     model: <CarModelModal />,
     mode: <ListModal />,
     toSelf: <ModeModal mode="SELF" />,
-    toGuide: <ModeModal mode="SELF" />,
+    toGuide: <ModeModal mode="GUIDE" />,
   };
 
   return (
