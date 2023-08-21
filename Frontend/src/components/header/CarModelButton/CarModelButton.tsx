@@ -35,19 +35,19 @@ export default function CarModelButton({ pathName }: Props) {
 
   const handleClick = () => {
     if (pathName !== '/' && pathName !== '/guide-mode') {
-      setOpen(true);
       setIsModel(true);
+      setOpen(true);
     }
     if (open) {
-      setOpen(false);
       setIsModel(false);
+      setOpen(false);
     }
   };
 
   const handleOutClick = () => {
     if (open) {
-      setOpen(false);
       setIsModel(false);
+      setOpen(false);
       setSelfModeStep(1);
       selectOptionDispatch({
         type: 'INIT_LIST',
@@ -72,6 +72,7 @@ export default function CarModelButton({ pathName }: Props) {
       </S.CarModelContainer>
       {isModel && (
         <ModalPortal>
+          (
           <Modal
             icon="ModalReloadIcon"
             title="모델을 변경하시겠어요?"
@@ -80,6 +81,7 @@ export default function CarModelButton({ pathName }: Props) {
             buttonLeft={buttonLeft}
             buttonRight={buttonRight}
           />
+          )
         </ModalPortal>
       )}
     </>
