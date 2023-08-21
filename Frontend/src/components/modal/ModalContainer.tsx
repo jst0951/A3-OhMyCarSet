@@ -14,8 +14,8 @@ export default function ModalContainer() {
     main: <HeaderLogoModal />,
     model: <CarModelModal />,
     mode: <ListModal />,
-    toSelf: <ModeModal mode="SELF" />,
-    toGuide: <ModeModal mode="GUIDE" />,
+    toSelf: <ModeModal currentMode="GUIDE" />,
+    toGuide: <ModeModal currentMode="SELF" />,
   };
 
   return (

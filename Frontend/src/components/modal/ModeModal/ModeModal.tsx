@@ -8,10 +8,10 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  mode: 'SELF' | 'GUIDE';
+  currentMode: 'SELF' | 'GUIDE';
 }
 
-export default function ModeModal({ mode }: Props) {
+export default function ModeModal({ currentMode }: Props) {
   const navigate = useNavigate();
   const { setSelfModeStep } = useSelfModeContext();
   const selectOptionDispatch = useSelectOptionDispatch();
@@ -71,16 +71,16 @@ export default function ModeModal({ mode }: Props) {
     buttonRight: selfbuttonRight,
   };
 
-  const data = mode === 'SELF' ? selfToGuide : guideToSelf;
+  const mode = currentMode === 'SELF' ? selfToGuide : guideToSelf;
 
   return (
     <>
       <Modal
         icon="ModalReloadIcon"
-        title={data.title}
-        description={data.description}
+        title={mode.title}
+        description={mode.description}
         buttonLeft={buttonLeft}
-        buttonRight={data.buttonRight}
+        buttonRight={mode.buttonRight}
       />
     </>
   );
