@@ -22,8 +22,9 @@ export const ItemDescription = styled.div`
   ${bodyMedium2};
   color: ${colors.coolGreyBlack};
   word-break: keep-all;
-  max-width: 80px;
-  max-height: 60px;
+  display: flex;
+  align-items: center;
+  height: 100px;
   overflow: auto;
   max-width: 120px;
 `;
