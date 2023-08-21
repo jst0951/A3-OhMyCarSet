@@ -1,6 +1,7 @@
 package com.softeer2nd.ohmycarset.config;
 
 import com.softeer2nd.ohmycarset.domain.Tag;
+import com.softeer2nd.ohmycarset.domain.selective.OptionPackage;
 import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
@@ -34,7 +35,7 @@ public class CacheUpdateScheduleConfig {
             new ArrayList<>(List.of("system", "temperature", "external_device", "internal_device"));
 
     @Scheduled(fixedRate = refreshPeriod)
-    public void updateCount() {
+    public void count() {
         Runnable runnable = () -> {
             cacheUpdateConfig.count();
         };
@@ -42,7 +43,7 @@ public class CacheUpdateScheduleConfig {
     }
 
     @Scheduled(fixedRate = refreshPeriod)
-    public void updateCountByTagId() {
+    public void countByTagId() {
         // 모든 태그 목록을 불러옵니다.
         List<Long> tagIds = tagRepository.findAll().stream()
                 .map(Tag::getId)
@@ -58,7 +59,7 @@ public class CacheUpdateScheduleConfig {
     }
 
     @Scheduled(fixedRate = refreshPeriod)
-    public void updateCountByCategoryNameAndOptionId() {
+    public void countByCategoryNameAndOptionId() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
             for(RequiredOption requiredOption: requiredOptionList) {
@@ -69,4 +70,18 @@ public class CacheUpdateScheduleConfig {
             }
         }
     }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndPackageId() {
+        for(String categoryName: optionPackageCategoryNameList) {
+            List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
+            for(OptionPackage optionPackage: optionPackageList) {
+                Runnable runnable = () -> {
+                    cacheUpdateConfig.countByCategoryNameAndPackageId(categoryName, optionPackage.getId());
+                };
+                executorService.submit(runnable);
+            }
+        }
+    }
+
 }
