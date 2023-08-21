@@ -2,6 +2,7 @@ package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.PurchaseHistory;
 import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,6 +33,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "count")
     public Long count() {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM purchase_history", Long.class);
     }
@@ -50,6 +52,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByTagId", key = "#tagId")
     public Long countByTagId(Long tagId) {
         String sql = "SELECT COUNT(*) FROM purchase_history \n" +
                 "WHERE ? IN (tag1_id, tag2_id, tag3_id)";
