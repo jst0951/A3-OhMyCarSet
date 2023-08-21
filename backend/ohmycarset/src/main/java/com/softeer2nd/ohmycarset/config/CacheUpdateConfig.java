@@ -27,13 +27,11 @@ public class CacheUpdateConfig {
 
     // purchaseHistoryRepository
     @CachePut(value = "count")
-    @CacheEvict(value = "count", beforeInvocation = true)
     public Long count() {
         return purchaseHistoryRepository.count();
     }
 
     @CachePut(value = "countByTagId", key = "#tagId")
-    @CacheEvict(value = "countByTagId", key = "#tagId")
     public Long countByTagId(Long tagId) {
         return purchaseHistoryRepository.countByTagId(tagId);
     }
