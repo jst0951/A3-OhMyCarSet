@@ -17,8 +17,8 @@ interface SelectOptionStateT {
 }
 
 type SelectOptionActionT = {
-  type: 'UPDATE_LIST';
-  payload: {
+  type: 'UPDATE_LIST' | 'INIT_LIST';
+  payload?: {
     optionId?: number;
     newOptionData?: Partial<SelectOptionData>;
   };
@@ -83,15 +83,21 @@ type SelectOptionDispatchT = (action: SelectOptionActionT) => void;
 const selectOptionReducer = (state: SelectOptionStateT, action: SelectOptionActionT): SelectOptionStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
-      const { optionId, newOptionData } = action.payload;
+      const { optionId, newOptionData } = action.payload ?? {};
 
       const updatedDataList = state.dataList.map((option) =>
         option.id === optionId ? { ...option, ...newOptionData } : option
       );
 
       return {
-        totalPrice: state.totalPrice + (newOptionData?.price || 0),
         dataList: updatedDataList,
+        totalPrice: state.totalPrice + (newOptionData?.price || 0),
+      };
+    }
+    case 'INIT_LIST': {
+      return {
+        dataList: initialState.dataList,
+        totalPrice: DEFAULT_PRICE,
       };
     }
     default:

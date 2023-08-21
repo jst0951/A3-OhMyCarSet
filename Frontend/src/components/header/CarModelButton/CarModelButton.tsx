@@ -2,6 +2,10 @@ import Icon from '@/components/common/Icon';
 import ModalPortal from '@/components/common/modal/ModalPortal/ModalPortal';
 import Modal from '@/components/common/modal/Modal/Modal';
 import { useModalContext } from '@/contexts/ModalProvider';
+import { useSelfModeContext } from '@/contexts/SelfModeProvider';
+import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
+import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +20,10 @@ export default function CarModelButton({ pathName }: Props) {
   const navigate = useNavigate();
   const [isModel, setIsModel] = useState(false);
   const { open, setOpen } = useModalContext();
+  const { setSelfModeStep } = useSelfModeContext();
+  const selectOptionDispatch = useSelectOptionDispatch();
+  const selectPackageDispatch = useSelectPackageDispatch();
+  const currentPackageDispatch = useCurrentPackageDispatch();
   const buttonLeft = {
     name: '변경할래요!',
     onClick: () => handleOutClick(),
@@ -40,6 +48,17 @@ export default function CarModelButton({ pathName }: Props) {
     if (open) {
       setOpen(false);
       setIsModel(false);
+      setSelfModeStep(1);
+      selectOptionDispatch({
+        type: 'INIT_LIST',
+      });
+      selectPackageDispatch({
+        type: 'INIT_LIST',
+      });
+      currentPackageDispatch({
+        type: 'UPDATE_FILTER',
+        payload: 1,
+      });
       navigate('/');
     }
   };

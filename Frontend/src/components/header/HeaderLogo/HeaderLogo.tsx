@@ -5,6 +5,10 @@ import ModalPortal from '@/components/common/modal/ModalPortal/ModalPortal';
 import Modal from '@/components/common/modal/Modal/Modal';
 import { useModalContext } from '@/contexts/ModalProvider';
 import { useState } from 'react';
+import { useSelfModeContext } from '@/contexts/SelfModeProvider';
+import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
+import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
 
 type Props = {
   pathName: string;
@@ -14,6 +18,11 @@ function HeaderLogo({ pathName }: Props) {
   const navigate = useNavigate();
   const [isLogo, setIsLogo] = useState(false);
   const { open, setOpen } = useModalContext();
+  const { setSelfModeStep } = useSelfModeContext();
+  const selectOptionDispatch = useSelectOptionDispatch();
+  const selectPackageDispatch = useSelectPackageDispatch();
+  const currentPackageDispatch = useCurrentPackageDispatch();
+
   const buttonLeft = {
     name: '나갈래요',
     onClick: () => handleOutClick(),
@@ -38,6 +47,17 @@ function HeaderLogo({ pathName }: Props) {
     if (open) {
       setOpen(false);
       setIsLogo(false);
+      setSelfModeStep(1);
+      selectOptionDispatch({
+        type: 'INIT_LIST',
+      });
+      selectPackageDispatch({
+        type: 'INIT_LIST',
+      });
+      currentPackageDispatch({
+        type: 'UPDATE_FILTER',
+        payload: 1,
+      });
       navigate('/');
     }
   };

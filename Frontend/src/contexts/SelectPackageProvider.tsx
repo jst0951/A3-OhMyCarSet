@@ -20,8 +20,8 @@ interface SelectPackageStateT {
 }
 
 type SelectPackageActionT = {
-  type: 'UPDATE_LIST';
-  payload: {
+  type: 'UPDATE_LIST' | 'INIT_LIST';
+  payload?: {
     filterId: number;
     newData: SelectOptionData;
   };
@@ -59,7 +59,9 @@ type SelectPackageDispatchT = (action: SelectPackageActionT) => void;
 const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageActionT): SelectPackageStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
-      const { filterId, newData } = action.payload;
+      const { filterId, newData } = action.payload ?? {};
+
+      if (filterId === undefined || newData === undefined) return state;
 
       const updatedPackageList = state.packageList.map((data) => {
         if (data.filterId === filterId) {
@@ -81,6 +83,14 @@ const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageA
         packageList: updatedPackageList,
         totalCount: state.totalCount + (existingOption ? -1 : 1),
         totalPrice: state.totalPrice + (existingOption ? existingOption.price * -1 : newData.price),
+      };
+    }
+
+    case 'INIT_LIST': {
+      return {
+        packageList: initialState.packageList,
+        totalCount: 0,
+        totalPrice: 0,
       };
     }
     default:
