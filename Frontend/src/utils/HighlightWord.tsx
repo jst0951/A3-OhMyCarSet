@@ -17,6 +17,7 @@ export default function HighlightWord({ children }: Props) {
   let highlightedStr = children || '';
 
   const handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
     const target = event.target as HTMLDivElement;
     if (target.tagName === 'SPAN') {
       CarDictDispatch({ type: 'CLICK_WORD', payload: { keyword: target.textContent || '' } });
