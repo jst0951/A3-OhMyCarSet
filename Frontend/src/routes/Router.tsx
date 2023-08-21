@@ -4,6 +4,7 @@ import SelfModePage from '../pages/SelfModePage/SelfModePage.tsx';
 import GuideModePage from '../pages/GuideModepage/GuideModePage.tsx';
 import CompletePage from '@/pages/CompletePage/CompletePage.tsx';
 import PrivateRoute from './PrivateRoute.tsx';
+import ErrorPage from '@/pages/ErrorPage/ErrorPage.tsx';
 
 export default function Router() {
   return (
@@ -16,6 +17,7 @@ export default function Router() {
           <Route element={<PrivateRoute />}>
             <Route path="/complete" element={<CompletePage />} />
           </Route>
+          <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </>
