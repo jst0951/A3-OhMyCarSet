@@ -21,7 +21,7 @@ export default function fetchPost(endpoint: string, body: BodyType) {
       }
       throw new Error('에러 발생!');
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 
   return PromiseData;
 }
