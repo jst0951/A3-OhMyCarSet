@@ -108,7 +108,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
       <S.ItemContainer $isActive={isActive} $isSelfMode={pathname === SELF_MODE_URL} onClick={onClick} ref={optionRef}>
         <OptionHeader isActive={isActive} optionData={optionData} />
         <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
-        {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
+        {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} name={optionData.name} />}
         {checkShowMore() &&
           ('mainDescription' in optionData && optionData.mainDescription ? (
             <ShowMore

@@ -11,12 +11,16 @@ export default function HighlightWord({ children }: Props) {
   const { dataList, dictionaryOn } = useCarDictState();
   const CarDictDispatch = useCarDictDispatch();
 
-  if (!dictionaryOn) return children;
+  if (!dictionaryOn) {
+    if (children === undefined) return children;
+    return <div dangerouslySetInnerHTML={{ __html: children }} />;
+  }
 
   const keywordArr = dataList.map((item) => item.keyword);
   let highlightedStr = children || '';
 
   const handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
     const target = event.target as HTMLDivElement;
     if (target.tagName === 'SPAN') {
       CarDictDispatch({ type: 'CLICK_WORD', payload: { keyword: target.textContent || '' } });

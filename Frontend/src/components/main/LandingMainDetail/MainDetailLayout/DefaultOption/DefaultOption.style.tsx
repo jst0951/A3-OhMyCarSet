@@ -29,7 +29,7 @@ export const ItemLine = styled.div`
   align-items: flex-start;
   width: 256px;
   padding-left: 24px;
-  gap: 41px;
+  gap: 6px;
 `;
 
 export const ItemContainer = styled.div<{ $showMore: boolean }>`
