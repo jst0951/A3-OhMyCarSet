@@ -13,6 +13,7 @@ export default function OptionImage({ icon }: Props) {
     4: <S.Exterior $icon={iconSrc} />,
     5: <S.Interior $icon={iconSrc} />,
     6: <S.Wheel $icon={iconSrc} />,
+    7: <S.Package $icon={iconSrc} />,
   };
 
   return (

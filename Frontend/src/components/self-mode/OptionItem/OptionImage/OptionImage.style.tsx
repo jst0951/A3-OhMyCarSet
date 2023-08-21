@@ -32,3 +32,11 @@ export const Wheel = styled.div<{ $icon: string }>`
   background-image: url(${(props) => props.$icon});
   background-size: cover;
 `;
+
+export const Package = styled.div<{ $icon: string }>`
+  width: 71.11px;
+  height: 16px;
+  margin-top: 1px;
+  background-image: url(${(props) => props.$icon});
+  background-size: cover;
+`;

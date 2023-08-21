@@ -14,7 +14,7 @@ export default function SelfModeNav() {
   const checkDisabled = (id: number) => {
     if (id <= selfModeStep) return false;
     if (id < 7 && selectOptionState.dataList[id - 1].selectedName === null) return true;
-    if (id === 7 || id === 8) return true;
+    // if (id === 7 || id === 8) return true;
     return false;
   };
 

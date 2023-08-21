@@ -49,12 +49,12 @@ export default function DefaultOption({ isFetched }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [showMore, setShowMore] = useState(0);
-  const AllOption: ItemProps[][] = [[], [], [], []];
+  const allOption: ItemProps[][] = [[], [], [], []];
 
   defaultOption.map((trim, trimIndex) => {
     trim.defaultOptionCategoryDtoList.map((categoryDto) =>
       categoryDto.defaultOptionDetailDtoList.map(
-        (item: ItemProps) => (AllOption[trimIndex] = [...AllOption[trimIndex], item])
+        (item: ItemProps) => (allOption[trimIndex] = [...allOption[trimIndex], item])
       )
     );
   });
@@ -102,22 +102,14 @@ export default function DefaultOption({ isFetched }: Props) {
         <S.OptionContainer>
           {defaultOption.map((trim, trimIndex) => (
             <S.ItemLine key={trim.trimId}>
-              {selectedCategory === -1
-                ? AllOption[trimIndex].map((item: ItemProps, itemIndex) => (
-                    <S.ItemContainer key={item.optionId} $showMore={Math.floor(itemIndex / MAX_ITEM_NUM) <= showMore}>
-                      <Item item={item} />
-                    </S.ItemContainer>
-                  ))
-                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
-                    (item: ItemProps, optionIndex: number) => (
-                      <S.ItemContainer
-                        key={item.optionId}
-                        $showMore={Math.floor(optionIndex / MAX_ITEM_NUM) <= showMore}
-                      >
-                        <Item item={item} />
-                      </S.ItemContainer>
-                    )
-                  )}
+              {(selectedCategory === -1
+                ? allOption[trimIndex]
+                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList
+              ).map((item: ItemProps, itemIndex) => (
+                <S.ItemContainer key={item.optionId} $showMore={Math.floor(itemIndex / MAX_ITEM_NUM) <= showMore}>
+                  <Item item={item} />
+                </S.ItemContainer>
+              ))}
             </S.ItemLine>
           ))}
         </S.OptionContainer>

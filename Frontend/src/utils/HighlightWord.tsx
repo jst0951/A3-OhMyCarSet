@@ -1,5 +1,4 @@
 import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
-import { useDictionaryOnContext } from '@/contexts/DictionaryOnProvider';
 import { colors } from '@/style/theme';
 import { MouseEvent } from 'react';
 import { styled } from 'styled-components';
@@ -9,9 +8,8 @@ interface Props {
 }
 
 export default function HighlightWord({ children }: Props) {
-  const { dataList } = useCarDictState();
+  const { dataList, dictionaryOn } = useCarDictState();
   const CarDictDispatch = useCarDictDispatch();
-  const { dictionaryOn } = useDictionaryOnContext();
 
   if (!dictionaryOn) return children;
 

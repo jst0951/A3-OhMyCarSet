@@ -9,7 +9,7 @@ export default function Detail() {
   const myPalisadeTrim = [
     {
       id: 0,
-      imgSrc: 'selective_option/4_1.png',
+      imgSrc: myPalisadeSession.single.dataList[3].imgSrc,
       price: 43460000,
       selectedId: 1,
       selectedName: '팰리세이드 Le Blanc (르블랑)',
@@ -30,7 +30,13 @@ export default function Detail() {
         </S.TitleContainer>
         <S.SectionContainer>
           {myPalisadeArray.map((data: SelectOptionData, index: number) => (
-            <DetailItem key={data.id} data={data} index={index} />
+            <S.Section key={data.id}>
+              <S.SectionTitleContainer>
+                <S.SectionTitle>{data.stepName}</S.SectionTitle>
+                <S.SectionPrice>{data.price.toLocaleString()} 원</S.SectionPrice>
+              </S.SectionTitleContainer>
+              <DetailItem data={data} index={index} />
+            </S.Section>
           ))}
           <DetailMultiItem />
         </S.SectionContainer>

@@ -23,13 +23,15 @@ export const GuideText = styled.div`
   letter-spacing: -1.36px;
 `;
 
-export const CarImg = styled.div`
+export const CarImg = styled.div<{ $isExternal: boolean }>`
   width: 589px;
   height: 326px;
+  ${({ $isExternal }) => !$isExternal && `padding: 55px;`}
 
   & > img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 `;
 

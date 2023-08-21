@@ -1,9 +1,20 @@
-import GuideMainTag from '@/components/guide-mode/GuideMainTag/GuideMainTag';
-import GuideMainComplete from '../GuideMainComplete/GuideMainComplete';
+import GuideMainTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMainTag';
+import GuideComplete from '../GuideComplete/GuideComplete';
 import { useState } from 'react';
+import GuideModeMain from '../GuideMode/GuideModeMain';
+import Loading from '@/components/loading/Loading';
+
+export type guideStepT = 'TAG_SELECT' | 'LOADING' | 'COMPLETE' | 'GUIDE_MODE_URL';
 
 export default function GuideMain() {
-  const [complete, setComplete] = useState<boolean>(false);
+  const [guideStep, setGuideStep] = useState<guideStepT>('TAG_SELECT');
 
-  return <>{complete ? <GuideMainComplete /> : <GuideMainTag setComplete={setComplete} />}</>;
+  const componentMap = {
+    TAG_SELECT: <GuideMainTag setGuideStep={setGuideStep} />,
+    LOADING: <Loading redirect="GUIDE_COMPLETE" setGuideStep={setGuideStep} />,
+    COMPLETE: <GuideComplete setGuideStep={setGuideStep} />,
+    GUIDE_MODE_URL: <GuideModeMain />,
+  };
+
+  return <>{componentMap[guideStep]}</>;
 }

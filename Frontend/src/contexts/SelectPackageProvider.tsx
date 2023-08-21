@@ -11,6 +11,7 @@ export type SelectPackageData = {
   filterId: number;
   filterName: string;
   selectedList: Map<number, SelectOptionData>;
+  recommendList?: number[];
 };
 
 interface SelectPackageStateT {
@@ -24,6 +25,7 @@ type SelectPackageActionT = {
   payload?: {
     filterId: number;
     newData: SelectOptionData;
+    recommendId?: number;
   };
 };
 
@@ -33,21 +35,25 @@ const initialState: SelectPackageStateT = {
       filterId: 1,
       filterName: '시스템',
       selectedList: new Map(),
+      recommendList: [],
     },
     {
       filterId: 2,
       filterName: '온도관리',
       selectedList: new Map(),
+      recommendList: [],
     },
     {
       filterId: 3,
       filterName: '외부장치',
       selectedList: new Map(),
+      recommendList: [],
     },
     {
       filterId: 4,
       filterName: '내부장치',
       selectedList: new Map(),
+      recommendList: [],
     },
   ],
   totalCount: 0,
@@ -59,7 +65,7 @@ type SelectPackageDispatchT = (action: SelectPackageActionT) => void;
 const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageActionT): SelectPackageStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
-      const { filterId, newData } = action.payload ?? {};
+      const { filterId, newData, recommendId } = action.payload ?? {};
 
       if (filterId === undefined || newData === undefined) return state;
 
@@ -72,25 +78,28 @@ const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageA
           } else {
             updatedMap.set(newData.id, newData);
           }
-          return { ...data, selectedList: updatedMap };
+
+          if (recommendId === undefined) return { ...data, selectedList: updatedMap };
+
+          let newRecommend = data.recommendList;
+
+          if (newRecommend === undefined) {
+            newRecommend = [recommendId];
+          } else {
+            newRecommend.push(recommendId);
+          }
+
+          return { ...data, selectedList: updatedMap, recommendList: newRecommend };
         }
         return data;
       });
 
       const existingOption = state.packageList[filterId - 1].selectedList.get(newData.id);
-
+      console.log(state);
       return {
         packageList: updatedPackageList,
         totalCount: state.totalCount + (existingOption ? -1 : 1),
         totalPrice: state.totalPrice + (existingOption ? existingOption.price * -1 : newData.price),
-      };
-    }
-
-    case 'INIT_LIST': {
-      return {
-        packageList: initialState.packageList,
-        totalCount: 0,
-        totalPrice: 0,
       };
     }
     default:
