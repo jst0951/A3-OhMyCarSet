@@ -12,10 +12,18 @@ import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 
+type CacheDataT = {
+  id: number;
+  dataList: OptionDataT[];
+};
+
 export default function SelfModeSingle() {
   const { pathname } = useLocation();
   const { selfModeStep } = useSelfModeContext();
   const selectOptionState = useSelectOptionState();
+
+  const [cacheData, setCacheData] = useState<CacheDataT>();
+  const [hovered, setHovered] = useState(false);
   const [stepData, setStepData] = useState<OptionDataT[]>([]);
   const [tempTotal, setTempTotal] = useState<number>(DEFAULT_PRICE);
   const [prevTotal, setPrevTotal] = useState<number>(DEFAULT_PRICE);
@@ -23,22 +31,21 @@ export default function SelfModeSingle() {
   const [showFeedback, setShowFeedback] = useState<number>(0);
   const { selectTag } = useSelectTagContext();
 
-  const fetchDataByMode = async () => {
-    const endpoint = `selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`;
+  const fetchDataByMode = async (idx: number) => {
+    const endpoint = `selective_option/required_option/${categoryNameList[idx].key}`;
     if (pathname === SELF_MODE_URL) {
       return await fetchData(endpoint);
     } else {
       return await fetchPost(endpoint, {
         ...selectTag,
-        recommendOptionId: selectOptionState.dataList[selfModeStep - 1].recommendList,
+        recommendOptionId: selectOptionState.dataList[idx].recommendList,
       });
     }
   };
 
   const fetchStepData = async () => {
     try {
-      const response = await fetchDataByMode();
-      console.log(response);
+      const response = cacheData?.id === selfModeStep ? cacheData.dataList : await fetchDataByMode(selfModeStep - 1);
       setStepData(response);
       // 옵션 초기화
       if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
@@ -57,9 +64,25 @@ export default function SelfModeSingle() {
     }
   };
 
+  const cacheStepData = async () => {
+    try {
+      const response = await fetchDataByMode(selfModeStep);
+      // console.log('hovered cache', response);
+      setCacheData({ id: selfModeStep + 1, dataList: response });
+    } catch (error) {
+      console.error('Error fetching core option data:', error);
+    }
+  };
+
   const handleClickOption = (selectedOption: OptionDataT) => {
     setSelectedOption(selectedOption);
   };
+
+  useEffect(() => {
+    if (!hovered) return;
+    if (selfModeStep === 6) return;
+    cacheStepData();
+  }, [hovered]);
 
   useEffect(() => {
     fetchStepData();
@@ -103,6 +126,8 @@ export default function SelfModeSingle() {
             ))}
           </S.OptionContainer>
           <OptionFooter
+            hovered={hovered}
+            setHovered={setHovered}
             selectedData={selectedOption}
             prevTotal={prevTotal}
             tempTotal={tempTotal}

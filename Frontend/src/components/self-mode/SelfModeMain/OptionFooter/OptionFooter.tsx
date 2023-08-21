@@ -12,10 +12,12 @@ import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionP
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
 interface OptionFooterProps {
+  hovered?: boolean;
+  setHovered?: Dispatch<React.SetStateAction<boolean>>;
   selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
-  setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
+  setShowFeedback?: Dispatch<React.SetStateAction<number>>;
 }
 
 interface SelectOptionStateT {
@@ -41,7 +43,14 @@ interface myPalisadeProps {
   multi: SelectPackageStateT;
 }
 
-export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
+export default function OptionFooter({
+  hovered,
+  setHovered,
+  selectedData,
+  prevTotal,
+  tempTotal,
+  setShowFeedback,
+}: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
@@ -62,6 +71,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const myPalisade: myPalisadeProps = {
     single: selectOptionState,
     multi: sectionList,
+  };
+
+  const handleMouseEnter = () => {
+    if (selfModeStep > 6 || setHovered === undefined) return;
+    if (!hovered) setHovered(true);
   };
 
   const handleClickEstimate = () => {
@@ -97,6 +111,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
         setShowFeedback(0);
         setWaiting(false);
         setSelfModeStep((prev) => prev + 1);
+        if (selfModeStep < 7 && setHovered !== undefined) setHovered(false);
       }, 2000);
     } else {
       sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
@@ -143,9 +158,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </S.PrevButton>
-            <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
-              선택완료
-            </RectButton>
+            <div onMouseEnter={handleMouseEnter}>
+              <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
+                선택완료
+              </RectButton>
+            </div>
           </S.CompleteButtonContainer>
         </S.OptionFooterWrapper>
         <S.EstimateContainer ref={estimateRef} $show={showEstimate}>
