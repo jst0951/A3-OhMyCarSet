@@ -2,8 +2,6 @@ import { colors } from '@/style/theme';
 import { headMedium2, popupRegular } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
-export const MainContainer = styled.div``;
-
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;

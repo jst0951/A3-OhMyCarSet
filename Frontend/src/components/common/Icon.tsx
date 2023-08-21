@@ -4,7 +4,7 @@ import { colors } from '@/style/theme';
 const DEFAULT_SIZE = 24;
 const DEFAULT_COLOR = colors.coolGreyBlack;
 
-type IconType = keyof typeof icons;
+export type IconType = keyof typeof icons;
 
 interface IconProps {
   icon: IconType;

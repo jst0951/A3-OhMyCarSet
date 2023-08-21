@@ -1,6 +1,9 @@
 import Icon from '@/components/common/Icon';
 import * as S from './ModeButton.style';
 import { colors } from '@/style/theme';
+import ListModal from '@/components/common/modal/ListModal/ListModal';
+import ModalPortal from '@/components/common/modal/ModalPortal/ModalPortal';
+import { useModalContext } from '@/contexts/ModalProvider';
 
 type modeType = 'default' | 'self' | 'guide';
 
@@ -15,8 +18,10 @@ const modeTextMap: Record<modeType, string> = {
 };
 
 export default function ModeButton({ type }: ModeButtonType) {
+  const { setOpen } = useModalContext();
   const modeText = modeTextMap[type];
 
+  setOpen(true);
   return (
     <>
       <S.HeaderModeContainer type={type}>
@@ -28,6 +33,9 @@ export default function ModeButton({ type }: ModeButtonType) {
           </S.ModeText>
         )}
       </S.HeaderModeContainer>
+      <ModalPortal>
+        <ListModal icon="ModalToolsIcon" mode={type} />
+      </ModalPortal>
     </>
   );
 }
