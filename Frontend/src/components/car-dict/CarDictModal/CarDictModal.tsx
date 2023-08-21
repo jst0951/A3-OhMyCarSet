@@ -5,6 +5,10 @@ import { colors } from '@/style/theme';
 import { MouseEvent, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { useLocation } from 'react-router-dom';
+import { GUIDE_MODE_URL, SELF_MODE_URL } from '@/constants';
+
+const UTF_KR = 44032;
+const NO_CONSONANT = 28;
 
 export default function CarDictModal() {
   const { pathname } = useLocation();
@@ -24,11 +28,22 @@ export default function CarDictModal() {
     }
   };
 
+  const generateTitle = (keyword: string) => {
+    const charCode = keyword.charCodeAt(keyword.length - 1);
+
+    const consonantCode = (charCode - UTF_KR) % NO_CONSONANT;
+
+    if (consonantCode === 0) {
+      return `${keyword}가 뭔가요?`;
+    }
+    return `${keyword}이 뭔가요?`;
+  };
+
   const checkInMode = () => {
     switch (pathname) {
-      case '/self-mode':
+      case SELF_MODE_URL:
         return true;
-      case '/guide-mode':
+      case GUIDE_MODE_URL:
         return true;
       default:
         return false;
@@ -42,7 +57,7 @@ export default function CarDictModal() {
             <S.Header>
               <S.TitleContainer>
                 <Icon icon="DictionaryOnIcon" size={18} color={colors.iconYellow} />
-                <S.Title>{clickedData.keyword}</S.Title>
+                <S.Title>{generateTitle(clickedData.keyword)}</S.Title>
               </S.TitleContainer>
               <S.CloseButton onClick={handleCloseModal}>이해했어요!</S.CloseButton>
             </S.Header>

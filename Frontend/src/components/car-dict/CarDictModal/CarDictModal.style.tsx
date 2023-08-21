@@ -67,6 +67,10 @@ export const CloseButton = styled.div`
   line-height: 16px;
 
   cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const Image = styled.div`

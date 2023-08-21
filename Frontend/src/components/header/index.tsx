@@ -7,6 +7,7 @@ import Icon from '@/components/common/Icon';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import { colors } from '@/style/theme';
 import { useLocation } from 'react-router-dom';
+import { COMPLETE_URL, GUIDE_MODE_URL, SELF_MODE_URL } from '@/constants';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -16,9 +17,9 @@ export default function Header() {
     switch (pathname) {
       case '/':
         return 'default';
-      case '/self-mode':
+      case SELF_MODE_URL:
         return 'self';
-      case '/guide-mode':
+      case GUIDE_MODE_URL:
         return 'guide';
       default:
         return 'default';
@@ -40,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-      <HeaderContainer $isComplete={pathname === '/complete'} $scrollPosition={scrollPosition}>
+      <HeaderContainer $isComplete={pathname === COMPLETE_URL} $scrollPosition={scrollPosition}>
         <HeaderSection>
           <HeaderLeftContainer>
             <HeaderLogo />
