@@ -17,6 +17,7 @@ type DefaultOption = {
 interface ItemProps {
   optionId: number;
   optionName: string;
+  description: string;
   imgSrc: string;
 }
 
@@ -78,8 +79,7 @@ export default function DefaultOption({ isFetched }: Props) {
   };
 
   useEffect(() => {
-    if (isFetched) return;
-    fetchDefaultOption();
+    if (isFetched) fetchDefaultOption();
   }, [isFetched]);
 
   return (
