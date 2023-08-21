@@ -5,7 +5,7 @@ import { colors } from '@/style/theme';
 import { MouseEvent, useRef } from 'react';
 import ReactDom from 'react-dom';
 import { useLocation } from 'react-router-dom';
-import { GUIDE_MODE, SELF_MODE } from '@/constants';
+import { GUIDE_MODE_URL, SELF_MODE_URL } from '@/constants';
 
 const UTF_KR = 44032;
 const NO_CONSONANT = 28;
@@ -41,9 +41,9 @@ export default function CarDictModal() {
 
   const checkInMode = () => {
     switch (pathname) {
-      case SELF_MODE:
+      case SELF_MODE_URL:
         return true;
-      case GUIDE_MODE:
+      case GUIDE_MODE_URL:
         return true;
       default:
         return false;

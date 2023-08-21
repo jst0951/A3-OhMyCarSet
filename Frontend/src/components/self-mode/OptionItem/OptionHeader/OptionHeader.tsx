@@ -7,7 +7,7 @@ import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useEffect, useState } from 'react';
-import { GUIDE_MODE, SELF_MODE } from '@/constants';
+import { GUIDE_MODE_URL, SELF_MODE_URL } from '@/constants';
 
 interface Props {
   isActive: boolean;
@@ -16,7 +16,7 @@ interface Props {
 
 export default function OptionHeader({ isActive, optionData }: Props) {
   const { pathname } = useLocation();
-  const isSelfMode = pathname === SELF_MODE;
+  const isSelfMode = pathname === SELF_MODE_URL;
   const { dataList } = useSelectOptionState();
   const { packageList } = useSelectPackageState();
   const { filterId } = useCurrentPackageState();
@@ -24,7 +24,7 @@ export default function OptionHeader({ isActive, optionData }: Props) {
   const [isRecommended, setIsRecommended] = useState(false);
 
   useEffect(() => {
-    if (pathname === GUIDE_MODE) {
+    if (pathname === GUIDE_MODE_URL) {
       const recommendList =
         selfModeStep < 7 ? dataList[selfModeStep - 1].recommendList : packageList[filterId - 1].recommendList;
       if (recommendList === undefined) return;

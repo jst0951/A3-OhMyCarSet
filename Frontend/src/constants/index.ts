@@ -48,5 +48,6 @@ export const categoryNameList = [
 ];
 
 // route
-export const SELF_MODE = '/self-mode';
-export const GUIDE_MODE = '/guide-mode';
+export const SELF_MODE_URL = '/self-mode';
+export const GUIDE_MODE_URL = '/guide-mode';
+export const COMPLETE_URL = '/complete';

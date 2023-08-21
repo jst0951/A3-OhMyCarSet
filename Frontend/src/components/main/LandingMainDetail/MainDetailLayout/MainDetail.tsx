@@ -8,7 +8,7 @@ import DefaultOption from './DefaultOption/DefaultOption';
 import Icon from '@/components/common/Icon';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GUIDE_MODE, SELF_MODE } from '@/constants';
+import { GUIDE_MODE_URL, SELF_MODE_URL } from '@/constants';
 
 type TrimData = {
   id: number;
@@ -51,11 +51,11 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
   ];
 
   const handleClickMyCar = (id: number) => {
-    if (id === 2) navigate(SELF_MODE);
+    if (id === 2) navigate(SELF_MODE_URL);
   };
 
   const handleClickGuide = () => {
-    navigate(GUIDE_MODE);
+    navigate(GUIDE_MODE_URL);
   };
 
   const updateScroll = () => {

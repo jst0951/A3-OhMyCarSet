@@ -3,6 +3,7 @@ import * as S from './GuideComplete.style';
 import { useNavigate } from 'react-router-dom';
 import { guideStepT } from '../GuideMain/GuideMain';
 import { Dispatch } from 'react';
+import { COMPLETE_URL } from '@/constants';
 
 interface Props {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -12,11 +13,11 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   const navigate = useNavigate();
 
   const linkToComplete = () => {
-    navigate('/complete');
+    navigate(COMPLETE_URL);
   };
 
   const handleClickGuideMode = () => {
-    setGuideStep('GUIDE_MODE');
+    setGuideStep('GUIDE_MODE_URL');
   };
 
   return (

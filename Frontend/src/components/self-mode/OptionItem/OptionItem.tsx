@@ -11,7 +11,7 @@ import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
 import HighlightWord from '@/utils/HighlightWord';
 import OptionHeader from './OptionHeader/OptionHeader';
 import { useLocation } from 'react-router-dom';
-import { SELF_MODE } from '@/constants';
+import { SELF_MODE_URL } from '@/constants';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -105,7 +105,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
   return (
     <>
-      <S.ItemContainer $isActive={isActive} $isSelfMode={pathname === SELF_MODE} onClick={onClick} ref={optionRef}>
+      <S.ItemContainer $isActive={isActive} $isSelfMode={pathname === SELF_MODE_URL} onClick={onClick} ref={optionRef}>
         <OptionHeader isActive={isActive} optionData={optionData} />
         <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
         {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}

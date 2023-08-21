@@ -5,6 +5,7 @@ import LoadingStep from './LoadingStep/LoadingStep';
 import { useNavigate } from 'react-router-dom';
 import { useWaitingContext } from '@/contexts/WaitingProvider';
 import { guideStepT } from '../guide-mode/GuideMain/GuideMain';
+import { COMPLETE_URL } from '@/constants';
 
 const DURATION = 3000;
 
@@ -30,7 +31,7 @@ export default function Loading({ redirect, setGuideStep }: Props) {
     setWaiting(true);
     setTimeout(() => {
       setWaiting(false);
-      navigate('/complete');
+      navigate(COMPLETE_URL);
     }, DURATION);
   };
 

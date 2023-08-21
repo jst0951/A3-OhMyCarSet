@@ -3,7 +3,7 @@ import * as S from './DetailItem.style';
 import { useNavigate } from 'react-router-dom';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { SelectOptionData } from '@/contexts/SelectOptionProvider';
-import { SELF_MODE } from '@/constants';
+import { SELF_MODE_URL } from '@/constants';
 
 interface CompleteOptionProps {
   data: SelectOptionData;
@@ -15,7 +15,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
   const { setSelfModeStep } = useSelfModeContext();
 
   const correctionClickHandler = () => {
-    navigate(SELF_MODE);
+    navigate(SELF_MODE_URL);
     setSelfModeStep(index + 1);
   };
 

@@ -7,7 +7,7 @@ import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
-import { DEFAULT_PRICE, SELF_MODE, categoryNameList } from '@/constants';
+import { DEFAULT_PRICE, SELF_MODE_URL, categoryNameList } from '@/constants';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
@@ -25,7 +25,7 @@ export default function SelfModeSingle() {
 
   const fetchDataByMode = async () => {
     const endpoint = `selective_option/required_option/${categoryNameList[selfModeStep - 1].key}`;
-    if (pathname === SELF_MODE) {
+    if (pathname === SELF_MODE_URL) {
       return await fetchData(endpoint);
     } else {
       return await fetchPost(endpoint, {

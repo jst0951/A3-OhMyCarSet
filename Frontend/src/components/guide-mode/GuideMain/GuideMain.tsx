@@ -4,7 +4,7 @@ import { useState } from 'react';
 import GuideModeMain from '../GuideMode/GuideModeMain';
 import Loading from '@/components/loading/Loading';
 
-export type guideStepT = 'TAG_SELECT' | 'LOADING' | 'COMPLETE' | 'GUIDE_MODE';
+export type guideStepT = 'TAG_SELECT' | 'LOADING' | 'COMPLETE' | 'GUIDE_MODE_URL';
 
 export default function GuideMain() {
   const [guideStep, setGuideStep] = useState<guideStepT>('TAG_SELECT');
@@ -13,7 +13,7 @@ export default function GuideMain() {
     TAG_SELECT: <GuideMainTag setGuideStep={setGuideStep} />,
     LOADING: <Loading redirect="GUIDE_COMPLETE" setGuideStep={setGuideStep} />,
     COMPLETE: <GuideComplete setGuideStep={setGuideStep} />,
-    GUIDE_MODE: <GuideModeMain />,
+    GUIDE_MODE_URL: <GuideModeMain />,
   };
 
   return <>{componentMap[guideStep]}</>;
