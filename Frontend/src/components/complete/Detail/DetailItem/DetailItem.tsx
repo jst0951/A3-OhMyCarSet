@@ -45,6 +45,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
       });
     }
   };
+  // 테스트 주석
 
   return (
     <>
