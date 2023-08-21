@@ -17,12 +17,14 @@ import java.util.stream.Collectors;
 public class CacheUpdateScheduleConfig {
 
     private final CacheUpdateConfig cacheUpdateConfig;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(300);
+    private final long refreshPeriod = 10 * 1000; // ms 단위
+
     private final TagRepository tagRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(300);
 
-    @Scheduled(fixedRate = 10 * 1000)
+    @Scheduled(fixedRate = refreshPeriod)
     public void updateCount() {
         Runnable runnable = () -> {
             cacheUpdateConfig.count();
@@ -30,7 +32,7 @@ public class CacheUpdateScheduleConfig {
         executorService.submit(runnable);
     }
 
-    @Scheduled(fixedRate = 10 * 1000)
+    @Scheduled(fixedRate = refreshPeriod)
     public void updateCountByTagId() {
         // 모든 태그 목록을 불러옵니다.
         List<Long> tagIds = tagRepository.findAll().stream()
