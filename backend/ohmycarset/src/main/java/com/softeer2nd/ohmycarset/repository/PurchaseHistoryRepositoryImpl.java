@@ -60,6 +60,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByCategoryNameAndOptionId", key = "{#optionName, #optionId}")
     public Long countByCategoryNameAndOptionId(String optionName, Long optionId) {
         String column = optionName + "_id";
         String sql = "SELECT COUNT(*) FROM purchase_history\n" +

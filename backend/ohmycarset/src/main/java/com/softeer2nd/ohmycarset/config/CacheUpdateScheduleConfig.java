@@ -1,12 +1,15 @@
 package com.softeer2nd.ohmycarset.config;
 
 import com.softeer2nd.ohmycarset.domain.Tag;
+import com.softeer2nd.ohmycarset.domain.selective.RequiredOption;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
+import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
 import com.softeer2nd.ohmycarset.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +25,13 @@ public class CacheUpdateScheduleConfig {
 
     private final TagRepository tagRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
+    private final SelectiveOptionRepository selectiveOptionRepository;
 
+    private final List<String> requiredOptionCategoryNameList =
+            new ArrayList<>(List.of("powertrain", "wd", "body", "exterior_color", "interior_color", "wheel"));
+
+    private final List<String> optionPackageCategoryNameList =
+            new ArrayList<>(List.of("system", "temperature", "external_device", "internal_device"));
 
     @Scheduled(fixedRate = refreshPeriod)
     public void updateCount() {
@@ -45,6 +54,19 @@ public class CacheUpdateScheduleConfig {
                 cacheUpdateConfig.countByTagId(tagId);
             };
             executorService.submit(runnable);
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void updateCountByCategoryNameAndOptionId() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
+            for(RequiredOption requiredOption: requiredOptionList) {
+                Runnable runnable = () -> {
+                    cacheUpdateConfig.countByCategoryNameAndOptionId(categoryName, requiredOption.getId());
+                };
+                executorService.submit(runnable);
+            }
         }
     }
 }
