@@ -2,9 +2,11 @@ import RectButton from '@/components/common/button/RectButton/RectButton';
 import * as S from './GuideComplete.style';
 import { useNavigate } from 'react-router-dom';
 import { guideStepT } from '../GuideMain/GuideMain';
-import { Dispatch } from 'react';
+import { Dispatch, useEffect } from 'react';
 import { COMPLETE_URL } from '@/constants';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { SectionListT, myPalisadeProps } from '@/components/self-mode/SelfModeMain/OptionFooter/OptionFooter';
 
 interface Props {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -13,6 +15,8 @@ interface Props {
 export default function GuideMainComplete({ setGuideStep }: Props) {
   const navigate = useNavigate();
   const { dataList } = useSelectOptionState();
+  const selectOptionState = useSelectOptionState();
+  const selectPackageState = useSelectPackageState();
 
   const linkToComplete = () => {
     navigate(COMPLETE_URL);
@@ -21,6 +25,28 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   const handleClickGuideMode = () => {
     setGuideStep('GUIDE_MODE_URL');
   };
+
+  const setSessionStorage = () => {
+    console.log(selectPackageState.packageList);
+    const sectionList: SectionListT = {
+      sectionTitle: '옵션',
+      totalPrice: selectPackageState.totalPrice,
+      subList: Array.from(selectPackageState.packageList).map((packageData) =>
+        Array.from(packageData.selectedList.values())
+      ),
+    };
+
+    const myPalisade: myPalisadeProps = {
+      single: selectOptionState,
+      multi: sectionList,
+    };
+
+    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+  };
+
+  useEffect(() => {
+    setSessionStorage();
+  }, []);
 
   return (
     <S.MainContainer>
