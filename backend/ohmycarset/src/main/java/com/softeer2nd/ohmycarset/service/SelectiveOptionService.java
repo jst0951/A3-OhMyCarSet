@@ -21,6 +21,9 @@ import java.util.stream.Stream;
 
 @Service
 public class SelectiveOptionService {
+    private static final String MALE = "남자";
+    private static final String FEMALE = "여자";
+    private static final String NONE = "NONE";
 
     private final SelectiveOptionRepository selectiveOptionRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -118,7 +121,7 @@ public class SelectiveOptionService {
                     .collect(Collectors.toList());
 
             // 태그별 옵션 선택률을 구한다. <A태그와 B옵션이 포함된 견적의 수 / A태그가 포함된 견적의 수 * 100(%)>
-            if(!intersectTags.isEmpty()) {
+            if (!intersectTags.isEmpty()) {
                 for (Tag tag : intersectTags) {
                     // A태그와 B옵션이 포함된 견적의 수 : countByTagIdAndCategoryNameAndOptionId
                     // A태그가 포함된 견적의 수 : countByTagId
@@ -140,12 +143,13 @@ public class SelectiveOptionService {
         }
 
         if (categoryName.equals("exterior_color") || categoryName.equals("interior_color")) {
+            String genderRepresentation = getGenderRepresentation(gender.toString());
+
             Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
-            Double genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+            Double genderRatio = genderRepresentation.equals(NONE) ? 0.0 : getGenderRatio(categoryName, gender, recommendedOption);
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
 
-            String genderToKorean = gender.toString().equals("M") ? "남자" : "여자";
-            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderToKorean, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
@@ -173,7 +177,7 @@ public class SelectiveOptionService {
 
         List<OptionPackage> recommendedPackages = new ArrayList<>();
 
-        if(!userInfoDto.getRecommendOptionId().isEmpty()) {
+        if (!userInfoDto.getRecommendOptionId().isEmpty()) {
             recommendedPackages = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
         }
         List<OptionPackage> remainPackages = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
@@ -231,6 +235,16 @@ public class SelectiveOptionService {
         response.addAll(unsortedRemainPackages);
 
         return response;
+    }
+
+    private String getGenderRepresentation(String gender) {
+        if (gender.equals("M")) {
+            return MALE;
+        } else if (gender.equals("F")) {
+            return FEMALE;
+        } else {
+            return NONE;
+        }
     }
 
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, RequiredOption recommendedOption, List<Long> tagIds) {
@@ -327,13 +341,12 @@ public class SelectiveOptionService {
     private RequiredOptionDto getMostPurchasedOptionByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         // 옵션id, 구매내역수 - 구매내역 수 내림차순으로 정렬
         List<PurchaseCountDto> purchaseCountDtoList;
-        if(gender.equals('N')) {
+        if (gender.equals('N')) {
             purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndAge(categoryName, age)
                     .stream()
                     .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
                     .collect(Collectors.toList());
-        }
-        else {
+        } else {
             purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age)
                     .stream()
                     .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
