@@ -5,8 +5,12 @@ import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
 
 export default function CompleteMain() {
-  const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
   const [isExternal, setIsExternal] = useState<boolean>(true);
+  let getSingleDataList;
+
+  if ('myPalisade' in sessionStorage) {
+    getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
+  }
 
   const clickHandler = (external: boolean) => {
     setIsExternal(external);
