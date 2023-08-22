@@ -148,6 +148,7 @@ export default function SelfModeMulti() {
     const filterData = optionPackage[filterId - 1];
     const packageData = filterData?.find((data) => data.id === packageId)?.components;
     const optionData = packageData?.find((option) => option.id === optionId);
+
     if (optionData) {
       setImgSrc(optionData.imgSrc);
     } else {

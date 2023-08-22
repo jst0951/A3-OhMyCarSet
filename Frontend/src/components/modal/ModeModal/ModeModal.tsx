@@ -36,12 +36,16 @@ export default function ModeModal({ currentMode }: Props) {
 
   const handleChangeToSelf = () => {
     modalDispatch({ type: 'CLOSE_MODAL' });
-    deleteOptionPackageCache();
+    // deleteOptionPackageCache();
     currentPackageDispatch({
       type: 'UPDATE_FILTER',
       payload: 1,
     });
-    navigate(SELF_MODE_URL);
+    navigate(SELF_MODE_URL, {
+      state: {
+        modeChanged: true,
+      },
+    });
   };
 
   const handleChangeToGuide = () => {
