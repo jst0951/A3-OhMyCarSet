@@ -28,9 +28,11 @@ export default function OptionHeader({ isActive, optionData }: Props) {
       const recommendList =
         selfModeStep < 7 ? dataList[selfModeStep - 1].recommendList : packageList[filterId - 1].recommendList;
       if (recommendList === undefined) return;
+
       if (recommendList.some((id) => id === optionData.id)) setIsRecommended(true);
+      else setIsRecommended(false);
     }
-  }, []);
+  }, [optionData]);
 
   return (
     <>
