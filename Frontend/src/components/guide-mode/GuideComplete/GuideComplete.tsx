@@ -27,7 +27,6 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   };
 
   const setSessionStorage = () => {
-    console.log(selectPackageState.packageList);
     const sectionList: SectionListT = {
       sectionTitle: '옵션',
       totalPrice: selectPackageState.totalPrice,

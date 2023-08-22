@@ -65,7 +65,6 @@ type SelectPackageDispatchT = (action: SelectPackageActionT) => void;
 const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageActionT): SelectPackageStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
-      console.log(' state : ', state);
       const { filterId, newData, recommendId } = action.payload ?? {};
 
       if (filterId === undefined || newData === undefined) return state;
