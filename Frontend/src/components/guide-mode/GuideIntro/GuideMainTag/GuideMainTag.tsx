@@ -31,6 +31,7 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
   const fetchRecommend = async () => {
     try {
       const response = await fetchPost('recommend', selectTag);
+
       for (let idx = 0; idx < PACKAGE_START_INDEX; idx++) {
         const data = response[optionKeyArr[idx]];
 
@@ -52,7 +53,7 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
         const key = optionKeyArr[idx];
 
         if (response[key].length === 0) continue;
-        for (let option = 0; option < response[key].length - 1; option++) {
+        for (let option = 0; option < response[key].length; option++) {
           const data = response[key][option];
 
           SelectPackageDispatch({
