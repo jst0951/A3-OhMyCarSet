@@ -21,7 +21,6 @@ type ModalActionT = {
     | 'CHANGE_TO_SELF'
     | 'CHANGE_TO_GUIDE'
     | 'DEFAULT_OPTION'
-    | 'DESCRIPT_OPTION'
     | 'CLOSE_MODAL';
   payload?: DescriptionItem;
 };
@@ -60,9 +59,9 @@ const modalReducer = (state: ModalStateT, action: ModalActionT): ModalStateT => 
         activeModal: 'toGuide',
         isOpen: true,
       };
-    case 'DESCRIPT_OPTION':
+    case 'DEFAULT_OPTION':
       return {
-        activeModal: 'description',
+        activeModal: 'defaultOption',
         isOpen: true,
         item: action.payload,
       };

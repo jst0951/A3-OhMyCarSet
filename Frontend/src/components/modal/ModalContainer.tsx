@@ -17,7 +17,7 @@ export default function ModalContainer() {
     mode: <ListModal />,
     toSelf: <ModeModal currentMode="GUIDE" />,
     toGuide: <ModeModal currentMode="SELF" />,
-    description: <DescriptionModal />,
+    defaultOption: <DescriptionModal />,
   };
 
   return (
