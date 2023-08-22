@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 public class CacheUpdateScheduleConfig {
 
     private final CacheUpdateConfig cacheUpdateConfig;
-    private final ExecutorService executorService = Executors.newWorkStealingPool(100); // IO 지연이 많고, CPU 사용률이 낮아 높게 사용
-    private final long refreshPeriod = 10 * 1000; // ms 단위
+    private final ExecutorService executorService = Executors.newWorkStealingPool();
+    private final long refreshPeriod = 1 * 60 * 60 * 1000; // ms 단위
 
     private final TagRepository tagRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -114,6 +114,19 @@ public class CacheUpdateScheduleConfig {
                     };
                     executorService.submit(runnable);
                 }
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndExteriorColorId() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName("exterior_color");
+            for(RequiredOption option: optionList) {
+                Runnable runnable = () -> {
+                    cacheUpdateConfig.countByCategoryNameAndExteriorColorId(categoryName, option.getId());
+                };
+                executorService.submit(runnable);
             }
         }
     }

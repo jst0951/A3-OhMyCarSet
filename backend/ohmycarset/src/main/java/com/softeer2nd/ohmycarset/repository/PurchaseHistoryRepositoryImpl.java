@@ -103,6 +103,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByCategoryNameAndExteriorColorId", key = "{#categoryName, #exteriorColorId}")
     public List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId) {
         String optionId = categoryName + "_id";
         String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
