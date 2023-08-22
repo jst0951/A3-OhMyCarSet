@@ -18,7 +18,6 @@ public class RecommendController {
     private final SelectiveOptionService selectiveOptionService;
 
     @PostMapping(value = "/recommend")
-    @Cacheable(value = "Preset", key = "{#userInfoDto.age, #userInfoDto.gender, #userInfoDto.tag1, #userInfoDto.tag2, #userInfoDto.tag3}")
     @Operation(summary = "[가이드페이지]유저 프리셋",
             description = "유저가 선택한 사항들을 기반으로 프리셋을 만들어 제공합니다.<br>" +
                     "age[Integer] : 유저의 나이대, ex. 20대면 20, 30대면 30. 반드시 10의 배수로 제공!<br>" +
