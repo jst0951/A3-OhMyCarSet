@@ -10,6 +10,8 @@ export default function DescriptionModal() {
     modalDispatch({ type: 'CLOSE_MODAL' });
   };
 
+  console.log(item?.description.split('\\n'));
+
   return (
     item && (
       <S.ModalContainer>
@@ -21,10 +23,11 @@ export default function DescriptionModal() {
           <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} />
           <S.DescriptionContainer>
             {item.description.split('\\n').map((line, index) => (
-              <>
-                <div key={index}>{line}</div>
+              <div key={index}>
+                {line}
                 <br />
-              </>
+                <br />
+              </div>
             ))}
           </S.DescriptionContainer>
         </S.ModalMain>
