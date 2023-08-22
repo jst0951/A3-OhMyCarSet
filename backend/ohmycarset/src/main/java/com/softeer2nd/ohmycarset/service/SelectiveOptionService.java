@@ -145,12 +145,20 @@ public class SelectiveOptionService {
         if (categoryName.equals("exterior_color") || categoryName.equals("interior_color")) {
             String genderRepresentation = getGenderRepresentation(gender.toString());
 
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
-            Double genderRatio = genderRepresentation.equals(NONE) ? 0.0 : getGenderRatio(categoryName, gender, recommendedOption);
+            Double similarPercentage;
+            Double genderRatio;
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
+            List<TagDto> tagDtoList;
 
-            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
-
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, 0.0), new TagDto(101L, age + "대", ageRatio));
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
+                genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            }
+            
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
@@ -168,6 +176,7 @@ public class SelectiveOptionService {
 
         return response;
     }
+
 
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
         List<OptionPackageDto> response = new ArrayList<>();
@@ -262,6 +271,12 @@ public class SelectiveOptionService {
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, RequiredOption recommendedOption) {
         Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndGenderAndAge(categoryName, recommendedOption.getId(), gender, age);
         Long countSimilarUser = purchaseHistoryRepository.countByGenderAndAge(gender, age);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
+    private Double getSimilarPercentage(String categoryName, Integer age, RequiredOption recommendedOption) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndAge(categoryName, recommendedOption.getId(), age);
+        Long countSimilarUser = purchaseHistoryRepository.countByAge(age);
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
