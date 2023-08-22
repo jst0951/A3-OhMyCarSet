@@ -37,7 +37,12 @@ export default function Core() {
             {trim.coreOptionList.map((option) => (
               <S.CoreOptionItemContainer key={option.id}>
                 <S.CoreOptionItemImg>
-                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${option.imgSrc}`} alt={option.name} width={60} />
+                  <img
+                    src={`${import.meta.env.VITE_STATIC_API_URL}/${option.imgSrc}`}
+                    alt={option.name}
+                    width={60}
+                    loading="lazy"
+                  />
                 </S.CoreOptionItemImg>
                 <S.CoreOptionItemDescription>{option.name}</S.CoreOptionItemDescription>
               </S.CoreOptionItemContainer>

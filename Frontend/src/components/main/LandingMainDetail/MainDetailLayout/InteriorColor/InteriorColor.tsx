@@ -36,7 +36,7 @@ export default function InteriorColor() {
             {line.icolorList.map((item) => (
               <S.InteriorColorItemContainer key={item.id}>
                 <S.InteriorColorItem>
-                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.name} />
+                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.name} loading="lazy" />
                 </S.InteriorColorItem>
                 <S.InteriorColorItemDescription>{item.name}</S.InteriorColorItemDescription>
               </S.InteriorColorItemContainer>

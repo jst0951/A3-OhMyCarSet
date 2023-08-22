@@ -24,7 +24,7 @@ export default function Item({ item }: ItemProps) {
     <>
       <S.ItemContainer onClick={handleClick}>
         <S.Item>
-          <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} />
+          <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} loading="lazy" />
         </S.Item>
         <S.ItemDescription>{HighlightWord({ children: item.optionName })}</S.ItemDescription>
       </S.ItemContainer>

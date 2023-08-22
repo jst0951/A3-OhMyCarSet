@@ -23,7 +23,14 @@ export const CoreOptionItemContainer = styled.div`
 `;
 
 export const CoreOptionItemImg = styled.div`
-  max-width: 60px;
+  width: 60px;
+  height: 60px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 export const CoreOptionItemDescription = styled.div`
