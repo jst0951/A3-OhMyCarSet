@@ -126,6 +126,18 @@ public class CacheUpdateScheduleConfig {
     }
 
     @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndAge() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            for(Integer age: ageList) {
+                Runnable runnable = () -> {
+                    cacheUpdateConfig.countByCategoryNameAndAge(categoryName, age);
+                };
+                executorService.submit(runnable);
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
     public void countByCategoryNameAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Character gender: genderList) {

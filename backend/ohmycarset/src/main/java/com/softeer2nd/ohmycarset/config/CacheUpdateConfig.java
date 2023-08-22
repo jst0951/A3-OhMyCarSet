@@ -54,6 +54,11 @@ public class CacheUpdateConfig {
         return purchaseHistoryRepository.countByTagIdAndCategoryNameAndPackageId(tagId, categoryName, packageId);
     }
 
+    @CachePut(value = "countByCategoryNameAndAge", key = "{#categoryName, #age}")
+    public List<PurchaseCountDto> countByCategoryNameAndAge(String categoryName, Integer age) {
+        return purchaseHistoryRepository.countByCategoryNameAndAge(categoryName, age);
+    }
+
     @CachePut(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
     public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         return purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age);
