@@ -13,9 +13,9 @@ public class CoreOptionDto {
     private final String trimName;
     List<CoreOption> coreOptionList;
 
-    public CoreOptionDto(Trim trim, List<CoreOption> coreOptionList) {
-        this.trimId = trim.getId();
-        this.trimName = trim.getName();
+    public CoreOptionDto(Long trimId, String trimName, List<CoreOption> coreOptionList) {
+        this.trimId = trimId;
+        this.trimName = trimName;
         this.coreOptionList = coreOptionList;
     }
 }
