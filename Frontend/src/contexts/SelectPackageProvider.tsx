@@ -65,6 +65,7 @@ type SelectPackageDispatchT = (action: SelectPackageActionT) => void;
 const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageActionT): SelectPackageStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
+      console.log(' state : ', state);
       const { filterId, newData, recommendId } = action.payload ?? {};
 
       if (filterId === undefined || newData === undefined) return state;
@@ -81,13 +82,9 @@ const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageA
 
           if (recommendId === undefined) return { ...data, selectedList: updatedMap };
 
-          let newRecommend = data.recommendList;
+          const newRecommend = data.recommendList ? [...data.recommendList] : []; // 깊은 복사
 
-          if (newRecommend === undefined) {
-            newRecommend = [recommendId];
-          } else {
-            newRecommend.push(recommendId);
-          }
+          newRecommend.push(recommendId);
 
           return { ...data, selectedList: updatedMap, recommendList: newRecommend };
         }
@@ -102,6 +99,8 @@ const selectPackageReducer = (state: SelectPackageStateT, action: SelectPackageA
         totalPrice: state.totalPrice + (existingOption ? existingOption.price * -1 : newData.price),
       };
     }
+    case 'INIT_LIST':
+      return { ...initialState };
     default:
       return state;
   }
