@@ -25,7 +25,7 @@ interface SelectOptionStateT {
   totalPrice: number;
 }
 
-interface SelectPackageStateT {
+export interface SectionListT {
   sectionTitle: string;
   totalPrice: number;
   subList: Array<
@@ -38,9 +38,9 @@ interface SelectPackageStateT {
   >;
 }
 
-interface myPalisadeProps {
+export interface myPalisadeProps {
   single: SelectOptionStateT;
-  multi: SelectPackageStateT;
+  multi: SectionListT;
 }
 
 export default function OptionFooter({
@@ -60,7 +60,7 @@ export default function OptionFooter({
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
 
-  const sectionList: SelectPackageStateT = {
+  const sectionList: SectionListT = {
     sectionTitle: '옵션',
     totalPrice: selectPackageState.totalPrice,
     subList: Array.from(selectPackageState.packageList).map((packageData) =>
