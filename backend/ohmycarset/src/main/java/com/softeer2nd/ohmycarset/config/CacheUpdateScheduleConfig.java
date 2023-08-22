@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class CacheUpdateScheduleConfig {
 
     private final CacheUpdateConfig cacheUpdateConfig;
-    private final ExecutorService executorService = Executors.newFixedThreadPool(300);
+    private final ExecutorService executorService = Executors.newWorkStealingPool(100);
     private final long refreshPeriod = 10 * 1000; // ms 단위
 
     private final TagRepository tagRepository;
@@ -84,4 +84,22 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByTagIdAndCategoryNameAndOptionId() {
+        List<Long> tagIds = tagRepository.findAll().stream()
+                .map(Tag::getId)
+                .collect(Collectors.toList());
+
+        for(Long tagId: tagIds) {
+            for(String categoryName: requiredOptionCategoryNameList) {
+                List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
+                for(RequiredOption requiredOption: requiredOptionList) {
+                    Runnable runnable = () -> {
+                        cacheUpdateConfig.countByTagIdAndCategoryNameAndOptionId(tagId, categoryName, requiredOption.getId());
+                    };
+                    executorService.submit(runnable);
+                }
+            }
+        }
+    }
 }

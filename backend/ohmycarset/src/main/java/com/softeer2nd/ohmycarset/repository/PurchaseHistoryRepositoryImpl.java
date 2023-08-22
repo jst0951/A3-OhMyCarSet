@@ -78,8 +78,9 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String optionName, Long optionId) {
-        String column = optionName + "_id";
+    @Cacheable(value = "countByTagIdAndCategoryNameAndOptionId", key = "{#tagId, #categoryName, #optionId}")
+    public Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId) {
+        String column = categoryName + "_id";
         String sql = "SELECT COUNT(*) FROM purchase_history WHERE\n" +
                 "(tag1_id=? OR tag2_id=? OR tag3_id=?) AND\n" +
                 column + "=?";

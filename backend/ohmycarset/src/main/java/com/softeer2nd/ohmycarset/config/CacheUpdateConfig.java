@@ -43,4 +43,9 @@ public class CacheUpdateConfig {
     public Long countByCategoryNameAndPackageId(String categoryName, Long packageId) {
         return purchaseHistoryRepository.countByCategoryNameAndPackageId(categoryName, packageId);
     }
+
+    @CachePut(value = "countByTagIdAndCategoryNameAndOptionId", key = "{#tagId, #categoryName, #optionId}")
+    public Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId) {
+        return purchaseHistoryRepository.countByTagIdAndCategoryNameAndOptionId(tagId, categoryName, optionId);
+    }
 }
