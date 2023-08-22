@@ -7,6 +7,7 @@ import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.SelectiveOptionRepository;
 import com.softeer2nd.ohmycarset.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Component
+@EnableScheduling
 @RequiredArgsConstructor
 public class CacheUpdateScheduleConfig {
 
