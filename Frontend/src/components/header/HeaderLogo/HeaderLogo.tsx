@@ -9,7 +9,7 @@ function HeaderLogo() {
 
   const handleClick = () => {
     if (pathname === '/') return;
-    modalDispatch('GO_MAIN');
+    modalDispatch({ type: 'GO_MAIN' });
   };
 
   return (

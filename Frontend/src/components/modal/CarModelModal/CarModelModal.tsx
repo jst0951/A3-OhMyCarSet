@@ -27,11 +27,11 @@ export default function CarModelModal() {
 
   const handleClick = () => {
     if (pathname === '/') return;
-    modalDispatch('CLOSE_MODAL');
+    modalDispatch({ type: 'CLOSE_MODAL' });
   };
 
   const handleOutClick = () => {
-    modalDispatch('CLOSE_MODAL');
+    modalDispatch({ type: 'CLOSE_MODAL' });
     setSelfModeStep(1);
     selectOptionDispatch({
       type: 'INIT_LIST',

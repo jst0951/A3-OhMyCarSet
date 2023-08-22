@@ -1,18 +1,29 @@
 import { createContext, useContext, useReducer } from 'react';
 
+export type DescriptionItem = {
+  optionId: number;
+  optionName: string;
+  description: string;
+  imgSrc: string;
+};
+
 interface ModalStateT {
   activeModal: string | null;
   isOpen: boolean;
+  item?: DescriptionItem;
 }
 
-type ModalActionT =
-  | 'GO_MAIN'
-  | 'CHANGE_MODEL'
-  | 'CHANGE_MODE'
-  | 'CHANGE_TO_SELF'
-  | 'CHANGE_TO_GUIDE'
-  | 'DEFAULT_OPTION'
-  | 'CLOSE_MODAL';
+type ModalActionT = {
+  type:
+    | 'GO_MAIN'
+    | 'CHANGE_MODEL'
+    | 'CHANGE_MODE'
+    | 'CHANGE_TO_SELF'
+    | 'CHANGE_TO_GUIDE'
+    | 'DEFAULT_OPTION'
+    | 'CLOSE_MODAL';
+  payload?: DescriptionItem;
+};
 
 const initialState: ModalStateT = {
   activeModal: null,
@@ -22,7 +33,7 @@ const initialState: ModalStateT = {
 type ModalDispatchT = (action: ModalActionT) => void;
 
 const modalReducer = (state: ModalStateT, action: ModalActionT): ModalStateT => {
-  switch (action) {
+  switch (action.type) {
     case 'GO_MAIN':
       return {
         activeModal: 'main',
@@ -47,6 +58,12 @@ const modalReducer = (state: ModalStateT, action: ModalActionT): ModalStateT => 
       return {
         activeModal: 'toGuide',
         isOpen: true,
+      };
+    case 'DEFAULT_OPTION':
+      return {
+        activeModal: 'defaultOption',
+        isOpen: true,
+        item: action.payload,
       };
     case 'CLOSE_MODAL':
       return {
