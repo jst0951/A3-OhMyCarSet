@@ -10,4 +10,11 @@ public class ExteriorColor {
     private String name;
     private String colorCode;
     private String imgSrc;
+
+    public ExteriorColor(Long id, String name, String colorCode, String imgSrc) {
+        this.id = id;
+        this.name = name;
+        this.colorCode = colorCode;
+        this.imgSrc = imgSrc;
+    }
 }
