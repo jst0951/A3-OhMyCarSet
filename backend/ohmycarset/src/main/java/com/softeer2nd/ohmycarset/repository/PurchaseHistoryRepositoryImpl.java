@@ -145,14 +145,15 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
-    public Long countByCategoryNameAndOptionIdAndGender(String categoryName, Long id, Character gender) {
+    @Cacheable(value = "countByCategoryNameAndOptionIdAndGender", key = "{#categoryName, #optionId, #gender}")
+    public Long countByCategoryNameAndOptionIdAndGender(String categoryName, Long optionId, Character gender) {
         String option = categoryName + "_id";
         String query = "SELECT count(*) as count FROM purchase_history \n" +
                 "WHERE gender=:gender AND " + option + "=:id";
 
         Map<String, Object> params = new HashMap<>();
         params.put("gender", gender.toString());
-        params.put("id", id);
+        params.put("id", optionId);
 
         return namedTemplate.queryForObject(query, params, Long.class);
     }
