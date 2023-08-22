@@ -160,4 +160,21 @@ public class CacheUpdateScheduleConfig {
             }
         }
     }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndOptionIdAndGenderAndAge() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
+            for(RequiredOption option: optionList) {
+                for(Character gender: genderList) {
+                    for(Integer age: ageList) {
+                        Runnable runnable = () -> {
+                            cacheUpdateConfig.countByCategoryNameAndOptionIdAndGenderAndAge(categoryName, option.getId(), gender, age);
+                        };
+                        executorService.submit(runnable);
+                    }
+                }
+            }
+        }
+    }
 }

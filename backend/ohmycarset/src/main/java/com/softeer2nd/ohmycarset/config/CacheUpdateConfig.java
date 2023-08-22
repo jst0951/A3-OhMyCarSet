@@ -69,4 +69,9 @@ public class CacheUpdateConfig {
     public Long countByCategoryNameAndOptionIdAndAge(String categoryName, Long optionId, Integer age) {
         return purchaseHistoryRepository.countByCategoryNameAndOptionIdAndAge(categoryName, optionId, age);
     }
+
+    @CachePut(value = "countByCategoryNameAndOptionIdAndGenderAndAge", key = "{#categoryName, #optionId, #gender, #age}")
+    public Long countByCategoryNameAndOptionIdAndGenderAndAge(String categoryName, Long optionId, Character gender, Integer age) {
+        return purchaseHistoryRepository.countByCategoryNameAndOptionIdAndGenderAndAge(categoryName, optionId, gender, age);
+    }
 }
