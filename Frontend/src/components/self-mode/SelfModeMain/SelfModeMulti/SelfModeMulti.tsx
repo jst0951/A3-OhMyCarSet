@@ -86,10 +86,7 @@ export default function SelfModeMulti() {
 
       if (response) {
         const data = await response.text();
-        console.log(JSON.parse(data));
         allData.push(JSON.parse(data));
-      } else {
-        console.log('No cached response found for the URL:', url);
       }
     });
     await Promise.all(fetchPromises);
@@ -107,7 +104,7 @@ export default function SelfModeMulti() {
     } else {
       fetchAllData(allData);
     }
-    console.log(allData);
+    // console.log(allData);
   };
 
   const handleClickOption = (currentFilter: number, selectedData: OptionPackageT) => {
