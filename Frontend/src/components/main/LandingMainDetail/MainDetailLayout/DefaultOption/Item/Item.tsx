@@ -25,6 +25,7 @@ export default function Item({ item }: ItemProps) {
       <S.ItemContainer onClick={handleClick}>
         <S.Item>
           <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} loading="lazy" />
+          <S.Dimmed>+ 자세히 보기</S.Dimmed>
         </S.Item>
         <S.ItemDescription>{HighlightWord({ children: item.optionName })}</S.ItemDescription>
       </S.ItemContainer>
