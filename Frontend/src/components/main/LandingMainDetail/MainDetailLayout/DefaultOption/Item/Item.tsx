@@ -17,7 +17,7 @@ export default function Item({ item }: ItemProps) {
   const modalDispatch = useModalDispatch();
 
   const handleClick = () => {
-    modalDispatch({ type: 'DESCRIPT_OPTION', payload: item });
+    modalDispatch({ type: 'DEFAULT_OPTION', payload: item });
   };
 
   return (
