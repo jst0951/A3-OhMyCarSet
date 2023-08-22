@@ -7,10 +7,9 @@ export const MainContainer = styled.div`
   justify-content: center;
 
   width: 1024px;
-  height: 100vh;
+  height: calc(100vh - 85px);
 
   margin: 0 auto;
-  padding-top: 86px;
   gap: 100px;
 `;
 

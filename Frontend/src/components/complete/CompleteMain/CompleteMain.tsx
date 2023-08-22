@@ -1,19 +1,32 @@
 import * as S from './CompleteMain.style';
 import { useState } from 'react';
+import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
-import Fireworks from '../FireWorks/FireWorks';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 export default function CompleteMain() {
-  const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
   const [isExternal, setIsExternal] = useState<boolean>(true);
+  const selectOptionState = useSelectOptionState();
+  let getSingleDataList;
+  let contextExist = true;
+
+  selectOptionState.dataList.map((data: SelectOptionData) => {
+    if (data.selectedId === 0) {
+      contextExist = false;
+    }
+  });
+
+  if ('myPalisade' in sessionStorage) {
+    getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
+  }
 
   const clickHandler = (external: boolean) => {
     setIsExternal(external);
   };
 
-  return (
+  return 'myPalisade' in sessionStorage || contextExist ? (
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
       <S.CarImg $isExternal={isExternal}>
@@ -53,5 +66,7 @@ export default function CompleteMain() {
         <Detail />
       </S.DetailContainer>
     </S.MainContainer>
+  ) : (
+    <ErrorPage />
   );
 }
