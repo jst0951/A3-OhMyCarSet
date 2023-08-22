@@ -4,7 +4,7 @@ import GuideSingleTag from '@/components/guide-mode/GuideIntro/GuideMainTag/Guid
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { GUIDE_MAX_STEP, PACKAGE_END_INDEX, PACKAGE_START_INDEX, optionKeyArr } from '@/constants';
 import { guideStepT } from '../../GuideMain/GuideMain';
 import fetchPost from '@/utils/apis/fetchPost';
@@ -12,6 +12,7 @@ import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
 import { OptionPackageT } from '@/components/self-mode/SelfModeMain/SelfModeMain';
+import { deletePowertrainCache } from '@/utils/cache/deletePowertrainCache';
 
 interface MainProps {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -80,6 +81,10 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
 
     setGuideStep('LOADING');
   };
+
+  useEffect(() => {
+    if (guideModeStep === 1) deletePowertrainCache();
+  }, [guideModeStep]);
 
   return (
     <>
