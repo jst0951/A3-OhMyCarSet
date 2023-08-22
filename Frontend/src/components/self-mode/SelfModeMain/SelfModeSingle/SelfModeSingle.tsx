@@ -7,11 +7,12 @@ import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
-import { DEFAULT_PRICE, SELF_MODE_URL, categoryNameList } from '@/constants';
+import { DEFAULT_PRICE, SELF_MODE_URL, categoryNameList, optionPackageList } from '@/constants';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { cacheSelfOptionPackage } from '@/utils/cache/cacheSelfOptionPackage';
 
 type CacheDataT = {
   id: number;
@@ -69,7 +70,6 @@ export default function SelfModeSingle() {
   const cacheStepData = async () => {
     try {
       const response = await fetchDataByMode(selfModeStep);
-      // console.log('hovered cache', response);
       setCacheData({ id: selfModeStep + 1, dataList: response });
     } catch (error) {
       console.error('Error fetching core option data:', error);
@@ -80,29 +80,11 @@ export default function SelfModeSingle() {
     setSelectedOption(selectedOption);
   };
 
-  const urls = [
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/system`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/temperature`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/external_device`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/internal_device`,
-  ];
-
-  const cacheOptionPackage = async () => {
-    const cache = await caches.open('optionPackage');
-
-    for (const url of urls) {
-      const response = await fetch(url);
-
-      if (response.ok) {
-        await cache.put(url, response.clone());
-        console.log(`Cached response for ${url}`);
-      } else {
-        console.log(`Failed to fetch response for ${url}`);
-      }
-    }
-  };
-
   const cacheGuideOptionPackage = async () => {
+    const urls = optionPackageList.map((data) => {
+      return `${import.meta.env.VITE_API_URL}/selective_option/option_package/${data.key}`;
+    });
+
     const cache = await caches.open('optionPackage');
 
     for (const [idx, url] of urls.entries()) {
@@ -119,24 +101,25 @@ export default function SelfModeSingle() {
 
       if (response.ok) {
         await cache.put(url, response.clone());
-        console.log(`Cached response for ${url}`);
       } else {
-        console.log(`Failed to fetch response for ${url}`);
+        console.error(`Failed to fetch response for ${url}`);
+      }
+    }
+  };
+
+  const cacheAfterHover = async () => {
+    if (selfModeStep < 6) await cacheStepData();
+    else if (selfModeStep === 6) {
+      const hasCache = await caches.has('optionPackage');
+      if (!hasCache) {
+        pathname === SELF_MODE_URL ? await cacheSelfOptionPackage() : await cacheGuideOptionPackage();
       }
     }
   };
 
   useEffect(() => {
     if (!hovered) return;
-    if (selfModeStep < 6) cacheStepData();
-    else if (selfModeStep === 6) {
-      caches.has('optionPackage').then((hasCache) => {
-        console.log(hasCache);
-        if (!hasCache) {
-          pathname === SELF_MODE_URL ? cacheOptionPackage() : cacheGuideOptionPackage();
-        }
-      });
-    }
+    cacheAfterHover();
   }, [hovered]);
 
   useEffect(() => {
