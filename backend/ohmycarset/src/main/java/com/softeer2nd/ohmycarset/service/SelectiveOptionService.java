@@ -101,6 +101,7 @@ public class SelectiveOptionService {
 
         Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
+        String genderRepresentation = getGenderRepresentation(gender.toString());
 
         RequiredOption recommendedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0)).get();
         List<RequiredOption> remainOptions = selectiveOptionRepository.findRemainOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0));
@@ -136,15 +137,18 @@ public class SelectiveOptionService {
             // 비슷한 사용자의 옵션 선택률을 구한다. <A옵션이 포함된 유사유저의 견적의 수 / 유사유저의 견적의 수 * 100(%)>
             // A옵션이 포함된 유사유저의 견적의 수 : countByCategoryNameAndOptionIdAndGenderAndAgeAndTags
             // 유사유저의 견적의 수 : countByGenderAndAgeAndTags
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption, tagIds);
+            Double similarPercentage;
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption, tagIds);
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption, tagIds);
+            }
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
 
         if (categoryName.equals("exterior_color") || categoryName.equals("interior_color")) {
-            String genderRepresentation = getGenderRepresentation(gender.toString());
-
             Double similarPercentage;
             Double genderRatio;
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
@@ -158,7 +162,7 @@ public class SelectiveOptionService {
                 genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
                 tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
             }
-            
+
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
@@ -176,7 +180,6 @@ public class SelectiveOptionService {
 
         return response;
     }
-
 
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
         List<OptionPackageDto> response = new ArrayList<>();
@@ -259,6 +262,12 @@ public class SelectiveOptionService {
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, RequiredOption recommendedOption, List<Long> tagIds) {
         Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndGenderAndAgeAndTags(categoryName, recommendedOption.getId(), gender, age, tagIds);
         Long countSimilarUser = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
+    private Double getSimilarPercentage(String categoryName, Integer age, RequiredOption recommendedOption, List<Long> tagIds) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndAgeAndTags(categoryName, recommendedOption.getId(), age, tagIds);
+        Long countSimilarUser = purchaseHistoryRepository.countByAgeAndTags(age, tagIds);
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
