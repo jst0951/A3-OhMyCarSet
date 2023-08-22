@@ -51,3 +51,7 @@ export const categoryNameList = [
 export const SELF_MODE_URL = '/self-mode';
 export const GUIDE_MODE_URL = '/guide-mode';
 export const COMPLETE_URL = '/complete';
+
+// button text
+export const CANCEL_TEXT = '안할래요';
+export const CHANGE_TEXT = '변경할래요!';

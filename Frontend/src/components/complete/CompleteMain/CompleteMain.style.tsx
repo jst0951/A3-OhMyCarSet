@@ -26,7 +26,7 @@ export const GuideText = styled.div`
 export const CarImg = styled.div<{ $isExternal: boolean }>`
   width: 589px;
   height: 326px;
-  ${({ $isExternal }) => !$isExternal && `padding: 55px;`}
+  margin: 20px;
 
   & > img {
     width: 100%;
