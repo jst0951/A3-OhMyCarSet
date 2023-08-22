@@ -57,12 +57,9 @@ export default function SelfModeMulti() {
     }
   };
 
-  const urls = [
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/system`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/temperature`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/external_device`,
-    `${import.meta.env.VITE_API_URL}/selective_option/option_package/internal_device`,
-  ];
+  const urls = optionPackageList.map((data) => {
+    return `${import.meta.env.VITE_API_URL}/selective_option/option_package/${data.key}`;
+  });
 
   const fetchAllData = async (allData: OptionPackageListT[]) => {
     try {
