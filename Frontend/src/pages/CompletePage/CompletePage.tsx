@@ -2,7 +2,7 @@ import Layout from '@/components/layout/Layout';
 import * as S from './CompletePage.style';
 import CompleteMain from '@/components/complete/CompleteMain/CompleteMain';
 import CompleteNav from '@/components/complete/CompleteNav/CompleteNav';
-import ErrorPage from '@/components/complete/ErrorPage/ErrorPage';
+import Error from '@/components/complete/Error/Error';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 
 export default function CompletePage() {
@@ -15,18 +15,18 @@ export default function CompletePage() {
     }
   });
 
-  return 'myPalisade' in sessionStorage || contextExist ? (
+  return (
     <>
       <Layout>
-        <S.CompleteContainer>
-          <CompleteNav />
-          <CompleteMain />
-        </S.CompleteContainer>
+        {'myPalisade' in sessionStorage || contextExist ? (
+          <S.CompleteContainer>
+            <CompleteNav />
+            <CompleteMain />
+          </S.CompleteContainer>
+        ) : (
+          <Error />
+        )}
       </Layout>
     </>
-  ) : (
-    <Layout>
-      <ErrorPage />
-    </Layout>
   );
 }
