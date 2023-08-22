@@ -23,6 +23,8 @@ public interface PurchaseHistoryRepository {
 
     Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId);
 
+    List<PurchaseCountDto> countByCategoryNameAndAge(String categoryName, Integer age);
+
     List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age);
 
     List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId);
