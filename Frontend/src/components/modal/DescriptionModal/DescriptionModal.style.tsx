@@ -27,25 +27,31 @@ export const ModalMain = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & img {
+    width: 610px;
+    height: 300px;
+  }
 `;
 
 export const TitleContainer = styled.div`
   max-width: 500px;
 
   margin-top: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 
-  color: ${colors.mainHyundaiBlue};
+  color: ${colors.coolGreyBlack};
+  text-align: center;
   word-break: keep-all;
   ${headMedium1};
 `;
 
 export const DescriptionContainer = styled.div`
-  width: 350px;
+  width: 610px;
 
   margin-top: 40px;
 
-  color: ${colors.mainHyundaiBlue};
+  color: ${colors.coolGrey004};
   opacity: 0.8;
   word-break: keep-all;
   white-space: pre-wrap;
