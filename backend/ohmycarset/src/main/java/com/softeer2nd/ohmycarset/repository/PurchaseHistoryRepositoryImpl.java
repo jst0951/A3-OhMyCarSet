@@ -88,6 +88,16 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByTagIdAndCategoryNameAndPackageId", key = "{#tagId, #categoryName, #packageId}")
+    public Long countByTagIdAndCategoryNameAndPackageId(Long tagId, String categoryName, Long packageId) {
+        String table = "purchase_" + categoryName + "_map";
+        String query = "SELECT COUNT(*) FROM purchase_history AS A \n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
+                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
+        return jdbcTemplate.queryForObject(query, Long.class, tagId, tagId, tagId, packageId);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
     public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         String optionId = categoryName + "_id";
@@ -222,15 +232,6 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("age", age);
 
         return namedTemplate.queryForObject(query, params, Long.class);
-    }
-
-    @Override
-    public Long countByTagIdAndCategoryNameAndPackageId(Long tagId, String categoryName, Long packageId) {
-        String table = "purchase_" + categoryName + "_map";
-        String query = "SELECT COUNT(*) FROM purchase_history AS A \n" +
-                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
-                "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
-        return jdbcTemplate.queryForObject(query, Long.class, tagId, tagId, tagId, packageId);
     }
 
     @Override

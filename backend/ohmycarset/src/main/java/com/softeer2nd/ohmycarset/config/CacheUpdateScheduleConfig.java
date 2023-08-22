@@ -105,6 +105,25 @@ public class CacheUpdateScheduleConfig {
     }
 
     @Scheduled(fixedRate = refreshPeriod)
+    public void countByTagIdAndCategoryNameAndPackageId() {
+        List<Long> tagIds = tagRepository.findAll().stream()
+                .map(Tag::getId)
+                .collect(Collectors.toList());
+
+        for(Long tagId: tagIds) {
+            for(String categoryName: optionPackageCategoryNameList) {
+                List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
+                for(OptionPackage optionPackage: optionPackageList) {
+                    Runnable runnable = () -> {
+                        cacheUpdateConfig.countByTagIdAndCategoryNameAndPackageId(tagId, categoryName, optionPackage.getId());
+                    };
+                    executorService.submit(runnable);
+                }
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
     public void countByCategoryNameAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Character gender: genderList) {
