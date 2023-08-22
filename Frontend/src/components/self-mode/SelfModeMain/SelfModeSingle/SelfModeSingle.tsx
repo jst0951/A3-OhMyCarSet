@@ -13,6 +13,7 @@ import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { cacheSelfOptionPackage } from '@/utils/cache/cacheSelfOptionPackage';
+import { deleteOptionPackageCache } from '@/utils/cache/deleteOptionPackageCache';
 
 type CacheDataT = {
   id: number;
@@ -123,6 +124,7 @@ export default function SelfModeSingle() {
   }, [hovered]);
 
   useEffect(() => {
+    if (selfModeStep === 1) deleteOptionPackageCache();
     fetchStepData();
   }, [selfModeStep]);
 
