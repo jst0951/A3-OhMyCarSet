@@ -150,7 +150,7 @@ export default function OptionFooter({
             <S.TotalPrice>
               <S.Price>
                 <CountingAnimation startValue={prevTotal} endValue={tempTotal} duration={1000} />
-              </S.Price>{' '}
+              </S.Price>
               원
             </S.TotalPrice>
           </S.TotalPriceContainer>
