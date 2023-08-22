@@ -12,9 +12,9 @@ public class InteriorColorDto {
     private final String trimName;
     private final List<InteriorColor> iColorList;
 
-    public InteriorColorDto(Trim trim, List<InteriorColor> interiorColorList) {
-        this.trimId = trim.getId();
-        this.trimName = trim.getName();
+    public InteriorColorDto(Long trimId, String trimName, List<InteriorColor> interiorColorList) {
+        this.trimId = trimId;
+        this.trimName = trimName;
         this.iColorList = interiorColorList;
     }
 }
