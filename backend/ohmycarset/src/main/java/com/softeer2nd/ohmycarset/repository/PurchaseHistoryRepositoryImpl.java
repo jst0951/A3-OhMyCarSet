@@ -201,6 +201,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByGender", key = "#gender")
     public Long countByGender(Character gender) {
         String query = "SELECT count(*) as count FROM purchase_history \n" +
                 "WHERE gender=:gender";
@@ -212,6 +213,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByAge", key = "#age")
     public Long countByAge(Integer age) {
         String query = "SELECT count(*) as count FROM purchase_history \n" +
                 "WHERE age>=:age AND age<=:age+9";

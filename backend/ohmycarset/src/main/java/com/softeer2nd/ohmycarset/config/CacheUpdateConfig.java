@@ -79,4 +79,14 @@ public class CacheUpdateConfig {
     public Long countByGenderAndAge(Character gender, Integer age) {
         return purchaseHistoryRepository.countByGenderAndAge(gender, age);
     }
+
+    @CachePut(value = "countByGender", key = "#gender")
+    public Long countByGender(Character gender) {
+        return purchaseHistoryRepository.countByGender(gender);
+    }
+
+    @CachePut(value = "countByAge", key = "#age")
+    public Long countByAge(Integer age) {
+        return purchaseHistoryRepository.countByAge(age);
+    }
 }

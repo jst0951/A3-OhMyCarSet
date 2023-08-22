@@ -189,4 +189,24 @@ public class CacheUpdateScheduleConfig {
             }
         }
     }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByGender() {
+        for(Character gender: genderList) {
+            Runnable runnable = () -> {
+                cacheUpdateConfig.countByGender(gender);
+            };
+            executorService.submit(runnable);
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByAge() {
+        for(Integer age: ageList) {
+            Runnable runnable = () -> {
+                cacheUpdateConfig.countByAge(age);
+            };
+            executorService.submit(runnable);
+        }
+    }
 }
