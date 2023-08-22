@@ -9,8 +9,9 @@ import { GUIDE_MAX_STEP, PACKAGE_END_INDEX, PACKAGE_START_INDEX, optionKeyArr } 
 import { guideStepT } from '../../GuideMain/GuideMain';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
-import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
+import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { SectionListT, myPalisadeProps } from '@/components/self-mode/SelfModeMain/OptionFooter/OptionFooter';
 
 interface MainProps {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -20,6 +21,10 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
   const [guideModeStep, setGuideModeStep] = useState(1);
   const [showButton, setShowButton] = useState<boolean>(false);
   const { selectTag } = useSelectTagContext();
+
+  const selectOptionState = useSelectOptionState();
+  const selectPackageState = useSelectPackageState();
+
   const SelectOptionDispatch = useSelectOptionDispatch();
   const SelectPackageDispatch = useSelectPackageDispatch();
 
@@ -70,8 +75,27 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
     }
   };
 
-  const clickHandler = () => {
-    fetchRecommend();
+  const setSessionStorage = async () => {
+    const sectionList: SectionListT = {
+      sectionTitle: '옵션',
+      totalPrice: selectPackageState.totalPrice,
+      subList: Array.from(selectPackageState.packageList).map((packageData) =>
+        Array.from(packageData.selectedList.values())
+      ),
+    };
+
+    const myPalisade: myPalisadeProps = {
+      single: selectOptionState,
+      multi: sectionList,
+    };
+
+    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+  };
+
+  const clickHandler = async () => {
+    await fetchRecommend();
+    await setSessionStorage();
+
     setGuideStep('LOADING');
   };
 
