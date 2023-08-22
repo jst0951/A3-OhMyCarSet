@@ -65,8 +65,6 @@ export default function SelfModeMulti() {
   ];
 
   const fetchAllData = async (allData: OptionPackageListT[]) => {
-    console.log('package data fetch');
-
     try {
       for (const option of optionPackageList) {
         const response = await fetchOptionData(option.key, option.idx);
@@ -95,7 +93,7 @@ export default function SelfModeMulti() {
       }
     });
     await Promise.all(fetchPromises);
-    console.log('cached apckage', allData);
+
     setOptionPackage(allData);
     setImgSrc(allData[0][0].components[0].imgSrc);
   };
@@ -103,11 +101,8 @@ export default function SelfModeMulti() {
   const getAllData = async () => {
     const allData: OptionPackageListT[] = [];
 
-    // setTempTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
-    // setPrevTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
     const hasCache = await caches.has('optionPackage');
     if (hasCache) {
-      console.log('cached package data');
       fetchCachedData(allData);
     } else {
       fetchAllData(allData);
