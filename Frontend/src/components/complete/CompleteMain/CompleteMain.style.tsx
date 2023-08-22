@@ -27,7 +27,6 @@ export const CarImg = styled.div<{ $isExternal: boolean }>`
   width: 589px;
   height: 326px;
   margin: 20px;
-  ${({ $isExternal }) => !$isExternal && ``}
 
   & > img {
     width: 100%;
