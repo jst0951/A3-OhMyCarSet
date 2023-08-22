@@ -24,7 +24,7 @@ public class CacheUpdateScheduleConfig {
 
     private final CacheUpdateConfig cacheUpdateConfig;
     private final ExecutorService executorService = Executors.newWorkStealingPool();
-    private final long refreshPeriod = 1 * 60 * 60 * 1000; // ms 단위
+    private final long refreshPeriod = 24 * 60 * 60 * 1000; // ms 단위
 
     private final TagRepository tagRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -121,6 +121,18 @@ public class CacheUpdateScheduleConfig {
                     };
                     executorService.submit(runnable);
                 }
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndAge() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            for(Integer age: ageList) {
+                Runnable runnable = () -> {
+                    cacheUpdateConfig.countByCategoryNameAndAge(categoryName, age);
+                };
+                executorService.submit(runnable);
             }
         }
     }

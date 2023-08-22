@@ -313,7 +313,7 @@ public class SelectiveOptionService {
         wd = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("wd", gender, age, tagIds);
 
         // 휠은 별도의 로직이 필요합니다.
-        wheel = getWheelOptionByGenderAndAgeAndTagsAndExteriorColor(gender, age, tagIds, exteriorColor.getId());
+        wheel = getWheelOptionByTagsAndExteriorColor(tagIds, exteriorColor.getId());
 
         // 부가옵션은 겹치는 태그가 하나라도 있으면 모두 담습니다.
         system = getAllPackageByCategoryNameAndTags("system", tagIds);
@@ -326,10 +326,19 @@ public class SelectiveOptionService {
 
     private RequiredOptionDto getMostPurchasedOptionByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         // 옵션id, 구매내역수 - 구매내역 수 내림차순으로 정렬
-        List<PurchaseCountDto> purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age)
-                .stream()
-                .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
-                .collect(Collectors.toList());
+        List<PurchaseCountDto> purchaseCountDtoList;
+        if(gender.equals('N')) {
+            purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndAge(categoryName, age)
+                    .stream()
+                    .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
+                    .collect(Collectors.toList());
+        }
+        else {
+            purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age)
+                    .stream()
+                    .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
+                    .collect(Collectors.toList());
+        }
 
         // 가장 많이 팔린 옵션을 찾습니다.
         RequiredOption defaultOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, 1L).orElseThrow();
@@ -404,7 +413,7 @@ public class SelectiveOptionService {
         return new RequiredOptionDto(optionTagListMap.entrySet().iterator().next().getKey());
     }
 
-    private RequiredOptionDto getWheelOptionByGenderAndAgeAndTagsAndExteriorColor(Character gender, Integer age, List<Long> tagIds, Long exteriorColorId) {
+    private RequiredOptionDto getWheelOptionByTagsAndExteriorColor(List<Long> tagIds, Long exteriorColorId) {
         // 휠만을 위한 로직이므로, 카테고리는 wheel으로 고정입니다.
         final String categoryName = "wheel";
 

@@ -98,6 +98,20 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByCategoryNameAndAge", key = "{#categoryName, #age}")
+    public List<PurchaseCountDto> countByCategoryNameAndAge(String categoryName, Integer age) {
+        String optionId = categoryName + "_id";
+        String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
+                "WHERE age >= :age AND age <= :age+9 \n" +
+                "GROUP BY " + optionId;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+
+        return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
     public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         String optionId = categoryName + "_id";
