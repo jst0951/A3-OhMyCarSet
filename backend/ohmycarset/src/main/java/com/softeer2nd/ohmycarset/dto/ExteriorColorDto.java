@@ -12,9 +12,9 @@ public class ExteriorColorDto {
     private final String trimName;
     private final List<ExteriorColor> eColorList;
 
-    public ExteriorColorDto(Trim trim, List<ExteriorColor> exteriorColorList) {
-        this.trimId = trim.getId();
-        this.trimName = trim.getName();
+    public ExteriorColorDto(Long trimId, String trimName, List<ExteriorColor> exteriorColorList) {
+        this.trimId = trimId;
+        this.trimName = trimName;
         this.eColorList = exteriorColorList;
     }
 }
