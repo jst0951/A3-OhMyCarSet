@@ -28,6 +28,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
   const navigate = useNavigate();
   const { setSelfModeStep } = useSelfModeContext();
   const currentPackageDispatch = useCurrentPackageDispatch();
+  const name = 'selectedName' in data ? data.selectedName : 'optionName' in data ? data.optionName : data.name;
 
   const correctionClickHandler = () => {
     if ('stepName' in data && index === 0) {
@@ -51,11 +52,9 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
       <S.MainContainer>
         <S.MainLeft>
           <S.ImgContainer>
-            <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`} />
+            <img src={`${import.meta.env.VITE_STATIC_API_URL}/${data.imgSrc}`} alt={name || '옵션 이미지'} />
           </S.ImgContainer>
-          <S.SelectedName>
-            {'selectedName' in data ? data.selectedName : 'optionName' in data ? data.optionName : data.name}
-          </S.SelectedName>
+          <S.SelectedName>{name}</S.SelectedName>
         </S.MainLeft>
         <S.MainRight>
           {'price' in data ? (
