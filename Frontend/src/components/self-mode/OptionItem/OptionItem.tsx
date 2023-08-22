@@ -1,4 +1,3 @@
-import Icon from '@/components/common/Icon';
 import * as S from './OptionItem.style';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { OptionDataT, OptionPackageT } from '../SelfModeMain/SelfModeMain';
@@ -10,6 +9,9 @@ import ShowMoreMulti from './ShowMoreMulti/ShowMoreMulti';
 import { useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
 import HighlightWord from '@/utils/HighlightWord';
+import OptionHeader from './OptionHeader/OptionHeader';
+import { useLocation } from 'react-router-dom';
+import { SELF_MODE_URL } from '@/constants';
 
 export interface OptionDataProps {
   optionData: OptionDataT | OptionPackageT;
@@ -19,6 +21,7 @@ export interface OptionDataProps {
 }
 
 export default function OptionItem({ optionData, isActive, onClick, showFeedback }: OptionDataProps) {
+  const { pathname } = useLocation();
   const { selfModeStep } = useSelfModeContext();
   const [showMore, setShowMore] = useState<boolean>(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
@@ -93,16 +96,19 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
 
     if (showFeedback === optionData.id) {
       initfeedbackBoxHeight();
+    } else if (showFeedback === 0) {
+      if (optionRef.current !== null) {
+        optionRef.current.style.height = '';
+      }
     }
   }, [selfModeStep, showFeedback]);
 
   return (
     <>
-      <S.ItemContainer $isActive={isActive} onClick={onClick} ref={optionRef}>
-        <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
-        <S.SalePercent $isActive={isActive}>구매자의 63%가 선택했어요!</S.SalePercent>
+      <S.ItemContainer $isActive={isActive} $isSelfMode={pathname === SELF_MODE_URL} onClick={onClick} ref={optionRef}>
+        <OptionHeader isActive={isActive} optionData={optionData} />
         <S.OptionName $isActive={isActive}>{HighlightWord({ children: optionData.name })}</S.OptionName>
-        {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} />}
+        {optionData.iconSrc && <OptionImage icon={optionData.iconSrc} name={optionData.name} />}
         {checkShowMore() &&
           ('mainDescription' in optionData && optionData.mainDescription ? (
             <ShowMore
@@ -122,7 +128,7 @@ export default function OptionItem({ optionData, isActive, onClick, showFeedback
               />
             )
           ))}
-        <S.OptionBottomContainer $isActive={isActive}>
+        <S.OptionBottomContainer>
           <S.OptionPrice>{`+ ${optionData.price.toLocaleString()}원`}</S.OptionPrice>
           {checkShowMore() && <ShowMoreButton isActive={isActive} showMore={showMore} onClick={toggleShowMore} />}
         </S.OptionBottomContainer>

@@ -17,49 +17,59 @@ type DefaultOption = {
 interface ItemProps {
   optionId: number;
   optionName: string;
+  description: string;
   imgSrc: string;
 }
 
-interface ItemContainerProps {
-  item: ItemProps;
-  showMore: string;
-  index?: number;
+interface Props {
+  isFetched: boolean;
+}
+
+interface ShowMoreProps {
+  itemArrayLength: number;
+  showLength: number;
+  onClick: () => void;
 }
 
 const MAX_ITEM_NUM = 5;
+const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
 
-function ItemContianer({ item, showMore, index }: ItemContainerProps) {
-  if (index === undefined) {
+function ShowMoreButton({ itemArrayLength, showLength, onClick }: ShowMoreProps) {
+  if (itemArrayLength > showLength) {
     return (
-      <S.ItemContainer $more={item.optionId <= MAX_ITEM_NUM} $showMore={showMore}>
-        <Item item={item}></Item>
-      </S.ItemContainer>
-    );
-  } else {
-    return (
-      <S.ItemContainer $more={index < MAX_ITEM_NUM} $showMore={showMore}>
-        <Item item={item}></Item>
-      </S.ItemContainer>
+      <S.MoreButtonContainer onClick={onClick}>
+        더보기
+        <Icon icon="ArrowBottomIcon" size={20} />
+      </S.MoreButtonContainer>
     );
   }
 }
 
-export default function DefaultOption() {
+export default function DefaultOption({ isFetched }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
-  const [showMore, setShowMore] = useState('none');
+  const [showMore, setShowMore] = useState(0);
+  const allOption: ItemProps[][] = [[], [], [], []];
+
+  defaultOption.map((trim, trimIndex) => {
+    trim.defaultOptionCategoryDtoList.map((categoryDto) =>
+      categoryDto.defaultOptionDetailDtoList.map(
+        (item: ItemProps) => (allOption[trimIndex] = [...allOption[trimIndex], item])
+      )
+    );
+  });
 
   const moreEventHandler = () => {
-    showMore === 'none' ? setShowMore('flex') : setShowMore('none');
+    setShowMore(showMore + 1);
   };
 
   const filterEventHandler = (index: number) => {
     setSelectedCategory(index - 1);
-    setShowMore('none');
+    setShowMore(0);
   };
 
-  const fetchSetDefaultOption = async () => {
+  const fetchDefaultOption = async () => {
     try {
       const defaultOpion = await fetchData('default_option');
       setDefaultOption(defaultOpion);
@@ -69,8 +79,8 @@ export default function DefaultOption() {
   };
 
   useEffect(() => {
-    fetchSetDefaultOption();
-  }, []);
+    if (isFetched) fetchDefaultOption();
+  }, [isFetched]);
 
   return (
     <>
@@ -90,36 +100,28 @@ export default function DefaultOption() {
           ))}
         </S.ButtonLine>
         <S.OptionContainer>
-          {defaultOption.map((trim) => (
+          {defaultOption.map((trim, trimIndex) => (
             <S.ItemLine key={trim.trimId}>
-              {selectedCategory === -1
-                ? trim.defaultOptionCategoryDtoList.map((categoryDto) =>
-                    categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (
-                      <ItemContianer key={item.optionId} item={item} showMore={showMore} />
-                    ))
-                  )
-                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.map(
-                    (item: ItemProps, optionIndex: number) => (
-                      <ItemContianer key={item.optionId} item={item} showMore={showMore} index={optionIndex} />
-                    )
-                  )}
+              {(selectedCategory === -1
+                ? allOption[trimIndex]
+                : trim.defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList
+              ).map((item: ItemProps, itemIndex) => (
+                <S.ItemContainer key={item.optionId} $showMore={Math.floor(itemIndex / MAX_ITEM_NUM) <= showMore}>
+                  <Item item={item} />
+                </S.ItemContainer>
+              ))}
             </S.ItemLine>
           ))}
         </S.OptionContainer>
-        {selectedCategory === -1 ? (
-          <S.MoreButtonContainer onClick={moreEventHandler}>
-            더보기
-            <Icon icon="ArrowBottomIcon" size={20} />
-          </S.MoreButtonContainer>
-        ) : (
-          defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length >
-            MAX_ITEM_NUM && (
-            <S.MoreButtonContainer onClick={moreEventHandler}>
-              더보기
-              <Icon icon="ArrowBottomIcon" size={20} />
-            </S.MoreButtonContainer>
-          )
-        )}
+        <ShowMoreButton
+          itemArrayLength={
+            selectedCategory === -1
+              ? MAX_ALL_ITEM_NUM
+              : defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length
+          }
+          showLength={(showMore + 1) * MAX_ITEM_NUM}
+          onClick={moreEventHandler}
+        />
       </S.Container>
     </>
   );

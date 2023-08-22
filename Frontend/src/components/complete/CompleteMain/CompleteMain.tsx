@@ -5,8 +5,12 @@ import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
 
 export default function CompleteMain() {
-  const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
   const [isExternal, setIsExternal] = useState<boolean>(true);
+  let getSingleDataList;
+
+  if ('myPalisade' in sessionStorage) {
+    getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
+  }
 
   const clickHandler = (external: boolean) => {
     setIsExternal(external);
@@ -15,7 +19,7 @@ export default function CompleteMain() {
   return (
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
-      <S.CarImg>
+      <S.CarImg $isExternal={isExternal}>
         <img
           src={`${import.meta.env.VITE_STATIC_API_URL}/${getSingleDataList[isExternal ? 3 : 4].imgSrc}`}
           alt={getSingleDataList[isExternal ? 3 : 4].name}

@@ -12,10 +12,12 @@ import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionP
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
 interface OptionFooterProps {
+  hovered?: boolean;
+  setHovered?: Dispatch<React.SetStateAction<boolean>>;
   selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
-  setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
+  setShowFeedback?: Dispatch<React.SetStateAction<number>>;
 }
 
 interface SelectOptionStateT {
@@ -23,7 +25,7 @@ interface SelectOptionStateT {
   totalPrice: number;
 }
 
-interface SelectPackageStateT {
+export interface SectionListT {
   sectionTitle: string;
   totalPrice: number;
   subList: Array<
@@ -36,23 +38,29 @@ interface SelectPackageStateT {
   >;
 }
 
-interface myPalisadeProps {
+export interface myPalisadeProps {
   single: SelectOptionStateT;
-  multi: SelectPackageStateT;
+  multi: SectionListT;
 }
 
-export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
+export default function OptionFooter({
+  hovered,
+  setHovered,
+  selectedData,
+  prevTotal,
+  tempTotal,
+  setShowFeedback,
+}: OptionFooterProps) {
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
-  const [disableNext, setDisableNext] = useState<boolean>(false);
   const { setWaiting } = useWaitingContext();
 
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
 
-  const sectionList: SelectPackageStateT = {
+  const sectionList: SectionListT = {
     sectionTitle: '옵션',
     totalPrice: selectPackageState.totalPrice,
     subList: Array.from(selectPackageState.packageList).map((packageData) =>
@@ -63,6 +71,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const myPalisade: myPalisadeProps = {
     single: selectOptionState,
     multi: sectionList,
+  };
+
+  const handleMouseEnter = () => {
+    if (selfModeStep > 6 || setHovered === undefined) return;
+    if (!hovered) setHovered(true);
   };
 
   const handleClickEstimate = () => {
@@ -80,7 +93,6 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
   const handleClickNext = (optionId: number) => {
     if (selfModeStep < 7 && setShowFeedback !== undefined) {
       if (selectedData === undefined) return;
-      setDisableNext(true);
       setWaiting(true);
       setShowFeedback(selectedData.id);
       selectOptionDispatch({
@@ -97,9 +109,9 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       });
       setTimeout(() => {
         setShowFeedback(0);
-        setDisableNext(false);
         setWaiting(false);
         setSelfModeStep((prev) => prev + 1);
+        if (selfModeStep < 7 && setHovered !== undefined) setHovered(false);
       }, 2000);
     } else {
       sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
@@ -138,7 +150,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.TotalPrice>
               <S.Price>
                 <CountingAnimation startValue={prevTotal} endValue={tempTotal} duration={1000} />
-              </S.Price>{' '}
+              </S.Price>
               원
             </S.TotalPrice>
           </S.TotalPriceContainer>
@@ -146,11 +158,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </S.PrevButton>
-            <S.NextButton $disable={disableNext}>
+            <div onMouseEnter={handleMouseEnter}>
               <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
                 선택완료
               </RectButton>
-            </S.NextButton>
+            </div>
           </S.CompleteButtonContainer>
         </S.OptionFooterWrapper>
         <S.EstimateContainer ref={estimateRef} $show={showEstimate}>

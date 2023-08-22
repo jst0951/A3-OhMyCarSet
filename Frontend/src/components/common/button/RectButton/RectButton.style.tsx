@@ -43,12 +43,13 @@ const pageStyle = css<Props>`
         ${bodyMedium2};
         display: flex;
         width: 150px;
-        padding: 14px 50px;
+        padding: 14px;
         justify-content: center;
         align-items: center;
       `;
     }
     return css`
+      ${bodyMedium2}
       width: 140px;
       height: 50px;
     `;
@@ -71,7 +72,6 @@ const typeStyle = css<Props>`
       `;
     }
     return css`
-      ${bodyMedium2}
       background-color: ${colors.mainHyundaiBlue};
       color: ${colors.hyundaiWhite};
     `;

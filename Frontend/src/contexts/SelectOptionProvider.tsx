@@ -8,7 +8,7 @@ export type SelectOptionData = {
   selectedName: string | null;
   price: number;
   imgSrc: string | null;
-  IconSrc?: string | null;
+  recommendList?: number[];
 };
 
 interface SelectOptionStateT {
@@ -17,10 +17,10 @@ interface SelectOptionStateT {
 }
 
 type SelectOptionActionT = {
-  type: 'UPDATE_LIST';
-  payload: {
-    optionId?: number;
-    newOptionData?: Partial<SelectOptionData>;
+  type: 'UPDATE_LIST' | 'INIT_LIST';
+  payload?: {
+    optionId: number;
+    newOptionData: Partial<SelectOptionData>;
   };
 };
 
@@ -33,6 +33,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 2,
@@ -41,6 +42,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 3,
@@ -49,6 +51,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 4,
@@ -57,6 +60,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 5,
@@ -65,6 +69,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
     {
       id: 6,
@@ -73,6 +78,7 @@ const initialState: SelectOptionStateT = {
       selectedName: null,
       price: 0,
       imgSrc: null,
+      recommendList: [],
     },
   ],
   totalPrice: DEFAULT_PRICE,
@@ -83,15 +89,23 @@ type SelectOptionDispatchT = (action: SelectOptionActionT) => void;
 const selectOptionReducer = (state: SelectOptionStateT, action: SelectOptionActionT): SelectOptionStateT => {
   switch (action.type) {
     case 'UPDATE_LIST': {
-      const { optionId, newOptionData } = action.payload;
+      const { optionId, newOptionData } = action.payload ?? {};
+
+      if (optionId === undefined || newOptionData === undefined) return state;
 
       const updatedDataList = state.dataList.map((option) =>
         option.id === optionId ? { ...option, ...newOptionData } : option
       );
 
       return {
-        totalPrice: state.totalPrice + (newOptionData?.price || 0),
         dataList: updatedDataList,
+        totalPrice: state.totalPrice - state.dataList[optionId - 1].price + (newOptionData?.price || 0),
+      };
+    }
+    case 'INIT_LIST': {
+      return {
+        dataList: initialState.dataList,
+        totalPrice: DEFAULT_PRICE,
       };
     }
     default:

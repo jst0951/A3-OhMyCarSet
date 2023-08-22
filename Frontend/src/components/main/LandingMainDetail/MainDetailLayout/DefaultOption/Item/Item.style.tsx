@@ -6,6 +6,7 @@ export const ItemContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
   gap: 12px;
 `;
 
@@ -14,6 +15,7 @@ export const Item = styled.div`
     width: 80px;
     height: 60px;
     border-radius: 6px;
+    cursor: pointer;
   }
 `;
 
@@ -21,5 +23,9 @@ export const ItemDescription = styled.div`
   ${bodyMedium2};
   color: ${colors.coolGreyBlack};
   word-break: keep-all;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  overflow: auto;
   max-width: 120px;
 `;

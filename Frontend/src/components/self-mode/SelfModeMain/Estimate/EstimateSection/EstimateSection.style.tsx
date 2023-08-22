@@ -46,8 +46,10 @@ export const SelectedContainer = styled.div`
 `;
 
 export const SelectedName = styled.div`
+  max-width: 160px;
   ${bodyRegular2}
   color: ${colors.coolGreyBlack};
+  word-break: keep-all;
 `;
 
 export const OptionPrice = styled.div`

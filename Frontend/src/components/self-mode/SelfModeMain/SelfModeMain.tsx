@@ -4,6 +4,12 @@ import SelfModeSingle from './SelfModeSingle/SelfModeSingle';
 import SelfModeMulti from './SelfModeMulti/SelfModeMulti';
 import Loading from '@/components/loading/Loading';
 
+type TagT = {
+  id: number;
+  name: string;
+  percentage: number;
+};
+
 export type OptionDataT = {
   id: number;
   name: string;
@@ -14,6 +20,8 @@ export type OptionDataT = {
   price: number;
   imgSrc: string;
   iconSrc?: string | null;
+  purchaseRate: number;
+  tags: TagT[];
 };
 
 export interface OptionPackageT {
@@ -27,6 +35,8 @@ export interface OptionPackageT {
     description: string;
     imgSrc: string;
   }>;
+  purchaseRate: number;
+  tags: TagT[];
 }
 
 type SystemData = {
@@ -49,7 +59,13 @@ export default function SelfModeMain() {
   return (
     <>
       <S.SelfModeMainContainer>
-        {selfModeStep < 7 ? <SelfModeSingle /> : selfModeStep === 7 ? <SelfModeMulti /> : <Loading />}
+        {selfModeStep < 7 ? (
+          <SelfModeSingle />
+        ) : selfModeStep === 7 ? (
+          <SelfModeMulti />
+        ) : (
+          <Loading redirect="MAIN_COMPLETE" />
+        )}
       </S.SelfModeMainContainer>
     </>
   );

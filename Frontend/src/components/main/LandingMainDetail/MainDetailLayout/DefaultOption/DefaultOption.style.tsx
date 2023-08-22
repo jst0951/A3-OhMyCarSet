@@ -29,21 +29,21 @@ export const ItemLine = styled.div`
   align-items: flex-start;
   width: 256px;
   padding-left: 24px;
-  gap: 41px;
+  gap: 6px;
 `;
 
-export const ItemContainer = styled.div<{ $more: boolean; $showMore: string }>`
+export const ItemContainer = styled.div<{ $showMore: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  ${({ $more, $showMore }) => !$more && `display: ${$showMore}`}
+  ${({ $showMore }) => ($showMore ? `display: flex` : `display: none`)}
 `;
 
-export const MoreItemContainer = styled.div<{ $showMore: string }>`
-  display: ${(props) => props.$showMore};
+export const MoreItemContainer = styled.div<{ $showMore: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  ${({ $showMore }) => ($showMore ? `display: flex` : `display: none`)}
 `;
 
 export const MoreButtonContainer = styled.div`
