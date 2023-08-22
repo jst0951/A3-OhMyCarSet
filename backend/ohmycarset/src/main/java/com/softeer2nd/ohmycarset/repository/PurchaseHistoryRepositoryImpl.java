@@ -263,4 +263,30 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
 
         return namedTemplate.queryForObject(query, params, Long.class);
     }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndAgeAndTags(String categoryName, Long id, Integer age, List<Long> tagIds) {
+        String column = categoryName + "_id";
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE " + column + "=:id AND (age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByAgeAndTags(Integer age, List<Long> tagIds) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE (age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
 }
