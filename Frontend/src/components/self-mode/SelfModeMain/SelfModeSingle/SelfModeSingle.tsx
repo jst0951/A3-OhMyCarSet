@@ -55,12 +55,12 @@ export default function SelfModeSingle() {
         setSelectedOption(
           response.find((data: OptionDataT) => data.id === selectOptionState.dataList[selfModeStep - 1].selectedId)
         );
-        setTempTotal(selectOptionState.totalPrice);
-        setPrevTotal(selectOptionState.totalPrice);
+        setTempTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
+        setPrevTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
       } else {
         setSelectedOption(response[0]);
-        setTempTotal(selectOptionState.totalPrice + response[0].price);
-        setPrevTotal(selectOptionState.totalPrice + response[0].price);
+        setTempTotal(selectOptionState.totalPrice + response[0].price + selectPackageState.totalPrice);
+        setPrevTotal(selectOptionState.totalPrice + response[0].price + selectPackageState.totalPrice);
       }
     } catch (error) {
       console.error('Error fetching core option data:', error);
@@ -127,13 +127,17 @@ export default function SelfModeSingle() {
   }, [selfModeStep]);
 
   useEffect(() => {
-    setPrevTotal(tempTotal);
+    setPrevTotal(tempTotal + selectPackageState.totalPrice);
+
     if (selectOptionState.dataList[selfModeStep - 1].selectedId !== 0) {
       setTempTotal(
-        selectOptionState.totalPrice - selectOptionState.dataList[selfModeStep - 1].price + (selectedOption?.price || 0)
+        selectOptionState.totalPrice -
+          selectOptionState.dataList[selfModeStep - 1].price +
+          (selectedOption?.price || 0) +
+          selectPackageState.totalPrice
       );
     } else {
-      setTempTotal(selectOptionState.totalPrice + (selectedOption?.price || 0));
+      setTempTotal(selectOptionState.totalPrice + (selectedOption?.price || 0) + selectPackageState.totalPrice);
     }
   }, [selectedOption]);
 

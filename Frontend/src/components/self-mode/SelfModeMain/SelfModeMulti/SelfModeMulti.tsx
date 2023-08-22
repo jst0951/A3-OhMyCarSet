@@ -23,8 +23,8 @@ export default function SelfModeMulti() {
   const selectPackageDispatch = useSelectPackageDispatch();
   const selectPackageState = useSelectPackageState();
   const selectOptionState = useSelectOptionState();
-  const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice);
-  const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice);
+  const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice + selectPackageState.totalPrice);
+  const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice + selectPackageState.totalPrice);
   const [imgSrc, setImgSrc] = useState('');
   const { selectTag } = useSelectTagContext();
 
@@ -103,6 +103,8 @@ export default function SelfModeMulti() {
   const getAllData = async () => {
     const allData: OptionPackageListT[] = [];
 
+    // setTempTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
+    // setPrevTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
     const hasCache = await caches.has('optionPackage');
     if (hasCache) {
       console.log('cached package data');
