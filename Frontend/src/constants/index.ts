@@ -78,3 +78,5 @@ export const COMPLETE_URL = '/complete';
 // button text
 export const CANCEL_TEXT = '안할래요';
 export const CHANGE_TEXT = '변경할래요!';
+
+export const POWERTRAIN_URI = `${import.meta.env.VITE_API_URL}/selective_option/required_option/powertrain`;

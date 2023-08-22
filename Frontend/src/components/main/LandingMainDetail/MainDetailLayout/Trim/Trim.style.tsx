@@ -17,4 +17,13 @@ export const TrimPrice = styled.div`
   color: ${colors.coolGreyBlack};
 `;
 
-export const TrimImgContainer = styled.div``;
+export const TrimImgContainer = styled.div`
+  width: 214px;
+  height: 95.93px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;

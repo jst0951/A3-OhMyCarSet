@@ -5,7 +5,6 @@ import { useModalDispatch } from '@/contexts/ModalProvider';
 import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { deleteOptionPackageCache } from '@/utils/cache/deleteOptionPackageCache';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -36,12 +35,15 @@ export default function ModeModal({ currentMode }: Props) {
 
   const handleChangeToSelf = () => {
     modalDispatch({ type: 'CLOSE_MODAL' });
-    deleteOptionPackageCache();
     currentPackageDispatch({
       type: 'UPDATE_FILTER',
       payload: 1,
     });
-    navigate(SELF_MODE_URL);
+    navigate(SELF_MODE_URL, {
+      state: {
+        modeChanged: true,
+      },
+    });
   };
 
   const handleChangeToGuide = () => {

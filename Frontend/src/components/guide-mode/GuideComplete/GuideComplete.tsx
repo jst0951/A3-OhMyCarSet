@@ -2,9 +2,12 @@ import RectButton from '@/components/common/button/RectButton/RectButton';
 import * as S from './GuideComplete.style';
 import { useNavigate } from 'react-router-dom';
 import { guideStepT } from '../GuideMain/GuideMain';
-import { Dispatch } from 'react';
-import { COMPLETE_URL } from '@/constants';
+import { Dispatch, useEffect, useState } from 'react';
+import { COMPLETE_URL, POWERTRAIN_URI } from '@/constants';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { SectionListT, myPalisadeProps } from '@/components/self-mode/SelfModeMain/OptionFooter/OptionFooter';
+import { useSelectTagContext } from '@/contexts/SelectTagProvide';
 
 interface Props {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -13,6 +16,10 @@ interface Props {
 export default function GuideMainComplete({ setGuideStep }: Props) {
   const navigate = useNavigate();
   const { dataList } = useSelectOptionState();
+  const selectOptionState = useSelectOptionState();
+  const selectPackageState = useSelectPackageState();
+  const { selectTag } = useSelectTagContext();
+  const [hovered, setHovered] = useState(false);
 
   const linkToComplete = () => {
     navigate(COMPLETE_URL);
@@ -21,6 +28,54 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   const handleClickGuideMode = () => {
     setGuideStep('GUIDE_MODE_URL');
   };
+
+  const cachePowerTrain = async () => {
+    const cache = await caches.open('powertrain');
+
+    const response = await fetch(POWERTRAIN_URI, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...selectTag,
+        recommendOptionId: selectOptionState.dataList[0].recommendList,
+      }),
+    });
+
+    if (response.ok) {
+      await cache.put(POWERTRAIN_URI, response.clone());
+    } else {
+      console.error(`Failed to fetch response for ${POWERTRAIN_URI}`);
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (hovered) return;
+    cachePowerTrain();
+    setHovered(true);
+  };
+
+  const setSessionStorage = () => {
+    const sectionList: SectionListT = {
+      sectionTitle: '옵션',
+      totalPrice: selectPackageState.totalPrice,
+      subList: Array.from(selectPackageState.packageList).map((packageData) =>
+        Array.from(packageData.selectedList.values())
+      ),
+    };
+
+    const myPalisade: myPalisadeProps = {
+      single: selectOptionState,
+      multi: sectionList,
+    };
+
+    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+  };
+
+  useEffect(() => {
+    setSessionStorage();
+  }, []);
 
   return (
     <S.MainContainer>
@@ -42,9 +97,11 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
         <RectButton type="recommended" page="ready" onClick={linkToComplete}>
           완성된 견적을 바로 볼게요
         </RectButton>
-        <RectButton type="notrecommended" page="ready" onClick={handleClickGuideMode}>
-          옵션을 하나씩 살펴볼래요
-        </RectButton>
+        <div onMouseEnter={handleMouseEnter}>
+          <RectButton type="notrecommended" page="ready" onClick={handleClickGuideMode}>
+            옵션을 하나씩 살펴볼래요
+          </RectButton>
+        </div>
       </S.ButtonLine>
     </S.MainContainer>
   );

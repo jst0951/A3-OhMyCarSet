@@ -148,6 +148,7 @@ export default function SelfModeMulti() {
     const filterData = optionPackage[filterId - 1];
     const packageData = filterData?.find((data) => data.id === packageId)?.components;
     const optionData = packageData?.find((option) => option.id === optionId);
+
     if (optionData) {
       setImgSrc(optionData.imgSrc);
     } else {
@@ -159,7 +160,9 @@ export default function SelfModeMulti() {
   return (
     <>
       <S.SelfModeMultiContainer>
-        <S.SelfModeImage>{imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} />}</S.SelfModeImage>
+        <S.SelfModeImage>
+          {imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} alt="선택 옵션" />}
+        </S.SelfModeImage>
         <S.SelfModeOption>
           <S.FilterContainer>
             {optionPackageList.map((option, idx) => (

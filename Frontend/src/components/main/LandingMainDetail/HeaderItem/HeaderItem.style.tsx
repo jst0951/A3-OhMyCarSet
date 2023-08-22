@@ -32,7 +32,7 @@ export const HeaderItemDescription = styled.div`
 `;
 
 export const HeaderItemBest = styled.div`
-  color: #ff4d4d;
+  color: #df1111;
   font-family: 'Hyundai Sans Head Medium';
   font-size: 14px;
   font-style: normal;
