@@ -1,9 +1,6 @@
 import HighlightWord from '@/utils/HighlightWord';
 import * as S from './Item.style';
-import { useModalContext } from '@/contexts/ModalProvider';
-import { useState } from 'react';
-import ModalPortal from '@/components/common/modal/ModalPortal/ModalPortal';
-import DescriptionModal from '@/components/common/modal/DescriptionModal/DescriptionModal';
+import { useModalDispatch } from '@/contexts/ModalProvider';
 
 type Item = {
   optionId: number;
@@ -17,12 +14,10 @@ interface ItemProps {
 }
 
 export default function Item({ item }: ItemProps) {
-  const { setOpen } = useModalContext();
-  const [imgClick, setImgClick] = useState(false);
+  const modalDispatch = useModalDispatch();
 
   const handleClick = () => {
-    setImgClick(true);
-    setOpen(true);
+    modalDispatch({ type: 'DESCRIPT_OPTION', payload: item });
   };
 
   return (
@@ -33,11 +28,6 @@ export default function Item({ item }: ItemProps) {
         </S.Item>
         <S.ItemDescription>{HighlightWord({ children: item.optionName })}</S.ItemDescription>
       </S.ItemContainer>
-      {imgClick && (
-        <ModalPortal>
-          <DescriptionModal title={item.optionName} description={item.description} imgSrc={item.imgSrc} />
-        </ModalPortal>
-      )}
     </>
   );
 }

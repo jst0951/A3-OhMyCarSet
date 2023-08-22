@@ -20,4 +20,3 @@ export { ReactComponent as LoadingToolIcon } from './loading_tool.svg';
 export { ReactComponent as ModalCryIcon } from './modal_cry.svg';
 export { ReactComponent as ModalReloadIcon } from './modal_reload.svg';
 export { ReactComponent as ModalToolsIcon } from './modal_tools.svg';
-export { ReactComponent as ModalClose } from './modal_close.svg';

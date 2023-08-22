@@ -12,13 +12,13 @@ export default function ListModal() {
 
   const handleSelfModeClick = () => {
     if (pathname === GUIDE_MODE_URL) {
-      modalDispatch('CHANGE_TO_SELF');
+      modalDispatch({ type: 'CHANGE_TO_SELF' });
     }
   };
 
   const handleGuideModeClick = () => {
     if (pathname === SELF_MODE_URL) {
-      modalDispatch('CHANGE_TO_GUIDE');
+      modalDispatch({ type: 'CHANGE_TO_GUIDE' });
     }
   };
 

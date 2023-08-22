@@ -27,15 +27,15 @@ export default function HeaderLogoModal() {
 
   const handleClick = () => {
     if (pathname !== '/') {
-      modalDispatch('GO_MAIN');
+      modalDispatch({ type: 'GO_MAIN' });
     }
     if (isOpen) {
-      modalDispatch('CLOSE_MODAL');
+      modalDispatch({ type: 'CLOSE_MODAL' });
     }
   };
 
   const handleOutClick = () => {
-    modalDispatch('CLOSE_MODAL');
+    modalDispatch({ type: 'CLOSE_MODAL' });
     setSelfModeStep(1);
     selectOptionDispatch({
       type: 'INIT_LIST',

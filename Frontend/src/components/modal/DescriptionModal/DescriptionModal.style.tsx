@@ -1,12 +1,11 @@
 import { colors } from '@/style/theme';
-import { headMedium2, popupRegular } from '@/style/typefaces';
+import { headMedium1, popupRegular } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const ModalContainer = styled.div`
-  width: 500px;
-  height: 450px;
+  position: relative;
 
-  padding-top: 20px;
+  padding: 50px 80px 60px 80px;
 
   border-radius: 6px;
   background: ${colors.hyundaiWhite};
@@ -14,10 +13,10 @@ export const ModalContainer = styled.div`
 `;
 
 export const CloseButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 20px;
   margin-right: 20px;
 
   cursor: pointer;
@@ -31,20 +30,24 @@ export const ModalMain = styled.div`
 `;
 
 export const TitleContainer = styled.div`
+  max-width: 500px;
+
   margin-top: 8px;
   margin-bottom: 20px;
 
   color: ${colors.mainHyundaiBlue};
-  ${headMedium2};
+  word-break: keep-all;
+  ${headMedium1};
 `;
 
 export const DescriptionContainer = styled.div`
-  width: 300px;
+  width: 350px;
 
-  margin-top: 20px;
+  margin-top: 40px;
+
   color: ${colors.mainHyundaiBlue};
   opacity: 0.8;
-  text-align: center;
   word-break: keep-all;
+  white-space: pre-wrap;
   ${popupRegular};
 `;

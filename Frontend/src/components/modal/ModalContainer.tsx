@@ -4,6 +4,7 @@ import HeaderLogoModal from './HeaderLogoModal/HeaderLogoModal';
 import CarModelModal from './CarModelModal/CarModelModal';
 import ListModal from './ListModal/ListModal';
 import ModeModal from './ModeModal/ModeModal';
+import DescriptionModal from './DescriptionModal/DescriptionModal';
 
 export default function ModalContainer() {
   const { activeModal } = useModalState();
@@ -16,6 +17,7 @@ export default function ModalContainer() {
     mode: <ListModal />,
     toSelf: <ModeModal currentMode="GUIDE" />,
     toGuide: <ModeModal currentMode="SELF" />,
+    description: <DescriptionModal />,
   };
 
   return (

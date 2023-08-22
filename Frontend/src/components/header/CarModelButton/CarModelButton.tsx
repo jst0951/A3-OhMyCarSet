@@ -9,7 +9,7 @@ export default function CarModelButton() {
 
   const handleClick = () => {
     if (pathname === '/') return;
-    modalDispatch('CHANGE_MODEL');
+    modalDispatch({ type: 'CHANGE_MODEL' });
   };
 
   return (
