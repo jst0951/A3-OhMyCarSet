@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class CacheUpdateScheduleConfig {
 
     private final CacheUpdateConfig cacheUpdateConfig;
-    private final ExecutorService executorService = Executors.newWorkStealingPool(100);
+    private final ExecutorService executorService = Executors.newWorkStealingPool(100); // IO 지연이 많고, CPU 사용률이 낮아 높게 사용
     private final long refreshPeriod = 10 * 1000; // ms 단위
 
     private final TagRepository tagRepository;
@@ -30,9 +30,10 @@ public class CacheUpdateScheduleConfig {
 
     private final List<String> requiredOptionCategoryNameList =
             new ArrayList<>(List.of("powertrain", "wd", "body", "exterior_color", "interior_color", "wheel"));
-
     private final List<String> optionPackageCategoryNameList =
             new ArrayList<>(List.of("system", "temperature", "external_device", "internal_device"));
+    private final List<Character> genderList = new ArrayList<>(List.of('F', 'M', 'N'));
+    private final List<Integer> ageList = new ArrayList<>(List.of(20, 30, 40, 50, 60, 70));
 
     @Scheduled(fixedRate = refreshPeriod)
     public void count() {
@@ -96,6 +97,20 @@ public class CacheUpdateScheduleConfig {
                 for(RequiredOption requiredOption: requiredOptionList) {
                     Runnable runnable = () -> {
                         cacheUpdateConfig.countByTagIdAndCategoryNameAndOptionId(tagId, categoryName, requiredOption.getId());
+                    };
+                    executorService.submit(runnable);
+                }
+            }
+        }
+    }
+
+    @Scheduled(fixedRate = refreshPeriod)
+    public void countByCategoryNameAndGenderAndAge() {
+        for(String categoryName: requiredOptionCategoryNameList) {
+            for(Character gender: genderList) {
+                for(Integer age: ageList) {
+                    Runnable runnable = () -> {
+                        cacheUpdateConfig.countByCategoryNameAndGenderAndAge(categoryName, gender, age);
                     };
                     executorService.submit(runnable);
                 }

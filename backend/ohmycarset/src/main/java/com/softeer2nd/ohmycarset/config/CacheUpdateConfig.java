@@ -1,6 +1,7 @@
 package com.softeer2nd.ohmycarset.config;
 
 import com.softeer2nd.ohmycarset.domain.Tag;
+import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
 import com.softeer2nd.ohmycarset.repository.PurchaseHistoryRepository;
 import com.softeer2nd.ohmycarset.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,10 @@ public class CacheUpdateConfig {
     @CachePut(value = "countByTagIdAndCategoryNameAndOptionId", key = "{#tagId, #categoryName, #optionId}")
     public Long countByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId) {
         return purchaseHistoryRepository.countByTagIdAndCategoryNameAndOptionId(tagId, categoryName, optionId);
+    }
+
+    @CachePut(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
+    public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
+        return purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age);
     }
 }

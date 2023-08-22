@@ -88,6 +88,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @Cacheable(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
     public List<PurchaseCountDto> countByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         String optionId = categoryName + "_id";
         String query = "SELECT " + optionId + " AS option_id, count(*) AS count FROM purchase_history \n" +
