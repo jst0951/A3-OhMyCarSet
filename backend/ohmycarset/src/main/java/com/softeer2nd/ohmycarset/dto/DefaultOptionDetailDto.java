@@ -10,10 +10,10 @@ public class DefaultOptionDetailDto {
     private final String description;
     private final String imgSrc;
 
-    public DefaultOptionDetailDto(DefaultOption defaultOption) {
-        this.optionId = defaultOption.getId();
-        this.optionName = defaultOption.getName();
-        this.description = defaultOption.getDescription();
-        this.imgSrc = defaultOption.getImgSrc();
+    public DefaultOptionDetailDto(Long id, String name, String description, String imgSrc) {
+        this.optionId = id;
+        this.optionName = name;
+        this.description = description;
+        this.imgSrc = imgSrc;
     }
 }

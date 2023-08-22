@@ -12,9 +12,9 @@ public class DefaultOptionDto {
     private final String trimName;
     private final List<DefaultOptionCategoryDto> defaultOptionCategoryDtoList;
 
-    public DefaultOptionDto(Trim trim, List<DefaultOptionCategoryDto> defaultOptionCategoryDtoList) {
-        this.trimId = trim.getId();
-        this.trimName = trim.getName();
+    public DefaultOptionDto(Long trimId, String trimName, List<DefaultOptionCategoryDto> defaultOptionCategoryDtoList) {
+        this.trimId = trimId;
+        this.trimName = trimName;
         this.defaultOptionCategoryDtoList = defaultOptionCategoryDtoList;
     }
 }
