@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
+import Fireworks from '../FireWorks/FireWorks';
 
 export default function CompleteMain() {
   const getSingleDataList = JSON.parse(sessionStorage.getItem('myPalisade') || '').single.dataList;
@@ -21,6 +22,8 @@ export default function CompleteMain() {
           alt={getSingleDataList[isExternal ? 3 : 4].name}
         />
       </S.CarImg>
+      {/* <Fireworks direction="left" number={30}></Fireworks>
+      <Fireworks direction="right" number={30}></Fireworks> */}
       <S.InternalExternal>
         <S.Button onClick={() => clickHandler(true)} $isExternal={isExternal}>
           외부

@@ -60,12 +60,12 @@ export default function DetailMultiItem() {
   let allSelected: SelectPackageData[] = [];
 
   defaultOption &&
-    defaultOption.defaultOptionCategoryDtoList.map((categoryDto) => {
-      categoryDto.defaultOptionDetailDtoList.map((item: ItemProps) => (allOption = [...allOption, item]));
+    defaultOption.defaultOptionCategoryDtoList.forEach((categoryDto) => {
+      categoryDto.defaultOptionDetailDtoList.forEach((item: ItemProps) => (allOption = [...allOption, item]));
     });
 
-  selectPackageState.subList.map((selectedCategoryData: SelectPackageData[]) => {
-    selectedCategoryData.map((data: SelectPackageData) => {
+  selectPackageState.subList.forEach((selectedCategoryData: SelectPackageData[]) => {
+    selectedCategoryData.forEach((data: SelectPackageData) => {
       allSelected = [...allSelected, data];
     });
   });
