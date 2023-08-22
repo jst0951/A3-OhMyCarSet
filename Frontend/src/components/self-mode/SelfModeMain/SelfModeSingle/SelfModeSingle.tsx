@@ -11,6 +11,7 @@ import { DEFAULT_PRICE, SELF_MODE_URL, categoryNameList } from '@/constants';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
+import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 
 type CacheDataT = {
   id: number;
@@ -30,6 +31,7 @@ export default function SelfModeSingle() {
   const [selectedOption, setSelectedOption] = useState<OptionDataT>();
   const [showFeedback, setShowFeedback] = useState<number>(0);
   const { selectTag } = useSelectTagContext();
+  const selectPackageState = useSelectPackageState();
 
   const fetchDataByMode = async (idx: number) => {
     const endpoint = `selective_option/required_option/${categoryNameList[idx].key}`;
@@ -78,10 +80,63 @@ export default function SelfModeSingle() {
     setSelectedOption(selectedOption);
   };
 
+  const urls = [
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/system`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/temperature`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/external_device`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/internal_device`,
+  ];
+
+  const cacheOptionPackage = async () => {
+    const cache = await caches.open('optionPackage');
+
+    for (const url of urls) {
+      const response = await fetch(url);
+
+      if (response.ok) {
+        await cache.put(url, response.clone());
+        console.log(`Cached response for ${url}`);
+      } else {
+        console.log(`Failed to fetch response for ${url}`);
+      }
+    }
+  };
+
+  const cacheGuideOptionPackage = async () => {
+    const cache = await caches.open('optionPackage');
+
+    for (const [idx, url] of urls.entries()) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...selectTag,
+          recommendOptionId: selectPackageState.packageList[idx].recommendList,
+        }),
+      });
+
+      if (response.ok) {
+        await cache.put(url, response.clone());
+        console.log(`Cached response for ${url}`);
+      } else {
+        console.log(`Failed to fetch response for ${url}`);
+      }
+    }
+  };
+
   useEffect(() => {
     if (!hovered) return;
-    if (selfModeStep === 6) return;
-    cacheStepData();
+    if (selfModeStep < 6) cacheStepData();
+    else if (selfModeStep === 6) {
+      caches.has('optionPackage').then((hasCache) => {
+        console.log(hasCache);
+        if (!hasCache) {
+          pathname === SELF_MODE_URL ? cacheOptionPackage() : cacheGuideOptionPackage();
+        }
+      });
+    }
   }, [hovered]);
 
   useEffect(() => {

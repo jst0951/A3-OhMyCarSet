@@ -10,30 +10,7 @@ import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { SELF_MODE_URL } from '@/constants';
-
-const optionList = [
-  {
-    idx: 0,
-    key: 'system',
-    text: '시스템',
-  },
-  {
-    idx: 1,
-    key: 'temperature',
-    text: '온도관리',
-  },
-  {
-    idx: 2,
-    key: 'external_device',
-    text: '외부장치',
-  },
-  {
-    idx: 3,
-    key: 'internal_device',
-    text: '내부장치',
-  },
-];
+import { SELF_MODE_URL, optionPackageList } from '@/constants';
 
 type OptionPackageListT = OptionPackageT[];
 
@@ -80,18 +57,60 @@ export default function SelfModeMulti() {
     }
   };
 
-  const fetchAllData = async () => {
+  const urls = [
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/system`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/temperature`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/external_device`,
+    `${import.meta.env.VITE_API_URL}/selective_option/option_package/internal_device`,
+  ];
+
+  const fetchAllData = async (allData: OptionPackageListT[]) => {
+    console.log('package data fetch');
+
     try {
-      const allData: OptionPackageListT[] = [];
-      for (const option of optionList) {
+      for (const option of optionPackageList) {
         const response = await fetchOptionData(option.key, option.idx);
         allData.push(response);
       }
+
       setOptionPackage(allData);
       setImgSrc(allData[0][0].components[0].imgSrc);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
     }
+  };
+
+  const fetchCachedData = async (allData: OptionPackageListT[]) => {
+    const cache = await caches.open('optionPackage');
+
+    const fetchPromises = urls.map(async (url) => {
+      const response = await cache.match(url);
+
+      if (response) {
+        const data = await response.text();
+        console.log(JSON.parse(data));
+        allData.push(JSON.parse(data));
+      } else {
+        console.log('No cached response found for the URL:', url);
+      }
+    });
+    await Promise.all(fetchPromises);
+    console.log('cached apckage', allData);
+    setOptionPackage(allData);
+    setImgSrc(allData[0][0].components[0].imgSrc);
+  };
+
+  const getAllData = async () => {
+    const allData: OptionPackageListT[] = [];
+
+    const hasCache = await caches.has('optionPackage');
+    if (hasCache) {
+      console.log('cached package data');
+      fetchCachedData(allData);
+    } else {
+      fetchAllData(allData);
+    }
+    console.log(allData);
   };
 
   const handleClickOption = (currentFilter: number, selectedData: OptionPackageT) => {
@@ -119,7 +138,7 @@ export default function SelfModeMulti() {
   };
 
   useEffect(() => {
-    fetchAllData();
+    getAllData();
   }, []);
 
   useEffect(() => {
@@ -152,7 +171,7 @@ export default function SelfModeMulti() {
         <S.SelfModeImage>{imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} />}</S.SelfModeImage>
         <S.SelfModeOption>
           <S.FilterContainer>
-            {optionList.map((option, idx) => (
+            {optionPackageList.map((option, idx) => (
               <S.FilterButton key={idx} $active={filterId === idx + 1} onClick={() => handleFilterOption(idx)}>
                 {option.text}
               </S.FilterButton>

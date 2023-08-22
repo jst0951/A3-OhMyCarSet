@@ -47,6 +47,29 @@ export const categoryNameList = [
   },
 ];
 
+export const optionPackageList = [
+  {
+    idx: 0,
+    key: 'system',
+    text: '시스템',
+  },
+  {
+    idx: 1,
+    key: 'temperature',
+    text: '온도관리',
+  },
+  {
+    idx: 2,
+    key: 'external_device',
+    text: '외부장치',
+  },
+  {
+    idx: 3,
+    key: 'internal_device',
+    text: '내부장치',
+  },
+];
+
 // route
 export const SELF_MODE_URL = '/self-mode';
 export const GUIDE_MODE_URL = '/guide-mode';
