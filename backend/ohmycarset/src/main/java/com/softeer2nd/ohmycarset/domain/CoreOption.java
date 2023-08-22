@@ -10,4 +10,11 @@ public class CoreOption {
     private String name;
     private Long trimId;
     private String imgSrc;
+
+    public CoreOption(Long id, String name, Long trimId, String imgSrc) {
+        this.id = id;
+        this.name = name;
+        this.trimId = trimId;
+        this.imgSrc = imgSrc;
+    }
 }
