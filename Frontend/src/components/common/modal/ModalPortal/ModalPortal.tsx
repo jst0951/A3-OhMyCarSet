@@ -16,7 +16,7 @@ export default function ModalPortal({ children }: Props) {
 
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-      ModalDispatch('CLOSE_MODAL');
+      ModalDispatch({ type: 'CLOSE_MODAL' });
     }
   };
 

@@ -15,6 +15,7 @@ export const Item = styled.div`
     width: 80px;
     height: 60px;
     border-radius: 6px;
+    cursor: pointer;
   }
 `;
 

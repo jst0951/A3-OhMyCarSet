@@ -22,7 +22,7 @@ export default function ModeModal({ currentMode }: Props) {
 
   const buttonLeft = {
     name: CANCEL_TEXT,
-    onClick: () => modalDispatch('CLOSE_MODAL'),
+    onClick: () => modalDispatch({ type: 'CLOSE_MODAL' }),
   };
   const selfbuttonRight = {
     name: CHANGE_TEXT,
@@ -35,7 +35,7 @@ export default function ModeModal({ currentMode }: Props) {
   };
 
   const handleChangeToSelf = () => {
-    modalDispatch('CLOSE_MODAL');
+    modalDispatch({ type: 'CLOSE_MODAL' });
     deleteOptionPackageCache();
     currentPackageDispatch({
       type: 'UPDATE_FILTER',
@@ -45,7 +45,7 @@ export default function ModeModal({ currentMode }: Props) {
   };
 
   const handleChangeToGuide = () => {
-    modalDispatch('CLOSE_MODAL');
+    modalDispatch({ type: 'CLOSE_MODAL' });
     setSelfModeStep(1);
     selectOptionDispatch({
       type: 'INIT_LIST',

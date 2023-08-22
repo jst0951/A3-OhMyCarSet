@@ -38,7 +38,7 @@ export default function ModeButton() {
 
   const handleModeClick = () => {
     if (pathname === SELF_MODE_URL || pathname === GUIDE_MODE_URL) {
-      modalDispatch('CHANGE_MODE');
+      modalDispatch({ type: 'CHANGE_MODE' });
     }
   };
 
