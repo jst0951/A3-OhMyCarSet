@@ -10,8 +10,6 @@ export default function DescriptionModal() {
     modalDispatch({ type: 'CLOSE_MODAL' });
   };
 
-  console.log(item?.description.split('\\n'));
-
   return (
     item && (
       <S.ModalContainer>
