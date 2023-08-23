@@ -3,11 +3,10 @@ import { keyframes } from 'styled-components';
 import * as S from './Confetti.style';
 
 interface ConfettiProps {
-  left: number;
-  width: number;
   heigth: number;
   confettiNum: number;
 }
+
 const makeItRain = (height: number) => {
   return keyframes`
    from {
@@ -31,9 +30,11 @@ const randomInRange = (min: number, max: number) => {
 
 const colors = ['#FF7676', '#FFB876', '#76ADFF'];
 
-export default function Confetti({ left, width, heigth, confettiNum }: ConfettiProps) {
+const WIDTH = 100;
+
+export default function Confetti({ heigth, confettiNum }: ConfettiProps) {
   const confetti: React.JSX.Element[] = Array.from({ length: 13 }).map((_, index) => {
-    const spaceWidth = width / confettiNum;
+    const spaceWidth = WIDTH / confettiNum;
     let confettiWidth;
     let confettiHeight;
     let delay;
@@ -64,7 +65,7 @@ export default function Confetti({ left, width, heigth, confettiNum }: ConfettiP
     return (
       <S.ConfettiDiv
         key={index}
-        $left={left + spaceWidth * index}
+        $left={spaceWidth * index}
         $color={colors[index % colors.length]}
         $transform={randomInRange(-80, 80)}
         $animation={animation}

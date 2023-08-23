@@ -80,12 +80,15 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
 
   return (
     <S.MainContainer>
-      <Confetti left={30} width={40} heigth={250} confettiNum={13} />
-      <img
-        src={`${import.meta.env.VITE_STATIC_API_URL}/${dataList[3].imgSrc}`}
-        alt={dataList[3].selectedName || '팰리세이드'}
-        height={300}
-      />
+      <S.ImageContainer>
+        <Confetti heigth={250} confettiNum={13} />
+        <img
+          src={`${import.meta.env.VITE_STATIC_API_URL}/${dataList[3].imgSrc}`}
+          alt={dataList[3].selectedName || '팰리세이드'}
+          width={547.57}
+          height={300}
+        />
+      </S.ImageContainer>
       <S.MainTitle>나만의 팰리세이드 견적 준비 완료!</S.MainTitle>
       <S.SelectedTrim>
         <S.Selected>선택된 트림</S.Selected>

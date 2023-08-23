@@ -2,11 +2,13 @@ import { styled, css } from 'styled-components';
 import Keyframes from 'styled-components/dist/models/Keyframes';
 
 export const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  width: 600px;
+  height: 300px;
   overflow: hidden;
 `;
 
@@ -24,6 +26,7 @@ export const ConfettiDiv = styled.div<{
   position: absolute;
   opacity: 0;
   z-index: -1;
+  top: 0;
   left: ${({ $left }) => $left}%;
   width: ${({ $width }) => $width}px;
   height: ${({ $height }) => $height}px;
