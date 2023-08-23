@@ -8,13 +8,18 @@ interface Props {
 
 export default function GuideIndicator({ guideModeStep, setGuideModeStep }: Props) {
   const handleClick = (idx: number) => {
-    setGuideModeStep(idx);
+    if (idx < guideModeStep) setGuideModeStep(idx);
   };
 
   return (
     <S.IndicatorContainer>
       {guideDescriptionData.map((data) => (
-        <S.Indicator key={data.page} $active={guideModeStep === data.page} onClick={() => handleClick(data.page)}>
+        <S.Indicator
+          key={data.page}
+          $disable={data.page > guideModeStep}
+          $active={guideModeStep === data.page}
+          onClick={() => handleClick(data.page)}
+        >
           {data.page}
         </S.Indicator>
       ))}

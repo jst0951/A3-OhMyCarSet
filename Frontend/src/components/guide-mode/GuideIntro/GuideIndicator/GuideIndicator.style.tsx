@@ -7,7 +7,7 @@ export const IndicatorContainer = styled.div`
   height: 33px;
 `;
 
-export const Indicator = styled.div<{ $active: boolean }>`
+export const Indicator = styled.div<{ $active: boolean; $disable: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,12 +25,17 @@ export const Indicator = styled.div<{ $active: boolean }>`
   line-height: 28px;
   letter-spacing: -0.8px;
 
-  cursor: pointer;
+  ${({ $disable }) => !$disable && `  cursor: pointer;`}
 
-  ${({ $active }) =>
+  ${({ $active, $disable }) =>
     $active
       ? css`
           background-color: ${colors.mainHyundaiBlue};
+          transition: all 0.2s ease;
+        `
+      : $disable
+      ? css`
+          background-color: #dfdfdf;
           transition: all 0.2s ease;
         `
       : css`
