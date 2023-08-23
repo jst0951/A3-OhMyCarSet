@@ -19,9 +19,9 @@ const makeItRain = () => {
     `;
 };
 
-function randomInRange(min: number, max: number) {
+const randomInRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
-}
+};
 
 const colors = ['#FF7676', '#FFB876', '#76ADFF'];
 
