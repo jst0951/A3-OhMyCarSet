@@ -19,6 +19,11 @@ type DefaultOption = {
   }>;
 };
 
+type PackageAllProps = {
+  id: number;
+  packageData: Array<SelectPackageData>;
+};
+
 interface ItemProps {
   optionId: number;
   optionName: string;
@@ -57,17 +62,19 @@ export default function DetailMultiItem() {
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [isOption, setIsOption] = useState(true);
   let allOption: ItemProps[] = [];
-  let allSelected: SelectPackageData[] = [];
+  const allSelected: PackageAllProps[] = [];
 
   defaultOption &&
     defaultOption.defaultOptionCategoryDtoList.forEach((categoryDto) => {
       categoryDto.defaultOptionDetailDtoList.forEach((item: ItemProps) => (allOption = [...allOption, item]));
     });
 
-  selectPackageState.subList.forEach((selectedCategoryData: SelectPackageData[]) => {
-    selectedCategoryData.forEach((data: SelectPackageData) => {
-      allSelected = [...allSelected, data];
-    });
+  selectPackageState.subList.forEach((selectedCategoryData: SelectPackageData[], categoryIndex: number) => {
+    const packageObject = {
+      id: categoryIndex,
+      packageData: selectedCategoryData,
+    };
+    allSelected.push(packageObject);
   });
 
   const handleFilterOption = (idx: number) => {
@@ -121,11 +128,13 @@ export default function DetailMultiItem() {
             <S.ListContainer>
               {selectedFilter === -1 ? (
                 allSelected.length ? (
-                  allSelected.map((data: SelectPackageData) => (
-                    <S.ItemContainer key={data.name}>
-                      <DetailItem data={data} index={selectedFilter} />
-                    </S.ItemContainer>
-                  ))
+                  allSelected.map((categoryData: PackageAllProps) =>
+                    categoryData.packageData.map((selectedPackage: SelectPackageData) => (
+                      <S.ItemContainer key={selectedPackage.name}>
+                        <DetailItem data={selectedPackage} index={categoryData.id} />
+                      </S.ItemContainer>
+                    ))
+                  )
                 ) : (
                   <S.EmptyContainer>해당 카테고리에 선택된 옵션이 없습니다.</S.EmptyContainer>
                 )
