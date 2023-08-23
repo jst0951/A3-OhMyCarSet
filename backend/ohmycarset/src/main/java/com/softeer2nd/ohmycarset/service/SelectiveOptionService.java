@@ -296,7 +296,7 @@ public class SelectiveOptionService {
         }
         unsortedRemainOptions.sort(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder()));
 
-
+        response.addAll(unsortedRemainOptions);
         return response;
     }
 
