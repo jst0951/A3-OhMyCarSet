@@ -5,6 +5,7 @@ import { guideStepT } from '../GuideMain/GuideMain';
 import { Dispatch } from 'react';
 import { COMPLETE_URL } from '@/constants';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import Confetti from '@/components/common/Confetti/Confetti';
 
 interface Props {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -24,6 +25,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
 
   return (
     <S.MainContainer>
+      <Confetti left={30} width={40} heigth={250} confettiNum={13} />
       <img
         src={`${import.meta.env.VITE_STATIC_API_URL}/${dataList[3].imgSrc}`}
         alt={dataList[3].selectedName || '팰리세이드'}
