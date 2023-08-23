@@ -20,7 +20,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
   const { selectTag } = useSelectTagContext();
-  const [hovered, setHovered] = useState(false);
+  const [powertrainCached, setPowertrainCached] = useState(false);
 
   const linkToComplete = () => {
     navigate(COMPLETE_URL);
@@ -51,12 +51,6 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
     }
   };
 
-  const handleMouseEnter = () => {
-    if (hovered) return;
-    cachePowerTrain();
-    setHovered(true);
-  };
-
   const setSessionStorage = () => {
     const sectionList: SectionListT = {
       sectionTitle: '옵션',
@@ -76,6 +70,9 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
 
   useEffect(() => {
     setSessionStorage();
+    if (powertrainCached) return;
+    cachePowerTrain();
+    setPowertrainCached(true);
   }, []);
 
   return (
@@ -102,7 +99,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
         <RectButton type="recommended" page="ready" onClick={linkToComplete}>
           완성된 견적을 바로 볼게요
         </RectButton>
-        <div onMouseEnter={handleMouseEnter}>
+        <div>
           <RectButton type="notrecommended" page="ready" onClick={handleClickGuideMode}>
             옵션을 하나씩 살펴볼래요
           </RectButton>
