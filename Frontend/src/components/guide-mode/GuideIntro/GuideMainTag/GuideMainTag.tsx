@@ -94,7 +94,7 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
     <>
       <S.MainContainer>
         <S.MainLeftContainer>
-          <GuideIndicator guideModeStep={guideModeStep} />
+          <GuideIndicator guideModeStep={guideModeStep} setGuideModeStep={setGuideModeStep} />
           <S.DescriptionContainer>
             {guideDescriptionData.map((data) => (
               <S.Description key={data.page} $hidden={data.page !== guideModeStep}>
