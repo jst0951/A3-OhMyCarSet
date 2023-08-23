@@ -38,7 +38,7 @@ public class CacheUpdateScheduleConfig {
     private final List<Character> genderList = new ArrayList<>(List.of('F', 'M', 'N'));
     private final List<Integer> ageList = new ArrayList<>(List.of(20, 30, 40, 50, 60, 70));
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void count() {
         Runnable runnable = () -> {
             cacheUpdateConfig.count();
@@ -46,7 +46,7 @@ public class CacheUpdateScheduleConfig {
         executorService.submit(runnable);
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByTagId() {
         // 모든 태그 목록을 불러옵니다.
         List<Long> tagIds = tagRepository.findAll().stream()
@@ -62,7 +62,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndOptionId() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -75,7 +75,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndPackageId() {
         for(String categoryName: optionPackageCategoryNameList) {
             List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
@@ -88,7 +88,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByTagIdAndCategoryNameAndOptionId() {
         List<Long> tagIds = tagRepository.findAll().stream()
                 .map(Tag::getId)
@@ -107,7 +107,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByTagIdAndCategoryNameAndPackageId() {
         List<Long> tagIds = tagRepository.findAll().stream()
                 .map(Tag::getId)
@@ -126,7 +126,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Integer age: ageList) {
@@ -138,7 +138,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Character gender: genderList) {
@@ -152,7 +152,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndExteriorColorId() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName("exterior_color");
@@ -165,7 +165,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndOptionIdAndGender() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -180,7 +180,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndOptionIdAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -195,7 +195,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByCategoryNameAndOptionIdAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -212,7 +212,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByGenderAndAge() {
         for(Character gender: genderList) {
             for(Integer age: ageList) {
@@ -224,7 +224,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByGender() {
         for(Character gender: genderList) {
             Runnable runnable = () -> {
@@ -234,7 +234,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod)
+    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
     public void countByAge() {
         for(Integer age: ageList) {
             Runnable runnable = () -> {
