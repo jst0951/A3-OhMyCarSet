@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from 'react';
 
-type SelectOptionData = {
+export type SelectPackageOptionData = {
   id: number;
   name: string;
   price: number;
@@ -10,7 +10,7 @@ type SelectOptionData = {
 export type SelectPackageData = {
   filterId: number;
   filterName: string;
-  selectedList: Map<number, SelectOptionData>;
+  selectedList: Map<number, SelectPackageOptionData>;
   recommendList?: number[];
 };
 
@@ -24,7 +24,7 @@ type SelectPackageActionT = {
   type: 'UPDATE_LIST' | 'INIT_LIST';
   payload?: {
     filterId: number;
-    newData: SelectOptionData;
+    newData: SelectPackageOptionData;
     recommendId?: number;
   };
 };

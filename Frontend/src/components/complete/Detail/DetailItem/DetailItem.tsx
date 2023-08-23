@@ -2,9 +2,10 @@ import { CorrectionIcon } from '@/asset/icons';
 import * as S from './DetailItem.style';
 import { useNavigate } from 'react-router-dom';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
-import { SelectOptionData } from '@/contexts/SelectOptionProvider';
+import { SelectOptionData, useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
 import { SELF_MODE_URL } from '@/constants';
+import { SelectPackageOptionData, useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
 
 interface ItemProps {
   optionId: number;
@@ -27,23 +28,75 @@ interface CompleteOptionProps {
 export default function DetailItem({ data, index }: CompleteOptionProps) {
   const navigate = useNavigate();
   const { setSelfModeStep } = useSelfModeContext();
+  const selectOptionDispatch = useSelectOptionDispatch();
+  const selectPackageDispatch = useSelectPackageDispatch();
   const currentPackageDispatch = useCurrentPackageDispatch();
   const name = 'selectedName' in data ? data.selectedName : 'optionName' in data ? data.optionName : data.name;
+
+  const updateContextWithSession = () => {
+    const selectDataInSession = JSON.parse(sessionStorage.getItem('myPalisade') || '');
+    const selectOption = selectDataInSession.single.dataList;
+    const selectPackage = selectDataInSession.multi.subList;
+
+    selectOption.forEach((data: SelectOptionData, idx: number) =>
+      selectOptionDispatch({
+        type: 'UPDATE_LIST',
+        payload: {
+          optionId: idx + 1,
+          newOptionData: {
+            selectedId: data.selectedId,
+            selectedName: data.selectedName,
+            price: data.price,
+            imgSrc: data.imgSrc,
+          },
+        },
+      })
+    );
+    selectPackage.forEach((packageData: SelectPackageOptionData[], idx: number) => {
+      packageData.forEach((data: SelectPackageOptionData) => {
+        selectPackageDispatch({
+          type: 'UPDATE_LIST',
+          payload: {
+            filterId: idx + 1,
+            newData: {
+              id: data.id,
+              name: data.name,
+              price: data.price,
+              imgSrc: data.imgSrc,
+            },
+            recommendId: data.id,
+          },
+        });
+      });
+    });
+  };
+
+  const singleCorrection = (index: number) => {
+    updateContextWithSession();
+    navigate(SELF_MODE_URL);
+    setSelfModeStep(index);
+  };
+
+  const multiCorrection = (index: number) => {
+    updateContextWithSession();
+    navigate(SELF_MODE_URL);
+    setSelfModeStep(7);
+    currentPackageDispatch({
+      type: 'UPDATE_FILTER',
+      payload: index + 1,
+    });
+  };
 
   const correctionClickHandler = () => {
     if ('stepName' in data && index === 0) {
       navigate('/');
     } else if ('stepName' in data && index !== undefined) {
-      navigate(SELF_MODE_URL);
-      setSelfModeStep(index);
+      // single
+      singleCorrection(index);
     }
     if ('name' in data && index !== undefined) {
-      navigate(SELF_MODE_URL);
-      setSelfModeStep(7);
-      currentPackageDispatch({
-        type: 'UPDATE_FILTER',
-        payload: index + 1,
-      });
+      // multi
+      multiCorrection(index);
     }
   };
 
