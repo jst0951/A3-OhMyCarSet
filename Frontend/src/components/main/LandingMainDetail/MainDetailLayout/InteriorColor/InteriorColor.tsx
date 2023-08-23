@@ -12,7 +12,11 @@ type InteriorColor = Array<{
   }>;
 }>;
 
-export default function InteriorColor() {
+interface Props {
+  isFetched: boolean;
+}
+
+export default function InteriorColor({ isFetched }: Props) {
   const [interiorColor, setInteriorColor] = useState<InteriorColor>([]);
 
   const fetchInteriorColor = async () => {
@@ -25,8 +29,8 @@ export default function InteriorColor() {
   };
 
   useEffect(() => {
-    fetchInteriorColor();
-  }, []);
+    if (isFetched) fetchInteriorColor();
+  }, [isFetched]);
 
   return (
     <>

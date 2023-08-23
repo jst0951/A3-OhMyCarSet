@@ -1,5 +1,3 @@
-import { colors } from '@/style/theme';
-import { bodyMedium1 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const Container = styled.div`
@@ -44,18 +42,4 @@ export const MoreItemContainer = styled.div<{ $showMore: boolean }>`
   align-items: center;
   gap: 12px;
   ${({ $showMore }) => ($showMore ? `display: flex` : `display: none`)}
-`;
-
-export const MoreButtonContainer = styled.div`
-  margin-top: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${bodyMedium1}
-  background-color: ${colors.coolGrey001};
-  color: ${colors.coolGrey004};
-  width: 140px;
-  height: 50px;
-  border-radius: 6px;
-  cursor: pointer;
 `;

@@ -5,6 +5,7 @@ import { guideStepT } from '../GuideMain/GuideMain';
 import { Dispatch, useEffect, useState } from 'react';
 import { COMPLETE_URL, POWERTRAIN_URI } from '@/constants';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import Confetti from '@/components/common/Confetti/Confetti';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { SectionListT, myPalisadeProps } from '@/components/self-mode/SelfModeMain/OptionFooter/OptionFooter';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
@@ -19,7 +20,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
   const { selectTag } = useSelectTagContext();
-  const [hovered, setHovered] = useState(false);
+  const [powertrainCached, setPowertrainCached] = useState(false);
 
   const linkToComplete = () => {
     navigate(COMPLETE_URL);
@@ -50,12 +51,6 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
     }
   };
 
-  const handleMouseEnter = () => {
-    if (hovered) return;
-    cachePowerTrain();
-    setHovered(true);
-  };
-
   const setSessionStorage = () => {
     const sectionList: SectionListT = {
       sectionTitle: '옵션',
@@ -75,15 +70,22 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
 
   useEffect(() => {
     setSessionStorage();
+    if (powertrainCached) return;
+    cachePowerTrain();
+    setPowertrainCached(true);
   }, []);
 
   return (
     <S.MainContainer>
-      <img
-        src={`${import.meta.env.VITE_STATIC_API_URL}/${dataList[3].imgSrc}`}
-        alt={dataList[3].selectedName || '팰리세이드'}
-        height={300}
-      />
+      <S.ImageContainer>
+        <Confetti heigth={250} confettiNum={13} />
+        <img
+          src={`${import.meta.env.VITE_STATIC_API_URL}/${dataList[3].imgSrc}`}
+          alt={dataList[3].selectedName || '팰리세이드'}
+          width={547.57}
+          height={300}
+        />
+      </S.ImageContainer>
       <S.MainTitle>나만의 팰리세이드 견적 준비 완료!</S.MainTitle>
       <S.SelectedTrim>
         <S.Selected>선택된 트림</S.Selected>
@@ -97,7 +99,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
         <RectButton type="recommended" page="ready" onClick={linkToComplete}>
           완성된 견적을 바로 볼게요
         </RectButton>
-        <div onMouseEnter={handleMouseEnter}>
+        <div>
           <RectButton type="notrecommended" page="ready" onClick={handleClickGuideMode}>
             옵션을 하나씩 살펴볼래요
           </RectButton>
