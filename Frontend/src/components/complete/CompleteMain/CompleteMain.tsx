@@ -4,6 +4,7 @@ import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
 import Confetti from '../../common/Confetti/Confetti';
+import ExternalCarModel from '../ExternalCarModel/ExternalCarModel';
 
 export default function CompleteMain() {
   const [isExternal, setIsExternal] = useState<boolean>(true);
@@ -22,11 +23,17 @@ export default function CompleteMain() {
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
       <S.CarImg $isExternal={isExternal}>
         <S.ImageContainer>
-          {isExternal && <Confetti heigth={250} confettiNum={13} />}
-          <img
-            src={`${import.meta.env.VITE_STATIC_API_URL}/${getSingleDataList[isExternal ? 3 : 4].imgSrc}`}
-            alt={getSingleDataList[isExternal ? 3 : 4].name}
-          />
+          {isExternal ? (
+            <>
+              <Confetti heigth={250} confettiNum={13} />
+              <ExternalCarModel color={getSingleDataList[3].id} />
+            </>
+          ) : (
+            <img
+              src={`${import.meta.env.VITE_STATIC_API_URL}/${getSingleDataList[4].imgSrc}`}
+              alt={getSingleDataList[isExternal ? 3 : 4].name}
+            />
+          )}
         </S.ImageContainer>
       </S.CarImg>
       <S.InternalExternal>
