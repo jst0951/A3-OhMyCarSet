@@ -10,6 +10,14 @@ export const MainContainer = styled.div`
   margin: 0 auto;
 `;
 
+export const ImageContainer = styled.div`
+  position: relative;
+  display: flex;
+  width: 600px;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const MainTitle = styled.div`
   color: ${colors.hyundaiBlack};
   text-align: center;

@@ -28,11 +28,20 @@ export const CarImg = styled.div<{ $isExternal: boolean }>`
   height: 326px;
   margin: 20px;
 
-  & > img {
+  & img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+`;
+
+export const ImageContainer = styled.div`
+  position: relative;
+  position: relative;
+  display: flex;
+  width: 600px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const InternalExternal = styled.div`
