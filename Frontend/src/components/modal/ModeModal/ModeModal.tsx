@@ -35,6 +35,7 @@ export default function ModeModal({ currentMode }: Props) {
 
   const handleChangeToSelf = () => {
     modalDispatch({ type: 'CLOSE_MODAL' });
+    sessionStorage.clear();
     currentPackageDispatch({
       type: 'UPDATE_FILTER',
       payload: 1,
@@ -48,6 +49,7 @@ export default function ModeModal({ currentMode }: Props) {
 
   const handleChangeToGuide = () => {
     modalDispatch({ type: 'CLOSE_MODAL' });
+    sessionStorage.clear();
     setSelfModeStep(1);
     selectOptionDispatch({
       type: 'INIT_LIST',

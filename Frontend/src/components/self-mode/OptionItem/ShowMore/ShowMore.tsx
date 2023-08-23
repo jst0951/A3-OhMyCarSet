@@ -17,7 +17,7 @@ export default function ShowMore({ contentBoxRef, contentRef, description, showM
     <>
       <S.ShowMoreWrapper ref={contentBoxRef} $showMore={showMore}>
         <S.ShowMoreContainer ref={contentRef}>
-          {description.main && <S.ShowMoreMainText>{description.main}</S.ShowMoreMainText>}
+          {description.main && <S.ShowMoreMainText>{HighlightWord({ children: description.main })}</S.ShowMoreMainText>}
           {description.sub && <S.ShowMoreSubText>{HighlightWord({ children: description.sub })}</S.ShowMoreSubText>}
         </S.ShowMoreContainer>
       </S.ShowMoreWrapper>

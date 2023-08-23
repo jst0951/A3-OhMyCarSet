@@ -11,7 +11,7 @@ export type SelectOptionData = {
   recommendList?: number[];
 };
 
-interface SelectOptionStateT {
+export interface SelectOptionStateT {
   dataList: SelectOptionData[];
   totalPrice: number;
 }

@@ -78,15 +78,14 @@ export default function SelfModeMulti() {
   const fetchCachedData = async (allData: OptionPackageListT[]) => {
     const cache = await caches.open('optionPackage');
 
-    const fetchPromises = urls.map(async (url) => {
+    for (const url of urls) {
       const response = await cache.match(url);
 
       if (response) {
         const data = await response.text();
         allData.push(JSON.parse(data));
       }
-    });
-    await Promise.all(fetchPromises);
+    }
 
     setOptionPackage(allData);
     setImgSrc(allData[0][0].components[0].imgSrc);
