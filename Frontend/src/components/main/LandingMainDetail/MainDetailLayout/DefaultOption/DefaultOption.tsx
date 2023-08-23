@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import * as S from './DefaultOption.style';
 import RectFilterButton from '@/components/common/button/RectFilterButton/RectFilterButton';
 import Item from './Item/Item';
-import Icon from '@/components/common/Icon';
+
 import fetchData from '@/utils/apis/fetchData';
+import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
 
 type DefaultOption = {
   trimId: number;
@@ -25,26 +26,9 @@ interface Props {
   isFetched: boolean;
 }
 
-interface ShowMoreProps {
-  itemArrayLength: number;
-  showLength: number;
-  onClick: () => void;
-}
-
 const MAX_ITEM_NUM = 5;
 const MAX_ALL_ITEM_NUM = 123;
 const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', '외관', '내장', '시트', '편의', '멀티미디어'];
-
-function ShowMoreButton({ itemArrayLength, showLength, onClick }: ShowMoreProps) {
-  if (itemArrayLength > showLength) {
-    return (
-      <S.MoreButtonContainer onClick={onClick}>
-        더보기
-        <Icon icon="ArrowBottomIcon" size={20} />
-      </S.MoreButtonContainer>
-    );
-  }
-}
 
 export default function DefaultOption({ isFetched }: Props) {
   const [defaultOption, setDefaultOption] = useState<DefaultOption[]>([]);

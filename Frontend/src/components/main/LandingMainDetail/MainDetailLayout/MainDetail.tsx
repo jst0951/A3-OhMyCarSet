@@ -46,7 +46,12 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
     {
       key: 'interior',
       name: '내장 색상',
-      component: <InteriorColor />,
+      component: <InteriorColor isFetched={isFetched} />,
+    },
+    {
+      key: 'default',
+      name: '기본 포함 품목',
+      component: <DefaultOption isFetched={isFetched} />,
     },
   ];
 
@@ -89,8 +94,6 @@ export default function MainDetail({ trimData }: DetailHeaderProps) {
             {detail.component}
           </S.OptionContainer>
         ))}
-        <S.LineTitle>기본 포함 품목</S.LineTitle>
-        <DefaultOption isFetched={isFetched} />
         <S.SelfButtonContainer>
           {trimData.map((trim) => (
             <RectButton key={trim.id} onClick={() => handleClickMyCar(trim.id)} type="recommended" page="main">
