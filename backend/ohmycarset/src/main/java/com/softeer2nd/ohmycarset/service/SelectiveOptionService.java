@@ -184,7 +184,7 @@ public class SelectiveOptionService {
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
         List<OptionPackageDto> response = new ArrayList<>();
 
-        Character gsender = userInfoDto.getGender();
+        Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
         String genderRepresentation = getGenderRepresentation(gender);
 
