@@ -24,6 +24,17 @@ public class SelectiveOptionService {
     private static final String MALE = "남자";
     private static final String FEMALE = "여자";
     private static final String NONE = "NONE";
+    private static final String[] COLOR_MAIN_FEEDBACK = {
+            " 색상은 가장 많이 판매됐어요!",
+            " 색상은 인기가 많아요!",
+            " 색상은 희소성이 있어요!"
+    };
+
+    private static final String[] COLOR_SUB_FEEDBACK = {
+            "가장 인기있는 색상을 원하신다면, 탁월한 선택입니다.",
+            "인기있는 색상을 원하신다면, 탁월한 선택입니다.",
+            "독특한 색상을 원하신다면, 탁월한 선택입니다."
+    };
 
     private final SelectiveOptionRepository selectiveOptionRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -106,6 +117,8 @@ public class SelectiveOptionService {
         RequiredOption recommendedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0)).get();
         List<RequiredOption> remainOptions = selectiveOptionRepository.findRemainOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0));
 
+        Long countTotalUser = purchaseHistoryRepository.count();
+
         if (categoryName.equals("powertrain") || categoryName.equals("wd") || categoryName.equals("body") || categoryName.equals("wheel")) {
             List<TagDto> tagDtoList = new ArrayList<>();
 
@@ -148,8 +161,115 @@ public class SelectiveOptionService {
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
 
-        if (categoryName.equals("exterior_color") || categoryName.equals("interior_color")) {
-            Double similarPercentage;
+        Double similarPercentage;
+        RequiredOptionDto exteriorColorDto;
+        List<RequiredOptionDto> emptyFeedbackExteriorColorDtoList = new ArrayList<>();
+
+        if (categoryName.equals("exterior_color")) {
+            Double genderRatio;
+            Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
+            List<TagDto> tagDtoList;
+
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, 0.0), new TagDto(101L, age + "대", ageRatio));
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
+                genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            }
+
+            Long countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, recommendedOption.getId());
+            Double purchasePercentage = (double) countUserWithOption / countTotalUser * 100;
+
+            exteriorColorDto = new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList);
+            // 추천 옵션 추가
+            emptyFeedbackExteriorColorDtoList.add(
+                    new RequiredOptionDto(
+                            recommendedOption.getId(),
+                            recommendedOption.getName(),
+                            recommendedOption.getMainDescription(),
+                            recommendedOption.getSubDescription(),
+                            null,
+                            null,
+                            recommendedOption.getPrice(),
+                            recommendedOption.getImgSrc(),
+                            recommendedOption.getIconSrc(),
+                            purchasePercentage,
+                            null)
+            );
+            // response.add(new RequiredOptionDto(recommendedOption, purchasePercentage, tagDtoList));
+
+            for (RequiredOption remainOption : remainOptions) {
+                countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, remainOption.getId());
+                purchasePercentage = (double) countUserWithOption / countTotalUser * 100;
+                emptyFeedbackExteriorColorDtoList.add(
+                        new RequiredOptionDto(
+                                remainOption.getId(),
+                                remainOption.getName(),
+                                remainOption.getMainDescription(),
+                                remainOption.getSubDescription(),
+                                null,
+                                null,
+                                remainOption.getPrice(),
+                                remainOption.getImgSrc(),
+                                remainOption.getIconSrc(),
+                                purchasePercentage,
+                                null)
+                );
+            }
+            
+            // 판매율 내림차순으로 정렬
+            emptyFeedbackExteriorColorDtoList.sort(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder()));
+            for (int purchaseRank = 0; purchaseRank < 6; purchaseRank++) {
+                // 추천옵션
+                RequiredOptionDto dto = emptyFeedbackExteriorColorDtoList.get(purchaseRank);
+                String mainFeedback = generateMainFeedback(purchaseRank, dto.getName());
+                String subFeedback = generateSubFeedback(purchaseRank);
+                if (dto.getName().equals(exteriorColorDto.getName())) {
+                    response.add(
+                            new RequiredOptionDto(
+                                    exteriorColorDto.getId(),
+                                    exteriorColorDto.getName(),
+                                    exteriorColorDto.getMainDescription(),
+                                    exteriorColorDto.getSubDescription(),
+                                    mainFeedback,
+                                    subFeedback,
+                                    exteriorColorDto.getPrice(),
+                                    exteriorColorDto.getImgSrc(),
+                                    exteriorColorDto.getIconSrc(),
+                                    exteriorColorDto.getPurchaseRate(),
+                                    exteriorColorDto.getTags()
+                            )
+                    );
+                } else {
+                    response.add(
+                            new RequiredOptionDto(
+                                    dto.getId(),
+                                    dto.getName(),
+                                    dto.getMainDescription(),
+                                    dto.getSubDescription(),
+                                    mainFeedback,
+                                    subFeedback,
+                                    dto.getPrice(),
+                                    dto.getImgSrc(),
+                                    dto.getIconSrc(),
+                                    dto.getPurchaseRate(),
+                                    dto.getTags()
+                            )
+                    );
+                }
+            }
+
+            Collections.sort(response, Comparator
+                    .comparing((RequiredOptionDto o) -> o.getTags() == null)  // Compare null tags first
+                    .thenComparing(Comparator.nullsLast(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder())))
+            );
+
+            return response;
+        }
+
+        if (categoryName.equals("interior_color")) {
             Double genderRatio;
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
             List<TagDto> tagDtoList;
@@ -167,8 +287,7 @@ public class SelectiveOptionService {
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
 
-        // 남은 옵션 추가
-        Long countTotalUser = purchaseHistoryRepository.count();
+
         List<RequiredOptionDto> unsortedRemainOptions = new ArrayList<>();
         for (RequiredOption remainOption : remainOptions) {
             Long countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, remainOption.getId());
@@ -176,9 +295,27 @@ public class SelectiveOptionService {
             unsortedRemainOptions.add(new RequiredOptionDto(remainOption, purchasePercentage, null));
         }
         unsortedRemainOptions.sort(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder()));
-        response.addAll(unsortedRemainOptions);
+
 
         return response;
+    }
+
+    private String generateSubFeedback(int purchaseRank) {
+        if (purchaseRank == 0) {
+            return COLOR_SUB_FEEDBACK[0];
+        } else if (purchaseRank == 1 || purchaseRank == 2) {
+            return COLOR_SUB_FEEDBACK[1];
+        }
+        return COLOR_SUB_FEEDBACK[2];
+    }
+
+    private String generateMainFeedback(int purchaseRank, String name) {
+        if (purchaseRank == 0) {
+            return name + COLOR_MAIN_FEEDBACK[0];
+        } else if (purchaseRank == 1 || purchaseRank == 2) {
+            return name + COLOR_MAIN_FEEDBACK[1];
+        }
+        return name + COLOR_MAIN_FEEDBACK[2];
     }
 
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
