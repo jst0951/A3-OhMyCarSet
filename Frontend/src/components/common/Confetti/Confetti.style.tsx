@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 600px;
+  width: 800px;
   height: 300px;
   overflow: hidden;
 `;

@@ -28,7 +28,7 @@ const randomInRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 
-const colors = ['#FF7676', '#FFB876', '#76ADFF'];
+const colors = ['#FF7676', '#FFB876', '#ffe175', '#A5E776', '#76ADFF', '#c79fff'];
 
 const WIDTH = 100;
 
@@ -40,6 +40,8 @@ export default function Confetti({ heigth, confettiNum }: ConfettiProps) {
     let delay;
     let animationIteration;
     let duration;
+
+    const randomIdx = Math.floor(Math.random() * (colors.length - 1));
 
     if (index % 3 === 0) {
       confettiWidth = 3;
@@ -66,7 +68,7 @@ export default function Confetti({ heigth, confettiNum }: ConfettiProps) {
       <S.ConfettiDiv
         key={index}
         $left={spaceWidth * index}
-        $color={colors[index % colors.length]}
+        $color={colors[randomIdx]}
         $transform={randomInRange(-80, 80)}
         $animation={animation}
         $width={confettiWidth}
