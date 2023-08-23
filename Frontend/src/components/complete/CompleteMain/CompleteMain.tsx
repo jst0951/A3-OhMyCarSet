@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
+import Confetti from '../Confetti/Confetti';
 
 export default function CompleteMain() {
   const [isExternal, setIsExternal] = useState<boolean>(true);
@@ -19,6 +20,7 @@ export default function CompleteMain() {
   return (
     <S.MainContainer>
       <S.GuideText>나를 위한 팰리세이드가 완성되었어요!</S.GuideText>
+      {isExternal && <Confetti />}
       <S.CarImg $isExternal={isExternal}>
         <img
           src={`${import.meta.env.VITE_STATIC_API_URL}/${getSingleDataList[isExternal ? 3 : 4].imgSrc}`}
