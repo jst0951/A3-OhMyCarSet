@@ -86,6 +86,10 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
     if (guideModeStep === 1) deletePowertrainCache();
   }, [guideModeStep]);
 
+  useEffect(() => {
+    setGuideModeStep(1);
+  }, []);
+
   return (
     <>
       <S.MainContainer>
