@@ -101,7 +101,7 @@ public class SelectiveOptionService {
 
         Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
-        String genderRepresentation = getGenderRepresentation(gender.toString());
+        String genderRepresentation = getGenderRepresentation(gender);
 
         RequiredOption recommendedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0)).get();
         List<RequiredOption> remainOptions = selectiveOptionRepository.findRemainOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0));
@@ -184,8 +184,9 @@ public class SelectiveOptionService {
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
         List<OptionPackageDto> response = new ArrayList<>();
 
-        Character gender = userInfoDto.getGender();
+        Character gsender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
+        String genderRepresentation = getGenderRepresentation(gender);
 
         List<OptionPackage> recommendedPackages = new ArrayList<>();
 
@@ -193,7 +194,6 @@ public class SelectiveOptionService {
             recommendedPackages = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
         }
         List<OptionPackage> remainPackages = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
-
 
         for (OptionPackage recommendedPackage : recommendedPackages) {
             List<Tag> optionTags = tagRepository.findAllByCategoryNameAndPackageId(categoryName, recommendedPackage.getId());
@@ -225,7 +225,12 @@ public class SelectiveOptionService {
             // 비슷한 사용자의 패키지옵션 선택률을 구한다. <A패키지옵션이 포함된 유사유저의 견적의 수 / 유사유저의 견적의 수 * 100(%)>
             // A패키지옵션이 포함된 유사유저의 견적의 수 : countByCategoryNameAndOptionIdAndGenderAndAgeAndTags
             // 유사유저의 견적의 수 : countByGenderAndAgeAndTags
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedPackage, tagIds);
+            Double similarPercentage;
+            if (genderRepresentation.equals("NONE")) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedPackage, tagIds);
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedPackage, tagIds);
+            }
 
             // 추천 패키지옵션 추가
             List<PackageComponent> components = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(categoryName, recommendedPackage.getId());
@@ -249,10 +254,10 @@ public class SelectiveOptionService {
         return response;
     }
 
-    private String getGenderRepresentation(String gender) {
-        if (gender.equals("M")) {
+    private String getGenderRepresentation(Character gender) {
+        if (gender.equals('M')) {
             return MALE;
-        } else if (gender.equals("F")) {
+        } else if (gender.equals('F')) {
             return FEMALE;
         } else {
             return NONE;
@@ -274,6 +279,12 @@ public class SelectiveOptionService {
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, OptionPackage recommendedPackage, List<Long> tagIds) {
         Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndPackageIdAndGenderAndAgeAndTags(categoryName, recommendedPackage.getId(), gender, age, tagIds);
         Long countSimilarUser = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
+    private Double getSimilarPercentage(String categoryName, Integer age, OptionPackage recommendedPackage, List<Long> tagIds) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndPackageIdAndAgeAndTags(categoryName, recommendedPackage.getId(), age, tagIds);
+        Long countSimilarUser = purchaseHistoryRepository.countByAgeAndTags(age, tagIds);
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
