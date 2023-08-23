@@ -19,6 +19,11 @@ type DefaultOption = {
   }>;
 };
 
+type PackageAllProps = {
+  id: number;
+  packageData: Array<SelectPackageData>;
+};
+
 interface ItemProps {
   optionId: number;
   optionName: string;
@@ -53,21 +58,23 @@ const filterCategory = ['전체', '성능', '지능형 안전기술', '안전', 
 export default function DetailMultiItem() {
   const selectPackageState = JSON.parse(sessionStorage.getItem('myPalisade') || '').multi;
   const [defaultOption, setDefaultOption] = useState<DefaultOption>();
-  const [selectedFilter, setSelectedFilter] = useState<number>(0);
+  const [selectedFilter, setSelectedFilter] = useState<number>(-1);
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [isOption, setIsOption] = useState(true);
   let allOption: ItemProps[] = [];
-  let allSelected: SelectPackageData[] = [];
+  let allSelected: PackageAllProps[] = [];
 
   defaultOption &&
     defaultOption.defaultOptionCategoryDtoList.forEach((categoryDto) => {
       categoryDto.defaultOptionDetailDtoList.forEach((item: ItemProps) => (allOption = [...allOption, item]));
     });
 
-  selectPackageState.subList.forEach((selectedCategoryData: SelectPackageData[]) => {
-    selectedCategoryData.forEach((data: SelectPackageData) => {
-      allSelected = [...allSelected, data];
-    });
+  selectPackageState.subList.forEach((selectedCategoryData: SelectPackageData[], categoryIndex: number) => {
+    const packageObject = {
+      id: categoryIndex,
+      packageData: selectedCategoryData,
+    };
+    allSelected = [...allSelected, packageObject];
   });
 
   const handleFilterOption = (idx: number) => {
@@ -109,19 +116,25 @@ export default function DetailMultiItem() {
           <>
             <S.FilterContainer>
               {optionList.map((option, idx) => (
-                <S.FilterButton key={idx} $active={selectedFilter === idx} onClick={() => handleFilterOption(idx)}>
+                <S.FilterButton
+                  key={idx}
+                  $active={selectedFilter === idx - 1}
+                  onClick={() => handleFilterOption(idx - 1)}
+                >
                   {option.text}
                 </S.FilterButton>
               ))}
             </S.FilterContainer>
             <S.ListContainer>
-              {selectedFilter === 0 ? (
+              {selectedFilter === -1 ? (
                 allSelected.length ? (
-                  allSelected.map((data: SelectPackageData) => (
-                    <S.ItemContainer key={data.name}>
-                      <DetailItem data={data} index={selectedFilter} />
-                    </S.ItemContainer>
-                  ))
+                  allSelected.map((categoryData: PackageAllProps) =>
+                    categoryData.packageData.map((selectedPackage: SelectPackageData) => (
+                      <S.ItemContainer key={selectedPackage.name}>
+                        <DetailItem data={selectedPackage} index={categoryData.id} />
+                      </S.ItemContainer>
+                    ))
+                  )
                 ) : (
                   <S.EmptyContainer>해당 카테고리에 선택된 옵션이 없습니다.</S.EmptyContainer>
                 )

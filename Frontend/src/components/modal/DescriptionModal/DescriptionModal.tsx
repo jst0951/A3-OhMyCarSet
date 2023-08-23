@@ -18,7 +18,10 @@ export default function DescriptionModal() {
         </S.CloseButton>
         <S.ModalMain>
           <S.TitleContainer>{item.optionName}</S.TitleContainer>
-          <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.optionName} />
+          <img
+            src={`${import.meta.env.VITE_STATIC_API_URL}/default_option/highres/${item.optionId}.jpg`}
+            alt={item.optionName}
+          />
           <S.DescriptionContainer>
             {item.description.split('\\n').map((line, index) => (
               <div key={index}>
