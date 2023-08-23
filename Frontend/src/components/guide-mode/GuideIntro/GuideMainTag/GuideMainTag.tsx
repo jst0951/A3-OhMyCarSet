@@ -4,14 +4,15 @@ import GuideSingleTag from '@/components/guide-mode/GuideIntro/GuideMainTag/Guid
 import guideDescriptionData from '@/asset/data/guideDescriptionData.json';
 import GuideMultiTag from '@/components/guide-mode/GuideIntro/GuideMainTag/GuideMultiTag/GuideMultiTag';
 import RectButton from '@/components/common/button/RectButton/RectButton';
-import { Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { GUIDE_MAX_STEP, PACKAGE_END_INDEX, PACKAGE_START_INDEX, optionKeyArr } from '@/constants';
 import { guideStepT } from '../../GuideMain/GuideMain';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
-import { useSelectOptionDispatch, useSelectOptionState } from '@/contexts/SelectOptionProvider';
-import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
-import { SectionListT, myPalisadeProps } from '@/components/self-mode/SelfModeMain/OptionFooter/OptionFooter';
+import { useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
+import { useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
+import { OptionPackageT } from '@/components/self-mode/SelfModeMain/SelfModeMain';
+import { deletePowertrainCache } from '@/utils/cache/deletePowertrainCache';
 
 interface MainProps {
   setGuideStep: Dispatch<React.SetStateAction<guideStepT>>;
@@ -21,9 +22,6 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
   const [guideModeStep, setGuideModeStep] = useState(1);
   const [showButton, setShowButton] = useState<boolean>(false);
   const { selectTag } = useSelectTagContext();
-
-  const selectOptionState = useSelectOptionState();
-  const selectPackageState = useSelectPackageState();
 
   const SelectOptionDispatch = useSelectOptionDispatch();
   const SelectPackageDispatch = useSelectPackageDispatch();
@@ -53,8 +51,9 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
         const key = optionKeyArr[idx];
 
         if (response[key].length === 0) continue;
+
         for (let option = 0; option < response[key].length; option++) {
-          const data = response[key][option];
+          const data: OptionPackageT = response[key][option];
 
           SelectPackageDispatch({
             type: 'UPDATE_LIST',
@@ -64,7 +63,7 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
                 id: data.id,
                 name: data.name,
                 price: data.price,
-                imgSrc: data.imgSrc,
+                imgSrc: data.components[0].imgSrc,
               },
               recommendId: data.id,
             },
@@ -76,29 +75,16 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
     }
   };
 
-  const setSessionStorage = async () => {
-    const sectionList: SectionListT = {
-      sectionTitle: '옵션',
-      totalPrice: selectPackageState.totalPrice,
-      subList: Array.from(selectPackageState.packageList).map((packageData) =>
-        Array.from(packageData.selectedList.values())
-      ),
-    };
-
-    const myPalisade: myPalisadeProps = {
-      single: selectOptionState,
-      multi: sectionList,
-    };
-
-    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
-  };
-
   const clickHandler = async () => {
+    SelectPackageDispatch({ type: 'INIT_LIST' });
     await fetchRecommend();
-    await setSessionStorage();
 
     setGuideStep('LOADING');
   };
+
+  useEffect(() => {
+    if (guideModeStep === 1) deletePowertrainCache();
+  }, [guideModeStep]);
 
   return (
     <>

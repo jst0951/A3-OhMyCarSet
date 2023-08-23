@@ -24,7 +24,7 @@ export default function Trim({ trimData }: TrimProps) {
     <>
       <S.TrimContainer>
         <S.TrimImgContainer>
-          <img src={`${import.meta.env.VITE_STATIC_API_URL}/${repColor.imgSrc}`} alt={name} width={214} />
+          <img src={`${import.meta.env.VITE_STATIC_API_URL}/${repColor.imgSrc}`} alt={name} loading="lazy" />
         </S.TrimImgContainer>
         <S.TrimPrice>{defaultPrice.toLocaleString()}원 부터</S.TrimPrice>
       </S.TrimContainer>

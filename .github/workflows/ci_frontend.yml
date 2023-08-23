@@ -64,3 +64,12 @@ jobs:
                   . s3://ohmycarset.com \
                   --region ap-northeast-2 \
                   --delete
+                  
+            - name: Cloudfront 캐시 무효화
+              uses: chetan/invalidate-cloudfront-action@master
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ap-northeast-2
+                  DISTRIBUTION: ${{ secrets.AWS_DISTRIBUTION_ID }}
+                  PATHS: '/*'

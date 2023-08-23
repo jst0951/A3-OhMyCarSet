@@ -7,7 +7,14 @@ import { OptionDataT } from '../SelfModeMain';
 import OptionItem from '../../OptionItem/OptionItem';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import CarDictBox from '@/components/car-dict/CarDictBox/CarDictBox';
-import { DEFAULT_PRICE, SELF_MODE_URL, categoryNameList, optionPackageList } from '@/constants';
+import {
+  DEFAULT_PRICE,
+  GUIDE_MODE_URL,
+  POWERTRAIN_URI,
+  SELF_MODE_URL,
+  categoryNameList,
+  optionPackageList,
+} from '@/constants';
 import { useLocation } from 'react-router-dom';
 import fetchPost from '@/utils/apis/fetchPost';
 import { useSelectTagContext } from '@/contexts/SelectTagProvide';
@@ -47,6 +54,12 @@ export default function SelfModeSingle() {
     }
   };
 
+  const initOptionAndTotal = (response: OptionDataT) => {
+    setSelectedOption(response);
+    setTempTotal(selectOptionState.totalPrice + response.price + selectPackageState.totalPrice);
+    setPrevTotal(selectOptionState.totalPrice + response.price + selectPackageState.totalPrice);
+  };
+
   const fetchStepData = async () => {
     try {
       const response = cacheData?.id === selfModeStep ? cacheData.dataList : await fetchDataByMode(selfModeStep - 1);
@@ -59,9 +72,7 @@ export default function SelfModeSingle() {
         setTempTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
         setPrevTotal(selectOptionState.totalPrice + selectPackageState.totalPrice);
       } else {
-        setSelectedOption(response[0]);
-        setTempTotal(selectOptionState.totalPrice + response[0].price + selectPackageState.totalPrice);
-        setPrevTotal(selectOptionState.totalPrice + response[0].price + selectPackageState.totalPrice);
+        initOptionAndTotal(response[0]);
       }
     } catch (error) {
       console.error('Error fetching core option data:', error);
@@ -118,13 +129,33 @@ export default function SelfModeSingle() {
     }
   };
 
+  const fetchCachedPowertrain = async () => {
+    const cache = await caches.open('powertrain');
+
+    const response = await cache.match(POWERTRAIN_URI);
+
+    if (response) {
+      const data = await response.text();
+      const dataObj = JSON.parse(data);
+      console.log(dataObj);
+      setStepData(dataObj);
+      initOptionAndTotal(dataObj[0]);
+    }
+  };
+
   useEffect(() => {
     if (!hovered) return;
     cacheAfterHover();
   }, [hovered]);
 
   useEffect(() => {
-    if (selfModeStep === 1) deleteOptionPackageCache();
+    if (selfModeStep === 1) {
+      deleteOptionPackageCache();
+      if (pathname === GUIDE_MODE_URL) {
+        fetchCachedPowertrain();
+        return;
+      }
+    }
     fetchStepData();
   }, [selfModeStep]);
 

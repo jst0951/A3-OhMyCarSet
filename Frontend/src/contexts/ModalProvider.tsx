@@ -60,12 +60,14 @@ const modalReducer = (state: ModalStateT, action: ModalActionT): ModalStateT => 
         isOpen: true,
       };
     case 'DEFAULT_OPTION':
+      document.body.style.overflow = 'hidden';
       return {
         activeModal: 'defaultOption',
         isOpen: true,
         item: action.payload,
       };
     case 'CLOSE_MODAL':
+      document.body.style.overflow = 'unset';
       return {
         ...state,
         isOpen: false,

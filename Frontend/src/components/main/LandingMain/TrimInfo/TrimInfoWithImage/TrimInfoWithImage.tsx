@@ -9,7 +9,7 @@ export default function TrimInfoWithImage({ descriptionData }: TrimInfoWithTextP
         <S.TrimInfoContainer>
           {descriptionData.map((data, idx) => (
             <S.TrimCoreOption key={idx}>
-              <S.TrimOptionImage src={data.sub} />
+              <S.TrimOptionImage src={data.sub} alt={data.main} loading="lazy" />
               <S.TrimOptionText>
                 {data.main}
                 <S.TrimOptionBorder />
