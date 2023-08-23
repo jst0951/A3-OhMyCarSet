@@ -62,7 +62,7 @@ export default function DetailMultiItem() {
   const [selectedCategory, setSelectedCategory] = useState<number>(-1);
   const [isOption, setIsOption] = useState(true);
   let allOption: ItemProps[] = [];
-  const allSelected: PackageAllProps[] = [];
+  let allSelected: PackageAllProps[] = [];
 
   defaultOption &&
     defaultOption.defaultOptionCategoryDtoList.forEach((categoryDto) => {
@@ -74,7 +74,7 @@ export default function DetailMultiItem() {
       id: categoryIndex,
       packageData: selectedCategoryData,
     };
-    allSelected.push(packageObject);
+    allSelected = [...allSelected, packageObject];
   });
 
   const handleFilterOption = (idx: number) => {

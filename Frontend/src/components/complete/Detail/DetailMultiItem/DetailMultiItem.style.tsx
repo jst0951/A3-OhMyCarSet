@@ -78,6 +78,7 @@ export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+  min-height: 340px;
 `;
 
 export const ItemContainer = styled.div`
@@ -88,9 +89,14 @@ export const ItemContainer = styled.div`
 export const EmptyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 200px;
   align-items: center;
   justify-content: center;
+
+  height: 240px;
+  margin-bottom: 100px;
+
+  /* border-bottom: 1px solid ${colors.coolGrey003}; */
+
   color: ${colors.coolGrey003};
   font-family: 'Hyundai Sans Text Regular';
   font-size: 20px;
