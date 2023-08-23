@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelfModeContext } from '@/contexts/SelfModeProvider';
 import { SelectOptionData, useSelectOptionDispatch } from '@/contexts/SelectOptionProvider';
 import { useCurrentPackageDispatch } from '@/contexts/CurrentPackageProvider';
-import { SELF_MODE_URL } from '@/constants';
 import { SelectPackageOptionData, useSelectPackageDispatch } from '@/contexts/SelectPackageProvider';
+import { SELF_MODE_URL } from '@/constants';
 
 interface ItemProps {
   optionId: number;
@@ -37,6 +37,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
     const selectDataInSession = JSON.parse(sessionStorage.getItem('myPalisade') || '');
     const selectOption = selectDataInSession.single.dataList;
     const selectPackage = selectDataInSession.multi.subList;
+    const mode = selectDataInSession.mode;
 
     selectOption.forEach((data: SelectOptionData, idx: number) =>
       selectOptionDispatch({
@@ -52,6 +53,7 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
         },
       })
     );
+    selectPackageDispatch({ type: 'INIT_LIST' });
     selectPackage.forEach((packageData: SelectPackageOptionData[], idx: number) => {
       packageData.forEach((data: SelectPackageOptionData) => {
         selectPackageDispatch({
@@ -69,17 +71,16 @@ export default function DetailItem({ data, index }: CompleteOptionProps) {
         });
       });
     });
+    mode === SELF_MODE_URL ? navigate(mode) : navigate(mode, { state: { correction: true } });
   };
 
   const singleCorrection = (index: number) => {
     updateContextWithSession();
-    navigate(SELF_MODE_URL);
     setSelfModeStep(index);
   };
 
   const multiCorrection = (index: number) => {
     updateContextWithSession();
-    navigate(SELF_MODE_URL);
     setSelfModeStep(7);
     currentPackageDispatch({
       type: 'UPDATE_FILTER',

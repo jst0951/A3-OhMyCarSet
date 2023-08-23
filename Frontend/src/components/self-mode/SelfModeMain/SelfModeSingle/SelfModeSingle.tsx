@@ -137,7 +137,6 @@ export default function SelfModeSingle() {
     if (response) {
       const data = await response.text();
       const dataObj = JSON.parse(data);
-      console.log(dataObj);
       setStepData(dataObj);
       initOptionAndTotal(dataObj[0]);
     }

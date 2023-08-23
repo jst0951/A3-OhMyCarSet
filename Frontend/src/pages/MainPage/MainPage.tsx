@@ -10,6 +10,7 @@ export default function MainPage() {
   const { setSelfModeStep } = useSelfModeContext();
   const selectPackageDispatch = useSelectPackageDispatch();
   useEffect(() => {
+    sessionStorage.clear();
     setSelfModeStep(1);
     selectPackageDispatch({
       type: 'INIT_LIST',

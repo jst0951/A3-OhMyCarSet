@@ -1,6 +1,6 @@
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import * as S from './GuideComplete.style';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { guideStepT } from '../GuideMain/GuideMain';
 import { Dispatch, useEffect, useState } from 'react';
 import { COMPLETE_URL, POWERTRAIN_URI } from '@/constants';
@@ -16,6 +16,7 @@ interface Props {
 
 export default function GuideMainComplete({ setGuideStep }: Props) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { dataList } = useSelectOptionState();
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
@@ -61,6 +62,7 @@ export default function GuideMainComplete({ setGuideStep }: Props) {
     };
 
     const myPalisade: myPalisadeProps = {
+      mode: pathname,
       single: selectOptionState,
       multi: sectionList,
     };
