@@ -48,4 +48,10 @@ public interface PurchaseHistoryRepository {
     Long countByTagIdAndCategoryNameAndPackageId(Long id, String categoryName, Long id1);
 
     Long countByCategoryNameAndPackageIdAndGenderAndAgeAndTags(String categoryName, Long id, Character gender, Integer age, List<Long> tagIds);
+
+    Long countByCategoryNameAndOptionIdAndAgeAndTags(String categoryName, Long id, Integer age, List<Long> tagIds);
+
+    Long countByAgeAndTags(Integer age, List<Long> tagIds);
+
+    Long countByCategoryNameAndPackageIdAndAgeAndTags(String categoryName, Long id, Integer age, List<Long> tagIds);
 }

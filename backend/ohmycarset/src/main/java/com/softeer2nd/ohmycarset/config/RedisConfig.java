@@ -30,7 +30,7 @@ public class RedisConfig {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory);
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)))
-                .entryTtl(Duration.ofHours(12)); // TTL 12시간으로 지정
+                .entryTtl(Duration.ofHours(24)); // TTL 12시간으로 지정
         builder.cacheDefaults(configuration);
 
         return builder.build();

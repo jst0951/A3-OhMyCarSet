@@ -187,7 +187,7 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     public Long countByCategoryNameAndOptionIdAndAge(String categoryName, Long optionId, Integer age) {
         String option = categoryName + "_id";
         String query = "SELECT COUNT(*) FROM purchase_history \n" +
-                "WHERE age >= :age AND age <= :age+9 AND " + option + "=:id";
+                "WHERE " + option + "=:id AND age >= :age AND age <= :age+9";
 
         Map<String, Object> params = new HashMap<>();
         params.put("age", age);
@@ -199,9 +199,9 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     @Override
     @Cacheable(value = "countByCategoryNameAndOptionIdAndGenderAndAge", key = "{#categoryName, #optionId, #gender, #age}")
     public Long countByCategoryNameAndOptionIdAndGenderAndAge(String categoryName, Long optionId, Character gender, Integer age) {
-        String column = categoryName + "_id";
+        String option = categoryName + "_id";
         String query = "SELECT count(*) as count FROM purchase_history \n" +
-                "WHERE " + column + "=:id AND gender=:gender AND age >= :age AND age <= :age+9";
+                "WHERE " + option + "=:id AND gender=:gender AND age >= :age AND age <= :age+9";
 
         Map<String, Object> params = new HashMap<>();
         params.put("id", optionId);
@@ -258,6 +258,47 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         Map<String, Object> params = new HashMap<>();
         params.put("packageId", packageId);
         params.put("gender", gender.toString());
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByCategoryNameAndOptionIdAndAgeAndTags(String categoryName, Long id, Integer age, List<Long> tagIds) {
+        String column = categoryName + "_id";
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE " + column + "=:id AND (age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByAgeAndTags(Integer age, List<Long> tagIds) {
+        String query = "SELECT count(*) as count FROM purchase_history \n" +
+                "WHERE (age >= :age AND age <= :age+9 AND tag1_id IN (:tagIds) AND tag2_id IN (:tagIds) AND tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("age", age);
+        params.put("tagIds", tagIds);
+
+        return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    public Long countByCategoryNameAndPackageIdAndAgeAndTags(String categoryName, Long packageId, Integer age, List<Long> tagIds) {
+        String table = "purchase_" + categoryName + "_map";
+        String query = "SELECT count(*) as count FROM purchase_history AS A\n" +
+                "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
+                "WHERE M.option_id=:packageId AND (A.age >= :age AND A.age <= :age+9 AND A.tag1_id IN (:tagIds) AND A.tag2_id IN (:tagIds) AND A.tag3_id IN (:tagIds)) \n";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("packageId", packageId);
         params.put("age", age);
         params.put("tagIds", tagIds);
 
