@@ -149,7 +149,7 @@ export default function DetailMultiItem() {
             </S.FilterContainer>
             <S.ListContainer>
               {selectedFilter === -1 ? (
-                allSelected.length ? (
+                allSelectedLength > 0 ? (
                   allSelected.map((categoryData: PackageAllProps) =>
                     categoryData.packageData.map((selectedPackage: SelectPackageData) => {
                       allSelectedIndex++;
@@ -165,7 +165,7 @@ export default function DetailMultiItem() {
                     })
                   )
                 ) : (
-                  <S.EmptyContainer>해당 카테고리에 선택된 옵션이 없습니다.</S.EmptyContainer>
+                  <S.EmptyContainer>선택된 옵션이 없습니다.</S.EmptyContainer>
                 )
               ) : selectPackageState.subList[selectedFilter].length > 0 ? (
                 selectPackageState.subList[selectedFilter].map((data: SelectPackageData, dataIndex: number) => (
