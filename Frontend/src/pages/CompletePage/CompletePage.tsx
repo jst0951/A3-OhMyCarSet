@@ -1,7 +1,7 @@
 import Layout from '@/components/layout/Layout';
 import * as S from './CompletePage.style';
 import CompleteMain from '@/components/complete/CompleteMain/CompleteMain';
-import Error from '@/components/complete/Error/Error';
+import NotFound from '@/components/notFound/NotFound';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import SelfModeNav from '@/components/self-mode/SelfModeNav/SelfModeNav';
 
@@ -24,7 +24,7 @@ export default function CompletePage() {
             <CompleteMain />
           </S.CompleteContainer>
         ) : (
-          <Error />
+          <NotFound />
         )}
       </Layout>
     </>
