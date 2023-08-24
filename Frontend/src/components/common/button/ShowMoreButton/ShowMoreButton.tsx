@@ -12,7 +12,7 @@ export default function ShowMoreButton({ itemArrayLength, width, showLength, onC
   if (itemArrayLength > showLength) {
     return (
       <S.MoreButtonContainer onClick={onClick} $width={width}>
-        더보기
+        <div>더보기</div>
         <Icon icon="ArrowBottomIcon" size={20} />
       </S.MoreButtonContainer>
     );

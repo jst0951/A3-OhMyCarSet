@@ -3,8 +3,8 @@ import { colors } from '@/style/theme';
 import { bodyMedium1 } from '@/style/typefaces';
 
 export const MoreButtonContainer = styled.div<{ $width: number }>`
-  margin-top: 52px;
   display: flex;
+  gap: 2px;
   align-items: center;
   justify-content: center;
   ${bodyMedium1}
