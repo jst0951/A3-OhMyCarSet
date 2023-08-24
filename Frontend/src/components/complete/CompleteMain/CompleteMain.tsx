@@ -1,5 +1,5 @@
 import * as S from './CompleteMain.style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Summary from '@/components/complete/Summary/Summary';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import Detail from '@/components/complete/Detail/Detail';
@@ -16,6 +16,8 @@ export default function CompleteMain() {
   const clickHandler = (external: boolean) => {
     setIsExternal(external);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <S.MainContainer>

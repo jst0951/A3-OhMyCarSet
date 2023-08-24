@@ -2,12 +2,7 @@ import * as S from './Summary.style';
 import { DEFAULT_PRICE } from '@/constants';
 import SummaryItem from './SummaryItem/SummaryItem';
 import { SectionProps } from '@/components/self-mode/SelfModeMain/Estimate/Estimate';
-import { SelectOptionData } from '@/contexts/SelectOptionProvider';
-
-interface SelectOptionStateT {
-  dataList: SelectOptionData[];
-  totalPrice: number;
-}
+import { SelectOptionStateT } from '@/contexts/SelectOptionProvider';
 
 interface SelectPackageStateT {
   sectionTitle: string;

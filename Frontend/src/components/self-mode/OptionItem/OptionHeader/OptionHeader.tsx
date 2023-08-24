@@ -40,11 +40,14 @@ export default function OptionHeader({ isActive, optionData }: Props) {
         <Icon icon={isActive ? 'CheckIcon' : 'UncheckIcon'} />
         {isRecommended && optionData.tags && (
           <S.TagContainer>
-            {optionData.tags.map((tag) => (
-              <S.Tag key={tag.id} $isActive={isActive}>
-                {`${tag.name} ${Math.floor(tag.percentage)}%`}
-              </S.Tag>
-            ))}
+            {optionData.tags.map(
+              (tag) =>
+                tag.name !== 'NONE' && (
+                  <S.Tag key={tag.id} $isActive={isActive}>
+                    {`${tag.name} ${Math.floor(tag.percentage)}%`}
+                  </S.Tag>
+                )
+            )}
           </S.TagContainer>
         )}
       </S.IconContainer>

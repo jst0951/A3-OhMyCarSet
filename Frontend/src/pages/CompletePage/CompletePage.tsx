@@ -1,9 +1,9 @@
 import Layout from '@/components/layout/Layout';
 import * as S from './CompletePage.style';
 import CompleteMain from '@/components/complete/CompleteMain/CompleteMain';
-import CompleteNav from '@/components/complete/CompleteNav/CompleteNav';
-import Error from '@/components/complete/Error/Error';
+import NotFound from '@/components/notFound/NotFound';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import CompleteNav from '@/components/complete/CompleteNav/CompleteNav';
 
 export default function CompletePage() {
   const selectOptionState = useSelectOptionState();
@@ -24,7 +24,7 @@ export default function CompletePage() {
             <CompleteMain />
           </S.CompleteContainer>
         ) : (
-          <Error />
+          <NotFound />
         )}
       </Layout>
     </>

@@ -86,11 +86,15 @@ export default function GuideMainTag({ setGuideStep }: MainProps) {
     if (guideModeStep === 1) deletePowertrainCache();
   }, [guideModeStep]);
 
+  useEffect(() => {
+    setGuideModeStep(1);
+  }, []);
+
   return (
     <>
       <S.MainContainer>
         <S.MainLeftContainer>
-          <GuideIndicator guideModeStep={guideModeStep} />
+          <GuideIndicator guideModeStep={guideModeStep} setGuideModeStep={setGuideModeStep} />
           <S.DescriptionContainer>
             {guideDescriptionData.map((data) => (
               <S.Description key={data.page} $hidden={data.page !== guideModeStep}>

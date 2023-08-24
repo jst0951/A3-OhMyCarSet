@@ -18,7 +18,7 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 32px;
+  margin: 32px 0 52px;
 `;
 
 export const ItemLine = styled.div`

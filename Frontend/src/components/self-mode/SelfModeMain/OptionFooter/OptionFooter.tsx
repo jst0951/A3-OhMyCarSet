@@ -10,6 +10,7 @@ import CountingAnimation from '@/utils/CountingAnimation';
 import { useWaitingContext } from '@/contexts/WaitingProvider';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { useLocation } from 'react-router-dom';
 
 interface OptionFooterProps {
   hovered?: boolean;
@@ -39,6 +40,7 @@ export interface SectionListT {
 }
 
 export interface myPalisadeProps {
+  mode: string;
   single: SelectOptionStateT;
   multi: SectionListT;
 }
@@ -51,6 +53,7 @@ export default function OptionFooter({
   tempTotal,
   setShowFeedback,
 }: OptionFooterProps) {
+  const { pathname } = useLocation();
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
@@ -59,19 +62,6 @@ export default function OptionFooter({
 
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
-
-  const sectionList: SectionListT = {
-    sectionTitle: '옵션',
-    totalPrice: selectPackageState.totalPrice,
-    subList: Array.from(selectPackageState.packageList).map((packageData) =>
-      Array.from(packageData.selectedList.values())
-    ),
-  };
-
-  const myPalisade: myPalisadeProps = {
-    single: selectOptionState,
-    multi: sectionList,
-  };
 
   const handleMouseEnter = () => {
     if (selfModeStep > 6 || setHovered === undefined) return;
@@ -89,6 +79,24 @@ export default function OptionFooter({
   };
 
   const selectOptionDispatch = useSelectOptionDispatch();
+
+  const setInSessionStorage = () => {
+    const sectionList: SectionListT = {
+      sectionTitle: '옵션',
+      totalPrice: selectPackageState.totalPrice,
+      subList: Array.from(selectPackageState.packageList).map((packageData) =>
+        Array.from(packageData.selectedList.values())
+      ),
+    };
+
+    const myPalisade: myPalisadeProps = {
+      mode: pathname,
+      single: selectOptionState,
+      multi: sectionList,
+    };
+
+    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+  };
 
   const handleClickNext = (optionId: number) => {
     if (selfModeStep < 7 && setShowFeedback !== undefined) {
@@ -114,7 +122,8 @@ export default function OptionFooter({
         if (selfModeStep < 7 && setHovered !== undefined) setHovered(false);
       }, 2000);
     } else {
-      sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+      setInSessionStorage();
+
       setSelfModeStep(8);
     }
   };
