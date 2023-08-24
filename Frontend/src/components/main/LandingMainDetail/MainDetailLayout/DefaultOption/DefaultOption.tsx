@@ -4,7 +4,7 @@ import RectFilterButton from '@/components/common/button/RectFilterButton/RectFi
 import Item from './Item/Item';
 
 import fetchData from '@/utils/apis/fetchData';
-import ShowMoreButton from './ShowMoreButton/ShowMoreButton';
+import ShowMoreButton from '@/components/common/button/ShowMoreButton/ShowMoreButton';
 
 type DefaultOption = {
   trimId: number;
@@ -103,6 +103,7 @@ export default function DefaultOption({ isFetched }: Props) {
               ? MAX_ALL_ITEM_NUM
               : defaultOption[0].defaultOptionCategoryDtoList[selectedCategory].defaultOptionDetailDtoList.length
           }
+          width={140}
           showLength={(showMore + 1) * MAX_ITEM_NUM}
           onClick={moreEventHandler}
         />
