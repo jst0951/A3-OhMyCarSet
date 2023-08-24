@@ -1,9 +1,9 @@
 import Layout from '@/components/layout/Layout';
 import * as S from './CompletePage.style';
 import CompleteMain from '@/components/complete/CompleteMain/CompleteMain';
-import CompleteNav from '@/components/complete/CompleteNav/CompleteNav';
 import Error from '@/components/complete/Error/Error';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
+import SelfModeNav from '@/components/self-mode/SelfModeNav/SelfModeNav';
 
 export default function CompletePage() {
   const selectOptionState = useSelectOptionState();
@@ -20,7 +20,7 @@ export default function CompletePage() {
       <Layout>
         {'myPalisade' in sessionStorage || contextExist ? (
           <S.CompleteContainer>
-            <CompleteNav />
+            <SelfModeNav />
             <CompleteMain />
           </S.CompleteContainer>
         ) : (
