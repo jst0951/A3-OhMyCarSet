@@ -1,8 +1,8 @@
-import * as S from './Error.style';
+import * as S from './NotFound.style';
 import RectButton from '@/components/common/button/RectButton/RectButton';
 import { useNavigate } from 'react-router-dom';
 
-export default function Error() {
+export default function NotFound() {
   const navigate = useNavigate();
 
   const handleClick = () => {

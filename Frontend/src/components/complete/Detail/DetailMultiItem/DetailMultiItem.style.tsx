@@ -81,7 +81,8 @@ export const ListContainer = styled.div`
   min-height: 340px;
 `;
 
-export const ItemContainer = styled.div`
+export const ItemContainer = styled.div<{ $showMore: boolean }>`
+  display: ${({ $showMore }) => ($showMore ? `space-between` : ` none`)};
   width: 1024px;
   height: 100%;
 `;
