@@ -5,6 +5,7 @@ import CarModelModal from './CarModelModal/CarModelModal';
 import ListModal from './ListModal/ListModal';
 import ModeModal from './ModeModal/ModeModal';
 import DescriptionModal from './DescriptionModal/DescriptionModal';
+import CarDictIntroModal from './CarDictIntroModal/CarDictIntroModal';
 
 export default function ModalContainer() {
   const { activeModal } = useModalState();
@@ -18,6 +19,7 @@ export default function ModalContainer() {
     toSelf: <ModeModal currentMode="GUIDE" />,
     toGuide: <ModeModal currentMode="SELF" />,
     defaultOption: <DescriptionModal />,
+    carDictIntro: <CarDictIntroModal />,
   };
 
   return (

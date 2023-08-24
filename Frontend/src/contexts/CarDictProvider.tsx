@@ -13,10 +13,12 @@ interface CarDictStateT {
   clickedData: CarDictDataT | null;
   isOpen: boolean;
   dictionaryOn: boolean;
+  isInit: boolean;
+  introModal: boolean;
 }
 
 type CarDictActionT = {
-  type: 'INIT_LIST' | 'CLICK_WORD' | 'CLOSE_MODAL' | 'TOGGLE_DICT';
+  type: 'INIT_LIST' | 'CLICK_WORD' | 'CLOSE_MODAL' | 'TOGGLE_DICT' | 'INTRO_MODAL' | 'CLOSE_INTRO';
   payload?: {
     dataList?: CarDictDataT[];
     keyword?: string;
@@ -28,6 +30,8 @@ const initialState: CarDictStateT = {
   clickedData: null,
   isOpen: false,
   dictionaryOn: false,
+  isInit: true,
+  introModal: false,
 };
 
 type CarDictDispatchT = (action: CarDictActionT) => void;
@@ -59,6 +63,18 @@ const carDictReducer = (state: CarDictStateT, action: CarDictActionT): CarDictSt
       return {
         ...state,
         dictionaryOn: !state.dictionaryOn,
+      };
+    case 'INTRO_MODAL':
+      return {
+        ...state,
+        introModal: true,
+      };
+
+    case 'CLOSE_INTRO':
+      return {
+        ...state,
+        isInit: false,
+        introModal: false,
       };
     default:
       return state;

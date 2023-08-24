@@ -3,10 +3,11 @@ import * as S from './DictionaryButton.style';
 import { useCarDictDispatch, useCarDictState } from '@/contexts/CarDictProvider';
 
 export default function DictionaryButton() {
-  const { dictionaryOn } = useCarDictState();
+  const { dictionaryOn, isInit } = useCarDictState();
   const CarDictDispatch = useCarDictDispatch();
 
   const toggleDictionary = () => {
+    if (isInit) CarDictDispatch({ type: 'INTRO_MODAL' });
     CarDictDispatch({ type: 'TOGGLE_DICT' });
   };
 
