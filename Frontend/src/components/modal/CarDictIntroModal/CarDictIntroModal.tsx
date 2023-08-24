@@ -35,7 +35,7 @@ export default function CarDictIntroModal() {
             <S.Description>
               백카사전이 <span>ON</span> 되면, 하이라이트된 단어 클릭 시 초보자를 위한 설명이 제공됩니다.
             </S.Description>
-            <img src={carDictionaryImage} alt="백카사전" />
+            <img src={carDictionaryImage} alt="백카사전" loading="lazy" />
           </S.Container>
         </S.Modal>,
         el
