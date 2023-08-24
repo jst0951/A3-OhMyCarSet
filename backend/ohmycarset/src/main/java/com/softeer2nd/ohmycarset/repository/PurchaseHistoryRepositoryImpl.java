@@ -2,6 +2,7 @@ package com.softeer2nd.ohmycarset.repository;
 
 import com.softeer2nd.ohmycarset.domain.PurchaseHistory;
 import com.softeer2nd.ohmycarset.dto.PurchaseCountDto;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,6 +39,11 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM purchase_history", Long.class);
     }
 
+    @CachePut(value = "count")
+    public Long updateCount() {
+        return count();
+    }
+
     @Override
     public Optional<PurchaseHistory> findById(Long id) {
         List<PurchaseHistory> purchaseHistoryList = jdbcTemplate.query("SELECT * FROM purchase_history WHERE id=?", purchaseHistoryRowMapper, id);
@@ -60,6 +66,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByTagId", key = "#tagId")
+    public Long updateCountByTagId(Long tagId) {
+        return countByTagId(tagId);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndOptionId", key = "{#optionName, #optionId}")
     public Long countByCategoryNameAndOptionId(String optionName, Long optionId) {
         String column = optionName + "_id";
@@ -69,12 +81,24 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByCategoryNameAndOptionId", key = "{#optionName, #optionId}")
+    public Long updateCountByCategoryNameAndOptionId(String optionName, Long optionId) {
+        return countByCategoryNameAndOptionId(optionName, optionId);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndPackageId", key = "{#categoryName, #packageId}")
     public Long countByCategoryNameAndPackageId(String categoryName, Long packageId) {
         String table = "purchase_" + categoryName + "_map";
         String sql = "SELECT COUNT(*) FROM " + table + "\n" +
                 "WHERE " + table + ".option_id=?";
         return jdbcTemplate.queryForObject(sql, Long.class, packageId);
+    }
+
+    @Override
+    @CachePut(value = "countByCategoryNameAndPackageId", key = "{#categoryName, #packageId}")
+    public Long updateCountByCategoryNameAndPackageId(String categoryName, Long packageId) {
+        return countByCategoryNameAndPackageId(categoryName, packageId);
     }
 
     @Override
@@ -88,6 +112,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByTagIdAndCategoryNameAndOptionId", key = "{#tagId, #categoryName, #optionId}")
+    public Long updateCountByTagIdAndCategoryNameAndOptionId(Long tagId, String categoryName, Long optionId) {
+        return countByTagIdAndCategoryNameAndOptionId(tagId, categoryName, optionId);
+    }
+
+    @Override
     @Cacheable(value = "countByTagIdAndCategoryNameAndPackageId", key = "{#tagId, #categoryName, #packageId}")
     public Long countByTagIdAndCategoryNameAndPackageId(Long tagId, String categoryName, Long packageId) {
         String table = "purchase_" + categoryName + "_map";
@@ -95,6 +125,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
                 "INNER JOIN " + table + " AS M ON A.id=M.purchase_id \n" +
                 "WHERE (A.tag1_id=? OR A.tag2_id=? OR A.tag3_id=?) AND M.option_id=?";
         return jdbcTemplate.queryForObject(query, Long.class, tagId, tagId, tagId, packageId);
+    }
+
+    @Override
+    @CachePut(value = "countByTagIdAndCategoryNameAndPackageId", key = "{#tagId, #categoryName, #packageId}")
+    public Long updateCountByTagIdAndCategoryNameAndPackageId(Long tagId, String categoryName, Long packageId) {
+        return countByTagIdAndCategoryNameAndPackageId(tagId, categoryName, packageId);
     }
 
     @Override
@@ -109,6 +145,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("age", age);
 
         return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    @CachePut(value = "countByCategoryNameAndAge", key = "{#categoryName, #age}")
+    public List<PurchaseCountDto> updateCountByCategoryNameAndAge(String categoryName, Integer age) {
+        return countByCategoryNameAndAge(categoryName, age);
     }
 
     @Override
@@ -127,6 +169,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByCategoryNameAndGenderAndAge", key = "{#categoryName, #gender, #age}")
+    public List<PurchaseCountDto> updateCountByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
+        return countByCategoryNameAndGenderAndAge(categoryName, gender, age);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndExteriorColorId", key = "{#categoryName, #exteriorColorId}")
     public List<PurchaseCountDto> countByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId) {
         String optionId = categoryName + "_id";
@@ -138,6 +186,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("exterior_color_id", exteriorColorId);
 
         return namedTemplate.query(query, params, purchaseCountDtoRowMapper);
+    }
+
+    @Override
+    @CachePut(value = "countByCategoryNameAndExteriorColorId", key = "{#categoryName, exteriorColorId}")
+    public List<PurchaseCountDto> updateCountByCategoryNameAndExteriorColorId(String categoryName, Long exteriorColorId) {
+        return countByCategoryNameAndExteriorColorId(categoryName, exteriorColorId);
     }
 
     @Override
@@ -183,6 +237,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByCategoryNameAndOptionIdAndGender", key = "{#categoryName, #optionId, #gender}")
+    public Long updateCountByCategoryNameAndOptionIdAndGender(String categoryName, Long optionId, Character gender) {
+        return countByCategoryNameAndOptionIdAndGender(categoryName, optionId, gender);
+    }
+
+    @Override
     @Cacheable(value = "countByCategoryNameAndOptionIdAndAge", key = "{#categoryName, #optionId, #age}")
     public Long countByCategoryNameAndOptionIdAndAge(String categoryName, Long optionId, Integer age) {
         String option = categoryName + "_id";
@@ -194,6 +254,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("id", optionId);
 
         return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    @CachePut(value = "countByCategoryNameAndOptionIdAndAge", key = "{#categoryName, #optionId, #age}")
+    public Long updateCountByCategoryNameAndOptionIdAndAge(String categoryName, Long optionId, Integer age) {
+        return countByCategoryNameAndOptionIdAndAge(categoryName, optionId, age);
     }
 
     @Override
@@ -212,6 +278,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByCategoryNameAndOptionIdAndGenderAndAge", key = "{#categoryName, #optionId, #gender, #age}")
+    public Long updateCountByCategoryNameAndOptionIdAndGenderAndAge(String categoryName, Long optionId, Character gender, Integer age) {
+        return countByCategoryNameAndOptionIdAndGenderAndAge(categoryName, optionId, gender, age);
+    }
+
+    @Override
     @Cacheable(value = "countByGenderAndAge", key = "{#gender, #age}")
     public Long countByGenderAndAge(Character gender, Integer age) {
         String query = "SELECT count(*) as count FROM purchase_history \n" +
@@ -222,6 +294,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("age", age);
 
         return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    @CachePut(value = "countByGenderAndAge", key = "{#gender, #age}")
+    public Long updateCountByGenderAndAge(Character gender, Integer age) {
+        return countByGenderAndAge(gender, age);
     }
 
     @Override
@@ -237,6 +315,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
     }
 
     @Override
+    @CachePut(value = "countByGender", key = "#gender")
+    public Long updateCountByGender(Character gender) {
+        return updateCountByGender(gender);
+    }
+
+    @Override
     @Cacheable(value = "countByAge", key = "#age")
     public Long countByAge(Integer age) {
         String query = "SELECT count(*) as count FROM purchase_history \n" +
@@ -246,6 +330,12 @@ public class PurchaseHistoryRepositoryImpl implements PurchaseHistoryRepository 
         params.put("age", age);
 
         return namedTemplate.queryForObject(query, params, Long.class);
+    }
+
+    @Override
+    @CachePut(value = "countByAge", key = "#age")
+    public Long updateCountByAge(Integer age) {
+        return countByAge(age);
     }
 
     @Override
