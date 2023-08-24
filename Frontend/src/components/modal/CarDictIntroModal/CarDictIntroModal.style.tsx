@@ -13,17 +13,18 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
 
+  background-color: rgba(242, 244, 247, 0.6);
   backdrop-filter: blur(2px);
 
   z-index: 999;
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $show: boolean }>`
   position: relative;
 
   width: fit-content;
   height: fit-content;
-  padding: 60px 90px;
+  padding: 50px 80px;
 
   border-radius: 6px;
   background-color: ${colors.coolGreyBlack};
@@ -32,15 +33,31 @@ export const Container = styled.div`
 
   & > img {
     width: 600px;
-    height: 428px;
+    height: 310px;
     border-radius: 6px;
+  }
+  animation: ani 1s ease-in-out forwards;
+
+  @keyframes ani {
+    0% {
+      opacity: 0;
+      margin-top: 60px;
+    }
+    50% {
+      opacity: 1;
+      margin-top: -70px;
+    }
+    100% {
+      opacity: 1;
+      margin-top: -40px;
+    }
   }
 `;
 
 export const Close = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 24px;
+  right: 24px;
 
   cursor: pointer;
 `;
@@ -50,20 +67,19 @@ export const Title = styled.div`
   gap: 8px;
   align-items: center;
   color: ${colors.hyundaiWhite};
-  ${headMedium2}
+  ${headRegular3}
   font-size: 20px;
-  white-space: pre;
 `;
 
 export const Text = styled.div`
   & > span {
     font-size: 20px;
-    ${headRegular3}
+    ${headMedium2}
   }
 `;
 
 export const Description = styled.div`
-  margin: 10px 0 20px;
+  margin: 12px 0 20px 2px;
   color: ${colors.coolGrey001};
   ${bodyRegular2}
 

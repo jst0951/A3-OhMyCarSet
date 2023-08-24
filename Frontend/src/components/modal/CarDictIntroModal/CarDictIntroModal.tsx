@@ -24,15 +24,13 @@ export default function CarDictIntroModal() {
   return introModal
     ? ReactDom.createPortal(
         <S.Modal onClick={handleClickOutside}>
-          <S.Container ref={modalRef}>
+          <S.Container ref={modalRef} $show={introModal}>
             <S.Close onClick={handleClickClose}>
               <Icon icon="CloseIcon" size={24} />
             </S.Close>
             <S.Title>
-              <Icon icon="LightIcon" color="#FFE6A7" />
-              <S.Text>
-                <span>모르는 단어가 있다면 </span> 백카사전을 활용해보세요
-              </S.Text>
+              <Icon icon="LightIcon" color="#ffdf8f" />
+              <S.Text>모르는 단어가 있다면 백카사전을 활용해보세요</S.Text>
             </S.Title>
             <S.Description>
               백카사전이 <span>ON</span> 되면, 하이라이트된 단어 클릭 시 초보자를 위한 설명이 제공됩니다.
