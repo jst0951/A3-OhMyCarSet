@@ -21,7 +21,6 @@ type ModalActionT = {
     | 'CHANGE_TO_SELF'
     | 'CHANGE_TO_GUIDE'
     | 'DEFAULT_OPTION'
-    | 'CARDICT_INTRO'
     | 'CLOSE_MODAL';
   payload?: DescriptionItem;
 };
@@ -66,11 +65,6 @@ const modalReducer = (state: ModalStateT, action: ModalActionT): ModalStateT => 
         activeModal: 'defaultOption',
         isOpen: true,
         item: action.payload,
-      };
-    case 'CARDICT_INTRO':
-      return {
-        activeModal: 'carDictIntro',
-        isOpen: true,
       };
     case 'CLOSE_MODAL':
       document.body.style.overflow = 'unset';
