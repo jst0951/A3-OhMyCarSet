@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CacheUpdateScheduleConfig {
 
-    private final ExecutorService executorService = Executors.newWorkStealingPool();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
     private final long refreshPeriod = 24 * 60 * 60 * 1000; // 캐시 동기화 주기
     private final long initDelay = 300 * 1000; // 최초 스케줄링 대기시간(빌드시 테스트 중 스케줄링된 작업들 실행 방지)
 
