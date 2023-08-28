@@ -24,6 +24,7 @@ public class DefaultOptionService {
     private final DefaultCategoryRepository defaultCategoryRepository;
     private final DefaultOptionRepository defaultOptionRepository;
     private final TrimRepository trimRepository;
+
     public DefaultOptionService(DefaultCategoryRepository defaultCategoryRepository, DefaultOptionRepository defaultOptionRepository, TrimRepository trimRepository) {
         this.defaultCategoryRepository = defaultCategoryRepository;
         this.defaultOptionRepository = defaultOptionRepository;
@@ -39,18 +40,25 @@ public class DefaultOptionService {
         for (Trim trim : trimList) {
             List<DefaultOptionCategoryDto> defaultOptionCategoryDtoList = new ArrayList<>();
 
-            for(DefaultCategory defaultCategory : defaultCategoryList) {
+            for (DefaultCategory defaultCategory : defaultCategoryList) {
                 List<DefaultOption> defaultOptionList = defaultOptionRepository.findByTrimIdAndDefCategoryId(trim.getId(), defaultCategory.getId());
                 List<DefaultOptionDetailDto> defaultOptionDetailDtoList = new ArrayList<>();
 
-                for(DefaultOption defaultOption : defaultOptionList) {
-                    defaultOptionDetailDtoList.add(new DefaultOptionDetailDto(defaultOption));
+                for (DefaultOption defaultOption : defaultOptionList) {
+                    defaultOptionDetailDtoList.add(
+                            new DefaultOptionDetailDto(
+                                    defaultOption.getId(),
+                                    defaultOption.getName(),
+                                    defaultOption.getDescription(),
+                                    defaultOption.getImgSrc()
+                            )
+                    );
                 }
 
                 defaultOptionCategoryDtoList.add(new DefaultOptionCategoryDto(defaultCategory.getName(), defaultOptionDetailDtoList));
             }
 
-            defaultOptionDtoList.add(new DefaultOptionDto(trim, defaultOptionCategoryDtoList));
+            defaultOptionDtoList.add(new DefaultOptionDto(trim.getId(), trim.getName(), defaultOptionCategoryDtoList));
         }
 
         return defaultOptionDtoList;

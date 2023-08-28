@@ -27,7 +27,7 @@ public class ExteriorColorService {
         List<Trim> trimList = trimRepository.findAll();
         for(Trim trim: trimList) {
             List<ExteriorColor> exteriorColorList = exteriorColorRepository.findAllByTrimId(trim.getId());
-            exteriorColorDtoList.add(new ExteriorColorDto(trim, exteriorColorList));
+            exteriorColorDtoList.add(new ExteriorColorDto(trim.getId(), trim.getName(), exteriorColorList));
         }
 
         return exteriorColorDtoList;

@@ -28,7 +28,7 @@ public class CoreOptionService {
 
         for (Trim trim : trimList) {
             List<CoreOption> coreOptionList = coreOptionRepository.findByTrimId(trim.getId());
-            coreOptionDtoList.add(new CoreOptionDto(trim, coreOptionList));
+            coreOptionDtoList.add(new CoreOptionDto(trim.getId(), trim.getName(), coreOptionList));
         }
 
         return coreOptionDtoList;

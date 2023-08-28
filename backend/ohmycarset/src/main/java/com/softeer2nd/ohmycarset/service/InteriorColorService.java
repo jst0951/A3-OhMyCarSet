@@ -27,7 +27,7 @@ public class InteriorColorService {
         List<Trim> trimList = trimRepository.findAll();
         for(Trim trim: trimList) {
             List<InteriorColor> interiorColorList = interiorColorRepository.findAllByTrimId(trim.getId());
-            interiorColorDtoList.add(new InteriorColorDto(trim, interiorColorList));
+            interiorColorDtoList.add(new InteriorColorDto(trim.getId(), trim.getName(), interiorColorList));
         }
 
         return interiorColorDtoList;
