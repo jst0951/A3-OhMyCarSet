@@ -16,7 +16,7 @@ export default function CarModelButton() {
     <>
       <S.CarModelContainer onClick={() => handleClick()}>
         <Icon icon="HeaderCarIcon" />
-        <S.CarModelText>펠리세이드</S.CarModelText>
+        <S.CarModelText>팰리세이드</S.CarModelText>
         <Icon icon="HeaderMoreIcon" />
       </S.CarModelContainer>
     </>

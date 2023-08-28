@@ -46,7 +46,7 @@ export default function Loading({ redirect, setGuideStep }: Props) {
         <S.LoadingContainer>
           <LoadingCircle />
           <S.LoadingText>
-            나만의 펠리세이드가
+            나만의 팰리세이드가
             <br />
             만들어지고 있어요!
           </S.LoadingText>
