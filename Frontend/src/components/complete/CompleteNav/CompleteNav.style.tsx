@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { colors } from '@/style/theme';
 import { headMedium5, headRegular5 } from '@/style/typefaces';
 
-export const NavContainer = styled.div`
+export const SelfModeNavContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ export const NavContainer = styled.div`
 `;
 
 export const NavCategoryContainer = styled.div<{ $active: boolean }>`
-  width: 120px;
+  width: 128px;
   padding-top: 2px;
 
   cursor: pointer;
@@ -30,14 +30,14 @@ export const NavCategoryContainer = styled.div<{ $active: boolean }>`
 
 export const CategoryActiveBorder = styled.div<{ $activeCategory: number }>`
   position: absolute;
-  left: ${({ $activeCategory }) => `${($activeCategory - 1) * 120}px`};
+  left: ${({ $activeCategory }) => `${($activeCategory - 1) * 128}px`};
   bottom: 0;
 
   display: flex;
   justify-content: center;
   text-align: center;
 
-  width: 120px;
+  width: 128px;
   height: 2px;
 
   background-color: ${colors.mainHyundaiBlue};

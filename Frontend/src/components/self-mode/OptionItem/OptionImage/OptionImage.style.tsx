@@ -7,28 +7,32 @@ export const OptionImageContainer = styled.div`
   right: 20px;
 `;
 
-export const Exterior = styled.div<{ $icon: string }>`
+export const Exterior = styled.img`
   width: 60px;
   height: 60px;
   margin-top: 22px;
   border-radius: 50%;
   border: 1px solid ${colors.coolGrey002};
-  background-image: url(${(props) => props.$icon});
-  background-size: cover;
+  object-fit: cover;
 `;
 
-export const Interior = styled.div<{ $icon: string }>`
+export const Interior = styled.img`
   width: 150px;
   height: 50px;
   margin-top: 22px;
   border-radius: 2px;
-  background-image: url(${(props) => props.$icon});
-  background-size: cover;
+  object-fit: cover;
 `;
 
-export const Wheel = styled.div<{ $icon: string }>`
+export const Wheel = styled.img`
   width: 90px;
   height: 16.8px;
-  background-image: url(${(props) => props.$icon});
-  background-size: cover;
+  object-fit: cover;
+`;
+
+export const Package = styled.img`
+  width: 71.11px;
+  height: 16px;
+  margin-top: 1px;
+  object-fit: cover;
 `;

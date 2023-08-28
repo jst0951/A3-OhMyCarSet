@@ -2,19 +2,17 @@ import * as S from './CompleteNav.style';
 import optionList from '@/asset/data/optionList.json';
 
 export default function CompleteNav() {
-  const COMPLETE_PAGE = 8;
-
   return (
     <>
-      <S.NavContainer>
+      <S.SelfModeNavContainer>
         {optionList.map((option) => (
-          <S.NavCategoryContainer key={option.id} $active={option.id === COMPLETE_PAGE}>
+          <S.NavCategoryContainer key={option.id} $active={option.id === 8}>
             {`0${option.id} ${option.name}`}
           </S.NavCategoryContainer>
         ))}
-        <S.CategoryActiveBorder $activeCategory={COMPLETE_PAGE} />
+        <S.CategoryActiveBorder $activeCategory={8} />
         <S.NavBottomBorder />
-      </S.NavContainer>
+      </S.SelfModeNavContainer>
     </>
   );
 }

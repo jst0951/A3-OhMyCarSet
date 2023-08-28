@@ -10,12 +10,15 @@ import CountingAnimation from '@/utils/CountingAnimation';
 import { useWaitingContext } from '@/contexts/WaitingProvider';
 import { SelectOptionData, useSelectOptionState } from '@/contexts/SelectOptionProvider';
 import { useSelectPackageState } from '@/contexts/SelectPackageProvider';
+import { useLocation } from 'react-router-dom';
 
 interface OptionFooterProps {
+  hovered?: boolean;
+  setHovered?: Dispatch<React.SetStateAction<boolean>>;
   selectedData?: OptionDataT;
   prevTotal: number;
   tempTotal: number;
-  setShowFeedback?: Dispatch<React.SetStateAction<number>> | undefined;
+  setShowFeedback?: Dispatch<React.SetStateAction<number>>;
 }
 
 interface SelectOptionStateT {
@@ -23,7 +26,7 @@ interface SelectOptionStateT {
   totalPrice: number;
 }
 
-interface SelectPackageStateT {
+export interface SectionListT {
   sectionTitle: string;
   totalPrice: number;
   subList: Array<
@@ -36,33 +39,33 @@ interface SelectPackageStateT {
   >;
 }
 
-interface myPalisadeProps {
+export interface myPalisadeProps {
+  mode: string;
   single: SelectOptionStateT;
-  multi: SelectPackageStateT;
+  multi: SectionListT;
 }
 
-export default function OptionFooter({ selectedData, prevTotal, tempTotal, setShowFeedback }: OptionFooterProps) {
+export default function OptionFooter({
+  hovered,
+  setHovered,
+  selectedData,
+  prevTotal,
+  tempTotal,
+  setShowFeedback,
+}: OptionFooterProps) {
+  const { pathname } = useLocation();
   const { selfModeStep, setSelfModeStep } = useSelfModeContext();
   const buttonRef = useRef<HTMLInputElement>(null);
   const estimateRef = useRef<HTMLInputElement>(null);
   const [showEstimate, setShowEstimate] = useState<boolean>(false);
-  const [disableNext, setDisableNext] = useState<boolean>(false);
   const { setWaiting } = useWaitingContext();
 
   const selectOptionState = useSelectOptionState();
   const selectPackageState = useSelectPackageState();
 
-  const sectionList: SelectPackageStateT = {
-    sectionTitle: '옵션',
-    totalPrice: selectPackageState.totalPrice,
-    subList: Array.from(selectPackageState.packageList).map((packageData) =>
-      Array.from(packageData.selectedList.values())
-    ),
-  };
-
-  const myPalisade: myPalisadeProps = {
-    single: selectOptionState,
-    multi: sectionList,
+  const handleMouseEnter = () => {
+    if (selfModeStep > 6 || setHovered === undefined) return;
+    if (!hovered) setHovered(true);
   };
 
   const handleClickEstimate = () => {
@@ -77,10 +80,27 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
 
   const selectOptionDispatch = useSelectOptionDispatch();
 
+  const setInSessionStorage = () => {
+    const sectionList: SectionListT = {
+      sectionTitle: '옵션',
+      totalPrice: selectPackageState.totalPrice,
+      subList: Array.from(selectPackageState.packageList).map((packageData) =>
+        Array.from(packageData.selectedList.values())
+      ),
+    };
+
+    const myPalisade: myPalisadeProps = {
+      mode: pathname,
+      single: selectOptionState,
+      multi: sectionList,
+    };
+
+    sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+  };
+
   const handleClickNext = (optionId: number) => {
     if (selfModeStep < 7 && setShowFeedback !== undefined) {
       if (selectedData === undefined) return;
-      setDisableNext(true);
       setWaiting(true);
       setShowFeedback(selectedData.id);
       selectOptionDispatch({
@@ -97,12 +117,13 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
       });
       setTimeout(() => {
         setShowFeedback(0);
-        setDisableNext(false);
         setWaiting(false);
         setSelfModeStep((prev) => prev + 1);
+        if (selfModeStep < 7 && setHovered !== undefined) setHovered(false);
       }, 2000);
     } else {
-      sessionStorage.setItem('myPalisade', JSON.stringify(myPalisade));
+      setInSessionStorage();
+
       setSelfModeStep(8);
     }
   };
@@ -138,7 +159,7 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.TotalPrice>
               <S.Price>
                 <CountingAnimation startValue={prevTotal} endValue={tempTotal} duration={1000} />
-              </S.Price>{' '}
+              </S.Price>
               원
             </S.TotalPrice>
           </S.TotalPriceContainer>
@@ -146,11 +167,11 @@ export default function OptionFooter({ selectedData, prevTotal, tempTotal, setSh
             <S.PrevButton $disable={selfModeStep === 1} onClick={handleClickPrev}>
               이전
             </S.PrevButton>
-            <S.NextButton $disable={disableNext}>
+            <div onMouseEnter={handleMouseEnter}>
               <RectButton type="recommended" page="self" onClick={() => handleClickNext(selfModeStep)}>
                 선택완료
               </RectButton>
-            </S.NextButton>
+            </div>
           </S.CompleteButtonContainer>
         </S.OptionFooterWrapper>
         <S.EstimateContainer ref={estimateRef} $show={showEstimate}>

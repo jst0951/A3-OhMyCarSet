@@ -16,6 +16,7 @@ const pageStyle = css<Props>`
     }
     return css`
       display: flex;
+      height: 32px;
       padding: 6px 22px;
       justify-content: center;
       align-items: center;
@@ -29,7 +30,7 @@ const typeStyle = css<Props>`
       return css`
         ${popupRegular};
         background-color: ${colors.coolGrey001};
-        color: ${colors.coolGrey003};
+        color: #6a6e76;
       `;
     }
     return css`

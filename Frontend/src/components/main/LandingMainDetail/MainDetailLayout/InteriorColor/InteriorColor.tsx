@@ -12,7 +12,11 @@ type InteriorColor = Array<{
   }>;
 }>;
 
-export default function InteriorColor() {
+interface Props {
+  isFetched: boolean;
+}
+
+export default function InteriorColor({ isFetched }: Props) {
   const [interiorColor, setInteriorColor] = useState<InteriorColor>([]);
 
   const fetchInteriorColor = async () => {
@@ -25,8 +29,8 @@ export default function InteriorColor() {
   };
 
   useEffect(() => {
-    fetchInteriorColor();
-  }, []);
+    if (isFetched) fetchInteriorColor();
+  }, [isFetched]);
 
   return (
     <>
@@ -36,7 +40,7 @@ export default function InteriorColor() {
             {line.icolorList.map((item) => (
               <S.InteriorColorItemContainer key={item.id}>
                 <S.InteriorColorItem>
-                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} />
+                  <img src={`${import.meta.env.VITE_STATIC_API_URL}/${item.imgSrc}`} alt={item.name} loading="lazy" />
                 </S.InteriorColorItem>
                 <S.InteriorColorItemDescription>{item.name}</S.InteriorColorItemDescription>
               </S.InteriorColorItemContainer>

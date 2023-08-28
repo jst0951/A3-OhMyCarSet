@@ -8,7 +8,7 @@ export default function fetchData(endpoint: string) {
       }
       throw new Error('에러 발생!');
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 
   return PromiseData;
 }

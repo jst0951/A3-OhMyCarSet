@@ -1,5 +1,3 @@
-import { colors } from '@/style/theme';
-import { bodyMedium1 } from '@/style/typefaces';
 import { styled } from 'styled-components';
 
 export const Container = styled.div`
@@ -20,7 +18,7 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 32px;
+  margin: 32px 0 52px;
 `;
 
 export const ItemLine = styled.div`
@@ -29,33 +27,19 @@ export const ItemLine = styled.div`
   align-items: flex-start;
   width: 256px;
   padding-left: 24px;
-  gap: 41px;
+  gap: 6px;
 `;
 
-export const ItemContainer = styled.div<{ $more: boolean; $showMore: string }>`
+export const ItemContainer = styled.div<{ $showMore: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  ${({ $more, $showMore }) => !$more && `display: ${$showMore}`}
+  ${({ $showMore }) => ($showMore ? `display: flex` : `display: none`)}
 `;
 
-export const MoreItemContainer = styled.div<{ $showMore: string }>`
-  display: ${(props) => props.$showMore};
+export const MoreItemContainer = styled.div<{ $showMore: boolean }>`
   flex-direction: row;
   align-items: center;
   gap: 12px;
-`;
-
-export const MoreButtonContainer = styled.div`
-  margin-top: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${bodyMedium1}
-  background-color: ${colors.coolGrey001};
-  color: ${colors.coolGrey004};
-  width: 140px;
-  height: 50px;
-  border-radius: 6px;
-  cursor: pointer;
+  ${({ $showMore }) => ($showMore ? `display: flex` : `display: none`)}
 `;

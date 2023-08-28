@@ -92,15 +92,7 @@ export const PrevButton = styled.div<{ $disable: boolean }>`
   ${({ $disable }) =>
     $disable &&
     `
-      pointer-events: none;
-  `}
-`;
-
-export const NextButton = styled.div<{ $disable: boolean }>`
-  ${({ $disable }) =>
-    $disable &&
-    `
-      pointer-events: none;
+      display: none;
   `}
 `;
 

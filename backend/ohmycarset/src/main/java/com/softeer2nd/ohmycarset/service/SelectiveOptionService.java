@@ -21,6 +21,20 @@ import java.util.stream.Stream;
 
 @Service
 public class SelectiveOptionService {
+    private static final String MALE = "남자";
+    private static final String FEMALE = "여자";
+    private static final String NONE = "NONE";
+    private static final String[] COLOR_MAIN_FEEDBACK = {
+            " 색상은 가장 많이 판매됐어요!",
+            " 색상은 인기가 많아요!",
+            " 색상은 희소성이 있어요!"
+    };
+
+    private static final String[] COLOR_SUB_FEEDBACK = {
+            "가장 인기있는 색상을 원하신다면, 탁월한 선택입니다.",
+            "인기있는 색상을 원하신다면, 탁월한 선택입니다.",
+            "독특한 색상을 원하신다면, 탁월한 선택입니다."
+    };
 
     private final SelectiveOptionRepository selectiveOptionRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -98,9 +112,12 @@ public class SelectiveOptionService {
 
         Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
+        String genderRepresentation = getGenderRepresentation(gender);
 
         RequiredOption recommendedOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0)).get();
         List<RequiredOption> remainOptions = selectiveOptionRepository.findRemainOptionByCategoryNameAndOptionId(categoryName, userInfoDto.getRecommendOptionId().get(0));
+
+        Long countTotalUser = purchaseHistoryRepository.count();
 
         if (categoryName.equals("powertrain") || categoryName.equals("wd") || categoryName.equals("body") || categoryName.equals("wheel")) {
             List<TagDto> tagDtoList = new ArrayList<>();
@@ -118,7 +135,7 @@ public class SelectiveOptionService {
                     .collect(Collectors.toList());
 
             // 태그별 옵션 선택률을 구한다. <A태그와 B옵션이 포함된 견적의 수 / A태그가 포함된 견적의 수 * 100(%)>
-            if(!intersectTags.isEmpty()) {
+            if (!intersectTags.isEmpty()) {
                 for (Tag tag : intersectTags) {
                     // A태그와 B옵션이 포함된 견적의 수 : countByTagIdAndCategoryNameAndOptionId
                     // A태그가 포함된 견적의 수 : countByTagId
@@ -133,26 +150,144 @@ public class SelectiveOptionService {
             // 비슷한 사용자의 옵션 선택률을 구한다. <A옵션이 포함된 유사유저의 견적의 수 / 유사유저의 견적의 수 * 100(%)>
             // A옵션이 포함된 유사유저의 견적의 수 : countByCategoryNameAndOptionIdAndGenderAndAgeAndTags
             // 유사유저의 견적의 수 : countByGenderAndAgeAndTags
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption, tagIds);
+            Double similarPercentage;
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption, tagIds);
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption, tagIds);
+            }
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
 
-        if (categoryName.equals("exterior_color") || categoryName.equals("interior_color")) {
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
-            Double genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+        Double similarPercentage;
+        RequiredOptionDto exteriorColorDto;
+        List<RequiredOptionDto> emptyFeedbackExteriorColorDtoList = new ArrayList<>();
+
+        if (categoryName.equals("exterior_color")) {
+            Double genderRatio;
             Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
+            List<TagDto> tagDtoList;
 
-            String genderToKorean = gender.toString().equals("M") ? "남자" : "여자";
-            List<TagDto> tagDtoList = Arrays.asList(new TagDto(100L, genderToKorean, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, 0.0), new TagDto(101L, age + "대", ageRatio));
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
+                genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            }
+
+            Long countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, recommendedOption.getId());
+            Double purchasePercentage = (double) countUserWithOption / countTotalUser * 100;
+
+            exteriorColorDto = new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList);
+            // 추천 옵션 추가
+            emptyFeedbackExteriorColorDtoList.add(
+                    new RequiredOptionDto(
+                            recommendedOption.getId(),
+                            recommendedOption.getName(),
+                            recommendedOption.getMainDescription(),
+                            recommendedOption.getSubDescription(),
+                            null,
+                            null,
+                            recommendedOption.getPrice(),
+                            recommendedOption.getImgSrc(),
+                            recommendedOption.getIconSrc(),
+                            purchasePercentage,
+                            null)
+            );
+            // response.add(new RequiredOptionDto(recommendedOption, purchasePercentage, tagDtoList));
+
+            for (RequiredOption remainOption : remainOptions) {
+                countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, remainOption.getId());
+                purchasePercentage = (double) countUserWithOption / countTotalUser * 100;
+                emptyFeedbackExteriorColorDtoList.add(
+                        new RequiredOptionDto(
+                                remainOption.getId(),
+                                remainOption.getName(),
+                                remainOption.getMainDescription(),
+                                remainOption.getSubDescription(),
+                                null,
+                                null,
+                                remainOption.getPrice(),
+                                remainOption.getImgSrc(),
+                                remainOption.getIconSrc(),
+                                purchasePercentage,
+                                null)
+                );
+            }
+            
+            // 판매율 내림차순으로 정렬
+            emptyFeedbackExteriorColorDtoList.sort(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder()));
+            for (int purchaseRank = 0; purchaseRank < 6; purchaseRank++) {
+                // 추천옵션
+                RequiredOptionDto dto = emptyFeedbackExteriorColorDtoList.get(purchaseRank);
+                String mainFeedback = generateMainFeedback(purchaseRank, dto.getName());
+                String subFeedback = generateSubFeedback(purchaseRank);
+                if (dto.getName().equals(exteriorColorDto.getName())) {
+                    response.add(
+                            new RequiredOptionDto(
+                                    exteriorColorDto.getId(),
+                                    exteriorColorDto.getName(),
+                                    exteriorColorDto.getMainDescription(),
+                                    exteriorColorDto.getSubDescription(),
+                                    mainFeedback,
+                                    subFeedback,
+                                    exteriorColorDto.getPrice(),
+                                    exteriorColorDto.getImgSrc(),
+                                    exteriorColorDto.getIconSrc(),
+                                    exteriorColorDto.getPurchaseRate(),
+                                    exteriorColorDto.getTags()
+                            )
+                    );
+                } else {
+                    response.add(
+                            new RequiredOptionDto(
+                                    dto.getId(),
+                                    dto.getName(),
+                                    dto.getMainDescription(),
+                                    dto.getSubDescription(),
+                                    mainFeedback,
+                                    subFeedback,
+                                    dto.getPrice(),
+                                    dto.getImgSrc(),
+                                    dto.getIconSrc(),
+                                    dto.getPurchaseRate(),
+                                    dto.getTags()
+                            )
+                    );
+                }
+            }
+
+            Collections.sort(response, Comparator
+                    .comparing((RequiredOptionDto o) -> o.getTags() == null)  // Compare null tags first
+                    .thenComparing(Comparator.nullsLast(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder())))
+            );
+
+            return response;
+        }
+
+        if (categoryName.equals("interior_color")) {
+            Double genderRatio;
+            Double ageRatio = getAgeRatio(categoryName, age, recommendedOption);
+            List<TagDto> tagDtoList;
+
+            if (genderRepresentation.equals(NONE)) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, 0.0), new TagDto(101L, age + "대", ageRatio));
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedOption);
+                genderRatio = getGenderRatio(categoryName, gender, recommendedOption);
+                tagDtoList = Arrays.asList(new TagDto(100L, genderRepresentation, genderRatio), new TagDto(101L, age + "대", ageRatio));
+            }
 
             // 추천 옵션 추가
             response.add(new RequiredOptionDto(recommendedOption, similarPercentage, tagDtoList));
         }
 
-        // 남은 옵션 추가
-        Long countTotalUser = purchaseHistoryRepository.count();
+
         List<RequiredOptionDto> unsortedRemainOptions = new ArrayList<>();
         for (RequiredOption remainOption : remainOptions) {
             Long countUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionId(categoryName, remainOption.getId());
@@ -160,9 +295,27 @@ public class SelectiveOptionService {
             unsortedRemainOptions.add(new RequiredOptionDto(remainOption, purchasePercentage, null));
         }
         unsortedRemainOptions.sort(Comparator.comparing(RequiredOptionDto::getPurchaseRate, Comparator.reverseOrder()));
-        response.addAll(unsortedRemainOptions);
 
+        response.addAll(unsortedRemainOptions);
         return response;
+    }
+
+    private String generateSubFeedback(int purchaseRank) {
+        if (purchaseRank == 0) {
+            return COLOR_SUB_FEEDBACK[0];
+        } else if (purchaseRank == 1 || purchaseRank == 2) {
+            return COLOR_SUB_FEEDBACK[1];
+        }
+        return COLOR_SUB_FEEDBACK[2];
+    }
+
+    private String generateMainFeedback(int purchaseRank, String name) {
+        if (purchaseRank == 0) {
+            return name + COLOR_MAIN_FEEDBACK[0];
+        } else if (purchaseRank == 1 || purchaseRank == 2) {
+            return name + COLOR_MAIN_FEEDBACK[1];
+        }
+        return name + COLOR_MAIN_FEEDBACK[2];
     }
 
     public List<OptionPackageDto> getAllPackageByCategory(UserWithPresetDto userInfoDto, String categoryName) {
@@ -170,14 +323,14 @@ public class SelectiveOptionService {
 
         Character gender = userInfoDto.getGender();
         Integer age = userInfoDto.getAge();
+        String genderRepresentation = getGenderRepresentation(gender);
 
         List<OptionPackage> recommendedPackages = new ArrayList<>();
 
-        if(!userInfoDto.getRecommendOptionId().isEmpty()) {
+        if (!userInfoDto.getRecommendOptionId().isEmpty()) {
             recommendedPackages = selectiveOptionRepository.findAllPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
         }
         List<OptionPackage> remainPackages = selectiveOptionRepository.findAllRemainPackageByCategoryNameAndPackageId(categoryName, userInfoDto.getRecommendOptionId());
-
 
         for (OptionPackage recommendedPackage : recommendedPackages) {
             List<Tag> optionTags = tagRepository.findAllByCategoryNameAndPackageId(categoryName, recommendedPackage.getId());
@@ -209,7 +362,12 @@ public class SelectiveOptionService {
             // 비슷한 사용자의 패키지옵션 선택률을 구한다. <A패키지옵션이 포함된 유사유저의 견적의 수 / 유사유저의 견적의 수 * 100(%)>
             // A패키지옵션이 포함된 유사유저의 견적의 수 : countByCategoryNameAndOptionIdAndGenderAndAgeAndTags
             // 유사유저의 견적의 수 : countByGenderAndAgeAndTags
-            Double similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedPackage, tagIds);
+            Double similarPercentage;
+            if (genderRepresentation.equals("NONE")) {
+                similarPercentage = getSimilarPercentage(categoryName, age, recommendedPackage, tagIds);
+            } else {
+                similarPercentage = getSimilarPercentage(categoryName, gender, age, recommendedPackage, tagIds);
+            }
 
             // 추천 패키지옵션 추가
             List<PackageComponent> components = selectiveOptionRepository.findAllComponentByPackageNameAndPackageId(categoryName, recommendedPackage.getId());
@@ -233,9 +391,25 @@ public class SelectiveOptionService {
         return response;
     }
 
+    private String getGenderRepresentation(Character gender) {
+        if (gender.equals('M')) {
+            return MALE;
+        } else if (gender.equals('F')) {
+            return FEMALE;
+        } else {
+            return NONE;
+        }
+    }
+
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, RequiredOption recommendedOption, List<Long> tagIds) {
         Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndGenderAndAgeAndTags(categoryName, recommendedOption.getId(), gender, age, tagIds);
         Long countSimilarUser = purchaseHistoryRepository.countByGenderAndAgeAndTags(gender, age, tagIds);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
+    private Double getSimilarPercentage(String categoryName, Integer age, RequiredOption recommendedOption, List<Long> tagIds) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndAgeAndTags(categoryName, recommendedOption.getId(), age, tagIds);
+        Long countSimilarUser = purchaseHistoryRepository.countByAgeAndTags(age, tagIds);
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
@@ -245,9 +419,21 @@ public class SelectiveOptionService {
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
+    private Double getSimilarPercentage(String categoryName, Integer age, OptionPackage recommendedPackage, List<Long> tagIds) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndPackageIdAndAgeAndTags(categoryName, recommendedPackage.getId(), age, tagIds);
+        Long countSimilarUser = purchaseHistoryRepository.countByAgeAndTags(age, tagIds);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
     private Double getSimilarPercentage(String categoryName, Character gender, Integer age, RequiredOption recommendedOption) {
         Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndGenderAndAge(categoryName, recommendedOption.getId(), gender, age);
         Long countSimilarUser = purchaseHistoryRepository.countByGenderAndAge(gender, age);
+        return (double) countSimilarUserWithOption / countSimilarUser * 100;
+    }
+
+    private Double getSimilarPercentage(String categoryName, Integer age, RequiredOption recommendedOption) {
+        Long countSimilarUserWithOption = purchaseHistoryRepository.countByCategoryNameAndOptionIdAndAge(categoryName, recommendedOption.getId(), age);
+        Long countSimilarUser = purchaseHistoryRepository.countByAge(age);
         return (double) countSimilarUserWithOption / countSimilarUser * 100;
     }
 
@@ -304,81 +490,40 @@ public class SelectiveOptionService {
 
         // 옵션 선택
         // 외장 색상, 내장 색상의 경우, 연령대 및 성별 별 가장 많이 팔린 옵션으로 설정해줍니다.
-        long startTime = System.nanoTime();
         exteriorColor = getMostPurchasedOptionByCategoryNameAndGenderAndAge("exterior_color", gender, age);
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        System.out.println("exterior_color = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
         interiorColor = getMostPurchasedOptionByCategoryNameAndGenderAndAge("interior_color", gender, age);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("interior_color = " + (double) elapsedTime / 1000000);
 
         // 파워트레인, 바디타입, 구동방식은 태그 또한 고려하여 설정합니다.
-        startTime = System.nanoTime();
         powertrain = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("powertrain", gender, age, tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("powertrain = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
         body = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("body", gender, age, tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("body = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
         wd = getMostSelectedOptionByCategoryNameAndGenderAndAgeAndTags("wd", gender, age, tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("wd = " + (double) elapsedTime / 1000000);
 
-        startTime = System.nanoTime();
-        wheel = getWheelOptionByGenderAndAgeAndTagsAndExteriorColor(gender, age, tagIds, exteriorColor.getId());
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("wheel = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
-        system = getAllPackageByCategoryNameAndTags("system", tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("system = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
-        temperature = getAllPackageByCategoryNameAndTags("temperature", tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("temperature = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
-        externalDevice = getAllPackageByCategoryNameAndTags("external_device", tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("external_device = " + (double) elapsedTime / 1000000);
-
-        startTime = System.nanoTime();
-        internalDevice = getAllPackageByCategoryNameAndTags("internal_device", tagIds);
-        endTime = System.nanoTime();
-        elapsedTime = endTime - startTime;
-        System.out.println("internal_device = " + (double) elapsedTime / 1000000);
-
-        System.out.println("=========================");
         // 휠은 별도의 로직이 필요합니다.
+        wheel = getWheelOptionByTagsAndExteriorColor(tagIds, exteriorColor.getId());
 
         // 부가옵션은 겹치는 태그가 하나라도 있으면 모두 담습니다.
+        system = getAllPackageByCategoryNameAndTags("system", tagIds);
+        temperature = getAllPackageByCategoryNameAndTags("temperature", tagIds);
+        externalDevice = getAllPackageByCategoryNameAndTags("external_device", tagIds);
+        internalDevice = getAllPackageByCategoryNameAndTags("internal_device", tagIds);
 
         return new RecommendDto(powertrain, wd, body, exteriorColor, interiorColor, wheel, system, temperature, externalDevice, internalDevice);
     }
 
     private RequiredOptionDto getMostPurchasedOptionByCategoryNameAndGenderAndAge(String categoryName, Character gender, Integer age) {
         // 옵션id, 구매내역수 - 구매내역 수 내림차순으로 정렬
-        List<PurchaseCountDto> purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age)
-                .stream()
-                .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
-                .collect(Collectors.toList());
+        List<PurchaseCountDto> purchaseCountDtoList;
+        if (gender.equals('N')) {
+            purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndAge(categoryName, age)
+                    .stream()
+                    .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
+                    .collect(Collectors.toList());
+        } else {
+            purchaseCountDtoList = purchaseHistoryRepository.countByCategoryNameAndGenderAndAge(categoryName, gender, age)
+                    .stream()
+                    .sorted(Comparator.comparing(PurchaseCountDto::getCount).reversed())
+                    .collect(Collectors.toList());
+        }
 
         // 가장 많이 팔린 옵션을 찾습니다.
         RequiredOption defaultOption = selectiveOptionRepository.findOptionByCategoryNameAndOptionId(categoryName, 1L).orElseThrow();
@@ -453,7 +598,7 @@ public class SelectiveOptionService {
         return new RequiredOptionDto(optionTagListMap.entrySet().iterator().next().getKey());
     }
 
-    private RequiredOptionDto getWheelOptionByGenderAndAgeAndTagsAndExteriorColor(Character gender, Integer age, List<Long> tagIds, Long exteriorColorId) {
+    private RequiredOptionDto getWheelOptionByTagsAndExteriorColor(List<Long> tagIds, Long exteriorColorId) {
         // 휠만을 위한 로직이므로, 카테고리는 wheel으로 고정입니다.
         final String categoryName = "wheel";
 

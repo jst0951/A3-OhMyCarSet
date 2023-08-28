@@ -7,38 +7,26 @@ import OptionItem from '../../OptionItem/OptionItem';
 import { useCurrentPackageDispatch, useCurrentPackageState } from '@/contexts/CurrentPackageProvider';
 import { useSelectPackageDispatch, useSelectPackageState } from '@/contexts/SelectPackageProvider';
 import { useSelectOptionState } from '@/contexts/SelectOptionProvider';
-
-const optionList = [
-  {
-    key: 'system',
-    text: '시스템',
-  },
-  {
-    key: 'temperature',
-    text: '온도관리',
-  },
-  {
-    key: 'external_device',
-    text: '외부장치',
-  },
-  {
-    key: 'internal_device',
-    text: '내부장치',
-  },
-];
+import { useLocation } from 'react-router-dom';
+import fetchPost from '@/utils/apis/fetchPost';
+import { useSelectTagContext } from '@/contexts/SelectTagProvide';
+import { SELF_MODE_URL, optionPackageList } from '@/constants';
 
 type OptionPackageListT = OptionPackageT[];
 
 export default function SelfModeMulti() {
+  const { pathname } = useLocation();
   const [optionPackage, setOptionPackage] = useState<OptionPackageListT[]>([]);
   const { filterId, packageId, optionId } = useCurrentPackageState();
   const { packageList, totalCount, totalPrice } = useSelectPackageState();
   const currentPackageDispatch = useCurrentPackageDispatch();
   const selectPackageDispatch = useSelectPackageDispatch();
+  const selectPackageState = useSelectPackageState();
   const selectOptionState = useSelectOptionState();
-  const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice);
-  const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice);
+  const [tempTotal, setTempTotal] = useState<number>(selectOptionState.totalPrice + selectPackageState.totalPrice);
+  const [prevTotal, setPrevTotal] = useState<number>(selectOptionState.totalPrice + selectPackageState.totalPrice);
   const [imgSrc, setImgSrc] = useState('');
+  const { selectTag } = useSelectTagContext();
 
   const handleFilterOption = (idx: number) => {
     currentPackageDispatch({
@@ -47,9 +35,21 @@ export default function SelfModeMulti() {
     });
   };
 
-  const fetchOptionData = async (key: string) => {
+  const fetchDataByMode = async (key: string, idx: number) => {
+    const endpoint = `selective_option/option_package/${key}`;
+    if (pathname === SELF_MODE_URL) {
+      return await fetchData(endpoint);
+    } else {
+      return await fetchPost(endpoint, {
+        ...selectTag,
+        recommendOptionId: selectPackageState.packageList[idx].recommendList,
+      });
+    }
+  };
+
+  const fetchOptionData = async (key: string, idx: number) => {
     try {
-      const response = await fetchData(`selective_option/option_package/${key}`);
+      const response = await fetchDataByMode(key, idx);
 
       return response;
     } catch (error) {
@@ -57,18 +57,50 @@ export default function SelfModeMulti() {
     }
   };
 
-  const fetchAllData = async () => {
+  const urls = optionPackageList.map((data) => {
+    return `${import.meta.env.VITE_API_URL}/selective_option/option_package/${data.key}`;
+  });
+
+  const fetchAllData = async (allData: OptionPackageListT[]) => {
     try {
-      const allData: OptionPackageListT[] = [];
-      for (const option of optionList) {
-        const response = await fetchOptionData(option.key);
+      for (const option of optionPackageList) {
+        const response = await fetchOptionData(option.key, option.idx);
         allData.push(response);
       }
+
       setOptionPackage(allData);
       setImgSrc(allData[0][0].components[0].imgSrc);
     } catch (error) {
       console.error('Error fetching data for all options:', error);
     }
+  };
+
+  const fetchCachedData = async (allData: OptionPackageListT[]) => {
+    const cache = await caches.open('optionPackage');
+
+    for (const url of urls) {
+      const response = await cache.match(url);
+
+      if (response) {
+        const data = await response.text();
+        allData.push(JSON.parse(data));
+      }
+    }
+
+    setOptionPackage(allData);
+    setImgSrc(allData[0][0].components[0].imgSrc);
+  };
+
+  const getAllData = async () => {
+    const allData: OptionPackageListT[] = [];
+
+    const hasCache = await caches.has('optionPackage');
+    if (hasCache) {
+      fetchCachedData(allData);
+    } else {
+      fetchAllData(allData);
+    }
+    // console.log(allData);
   };
 
   const handleClickOption = (currentFilter: number, selectedData: OptionPackageT) => {
@@ -96,7 +128,7 @@ export default function SelfModeMulti() {
   };
 
   useEffect(() => {
-    fetchAllData();
+    getAllData();
   }, []);
 
   useEffect(() => {
@@ -115,6 +147,7 @@ export default function SelfModeMulti() {
     const filterData = optionPackage[filterId - 1];
     const packageData = filterData?.find((data) => data.id === packageId)?.components;
     const optionData = packageData?.find((option) => option.id === optionId);
+
     if (optionData) {
       setImgSrc(optionData.imgSrc);
     } else {
@@ -126,10 +159,12 @@ export default function SelfModeMulti() {
   return (
     <>
       <S.SelfModeMultiContainer>
-        <S.SelfModeImage>{imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} />}</S.SelfModeImage>
+        <S.SelfModeImage>
+          {imgSrc && <img src={`${import.meta.env.VITE_STATIC_API_URL}/${imgSrc}`} alt="선택 옵션" />}
+        </S.SelfModeImage>
         <S.SelfModeOption>
           <S.FilterContainer>
-            {optionList.map((option, idx) => (
+            {optionPackageList.map((option, idx) => (
               <S.FilterButton key={idx} $active={filterId === idx + 1} onClick={() => handleFilterOption(idx)}>
                 {option.text}
               </S.FilterButton>

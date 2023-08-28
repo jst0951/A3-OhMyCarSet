@@ -23,6 +23,7 @@ export const OptionContainer = styled.div`
 `;
 
 export const LineTitle = styled.div`
+  width: 1024px;
   border-bottom: 1px solid ${colors.coolGrey003};
   padding-bottom: 25px;
   ${headMedium4};
@@ -55,6 +56,8 @@ export const GuideButtonContainer = styled.div`
   height: 90px;
   border-radius: 6px;
   background: ${colors.coolGrey001};
+
+  cursor: pointer;
 `;
 
 export const GuideButtonInside = styled.div`
