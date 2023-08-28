@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 public class CacheUpdateScheduleConfig {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
-    private final long refreshPeriod = 24 * 60 * 60 * 1000; // 캐시 동기화 주기
-    private final long initDelay = 300 * 1000; // 최초 스케줄링 대기시간(빌드시 테스트 중 스케줄링된 작업들 실행 방지)
 
     private final TagRepository tagRepository;
     private final PurchaseHistoryRepository purchaseHistoryRepository;
@@ -37,7 +35,7 @@ public class CacheUpdateScheduleConfig {
     private final List<Character> genderList = new ArrayList<>(List.of('F', 'M', 'N'));
     private final List<Integer> ageList = new ArrayList<>(List.of(20, 30, 40, 50, 60, 70));
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void count() {
         Runnable runnable = () -> {
             purchaseHistoryRepository.updateCount();
@@ -45,7 +43,7 @@ public class CacheUpdateScheduleConfig {
         executorService.submit(runnable);
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByTagId() {
         // 모든 태그 목록을 불러옵니다.
         List<Long> tagIds = tagRepository.findAll().stream()
@@ -61,7 +59,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndOptionId() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> requiredOptionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -74,7 +72,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndPackageId() {
         for(String categoryName: optionPackageCategoryNameList) {
             List<OptionPackage> optionPackageList = selectiveOptionRepository.findAllPackageByCategoryName(categoryName);
@@ -87,7 +85,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByTagIdAndCategoryNameAndOptionId() {
         List<Long> tagIds = tagRepository.findAll().stream()
                 .map(Tag::getId)
@@ -106,7 +104,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByTagIdAndCategoryNameAndPackageId() {
         List<Long> tagIds = tagRepository.findAll().stream()
                 .map(Tag::getId)
@@ -125,7 +123,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Integer age: ageList) {
@@ -137,7 +135,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             for(Character gender: genderList) {
@@ -151,7 +149,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndExteriorColorId() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName("exterior_color");
@@ -164,7 +162,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndOptionIdAndGender() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -179,7 +177,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndOptionIdAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -194,7 +192,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByCategoryNameAndOptionIdAndGenderAndAge() {
         for(String categoryName: requiredOptionCategoryNameList) {
             List<RequiredOption> optionList = selectiveOptionRepository.findAllOptionByCategoryName(categoryName);
@@ -211,7 +209,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByGenderAndAge() {
         for(Character gender: genderList) {
             for(Integer age: ageList) {
@@ -223,7 +221,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByGender() {
         for(Character gender: genderList) {
             Runnable runnable = () -> {
@@ -233,7 +231,7 @@ public class CacheUpdateScheduleConfig {
         }
     }
 
-    @Scheduled(fixedRate = refreshPeriod, initialDelay = initDelay)
+    @Scheduled(cron = "0 0 3 * * ?", zone = "Asia/Seoul")
     public void countByAge() {
         for(Integer age: ageList) {
             Runnable runnable = () -> {
