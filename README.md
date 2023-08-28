@@ -24,6 +24,10 @@
 ### ✔️ Deploy
 <img src="https://img.shields.io/badge/amazonAWS-232F3E?style=for-the-badge&logo=amazonAWS&logoColor=white"> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"> <img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white"> 
 
+### 🖥️ Infrastructure
+![소프티어 구성도 drawio (5)](https://github.com/softeerbootcamp-2nd/A3-OhMyCarSet/assets/59467639/cc637224-4554-4c86-a6d9-7fe51c3fd2e1)
+
+
 <br />
 
 ## 🔗 링크
