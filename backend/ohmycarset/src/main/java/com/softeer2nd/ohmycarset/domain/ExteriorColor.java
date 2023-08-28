@@ -1,10 +1,12 @@
 package com.softeer2nd.ohmycarset.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ExteriorColor {
     private Long id;
     private String name;
